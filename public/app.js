@@ -5,11 +5,17 @@ seba.controller("AppCtrl", function ($http) {
     var url = "http://localhost:3000";
 
     app.saveProduct = function (newProduct) {
-        $http.post(url + "/add", {name:newProduct}).success( function () {
-            loadProducts();
-            var test = document.getElementById("test");
-            test.value = "";
-        })
+
+        var test = document.getElementById("test");
+        
+        if(test != ""){
+            $http.post(url + "/add", {name:newProduct}).success( function () {
+                loadProducts();
+                test.value = "";
+            })
+        }else{
+            console.log("This can't be empty")
+        }
     }
     
     function loadProducts() {

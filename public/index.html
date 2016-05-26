@@ -1,55 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>MEAN-SEBA</title>
-    <!-- Bootstrap -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="bower_components/bootstrap/js/html5shiv.min.js"></script>
-    <script src="bower_components/bootstrap/js/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body ng-app="seba" ng-controller="AppCtrl as app">
-<div class="container">
-<h1>Test MongoDB with AngularJS</h1>
-<table class="table table-hover">
-    <tr>
-        <th>Name</th>
-        <th>Actions</th>
-    </tr>
-    <tr ng-repeat="product in app.products">
-        <td><span>{{ product.name }}</span></td>
-        <td>
-            <button class="btn btn-success">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-        </td>
-    </tr>
-</table>
-<!--<ul>-->
-    <!--<li ng-repeat="product in app.products">-->
-        <!--{{ product.name }}-->
-    <!--</li>-->
-<!--</ul>-->
-<form ng-submit="">
-    <input type="text" id="test" ng-model="app.newProduct" class="form-control"/>
-    <br><br>
-    <button ng-click="app.saveProduct(app.newProduct)" class="btn btn-primary">
-        Save
-    </button>
-</form>
+     <head>
+     <title>Chef@Home</title>
+     <meta charset="utf-8">
+     <link rel="icon" href="images/favicon.ico">
+     <link rel="shortcut icon" href="images/favicon.ico" />
+     <link rel="stylesheet" href="css/style.css">
+     <script src="js/jquery.js"></script>
+     <script src="js/jquery-migrate-1.1.1.js"></script>
+     <script src="js/jquery.equalheights.js"></script>
+     <script src="js/jquery.ui.totop.js"></script>
+     <script src="js/jquery.easing.1.3.js"></script>
+     <script>
+        $(document).ready(function(){
+          $( ".block1" ).mouseover(function() {
+            $(this).addClass( "blur" );
+          });
+          $( ".block1" ).mouseout(function() {
+            $(this).removeClass( "blur" );
+          });
+          $().UItoTop({ easingType: 'easeOutQuart' });
+        }) 
+     </script>
+     
+     <link rel="stylesheet" href="assets/style.css">
+     
+    <!-- animate.css -->
+<link rel="stylesheet" href="assets/animate/animate.css" />
+<link rel="stylesheet" href="assets/animate/set.css" />
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="app.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script type="text/javascript" src="js/noty/packaged/jquery.noty.packaged.min.js"></script>
+
+<!--jQuery Plugins Declarations-->
+<script src="js/noty/jquery.noty.js" type="text/javascript" ></script>
+<script type="text/javascript" src="js/noty/layouts/top.js"></script>
+<script type="text/javascript" src="js/noty/layouts/center.js"></script>
+<script type="text/javascript" src="js/noty/layouts/bottom.js"></script>
+<script type="text/javascript" src="js/noty/layouts/inline.js"></script>
+<script type="text/javascript" src="js/noty/themes/default.js"></script>
+
+         
+<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="bower_components/paper-styles/color.html">
+  <link rel="import" href="bower_components/paper-styles/demo-pages.html">
+  <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+  <link rel="import" href="bower_components/paper-fab/paper-fab.html">
+
+  <style is="custom-style">
+    .horizontal-section {
+      min-width: 200px;
+    }
+
+
+    paper-fab {
+      display: block;
+      margin-bottom:24px;
+      margin-left: auto;
+      margin-right: auto;
+      position: fixed;
+    }
+
+
+    paper-fab.blue {
+      --paper-fab-background: var(--paper-light-blue-500);
+      --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+    }
+
+    paper-fab.red {
+      --paper-fab-background: var(--paper-red-500);
+      --paper-fab-keyboard-focus-background: var(--paper-red-900);
+    }
+
+    paper-fab.green {
+      --paper-fab-background: var(--paper-green-500);
+      --paper-fab-keyboard-focus-background: var(--paper-green-900);
+    }
+
+    paper-fab.orange {
+      --paper-fab-background: var(--paper-orange-500);
+      --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+    }
+      
+
+    paper-fab#cart {
+/*        display: absolute;*/
+        position: fixed;
+        top: 15px;
+        right: 16px;
+    }
+
+
+  </style>
+         
+<!-- gallery -->
+<!--<link rel="stylesheet" href="assets/gallery/blueimp-gallery.min.css">-->
+
+<!-- wow script -->
+<script src="assets/wow/wow.min.js"></script>
+
+
+<!-- boostrap -->
+<script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
+
+<!-- custom script -->
+<script src="assets/script.js"></script>
+<!-- dependencies: jQuery + animate.css --> 
+<!--<link rel="stylesheet" href="css/animate.min.css">-->
+<!-- iGrowl CSS + JS --> 
+<link rel="stylesheet" href="css/igrowl.min.css">
+<script src="js/igrowl.min.js"></script>
+<!-- at least one of the following icon stylesheets: --> 
+<link rel="stylesheet" href="css/fonts/vicons.css">
+<link rel="stylesheet" href="css/fonts/feather.css">
+<link rel="stylesheet" href="css/fonts/steadysets.css">
+<link rel="stylesheet" href="css/fonts/linecons.css">
+
+<!-- custom script -->
+<script src="assets/script.js"></script>
+
+     <!--[if lt IE 8]>
+       <div style=' clear: both; text-align:center; position: relative;'>
+         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+           <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+         </a>
+    <![endif]-->
+    <!--[if lt IE 9]
+    
+      <script src="js/html5shiv.js"></script>
+      <link rel="stylesheet" media="screen" href="css/ie.css">
+    <![endif]-->
+    <!--[if lt IE 10]>
+      <link rel="stylesheet" media="screen" href="css/ie1.css">
+    <![endif]-->
+    
+     </head>
+    
+    
+    
+     <body class="page1">
+         
+    <script>
+        function gotocart(){
+            setTimeout(function(){
+                //do what you need here
+                window.location.href = 'index-6.html';
+            }, 1000);
+        }
+    </script>
+         
+
+<!--==============================header=================================-->
+ <header> 
+  <div class="container_12">
+   <div class="grid_12"> 
+    <div class="socials">
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <!--<a href="#" class="last"><i class="fa fa-pinterest-p"></i></a>-->
+      <paper-fab icon="shopping-cart" title="shopping-cart" id="cart" class="green" onclick="gotocart()"></paper-fab>
+      
+    </div>
+
+    
+    <br>
+    <div>
+    <h2 id="gooddog" style="color: #5f5e4e; font-size: 70pt; ">Chef @ Home
+<!--    <a href="index-6.html" align="right"><img src="images/basket1.png"></img></a>-->
+    </div>  
+      <br>
+    <div class="menu_block">
+    
+
+    <nav id="bt-menu" class="bt-menu">
+        <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
+        <ul>
+          <li class="current bt-icon "><a href="index.html">Home</a></li>
+          <li class="bt-icon"><a href="index-2.html">Menu</a></li>
+          <li class="bt-icon"><a href="index-instruction.html">Instructions</a></li>
+          <li class="bt-icon"><a href="index-3.html">Ingredients</a></li>
+          <li class="bt-icon"><a href="index-4.html">About</a></li>
+          <li class="bt-icon"><a href="index-5.html">Contact</a></li>
+
+        </ul>
+      </nav>
+    
+ <div class="clear"></div>
 </div>
+<div class="clear"></div>
+          </div>
+      </div>
+</header>
+
+<!--==============================Content=================================-->
+
+<!-- <div class="css-slideshow"> 
+  <figure> 
+    <img src="images/blur_img1.jpg" width="1600" height="338"/> 
+     <figcaption></figcaption> 
+  </figure> 
+  <figure> 
+    <img src="images/blur_img2.jpg" width="1600" height="338"/> 
+    <figcaption></figcaption> 
+  </figure>
+  
+  <h2 id="gooddog" style="color: #5f5e4e; font-size: 50pt;">Top Ranked Dish
+</div> -->
+
+<div class="content" ><div class="ic">More Website Templates @ TemplateMonster.com - December 02, 2013!</div>
+<br><br><br>
+<h2 id="gooddog" style="color: #5f5e4e; font-size: 50pt;">Popular Dishes</h2>
+<br><br><br><br>
+<a href="index-2.html" class="block1" > 
+  <img src="images/thai-cuisine.jpg" alt="" class="fade-in one">
+  <span class="price"><span>Tom Yam Goong</span><span><small>฿</small> 70</span><strong></strong></span>
+</a>
+<a href="index-2.html" class="block1">
+  <img src="images/japanese-cuisine.jpg" alt="" class="fade-in two">
+  <span class="price"><span>Sushi Set</span><span><small>฿</small> 150</span><strong></strong></span>
+</a>
+<br><br>
+<br><br><br>
+<h2 id="gooddog" style="color: #5f5e4e; font-size: 50pt;">Recommended Dishes for Today</h2>
+<br><br>
+<!--<button>Click to fade out boxes</button><br><br>-->
+<br><br>
+<!--<a href="index-2.html" class="block1">
+  <img src="images/western-cuisine.jpg" alt="">
+  <span class="price"><span>Pasta</span>
+<span><small>$</small> 90</span><strong></strong></span>
+</a>-->
+
+<!-- works -->
+<div id="works"  class=" clearfix grid"> 
+    
+     <figure class="effect-oscar  wowload lnw fadeIn">
+        <img src="images/portfolio/mama.jpg" alt="mama"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_1" style="font-size: 19pt !important;">Minced Pork Mama</h2>
+            <br>
+            <p>Egg x 1<br>
+            <p>Mama x 1 pack<br>
+            <p>Minced Pork x 100 grams<br>
+            <p>Mama x 1 pack<br><br>
+            
+            <b>50 THB</b><br>
+            <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_1').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+     <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/salmon-steak.jpg" alt="salmon-steak"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_2" style="font-size: 19pt !important;">Salmon Steak</h2><br>
+            <p>Salt and Pepper<br>
+            <p>Salmon X 400 grams<br>
+            <p>Minced garlic X 3 cloves<br>
+            <p>Small set of salad<br>
+            <br>
+            <b>170 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_2').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+     <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/honeytoast.jpg" alt="honeytoast"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_3" style="font-size: 19pt !important;">Honey Toast</h2><br>
+            <p>2 scoops vanilla ice cream<br>
+            <p>5"thick unsliced bread<br>
+            <p>50 g unsalted butter<br>
+            <p> 25 tablespoons honey<br><br>
+            <b>90 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_3').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+     
+     <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/omelette.jpg" alt="omelette"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_4" style="font-size: 19pt !important;">Omelette</h2><br>
+            <p>Eggs X 2<br>
+            <p>tomato<br>
+            <p>dice-shaped Carrot<br>
+            <!-- <p>1 tablespoon milk/water<br> -->
+            <p> Minced pork X 30 grams<br><br>
+            <b>70 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_4').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+    <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/padthai.jpg" alt="padthai"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_5" style="font-size: 19pt !important;">Pad Thai</h2><br>
+            
+            <p>50 grams shrimp<br>
+            <p>150 grams rice noodles<br>
+            <p>2 spoons tamarind paste<br>
+            <p>1/3 cup extra firm tofu & beans<br>
+            <br>
+            <b>75 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_5').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+    <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/greencurry.jpg" alt="greencurry"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_6" style="font-size: 19pt !important;">Thai Green Curry</h2><br>
+            <p>200 g beef & vegetables<br>
+            <p>400 g fresh coconut milk<br>
+            <p>100 g green curry paste<br><br>
+            <b>80 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_6').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+    <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/BBQ-fried-chicken.jpg" alt="fried-chicken"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_7" style="font-size: 19pt !important;">BBQ Fried Chicken</h2><br>
+            <p>250 grams Chicken wings<br>
+            <p> BBQ Sauce X 25 grams <br>
+            <p>Small salad set<br><br>
+            <b>75 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_7').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+    <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/soymilk.jpg" alt="soymilk"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_8" style="font-size: 19pt !important;">Soy Milk</h2><br>
+            <p>Soy Bean x 200 grams<br>              
+            <p>Water x 1.5 litres<br>
+            <p>Sugar x 20 grams<br><br>
+            <b>70 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_8').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+    <figure class="effect-oscar  wowload lnw fadeInUp">
+        <img src="images/portfolio/salad.jpg" alt="salad"/>
+        <figcaption>
+            <h2 class="lnw" id = "grid_9" style="font-size: 19pt !important;">Caesar Salad</h2><br>
+            <p>Parmesan<br>
+            <p>Lettuce X 3 Romaine hearts<br>
+            <p>15 grams Bread crusts<br>
+            <p>Olive oil x 2 tablespoons<br><br>
+            <b>85 THB</b><br>
+                <a title="1" data-gallery class="noti" onclick="shownoti(document.getElementById('grid_9').innerHTML)">Order Now</a></p>            
+        </figcaption>
+    </figure>
+    
+
+     
+</div>
+<!-- works -->
+
+
+
+  <div class="container_12">
+    <div class="grid_12">
+      <h3 id="gooddog">New in Chef@Home</h3>
+    </div>
+    <div class="grid_3">
+      <div class="box maxheight">
+        <img src="images/box_img1.jpg" alt="">
+        <div class="title">Fast Delivery Service</div>
+        With Chef@Home, you can have your fresh ingredients served to you at nearby BTS stations within 15 minutes after you order.
+        <br>
+        <a href="#">More Info</a>
+      </div>
+    </div>
+    <div class="grid_3">
+      <div class="box maxheight">
+        <img src="images/box_img3.jpg" alt="">
+        <div class="title">Time saving</div>
+         <br>With Chef@Home, you can spend your luxury time with your family and friends without the need of grocery shopping.
+        <br>
+        <a href="#">More Info</a>
+      </div>
+    </div>
+    <div class="grid_3">
+      <div class="box maxheight">
+        <img src="images/box_img2.jpg" alt="">
+        <div class="title">Healthier life<br></div>
+        <br>With Chef@Home, you can cook any meals with fresh ingredients and brings you a healthier lifestyle. 
+        <br>
+        <br>
+        <a href="#">More Info</a>
+      </div>
+    </div>
+    <div class="grid_3">
+      <div class="box maxheight">
+        <img src="images/box_img4.jpg" alt="">
+        <div class="title">Improve Cooking Skills</div>
+        With Chef@Home, you have a chance to cook a healthy meal by yourself which can easily develop your cooking skills.
+        <br>
+        <a href="#">More Info</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--==============================footer=================================-->
+
+<footer>    
+  <div class="container_12">
+    <div class="grid_6 prefix_3">
+      <br>
+    <h2 id="gooddog" style="color: #5f5e4e; font-size: 70pt; ">Chef @ Home</h2>
+      <br>
+      <div class="copy" style="font-size: 10pt !important;">
+      &copy; 2015 | <a href="#">Privacy Policy</a> <br> Website  designed by <a href="http://www.chanawatn.com/ChefAtHome" rel="nofollow">Chef@Home</a>
+      </div>
+    </div>
+  </div>
+</footer>
+     <script>
+      $(document).ready(function(){ 
+         $(".bt-menu-trigger").toggle( 
+          function(){
+            $('.bt-menu').addClass('bt-menu-open'); 
+          }, 
+          function(){
+            $('.bt-menu').removeClass('bt-menu-open'); 
+          } 
+        ); 
+      }) 
+    </script>
+    
+    <script>
+    function shownoti(str){
+        
+        var x = str+' is added to your basket!';
+
+          noty({
+        layout: 'top',
+        type: 'warning',
+        text: x,
+        dismissQueue: true,
+        closeWith: ['click','hover'],
+        animation: {
+          open: {height: 'toggle'},
+          close: {height: 'toggle'},
+          easing: 'swing',
+          speed: 500 
+          },
+        timeout: 0
+        });
+    }
+    </script>
+    
+    
+    
+    <!-- gallery -->
+<!--<script src="assets/gallery/jquery.blueimp-gallery.min.js"></script>-->
+
+
+
+
 </body>
 </html>

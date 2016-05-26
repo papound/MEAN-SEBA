@@ -1,0 +1,19 @@
+{
+    "name": "polymer-star-rating",
+    "description": "Polymer star rating web component.",
+    "license": "MIT",
+    "main": "dist/my-element.html",
+    "version": "0.1.5",
+    "keywords": [
+        "polymer",
+        "web-components"
+    ],
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ],
+    "dependencies": {
+        "polymer": "Polymer/polymer#master"
+    }
+}
