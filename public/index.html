@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MEAN-SEBA</title>
+    <!-- Bootstrap -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/bootstrap/js/html5shiv.min.js"></script>
+    <script src="bower_components/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="seba" ng-controller="AppCtrl as app">
+<div class="container">
+<h1>Test MongoDB with AngularJS</h1>
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    <tr ng-repeat="product in app.products">
+        <td><span>{{ product.name }}</span></td>
+        <td>
+            <button class="btn btn-success">Edit</button>
+            <button class="btn btn-danger">Delete</button>
+        </td>
+    </tr>
+</table>
+<!--<ul>-->
+    <!--<li ng-repeat="product in app.products">-->
+        <!--{{ product.name }}-->
+    <!--</li>-->
+<!--</ul>-->
+<form ng-submit="">
+    <input type="text" id="test" ng-model="app.newProduct" class="form-control"/>
+    <br><br>
+    <button ng-click="app.saveProduct(app.newProduct)" class="btn btn-primary">
+        Save
+    </button>
+</form>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="app.js"></script>
+</div>
+</body>
+</html>
