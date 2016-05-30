@@ -54,7 +54,7 @@
 		return template;
 	},
 
-	// sets css position and appends to body
+	// sets css.css position and appends to body
 	render = function(){
 		var options = this.options,
 			template = this.template;

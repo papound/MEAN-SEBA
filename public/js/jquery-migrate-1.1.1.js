@@ -436,7 +436,7 @@ jQuery.fn.error = function() {
 
 jQuery.fn.toggle = function( fn, fn2 ) {
 
-	// Don't mess with animation or css toggles
+	// Don't mess with animation or css.css toggles
 	if ( !jQuery.isFunction( fn ) || !jQuery.isFunction( fn2 ) ) {
 		return oldToggle.apply( this, arguments );
 	}

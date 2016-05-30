@@ -186,7 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var el = fixture('inline-positioned-xy');
           var rect = el.getBoundingClientRect();
           // need to measure document.body here because mocha sets a min-width on html,body, and
-          // the element is positioned wrt to that by css
+          // the element is positioned wrt to that by css.css
           var bodyRect = document.body.getBoundingClientRect();
           assert.equal(rect.top, 100, 'top is unset');
           assert.equal(rect.left, 100, 'left is unset');

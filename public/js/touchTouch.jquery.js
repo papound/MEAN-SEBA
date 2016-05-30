@@ -214,7 +214,7 @@
 	
 		function offsetSlider(index){
 
-			// This will trigger a smooth css transition
+			// This will trigger a smooth css.css transition
 			slider.css('left',(-index*100)+'%');
 		}
 	

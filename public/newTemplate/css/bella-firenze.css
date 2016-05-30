@@ -39,6 +39,78 @@ Contents
 26.Ribbons 
 *********/
 
+/*********
+X.Custom by Pound
+*********/
+.chefathome-logo {
+    width: 70%;
+    height: auto;
+    fill: #bda881;
+    display: block;
+    margin: auto;
+}
+
+.chefathome-collapse-logo {
+    float: left;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background: url(../svg/chefathome_logo_bda881.svg) no-repeat top left;
+    width: 200px;
+    height: 70px;
+    color: #bda881
+}
+
+.menubar {
+    font-size: larger !important;
+}
+
+paper-button[raised] {
+
+    margin: 0 auto;
+}
+
+paper-input{
+    max-width: 300px;
+}
+
+paper-button[raised].red {
+    background: #D32F2F;
+    color: #fff;
+}
+
+paper-button[raised].blue {
+    background: #4285f4;
+    color: #fff;
+}
+
+paper-button[raised].green {
+    background: #388E3C;
+    color: #fff;
+}
+
+paper-button[raised].grey {
+    background: #727272;
+    color: #fff;
+}
+
+.in-login-popup{
+    margin-top: 0px !important;
+    max-width: 360px;
+}
+
+paper-dialog {
+    max-width: 360px;
+}
+
+.col-centered{
+    margin: 0 auto;
+}
+
+.affix-top{
+    background-color: rgba(45, 48, 53, 0.9)
+}
+
 /*********  
 1.Global Styles 
 *********/
@@ -156,14 +228,14 @@ hr.separator {
 
     .navbar #bellafirenze-lg {
         display: block;
-        background: url(http://bella.designershare.net/assets/bella-firenze/images/logo/bella-firenze-logo-light.svg) no-repeat center center;
+        background: url(../svg/chefathome_logo_full.svg) no-repeat center center;
         width: 100%;
         height: 90px
     }
 
     .navbar #bellafirenze-sm {
         display: block;
-        background: url(http://bella.designershare.net/assets/bella-firenze/images/logo/bella-firenze-logo.svg) no-repeat top left;
+        background: url(../svg/chefathome_logo_bda881.svg) no-repeat top left;
         width: 200px;
         height: 100px
     }
@@ -174,7 +246,7 @@ hr.separator {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    background: url(http://bella.designershare.net/assets/bella-firenze/images/logo/bella-firenze-logo-sm.svg) no-repeat top left;
+    background: url(../svg/chefathome_logo_bda881.svg) no-repeat top left;
     width: 200px;
     height: 70px;
     font-family: 'Engagement', cursive;
@@ -184,7 +256,7 @@ hr.separator {
 @media only screen and (max-width: 768px) {
     .navbar #bellafirenze-lg {
         display: block;
-        background: url(http://bella.designershare.net/assets/bella-firenze/images/logo/bella-firenze-logo.svg) no-repeat top left;
+        background: url(../svg/chefathome_logo_bda881.svg) no-repeat top left;
         width: 220px;
         background-size: cover;
         height: 90px
@@ -211,7 +283,7 @@ hr.separator {
 @media only screen and (max-width: 767px) {
     .navbar #bellafirenze-lg {
         display: block;
-        background: url(http://bella.designershare.net/assets/bella-firenze/images/logo/bella-firenze-logo.svg) no-repeat top left;
+        background: url(../svg/chefathome_logo_bda881.svg) no-repeat top left;
         height: 60px;
         width: 220px;
         height: 90px
@@ -372,7 +444,7 @@ header#fullwidth .lightform .form-control {
 
 /* Change Header Image Here */
 .bellafirenze {
-    background-image: url(http://bella.designershare.net/assets/bella-firenze/images/headers/bella-firenze-header.jpg);
+    background-image: url(../img/ingredients_3.jpg);
     background-position: bottom left
 }
 
@@ -465,17 +537,8 @@ header#fullwidth .lightform .form-control {
     color: #fff
 }
 
-@media only screen (min-width:
-
-641px
-
-) and
-
-(max-width:
-
-767px
-
-) {
+@media only screen(min-width: 641px) and (max-width: 767px )
+{
     .videobg .header-text {
         position: absolute;
         width: 100%;
