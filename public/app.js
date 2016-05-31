@@ -2,7 +2,7 @@ var seba = angular.module("seba", []);
 
 seba.controller("AppCtrl", function ($http) {
     var app = this;
-    var url = "http://localhost:3000";
+    var url = "http://localhost:4000";
 
     app.saveProduct = function (newProduct) {
 
@@ -19,8 +19,9 @@ seba.controller("AppCtrl", function ($http) {
     }
     
     function loadProducts() {
-        $http.get(url + "/list").success(function (products) {
-            app.products = products;
+        $http.get(url + "/list").success(function (taste) {
+            //console.dir(taste);
+            app.taste = taste;
             var test = document.getElementById("test");
             test.value = "";
         })
