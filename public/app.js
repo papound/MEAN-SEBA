@@ -2,7 +2,7 @@ var seba = angular.module("seba", []);
 
 seba.controller("AppCtrl", function ($http) {
     var app = this;
-    var url = "http://localhost:3000";
+    var url = "http://localhost:4000";
 
     app.saveProduct = function (newProduct) {
 
