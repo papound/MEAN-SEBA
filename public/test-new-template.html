@@ -54,6 +54,10 @@
     <link rel="import" href="bower_components/iron-icons/social-icons.html">
     <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="bower_components/paper-styles/color.html">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons"-->
+          <!--rel="stylesheet">-->
 
     <!--Custom Style-->
     <style is="custom-style">
@@ -97,6 +101,26 @@
             padding: 0px 4px;
         }
 
+        .fixed-right {
+            position: fixed;
+            top: inherit;
+            right: 20px;
+        }
+
+        .login_icon {
+            position: fixed;
+            top: inherit;
+            right: 80px;
+        }
+
+        .login_col {
+            margin-left: -100px;
+        }
+
+        .menu_center {
+            margin-left: 60px;
+        }
+
     </style>
 
 </head>
@@ -117,32 +141,51 @@
     <nav class="navbar navbar-fixed-top affix-top" data-spy="affix" data-offset-top="100">
         <div class="container">
             <div class="row hidden-sm hidden-xs">
-                <!-- Links 01 -->
-                <div class="col-sm-4">
-                    <ul class="nav navbar-nav pull-left">
-                        <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                        <li><a href="#menus" class="menubar">Menus&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                        <li><a href="#ingredients" class="menubar">Ingredients</a></li>
-                    </ul>
+                <div class="col-sm-11 menu_center">
+                    <!-- Links 01 -->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <ul class="nav navbar-nav pull-left">
+                                <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="#menus" class="menubar">Menus</a></li>
+
+                            </ul>
+                        </div>
+                        <!-- /.Links 01 -->
+                        <!-- Logo -->
+                        <div class="col-sm-4">
+                            <a href="index.html" id="bellafirenze-lg"></a>
+                        </div>
+                        <!-- /.Logo -->
+
+                        <!-- Links 02 -->
+                        <div class="col-sm-4">
+                            <ul class="nav navbar-nav pull-right">
+
+                                <li><a href="#contacts" class="menubar">Contacts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+
+                                <li><a href="#ingredients" class="menubar">Ingredients</a></li>
+
+                            </ul>
+
+                        </div>
+                        <!-- Links 02 -->
+                    </div>
+
                 </div>
-                <!-- /.Links 01 -->
-                <!-- Logo -->
-                <div class="col-sm-4">
-                    <a href="index.html" id="bellafirenze-lg"></a>
+                <div class="col-sm-1 login_col">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#" class="menubar fixed-right" data-dialog="dialog">Login</a></li>
+                                <li>
+                                    <a class="login_icon"><i class="material-icons">person</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.Logo -->
 
-                <!-- Links 02 -->
-                <div class="col-sm-4">
-                    <ul class="nav navbar-nav pull-right">
-
-                        <li><a href="#contacts" class="menubar">Contacts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-
-                        <li><a href="#" class="menubar" data-dialog="dialog">Login/Register</a></li>
-
-                    </ul>
-                </div>
-                <!-- Links 02 -->
             </div>
 
             <!--Login Dialog-->
@@ -196,7 +239,7 @@
                         <li><a href="#menus">Menus</a></li>
                         <li><a href="#ingredients">Ingredients</a></li>
                         <li><a href="#contacts">Contacts</a></li>
-                        <li><a href="#" data-dialog="dialog">Login/Register</a></li>
+                        <li><a href="#" data-dialog="dialog">Login</a></li>
                     </ul>
                 </div>
             </div>
