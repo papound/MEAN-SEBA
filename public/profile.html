@@ -54,6 +54,7 @@
     <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="bower_components/paper-styles/color.html">
 
+
     <!--Custom Style-->
     <style is="custom-style">
 
@@ -255,7 +256,7 @@
 
                 <!-- Left side column-->
                 <div class="col-md-3">
-                    To be delete: Upload picture dialog will be here
+                    <!--Space for uploading profilie picture-->
                 </div>
                 <!-- End left side column-->
 
@@ -266,32 +267,34 @@
 
                     <!--Age-->
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             DateOfBirth
                         </div>
-                        <div class="col-md-8">
 
-
+                        <!--Date Picker-->
+                        <div class="col-md-9">
                             <div class='col-sm-6'>
                                 <div class="form-group">
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" style="width: 90px"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+                                        <input type='text' class="form-control" style="width: 120px"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
                                     </div>
                                 </div>
                             </div>
                             <script type="text/javascript">
-                                $(function () {
-                                    $('#datetimepicker1').datetimepicker();
+                                $(document).ready(function () {
+                                    $("#datetimepicker1").datetimepicker({
+                                        format: 'DD/MM/YYYY'
+                                    });
                                 });
                             </script>
-
-
                         </div>
+                        <!--End Date Picker-->
+
                     </div>
-                    <br>
+
 
                     <!--Height-->
                     <div class="row">
@@ -299,7 +302,7 @@
                             Height
                         </div>
                         <div class="col-md-8">
-                            <input type="number" name="myHeight" value="165" style="width: 90px">
+                            <input type="number" name="myHeight" value="165" style="width: 100px" >
                         </div>
                     </div>
                     <br>
@@ -310,7 +313,7 @@
                             Weight
                         </div>
                         <div class="col-md-8">
-                            <input type="number" name="myWeight" value="65" style="width: 90px">
+                            <input type="number" name="myWeight" value="65" style="width: 100px">
                         </div>
                     </div>
                     <br>
@@ -329,7 +332,9 @@
                     <!-- Not preferring-->
                     <div class="row">
                         <div class="col-md-4">
-                            Do not prefer:
+                            Do
+                            not
+                            prefer:
                         </div>
                         <div class="col-md-8">
                             <div class="row">
@@ -367,7 +372,9 @@
                             <input type="checkbox" name="health">
                         </div>
                         <div class="col-md-10">
-                            High Blood Pressure
+                            High
+                            Blood
+                            Pressure
                         </div>
                     </div>
 
@@ -407,111 +414,11 @@
         <div class="row">
             <div class="col-md-12">
 
-                <!-- Menu Filter Area -->
-                <!--
-                <div class="row text-center">
-                    <div class="col-lg-12">
-                        <div class="menu-filter-area">
-                            <ul class="menu-filter" id="menu-masonry-sort">
-                                <li class="active"><a href="http://bella.designershare.net/menu.html#" data-target="*">All</a>
-                                </li>
-                                <li><a href="http://bella.designershare.net/menu.html#"
-                                       data-target=".starters">Starters</a></li>
-                                <li><a href="http://bella.designershare.net/menu.html#" data-target=".salads">Salads</a>
-                                </li>
-                                <li><a href="http://bella.designershare.net/menu.html#" data-target=".pizzas">Pizza</a>
-                                </li>
-                                <li><a href="http://bella.designershare.net/menu.html#" data-target=".mains">Mains</a>
-                                </li>
-                                <li><a href="http://bella.designershare.net/menu.html#"
-                                       data-target=".desserts">Desserts</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                -->
-                <!-- /.Menu Filter Area -->
 
-                <!-- Menu Items Area -->
-                <!--
-                <div class="row">
-                    <div class="menu-items-wrapper col-lg-12">
-                        <div class="menu-items" id="menu-masonry" style="position: relative; height: 1794px;">
-                -->
-                <!-- Menu Item 01 -->
-                <!-- Single Menu -->
-
-                <!--
-                 <div class="single-item starters" style="position: absolute; left: 0px; top: 0px;">
-                 -->
-                <!-- Ribbon - New -->
-                <!--
-                                <div class="ribbon-wrapper-light">
-                                    <div class="ribbon-light">New</div>
-                                </div>
-                                -->
-                <!-- Ribbon - New -->
-                <!--
-                <div class="row">
-                    <div class="col-xs-4 col-sm-2 col-md-3 col-lg-3">
-                        <figure class="menu-image"><a href="http://bella.designershare.net/menu.html#">
-                            <img class="img-responsive menu-item"
-                                 src="newTemplate/img/menu-item-01.jpg"
-                                 width="130" height="130" alt=""> </a></figure>
-                    </div>
-                    <div class="col-xs-8 col-sm-10 col-md-9 col-lg-9">
-                        <h3>Lorem Ipsum <span class="accent">4.95£</span></h3>
-                        <p>Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster tamquam, eu
-                            tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>
-                    </div>
-                </div>
-                -->
-                <!--
-                </div>
-                -->
-                <!-- /.Single Menu-->
-                <!-- /Menu Item 01 -->
-
-                <!-- Menu Item 02 -->
-                <!-- Single Menu-->
-                <!-- <div class="single-item starters" style="position: absolute; left: 578px; top: 0px;">-->
-                <!-- Ribbon - New -->
-                <!--
-                 <div class="ribbon-wrapper-light">
-                     <div class="ribbon-light">New</div>
-                 </div>
-                 -->
-                <!-- Ribbon - New -->
-                <!--
-                 <div class="row">
-                     <div class="col-xs-4 col-sm-2 col-md-3 col-lg-3">
-                         <figure class="menu-image"><a href="http://bella.designershare.net/menu.html#">
-                             <img class="img-responsive menu-item"
-                                  src="newTemplate/img/menu-item-02.jpg"
-                                  width="130" height="130" alt=""> </a></figure>
-                     </div>
-                     <div class="col-xs-8 col-sm-10 col-md-9 col-lg-9">
-                         <h3>Lorem Ipsum <span class="accent">4.95£</span></h3>
-                         <p>Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster tamquam, eu
-                             tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>
-                     </div>
-                 </div>
-                 -->
-                <!-- </div>-->
-                <!-- /.Single Menu-->
-                <!-- /Menu Item 02 -->
-                <!--
-                                        </div>
-                                    </div>
-                                </div>
-                                -->
-                <!-- /.Menu Items Area -->
-
-
-                <!-- </div>-->
             </div>
         </div>
         <!-- /.container -->
+    </div>
 </section>
 <!-- /.Full Menu List -->
 
@@ -661,6 +568,17 @@
     }
 
 </script>
+
+<!--Script for Date Picker-->
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet"
+      href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+<!--End Script Date Picker-->
 
 </body>
 </html>
