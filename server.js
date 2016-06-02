@@ -25,7 +25,7 @@ app.use(bodyParser());
 
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout:'layout'}));
+app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
 app.set('view engine', 'handlebars');
 
 db.on('error', console.error);
@@ -40,7 +40,8 @@ var taste_schema = new mongoose.Schema({
 
 var Taste = mongoose.model('Taste', taste_schema);
 
-app.use(express.static(path.join(__dirname,'public')));
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/list", function (req, res) {
     //console.dir(req);
@@ -62,11 +63,8 @@ app.post("/add", function (req, res) {
 
 // BodyParser Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Express Session
 app.use(session({
@@ -81,18 +79,18 @@ app.use(passport.session());
 
 // Express Validator
 app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
+    errorFormatter: function (param, msg, value) {
         var namespace = param.split('.')
-            , root    = namespace.shift()
+            , root = namespace.shift()
             , formParam = root;
 
-        while(namespace.length) {
+        while (namespace.length) {
             formParam += '[' + namespace.shift() + ']';
         }
         return {
-            param : formParam,
-            msg   : msg,
-            value : value
+            param: formParam,
+            msg: msg,
+            value: value
         };
     }
 }));
@@ -115,6 +113,6 @@ app.use('/profile', routes);
 // Set Port
 app.set('port', (process.env.PORT || 4000));
 
-app.listen(app.get('port'), function(){
-    console.log('Server runs at port: '+app.get('port'));
+app.listen(app.get('port'), function () {
+    console.log('Server runs at port: ' + app.get('port'));
 });
