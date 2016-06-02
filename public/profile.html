@@ -31,8 +31,8 @@
     <link href="newTemplate/css/animate.min.css" rel="stylesheet">
 
     <!-- Fonts -->
-    <link href="newTemplate/css" rel="stylesheet" type="text/css">
-    <link href="newTemplate/css/css(1)" rel="stylesheet" type="text/css">
+    <link href="newTemplate/css/css.css" rel="stylesheet" type="text/css">
+    <link href="newTemplate/css/css(1).css" rel="stylesheet" type="text/css">
     <link href="newTemplate/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -53,6 +53,17 @@
     <link rel="import" href="bower_components/iron-icons/social-icons.html">
     <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="bower_components/paper-styles/color.html">
+
+    <link rel="stylesheet"
+          href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
 
     <!--Custom Style-->
@@ -96,6 +107,25 @@
             height: 23px;
             padding: 0px 4px;
         }
+
+        .inputdemoBasicUsage .md-datepicker-button {
+            width: 36px;
+        }
+
+        .datepickerdemoBasicUsage {
+            /** Demo styles for mdCalendar. */ }
+        .datepickerdemoBasicUsage md-content {
+            padding-bottom: 200px; }
+        .datepickerdemoBasicUsage .validation-messages {
+            font-size: 12px;
+            color: #dd2c00;
+            margin: 10px 0 0 25px; }
+        .inputdemoErrors .inputErrorsApp {
+            min-height: 48px; }
+        .inputdemoErrors md-input-container > p {
+            font-size: 0.8em;
+            text-align: left;
+            width: 100%; }
 
     </style>
 
@@ -233,183 +263,215 @@
 <!-- Full Menu List -->
 <section id="menu-list">
     <div class="container">
+        <div ng-app="inputBasicDemo" layout="column" ng-cloak class="md-inline-form">
 
-        <!-- Title & Divider -->
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
-                 style="visibility: visible; animation-name: fadeIn;">
-                <h2>Edit profile</h2>
-                <!--
-                <p class="lead-sm">Our menu is seasonal so you can enjoy the freshest ingredients from local farmers and
-                    producers.
-                </p>
-                -->
-            </div>
-        </div>
-
-        <!-- /.Title & Divider -->
-
-
-        <!-- Edit profile-->
-        <form action="" method="post">
+            <!-- Title & Divider -->
             <div class="row">
-
-                <!-- Left side column-->
-                <div class="col-md-3">
-                    <!--Space for uploading profilie picture-->
+                <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
+                     style="visibility: visible; animation-name: fadeIn;">
+                    <h2>Edit profile</h2>
+                    <!--
+                    <p class="lead-sm">Our menu is seasonal so you can enjoy the freshest ingredients from local farmers and
+                        producers.
+                    </p>
+                    -->
                 </div>
-                <!-- End left side column-->
+            </div>
 
-                <!--Main column-->
-                <div class="col-md-4">
-                    <!-- Get name from log in-->
-                    <h3>Name</h3>
+            <!-- /.Title & Divider -->
 
-                    <!--Age-->
-                    <div class="row">
-                        <div class="col-md-3">
-                            DateOfBirth
+
+            <!-- Edit profile-->
+            <form action="" method="post" name="projectform">
+                <div class="row">
+
+                    <!-- Left side column-->
+                    <div class="col-md-3">
+                        <!--Space for uploading profilie picture-->
+                    </div>
+                    <!-- End left side column-->
+
+                    <!--Main column-->
+                    <div class="col-md-4">
+                        <!-- Get name from log in-->
+                        <h3>Name</h3>
+
+                        <!--Age-->
+                        <div class="row">
+                            <div class="col-md-3">
+                                DateOfBirth
+                            </div>
+                            <div ng-controller="DateCtrl" style='padding: 40px;' ng-cloak>
+                                <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+                            </div>
+
                         </div>
 
-                        <!--Date Picker-->
-                        <div class="col-md-9">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" style="width: 120px"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+
+                        <!--Height-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                Height
+                            </div>
+                            <div class="col-md-8" ng-controller="ErrCtrl">
+                                <!--<input type="number" name="myHeight" value="165" style="width: 100px">-->
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Height</label>
+                                    <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required ng-model="project.rate" min="1" max="999">
+                                    <div ng-messages="projectform.height.$error" multiple md-auto-hide="false">
+                                        <div ng-message="required">
+                                            You've to type something!
+                                        </div>
+                                        <div ng-message="pattern">
+                                            You type wrong pattern!
+                                        </div>
+                                        <div ng-message="min">
+                                            Your're the shortest one in earth!
+                                        </div>
+                                        <div ng-message="max">
+                                            You're the tallest person in the Earth!
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <br>
+
+                        <!--Weight-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                Weight
+                            </div>
+                            <div class="col-md-8" ng-controller="ErrCtrl">
+                                <!--<input type="number" name="myWeight" value="65" style="width: 100px">-->
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Weight</label>
+                                    <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required ng-model="project.rate" min="1" max="999">
+                                    <div ng-messages="projectform.weight.$error" multiple md-auto-hide="false">
+                                        <div ng-message="required">
+                                            You've to type something!
+                                        </div>
+                                        <div ng-message="pattern">
+                                            You type wrong pattern!
+                                        </div>
+                                        <div ng-message="min">
+                                            Your weight is less than any human in earth!
+                                        </div>
+                                        <div ng-message="max">
+                                            Your weight is highest among every human in earth!
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <br>
+
+                        <!--Vegetarian-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                Vegetarian
+                            </div>
+                            <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                <md-checkbox ng-model="data.cb1" aria-label="">
+                                    {{ data.cb1 }}
+                                </md-checkbox>
+                            </div>
+                        </div>
+                        <br>
+
+                        <!-- Not preferring-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                Do
+                                not
+                                prefer:
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                        <md-checkbox ng-model="data.cb2" aria-label="">
+                                            Diary Product<span ng-if="data.cb2"> : {{ data.cb2 }}</span>
+                                        </md-checkbox>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                        <md-checkbox ng-model="data.cb3" aria-label="">
+                                            Seafood<span ng-if="data.cb3"> : {{ data.cb3 }}</span>
+                                        </md-checkbox>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                        <md-checkbox ng-model="data.cb4" aria-label="">
+                                        </md-checkbox>
+                                        <span ng-if="!data.cb4"> Others</span>
+                                        <md-input-container ng-if="data.cb4" ng-disabled="false">
+                                            <label>Others, Please Specify</label>
+                                            <input ng-model="data.extra" name="other1" required>
+                                            <div ng-messages="projectform.other1.$error" multiple md-auto-hide="false">
+                                                <div ng-message="required">
+                                                    You've to type something!
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <span ng-if="data.cb4"> : {{data.extra}}</span>
                                     </div>
                                 </div>
                             </div>
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $("#datetimepicker1").datetimepicker({
-                                        format: 'DD/MM/YYYY'
-                                    });
-                                });
-                            </script>
                         </div>
-                        <!--End Date Picker-->
+                        <br>
 
-                    </div>
-
-
-                    <!--Height-->
-                    <div class="row">
-                        <div class="col-md-4">
-                            Height
-                        </div>
-                        <div class="col-md-8">
-                            <input type="number" name="myHeight" value="165" style="width: 100px" >
-                        </div>
-                    </div>
-                    <br>
-
-                    <!--Weight-->
-                    <div class="row">
-                        <div class="col-md-4">
-                            Weight
-                        </div>
-                        <div class="col-md-8">
-                            <input type="number" name="myWeight" value="65" style="width: 100px">
-                        </div>
-                    </div>
-                    <br>
-
-                    <!--Vegetarian-->
-                    <div class="row">
-                        <div class="col-md-4">
-                            Vegetarian
-                        </div>
-                        <div class="col-md-8">
-                            <input type="checkbox" name="veget" value="0">
-                        </div>
-                    </div>
-                    <br>
-
-                    <!-- Not preferring-->
-                    <div class="row">
-                        <div class="col-md-4">
-                            Do
-                            not
-                            prefer:
-                        </div>
-                        <div class="col-md-8">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <input type="checkbox" name="notprefer" value="DairyP">
-                                </div>
-                                <div class="col-md-10">
-                                    <p>Dairy Products</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <input type="checkbox" name="notprefer" value="Seafood">
-                                </div>
-                                <div class="col-md-10">
-                                    <p></p>Seafood</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <input type="checkbox" name="notprefer">
-                                </div>
-                                <div class="col-md-10">
-                                    <input type="text" style="width: 100px">
-                                </div>
+                        <!--Health Condition-->
+                        <h4>Health Condition</h4>
+                        <div class="row">
+                            <div class="col-md-8" ng-controller="Chk2Ctrl">
+                                <md-checkbox ng-model="data2.cb1" aria-label="">
+                                    High Blood Pressure<span ng-if="data2.cb1"> : {{ data2.cb1 }}</span>
+                                </md-checkbox>
                             </div>
                         </div>
-                    </div>
-                    <br>
 
-                    <!--Health Condition-->
-                    <h4>Health Condition</h4>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <input type="checkbox" name="health">
+                        <div class="row">
+                            <div class="col-md-8" ng-controller="Chk2Ctrl">
+                                <md-checkbox ng-model="data2.cb2" aria-label="">
+                                    Diabetes<span ng-if="data2.cb2"> : {{ data2.cb2 }}</span>
+                                </md-checkbox>
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            High
-                            Blood
-                            Pressure
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <input type="checkbox" name="health">
+                        <div class="row">
+                            <div class="col-md-8" ng-controller="Chk2Ctrl">
+                                <md-checkbox ng-model="data2.cb3" aria-label="">
+                                </md-checkbox>
+                                <span ng-if="!data2.cb3"> Others</span>
+                                <md-input-container ng-if="data2.cb3" ng-disabled="false">
+                                    <label>Others, Please Specify</label>
+                                    <input ng-model="data2.extra" name="other2" required>
+                                    <div ng-messages="projectform.other2.$error" multiple md-auto-hide="false">
+                                        <div ng-message="required">
+                                            You've to type something!
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <span ng-if="data2.cb3"> : {{data2.extra}}</span>
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <p>Diabetes</p>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <input type="checkbox" name="health">
-                        </div>
-                        <div class="col-md-10">
-                            <input type="text" style="width: 150px" placeholder="others please specify">
-                        </div>
+
                     </div>
+                    <!-- End main column-->
+
+                    <!--Right side column-->
+                    <div class="col-md-5">
+                        test3
+                    </div>
+                    <!--End right side column-->
 
 
                 </div>
-                <!-- End main column-->
-
-                <!--Right side column-->
-                <div class="col-md-5">
-                    test3
-                </div>
-                <!--End right side column-->
-
-
-            </div>
-        </form>
-
+            </form>
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -570,15 +632,17 @@
 </script>
 
 <!--Script for Date Picker-->
-<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
-<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-        src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<!--<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>-->
 <link rel="stylesheet"
-      href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+      href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
 <!--End Script Date Picker-->
+<script type="text/javascript" src="input-controller.js"></script>
+
 
 </body>
 </html>
