@@ -50,4 +50,9 @@ app2.controller('Chk2Ctrl', function($scope) {
             .primaryPalette('yellow')
             .dark();
     });
+
+app2.config(function($interpolateProvider) {
+    $interpolateProvider.startSymbol('{[{');
+    $interpolateProvider.endSymbol('}]}');
+});
     
