@@ -53,6 +53,8 @@
     <link rel="import" href="bower_components/iron-icons/social-icons.html">
     <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="bower_components/paper-styles/color.html">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
 
     <link rel="stylesheet"
           href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
@@ -65,6 +67,14 @@
     <!-- Angular Material Library -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
+    <!-- Angular Slider-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
+    <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
+
+    <!--Additional CSS-->
+    <!--<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.0-rc4/docs.css">-->
 
     <!--Custom Style-->
     <style is="custom-style">
@@ -136,6 +146,49 @@
             width: 100%;
         }
 
+        legend {
+            color: #3F51B5;
+        }
+
+        legend code {
+            color: #3F51B5;
+            font-weight: normal;
+        }
+
+        .ipsum {
+            color: saddlebrown;
+        }
+
+        article {
+            margin-bottom: 10px;
+        }
+        .tab-pane {
+            padding-top: 10px;
+        }
+        .field-title {
+            width: 100px;
+        }
+
+        .fixed-right {
+            position: fixed;
+            top: inherit;
+            right: 20px;
+        }
+
+        .login_icon {
+            position: fixed;
+            top: inherit;
+            right: 80px;
+        }
+
+        .login_col {
+            margin-left: -100px;
+        }
+
+        .menu_center {
+            margin-left: 60px;
+        }
+
     </style>
 
 </head>
@@ -156,32 +209,51 @@
     <nav class="navbar navbar-fixed-top affix-top" data-spy="affix" data-offset-top="100">
         <div class="container">
             <div class="row hidden-sm hidden-xs">
-                <!-- Links 01 -->
-                <div class="col-sm-4">
-                    <ul class="nav navbar-nav pull-left">
-                        <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                        <li><a href="#menus" class="menubar">Menus&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                        <li><a href="#ingredients" class="menubar">Ingredients</a></li>
-                    </ul>
+                <div class="col-sm-11 menu_center">
+                    <!-- Links 01 -->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <ul class="nav navbar-nav pull-left">
+                                <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="#menus" class="menubar">Menus</a></li>
+
+                            </ul>
+                        </div>
+                        <!-- /.Links 01 -->
+                        <!-- Logo -->
+                        <div class="col-sm-4">
+                            <a href="index-x.html" id="bellafirenze-lg"></a>
+                        </div>
+                        <!-- /.Logo -->
+
+                        <!-- Links 02 -->
+                        <div class="col-sm-4">
+                            <ul class="nav navbar-nav pull-right">
+
+                                <li><a href="#contacts" class="menubar">Contacts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+
+                                <li><a href="#ingredients" class="menubar">Ingredients</a></li>
+
+                            </ul>
+
+                        </div>
+                        <!-- Links 02 -->
+                    </div>
+
                 </div>
-                <!-- /.Links 01 -->
-                <!-- Logo -->
-                <div class="col-sm-4">
-                    <a href="index-x.html" id="bellafirenze-lg"></a>
+                <div class="col-sm-1 login_col">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#" class="menubar fixed-right" data-dialog="dialog">Login</a></li>
+                                <li>
+                                    <a class="login_icon"><i class="material-icons">person</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.Logo -->
 
-                <!-- Links 02 -->
-                <div class="col-sm-4">
-                    <ul class="nav navbar-nav pull-right">
-
-                        <li><a href="#contacts" class="menubar">Contacts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-
-                        <li><a href="#" class="menubar" data-dialog="dialog">Login/Register</a></li>
-
-                    </ul>
-                </div>
-                <!-- Links 02 -->
             </div>
 
             <!--Login Dialog-->
@@ -235,7 +307,7 @@
                         <li><a href="#menus">Menus</a></li>
                         <li><a href="#ingredients">Ingredients</a></li>
                         <li><a href="#contacts">Contacts</a></li>
-                        <li><a href="#" data-dialog="dialog">Login/Register</a></li>
+                        <li><a href="#" data-dialog="dialog">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -272,7 +344,7 @@
 <!-- Full Menu List -->
 <section id="menu-list">
     <div class="container">
-        <div ng-app="inputBasicDemo" layout="column" ng-cloak class="md-inline-form">
+        <div id="all_modules" layout="column" ng-cloak class="md-inline-form">
 
             <!-- Title & Divider -->
             <div class="row">
@@ -319,27 +391,24 @@
 
                         <!--Height-->
                         <div class="row">
-                            <div class="col-md-4">
-                                Height
-                            </div>
-                            <div class="col-md-8" ng-controller="ErrCtrl">
-                                <!--<input type="number" name="myHeight" value="165" style="width: 100px">-->
+
+                            <div ng-controller="ErrCtrl">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Height</label>
                                     <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
                                     <div ng-messages="projectform.height.$error" multiple md-auto-hide="false">
                                         <div ng-message="required">
-                                            You've to type something!
+                                            Your height is required.
                                         </div>
                                         <div ng-message="pattern">
                                             You type wrong pattern!
                                         </div>
                                         <div ng-message="min">
-                                            Your're the shortest one in earth!
+                                            Your're the shortest one on Earth!
                                         </div>
                                         <div ng-message="max">
-                                            You're the tallest person in the Earth!
+                                            You're the tallest person on Earth!
                                         </div>
                                     </div>
                                 </md-input-container>
@@ -349,27 +418,24 @@
 
                         <!--Weight-->
                         <div class="row">
-                            <div class="col-md-4">
-                                Weight
-                            </div>
-                            <div class="col-md-8" ng-controller="ErrCtrl">
-                                <!--<input type="number" name="myWeight" value="65" style="width: 100px">-->
+
+                            <div ng-controller="ErrCtrl">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Weight</label>
                                     <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
                                     <div ng-messages="projectform.weight.$error" multiple md-auto-hide="false">
                                         <div ng-message="required">
-                                            You've to type something!
+                                            Your weight is required.
                                         </div>
                                         <div ng-message="pattern">
                                             You type wrong pattern!
                                         </div>
                                         <div ng-message="min">
-                                            Your weight is less than any human in earth!
+                                            Your weight is less than any human on Earth!
                                         </div>
                                         <div ng-message="max">
-                                            Your weight is highest among every human in earth!
+                                            Your weight is the highest among every human on Earth!
                                         </div>
                                     </div>
                                 </md-input-container>
@@ -382,7 +448,10 @@
                             <div class="col-md-4">
                                 Vegetarian
                             </div>
-                            <div class="col-md-8" ng-controller="Chk1Ctrl">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11" ng-controller="Chk1Ctrl">
                                 <md-checkbox ng-model="data.cb1" aria-label="">
                                     {[{ data.cb1 }]}
                                 </md-checkbox>
@@ -397,11 +466,14 @@
                                 not
                                 prefer:
                             </div>
-                            <div class="col-md-8">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
                                 <div class="row">
                                     <div class="col-md-8" ng-controller="Chk1Ctrl">
                                         <md-checkbox ng-model="data.cb2" aria-label="">
-                                            Diary Product<span ng-if="data.cb2"> : {[{ data.cb2 }]}</span>
+                                            Dairy product<span ng-if="data.cb2"> : {[{ data.cb2 }]}</span>
                                         </md-checkbox>
                                     </div>
                                 </div>
@@ -422,7 +494,7 @@
                                             <input ng-model="data.extra" name="other1" required>
                                             <div ng-messages="projectform.other1.$error" multiple md-auto-hide="false">
                                                 <div ng-message="required">
-                                                    You've to type something!
+                                                    The info. is required.
                                                 </div>
                                             </div>
                                         </md-input-container>
@@ -434,8 +506,9 @@
                         <br>
 
                         <!--Health Condition-->
-                        <h4>Health Condition</h4>
+                        <p>Health Condition</p>
                         <div class="row">
+                            <div class="col-md-1"></div>
                             <div class="col-md-8" ng-controller="Chk2Ctrl">
                                 <md-checkbox ng-model="data2.cb1" aria-label="">
                                     High Blood Pressure<span ng-if="data2.cb1"> : {[{ data2.cb1 }]}</span>
@@ -444,6 +517,7 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-md-1"></div>
                             <div class="col-md-8" ng-controller="Chk2Ctrl">
                                 <md-checkbox ng-model="data2.cb2" aria-label="">
                                     Diabetes<span ng-if="data2.cb2"> : {[{ data2.cb2 }]}</span>
@@ -452,6 +526,7 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-md-1"></div>
                             <div class="col-md-8" ng-controller="Chk2Ctrl">
                                 <md-checkbox ng-model="data2.cb3" aria-label="">
                                 </md-checkbox>
@@ -461,7 +536,7 @@
                                     <input ng-model="data2.extra" name="other2" required>
                                     <div ng-messages="projectform.other2.$error" multiple md-auto-hide="false">
                                         <div ng-message="required">
-                                            You've to type something!
+                                            The info. is required.
                                         </div>
                                     </div>
                                 </md-input-container>
@@ -474,8 +549,30 @@
                     <!-- End main column-->
 
                     <!--Right side column-->
-                    <div class="col-md-5">
-                        test3
+                    <div class="col-md-5 ">
+                        <div ng-controller="Chk3Ctrl" class="md-padding checkboxdemoBasicUsage" ng-cloak="">
+                            <div>
+                                <fieldset class="standard">
+                                    <legend>Preferences
+                                        <ng-model>
+                                    </legend>
+
+                                        <div ng-app="rzSliderDemo">
+                                            <div ng-controller="MainCtrl" class="wrapper">
+                                                <article>
+                                                    <p>Calories: </p>
+                                                    <rzslider rz-slider-model="slider_translate.minValue"
+                                                              rz-slider-high="slider_translate.maxValue"
+                                                              rz-slider-options="slider_translate.options"></rzslider>
+                                                </article>
+                                            </div>
+                                        </div>
+
+
+                                </fieldset>
+
+                            </div>
+                        </div>
                     </div>
                     <!--End right side column-->
 
@@ -653,7 +750,9 @@
       href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
 <!--End Script Date Picker-->
 <script type="text/javascript" src="input-controller.js"></script>
-
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
 
 </body>
 </html>

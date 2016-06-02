@@ -43,21 +43,23 @@ var Taste = mongoose.model('Taste', taste_schema);
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/list", function (req, res) {
-    //console.dir(req);
-    // Find all movies.
-    Taste.find(function (err, tastes) {
-        if (err) return console.error(err);
-        //console.dir(tastes);
-        res.send(tastes);
-    })
+app.get("/list/tastes", function(req, res) {
+
+    var collection = db.collection('Taste');
+    
+    // Locate all the entries using find
+    collection.find().toArray(function(err, results) {
+        res.send(results);
+        // Let's close the db
+        db.close();
+    });
 })
 
-app.post("/add", function (req, res) {
-    var name = req.body.name;
-    var product = new Taste({name: name});
-    product.save(function (err) {
-        res.send();
+app.post("/add/tastes", function (req, res) {
+    var taste = db.collection('Taste');
+    taste.insert({name: "Pound555"}, function (err, result) {
+        res.send(result);
+        console.log("Success");
     })
 })
 
