@@ -28,7 +28,7 @@ app2.controller('DateCtrl', function ($scope) {
 
 app2.controller('Chk1Ctrl', function ($scope) {
     $scope.data = {};
-    $scope.data.cb1 = true;
+    $scope.data.cb1 = false;
     $scope.data.cb2 = false;
     $scope.data.cb3 = false;
     $scope.data.cb4 = false;
@@ -39,7 +39,7 @@ app2.controller('Chk1Ctrl', function ($scope) {
 app2.controller('Chk2Ctrl', function ($scope) {
     $scope.data2 = {};
     $scope.data2.cb1 = false;
-    $scope.data2.cb2 = true;
+    $scope.data2.cb2 = false;
     $scope.data2.cb3 = false;
     $scope.data2.extra = "";
 })
@@ -65,6 +65,15 @@ app2.controller('Chk3Ctrl', function ($scope) {
     $scope.data.cb4 = false;
     $scope.data.cb5 = false;
 
+})
+
+app2.controller('BtnCtrl', function ($scope) {
+    $scope.title1 = 'Button';
+    $scope.title4 = 'Warn';
+    $scope.isDisabled = true;
+
+    $scope.googleUrl = 'http://google.com';
+
 });
 
 var app3 = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap']);
@@ -74,14 +83,50 @@ app3.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
         value: 10
     };
     //Slider config with custom display function
-    $scope.slider_translate = {
-        minValue: 0,
-        maxValue: 400,
+    $scope.calories = {
+        minValue: 2100,
+        maxValue: 2900,
         options: {
-            ceil: 500,
+            ceil: 4000,
             floor: 0,
             translate: function (value) {
-                return value + ' grams';
+                return value;
+            }
+        }
+    };
+
+    $scope.proteins = {
+        minValue: 40,
+        maxValue: 70,
+        options: {
+            ceil: 200,
+            floor: 0,
+            translate: function (value) {
+                return value;
+            }
+        }
+    };
+
+    $scope.carb = {
+        minValue: 250,
+        maxValue: 450,
+        options: {
+            ceil: 1000,
+            floor: 0,
+            translate: function (value) {
+                return value;
+            }
+        }
+    };
+
+    $scope.fats = {
+        minValue: 60,
+        maxValue: 70,
+        options: {
+            ceil: 100,
+            floor: 0,
+            translate: function (value) {
+                return value;
             }
         }
     };

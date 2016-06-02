@@ -146,12 +146,7 @@
             width: 100%;
         }
 
-        legend {
-            color: #3F51B5;
-        }
-
         legend code {
-            color: #3F51B5;
             font-weight: normal;
         }
 
@@ -162,9 +157,11 @@
         article {
             margin-bottom: 10px;
         }
+
         .tab-pane {
             padding-top: 10px;
         }
+
         .field-title {
             width: 100px;
         }
@@ -187,6 +184,27 @@
 
         .menu_center {
             margin-left: 60px;
+        }
+
+        .buttondemoBasicUsage  {
+            border-radius: 3px;
+            text-align: center;
+            margin: 1em;
+            position: relative !important;
+            padding-bottom: 10px;
+        }
+
+        .buttondemoBasicUsage md-content {
+            margin-right: 7px;
+        }
+
+        .buttondemoBasicUsage .md-button {
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        .btn_group_bg {
+            background-color: transparent !important;
         }
 
     </style>
@@ -215,7 +233,7 @@
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-left">
                                 <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                                <li><a href="#menus" class="menubar">Menus</a></li>
+                                <li><a href="#menu" class="menubar">Menu</a></li>
 
                             </ul>
                         </div>
@@ -230,9 +248,9 @@
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-right">
 
-                                <li><a href="#contacts" class="menubar">Contacts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
-                                <li><a href="#ingredients" class="menubar">Ingredients</a></li>
+                                <li><a href="#ingredient" class="menubar">Ingredient</a></li>
 
                             </ul>
 
@@ -304,9 +322,9 @@
                 <div class="collapse navbar-collapse" id="navbar_collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#home">Home</a></li>
-                        <li><a href="#menus">Menus</a></li>
-                        <li><a href="#ingredients">Ingredients</a></li>
-                        <li><a href="#contacts">Contacts</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#ingredient">Ingredient</a></li>
+                        <li><a href="#contact">Contact</a></li>
                         <li><a href="#" data-dialog="dialog">Login</a></li>
                     </ul>
                 </div>
@@ -363,7 +381,7 @@
 
 
             <!-- Edit profile-->
-            <form action="" method="post" name="projectform">
+            <form action="" method="post" name="profileform">
                 <div class="row">
 
                     <!-- Left side column-->
@@ -391,9 +409,9 @@
 
                         <!--Height-->
                         <div class="row">
-
+                            <div class="col-md-1"></div>
                             <div ng-controller="ErrCtrl">
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block-10" flex-gt-sm>
                                     <label>Height</label>
                                     <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
@@ -418,9 +436,9 @@
 
                         <!--Weight-->
                         <div class="row">
-
+                            <div class="col-md-1"></div>
                             <div ng-controller="ErrCtrl">
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block-10" flex-gt-sm>
                                     <label>Weight</label>
                                     <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
@@ -549,24 +567,59 @@
                     <!-- End main column-->
 
                     <!--Right side column-->
+                    <div class="col-md-2"></div>
                     <div class="col-md-5 ">
-                        <div ng-controller="Chk3Ctrl" class="md-padding checkboxdemoBasicUsage" ng-cloak="">
+                        <div class="md-padding checkboxdemoBasicUsage" ng-cloak="">
                             <div>
+                                <br><br>
                                 <fieldset class="standard">
                                     <legend>Preferences
                                         <ng-model>
                                     </legend>
 
-                                        <div ng-app="rzSliderDemo">
-                                            <div ng-controller="MainCtrl" class="wrapper">
-                                                <article>
-                                                    <p>Calories: </p>
-                                                    <rzslider rz-slider-model="slider_translate.minValue"
-                                                              rz-slider-high="slider_translate.maxValue"
-                                                              rz-slider-options="slider_translate.options"></rzslider>
-                                                </article>
-                                            </div>
+                                    <div>
+                                        <div ng-controller="MainCtrl" class="wrapper">
+                                            <article>
+                                                <p>Calories (calories) : </p>
+                                                <rzslider rz-slider-model="calories.minValue"
+                                                          rz-slider-high="calories.maxValue"
+                                                          rz-slider-options="calories.options"></rzslider>
+                                            </article>
                                         </div>
+                                    </div>
+
+                                    <div>
+                                        <div ng-controller="MainCtrl" class="wrapper">
+                                            <article>
+                                                <p>Proteins (grams): </p>
+                                                <rzslider rz-slider-model="proteins.minValue"
+                                                          rz-slider-high="proteins.maxValue"
+                                                          rz-slider-options="proteins.options"></rzslider>
+                                            </article>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div ng-controller="MainCtrl" class="wrapper">
+                                            <article>
+                                                <p>Carbohydrate (grams): </p>
+                                                <rzslider rz-slider-model="carb.minValue"
+                                                          rz-slider-high="carb.maxValue"
+                                                          rz-slider-options="carb.options"></rzslider>
+                                            </article>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div ng-controller="MainCtrl" class="wrapper">
+                                            <article>
+                                                <p>Fats (grams): </p>
+                                                <rzslider rz-slider-model="fats.minValue"
+                                                          rz-slider-high="fats.maxValue"
+                                                          rz-slider-options="fats.options"></rzslider>
+                                            </article>
+                                        </div>
+                                    </div>
 
 
                                 </fieldset>
@@ -575,18 +628,25 @@
                         </div>
                     </div>
                     <!--End right side column-->
+                </div>
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5">
+                        <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
+                            <md-content class="btn_group_bg">
+                                <md-button class="md-raised">Save</md-button>
+                                <md-button class="md-raised">Reset</md-button>
+                                <md-button class="md-raised">Cancel</md-button>
+                            </md-content>
+                        </div>
+                    </div>
 
 
                 </div>
             </form>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
 
-
-            </div>
-        </div>
         <!-- /.container -->
     </div>
 </section>
@@ -750,9 +810,17 @@
       href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
 <!--End Script Date Picker-->
 <script type="text/javascript" src="input-controller.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+
+<!-- Angular Slider-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
+<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
 
 </body>
 </html>

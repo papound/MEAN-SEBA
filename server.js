@@ -23,36 +23,28 @@ var app = express();
 app.use(cors());
 app.use(bodyParser());
 
-//View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-app.set('view engine', 'handlebars');
-
 db.on('error', console.error);
 db.once('open', function () {
     // Create your schemas and models here.
 });
 
-// var Product = mongoose.model('Product', {name: String});
 var taste_schema = new mongoose.Schema({
     name: String
 });
 
 var Taste = mongoose.model('Taste', taste_schema);
 
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.get("/list/tastes", function(req, res) {
 
-    var collection = db.collection('Taste');
-    
+    var taste_collection = db.collection('Nutrition');
+
     // Locate all the entries using find
-    collection.find().toArray(function(err, results) {
+    taste_collection.find().toArray(function(err, results) {
         res.send(results);
         // Let's close the db
         db.close();
     });
+
 })
 
 app.post("/add/tastes", function (req, res) {
@@ -63,10 +55,18 @@ app.post("/add/tastes", function (req, res) {
     })
 })
 
+//View Engine
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+app.set('view engine', 'handlebars');
+
 // BodyParser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Express Session
 app.use(session({
