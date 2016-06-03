@@ -13,4 +13,8 @@ router.get('/profile', function(req, res){
     res.render('userprofile');
 });
 
+router.get('/main-profile', function(req, res){
+    res.render('mainprofile');
+});
+
 module.exports = router;

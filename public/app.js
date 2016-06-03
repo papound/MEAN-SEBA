@@ -4,28 +4,30 @@ seba.controller("AppCtrl", function ($http) {
     var app = this;
     var url = "http://localhost:4000";
 
-    app.saveProduct = function (newProduct) {
+    app.saveEntry = function (newEntry) {
 
-        var test = document.getElementById("test");
+        var textfield_test_var = document.getElementById("textfield_test");
         
-        if(test != ""){
-            $http.post(url + "/add", {name:newProduct}).success( function () {
-                loadProducts();
-                test.value = "";
+        if(textfield_test_var != ""){
+            $http.post(url + "/add", {name:newEntry}).success( function () {
+                loadEntry();
+                textfield_test_var.value = "";
             })
         }else{
             console.log("This can't be empty")
         }
     }
     
-    function loadProducts() {
-        $http.get(url + "/list").success(function (taste) {
+    function loadEntry() {
+        $http.get(url + "/list/database").success(function (db_lists) {
             //console.dir(taste);
-            app.taste = taste;
-            var test = document.getElementById("test");
-            test.value = "";
+            //console.log(db_lists);
+            app.db_lists = db_lists;
+
+            var textfield_test_var = document.getElementById("textfield_test");
+            textfield_test_var.value = "";
         })
     }
-    loadProducts();
+    loadEntry();
         
 })

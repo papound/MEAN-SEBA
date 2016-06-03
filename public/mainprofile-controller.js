@@ -10,6 +10,18 @@ app2.controller('ErrCtrl', function ($scope) {
     };
 })
 
+var url = "http://localhost:4000";
+app2.controller('profileCtrl', function ($scope, $http) {
+    var app = this;
+    $scope.name = (function() {
+        console.log("Start function!!");
+        $http.get(url + "/list/user").success(function (user) {
+            var user_json = user;
+            return user_json;
+        })
+    })();
+})
+
 app2.controller('DateCtrl', function ($scope) {
     $scope.myDate = new Date();
     $scope.minDate = new Date(

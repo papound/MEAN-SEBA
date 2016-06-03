@@ -9,8 +9,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://bella.designershare.net/assets/bella-firenze/images/favicon/favico.ico">
-    <title>Bella Firenze - Restaurant Template</title>
+    <!--<link rel="icon" href="http://bella.designershare.net/assets/bella-firenze/images/favicon/favico.ico">-->
+    <title>Chef@Home</title>
     <!-- GA -->
     <script async="" src="newTemplate/js/analytics.js"></script>
     <script src="newTemplate/js/ga.js"></script>
@@ -334,25 +334,25 @@
 <!-- /.Main Navigation -->
 
 <!-- Menu Header -->
-<section id="menu-header">
+<!--<section id="menu-header">
     <div class="container">
-        <!-- Title & Divider -->
+        &lt;!&ndash; Title & Divider &ndash;&gt;
         <div class="row">
             <div class="col-lg-12 text-center">
                 <p class="wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;"><img
                         src="newTemplate/svg/chefathome_logo_white.svg" width="500"
                         height="268" class="img-responsive center-block" alt="">
                 </p>
-                <!--
+                &lt;!&ndash;
                 <h2 class="mrgn-50-top">Edit profile</h2>
                 <div class="mrgn-20-top-btm text-center"><img src="newTemplate/svg/divider-white.svg" alt=""></div>
-                -->
+                &ndash;&gt;
             </div>
         </div>
-        <!-- /.Title & Divider -->
+        &lt;!&ndash; /.Title & Divider &ndash;&gt;
     </div>
-    <!-- /.container -->
-</section>
+    &lt;!&ndash; /.container &ndash;&gt;
+</section>-->
 <!-- /. Menu Header -->
 
 <!-- Full Menu List -->
@@ -364,7 +364,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
                      style="visibility: visible; animation-name: fadeIn;">
-                    <h2>Edit profile</h2>
+                    <h2>Profile</h2>
                     <!--
                     <p class="lead-sm">Our menu is seasonal so you can enjoy the freshest ingredients from local farmers and
                         producers.
@@ -394,7 +394,7 @@
                         <!--Age-->
                         <div class="row">
                             <div class="col-md-3">
-                                DateOfBirth
+                                Birthday
                             </div>
                             <div ng-controller="DateCtrl" style='padding: 40px;' ng-cloak>
                                 <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
@@ -405,10 +405,12 @@
 
                         <!--Height-->
                         <div class="row">
-                            <div class="col-md-1"></div>
+                            <div class="col-md-1">
+                                Height
+                            </div>
                             <div ng-controller="ErrCtrl">
                                 <md-input-container class="md-block-10" flex-gt-sm>
-                                    <label>Height</label>
+                                    <label>in cm</label>
                                     <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
                                     <div ng-messages="profileform.height.$error" multiple md-auto-hide="false">
@@ -432,10 +434,12 @@
 
                         <!--Weight-->
                         <div class="row">
-                            <div class="col-md-1"></div>
+                            <div class="col-md-1">
+                                Weight
+                            </div>
                             <div ng-controller="ErrCtrl">
                                 <md-input-container class="md-block-10" flex-gt-sm>
-                                    <label>Weight</label>
+                                    <label>in kg</label>
                                     <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
                                     <div ng-messages="profileform.weight.$error" multiple md-auto-hide="false">

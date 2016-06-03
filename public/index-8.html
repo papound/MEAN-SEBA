@@ -23,8 +23,10 @@
         <th>Name</th>
         <th>Actions</th>
     </tr>
-    <tr ng-repeat="product in app.taste_schema">
-        <td><span>{{ product.name }}</span></td>
+    <tr ng-repeat="document in app.db_lists">
+        <!--<td><span>{{ document._id.valueOf().str }}</span></td>-->
+        <!--<td><span>{{  }}</span></td>-->
+        <td><span>{{ document.name }}</span></td>
         <td>
             <button class="btn btn-success">Edit</button>
             <button class="btn btn-danger">Delete</button>
@@ -37,9 +39,9 @@
     <!--</li>-->
 <!--</ul>-->
 <form name="myForm" ng-submit="">
-    <input name="myInput" type="text" id="test" ng-model="app.newProduct" class="form-control"/>
+    <input name="myInput" type="text" id="textfield_test" ng-model="app.newEntry" class="form-control"/>
     <br><br>
-    <button ng-click="app.saveProduct(app.newProduct)" class="btn btn-primary">
+    <button ng-click="app.saveEntry(app.newEntry)" class="btn btn-primary">
         Save
     </button>
 </form>

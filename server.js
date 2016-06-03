@@ -28,32 +28,55 @@ db.once('open', function () {
     // Create your schemas and models here.
 });
 
-var taste_schema = new mongoose.Schema({
-    name: String
-});
+//var for index-8.html
 
-var Taste = mongoose.model('Taste', taste_schema);
+var db_model = mongoose.model('Nutrition', new mongoose.Schema({ name: String }),
+    'taste');
+var user_model = mongoose.model('User', new mongoose.Schema({ firstname: String }),
+    'user');
 
-app.get("/list/tastes", function(req, res) {
-
-    var taste_collection = db.collection('Nutrition');
-
+app.get("/list/database", function(req, res) {
     // Locate all the entries using find
-    taste_collection.find().toArray(function(err, results) {
+    db_model.find( function(err, results) {
+        //Getting Results
         res.send(results);
-        // Let's close the db
-        db.close();
+        // Close the db
+        //db.close();
     });
-
 })
 
-app.post("/add/tastes", function (req, res) {
+app.get("/list/user", function(req, res) {
+    // Locate all the entries using find
+    db_model.find( function(err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+})
+
+// app.post("/list/database", function(req, res) {
+//     if(req.body.email) {
+//         var email = req.body.email;
+//         // Locate all the entries using find
+//         user_model.find( { email: email}, function (err, results) {
+//             //Getting Results
+//             res.send(results);
+//             // Close the db
+//             db.close();
+//         });
+//     }else{
+//         console.log("Can't get email!!!");
+//     }
+// })
+
+/*app.post("/add/tastes", function (req, res) {
     var taste = db.collection('Taste');
     taste.insert({name: "Pound555"}, function (err, result) {
         res.send(result);
         console.log("Success");
     })
-})
+})*/
 
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -111,6 +134,7 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/profile', routes);
+app.use('/main-profile', routes);
 
 // Set Port
 app.set('port', (process.env.PORT || 4000));
