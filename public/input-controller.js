@@ -44,17 +44,6 @@ app2.controller('Chk2Ctrl', function ($scope) {
     $scope.data2.extra = "";
 })
 
-    .config(function ($mdThemingProvider) {
-        // Configure a dark theme with primary foreground yellow
-        $mdThemingProvider.theme('docs-dark', 'default')
-            .primaryPalette('yellow')
-            .dark();
-    });
-
-app2.config(function ($interpolateProvider) {
-    $interpolateProvider.startSymbol('{[{');
-    $interpolateProvider.endSymbol('}]}');
-});
 
 app2.controller('Chk3Ctrl', function ($scope) {
 
@@ -74,6 +63,18 @@ app2.controller('BtnCtrl', function ($scope) {
 
     $scope.googleUrl = 'http://google.com';
 
+});
+
+app2.config(function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('{[{');
+    $interpolateProvider.endSymbol('}]}');
+})
+
+.config(function ($mdThemingProvider) {
+    // Configure a dark theme with primary foreground yellow
+    $mdThemingProvider.theme('docs-dark', 'default')
+        .primaryPalette('yellow')
+        .dark();
 });
 
 var app3 = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap']);
@@ -130,19 +131,6 @@ app3.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
             }
         }
     };
-});
-
-var app4 = angular.module('BorderLegend', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
-
-app4.controller('LegendCtrl', function ($scope) {
-
-    $scope.data = {};
-    $scope.data.cb1 = true;
-    $scope.data.cb2 = false;
-    $scope.data.cb3 = false;
-    $scope.data.cb4 = false;
-    $scope.data.cb5 = false;
-
 });
 
 angular.element(document).ready(function () {

@@ -67,11 +67,7 @@
     <!-- Angular Material Library -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
-    <!-- Angular Slider-->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
-    <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
 
     <!--Additional CSS-->
     <!--<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.0-rc4/docs.css">-->
@@ -415,7 +411,7 @@
                                     <label>Height</label>
                                     <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
-                                    <div ng-messages="projectform.height.$error" multiple md-auto-hide="false">
+                                    <div ng-messages="profileform.height.$error" multiple md-auto-hide="false">
                                         <div ng-message="required">
                                             Your height is required.
                                         </div>
@@ -442,7 +438,7 @@
                                     <label>Weight</label>
                                     <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
-                                    <div ng-messages="projectform.weight.$error" multiple md-auto-hide="false">
+                                    <div ng-messages="profileform.weight.$error" multiple md-auto-hide="false">
                                         <div ng-message="required">
                                             Your weight is required.
                                         </div>
@@ -510,7 +506,7 @@
                                         <md-input-container ng-if="data.cb4" ng-disabled="false">
                                             <label>Others, Please Specify</label>
                                             <input ng-model="data.extra" name="other1" required>
-                                            <div ng-messages="projectform.other1.$error" multiple md-auto-hide="false">
+                                            <div ng-messages="profileform.other1.$error" multiple md-auto-hide="false">
                                                 <div ng-message="required">
                                                     The info. is required.
                                                 </div>
@@ -544,7 +540,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-1"></div>
+                            <!--<div class="col-md-1"></div>-->
                             <div class="col-md-8" ng-controller="Chk2Ctrl">
                                 <md-checkbox ng-model="data2.cb3" aria-label="">
                                 </md-checkbox>
@@ -552,7 +548,7 @@
                                 <md-input-container ng-if="data2.cb3" ng-disabled="false">
                                     <label>Others, Please Specify</label>
                                     <input ng-model="data2.extra" name="other2" required>
-                                    <div ng-messages="projectform.other2.$error" multiple md-auto-hide="false">
+                                    <div ng-messages="profileform.other2.$error" multiple md-auto-hide="false">
                                         <div ng-message="required">
                                             The info. is required.
                                         </div>
