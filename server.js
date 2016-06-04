@@ -111,6 +111,7 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/profile', routes);
+app.use('/register',routes);
 
 // Set Port
 app.set('port', (process.env.PORT || 4000));

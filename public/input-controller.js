@@ -56,6 +56,77 @@ app2.controller('Chk3Ctrl', function ($scope) {
 
 })
 
+
+
+
+app2.controller('TasteCtrl', function ($scope) {
+
+    $scope.data = {};
+    $scope.data.cb1 = false;
+    $scope.data.cb2 = false;
+    $scope.data.cb3 = false;
+    $scope.data.cb4 = false;
+    $scope.data.cb5 = false;
+
+})
+
+
+app2.controller('AddNutriCtrl', function ($scope) {
+
+    $scope.data = {};
+    $scope.data.cb1 = false;
+    $scope.data.cb2 = false;
+    $scope.data.cb3 = false;
+    $scope.data.cb4 = false;
+    $scope.data.cb5 = false;
+    $scope.data.cb6 = false;
+
+})
+
+app2.controller('SelectOptGroupCtrl', function($scope) {
+    $scope.nutritions = [{
+        category: 'vitamin',
+        name: 'Vitamin A'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin B'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin C'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin D'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin K'
+    }, {
+        category: 'others',
+        name: 'Fiber'
+    }, {
+        category: 'others',
+        name: 'Sodium'
+    } ];
+    $scope.selectedNutrition = [];
+    $scope.printSelectedNutritions = function printSelectedNutritions() {
+        var numberOfNutritions = this.selectedNutrition.length;
+
+        // If there is more than one topping, we add an 'and'
+        // to be gramatically correct. If there are 3+ toppings
+        // we also add an oxford comma.
+        if (numberOfNutritions > 1) {
+            var needsOxfordComma = numberOfNutritions > 2;
+            var lastNutritionConjunction = (needsOxfordComma ? ',' : '') + ' and ';
+            var lastNutrition = lastNutritionConjunction +
+                this.selectedNutrition[this.selectedNutrition.length - 1];
+            return this.selectedNutrition.slice(0, -1).join(', ') + lastNutrition;
+        }
+
+        return this.selectedNutrition.join('');
+    };
+});
+
+
+
 app2.controller('BtnCtrl', function ($scope) {
     $scope.title1 = 'Button';
     $scope.title4 = 'Warn';
@@ -125,6 +196,18 @@ app3.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
         maxValue: 70,
         options: {
             ceil: 100,
+            floor: 0,
+            translate: function (value) {
+                return value;
+            }
+        }
+    };
+
+    $scope.cholesterol = {
+        minValue: 50,
+        maxValue: 80,
+        options: {
+            ceil: 300,
             floor: 0,
             translate: function (value) {
                 return value;
