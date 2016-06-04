@@ -451,12 +451,10 @@
 
                         </div>
 
-
-                        <!--Height-->
                         <div class="row">
-                            <div class="col-md-1"></div>
                             <div ng-controller="ErrCtrl">
-                                <md-input-container class="md-block-10" flex-gt-sm>
+                                <!--Height-->
+                                <md-input-container class="md-block-5" flex-gt-sm>
                                     <label>Height (in cm)</label>
                                     <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                            ng-model="project.rate" min="1" max="999">
@@ -481,14 +479,9 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-                            </div>
-                        </div>
-                        <br>
 
-                        <!--Weight-->
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div ng-controller="ErrCtrl">
+
+                                <!--Weight-->
                                 <md-input-container class="md-block-10" flex-gt-sm>
                                     <label>Weight (in kg)</label>
                                     <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
@@ -531,288 +524,394 @@
                                         </div>
                                     </div>
                                 </md-input-container>
-                            </div>
-                        </div>
-                        <br>
 
-                        <!--Vegetarian-->
-                        <div class="row">
-                            <div class="col-md-4">
-                                Vegetarian
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-11" ng-controller="Chk1Ctrl">
-                                <md-checkbox ng-model="data.cb1" aria-label="">
-                                </md-checkbox>
-                            </div>
-                        </div>
-                        <br>
-
-                        <!-- Not preferring-->
-                        <div class="row">
-                            <div class="col-md-4">
-                                Do
-                                not
-                                prefer:
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-11">
-                                <div class="row">
-                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
-                                        <md-checkbox ng-model="data.cb2" aria-label="">
-                                            Dairy product<span ng-if="data.cb2"></span>
-                                        </md-checkbox>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
-                                        <md-checkbox ng-model="data.cb3" aria-label="">
-                                            Seafood<span ng-if="data.cb3"></span>
-                                        </md-checkbox>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
-                                        <md-checkbox ng-model="data.cb4" aria-label="">
-                                        </md-checkbox>
-                                        <span ng-if="!data.cb4"> Others</span>
-                                        <md-input-container ng-if="data.cb4" ng-disabled="false">
-                                            <label>Others, Please Specify</label>
-                                            <input ng-model="data.extra" name="other1" required>
-                                            <div ng-messages="profileform.other1.$error" multiple md-auto-hide="false">
-                                                <div ng-message="required">
-                                                    The
-                                                    info.is
-                                                    required.
-                                                </div>
-                                            </div>
-                                        </md-input-container>
-                                        <span ng-if="data.cb4"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-
-                        <!--Health Condition-->
-                        <p>Health Condition</p>
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-8" ng-controller="Chk2Ctrl">
-                                <md-checkbox ng-model="data2.cb1" aria-label="">
-                                    High Blood Pressure<span ng-if="data2.cb1"></span>
-                                </md-checkbox>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-8" ng-controller="Chk2Ctrl">
-                                <md-checkbox ng-model="data2.cb2" aria-label="">
-                                    Diabetes<span ng-if="data2.cb2"></span>
-                                </md-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-8" ng-controller="Chk2Ctrl">
-                                <md-checkbox ng-model="data2.cb3" aria-label="">
-                                </md-checkbox>
-                                <span ng-if="!data2.cb3"> Others</span>
-                                <md-input-container ng-if="data2.cb3" ng-disabled="false">
-                                    <label>Others, Please Specify</label>
-                                    <input ng-model="data2.extra" name="other2" required>
-                                    <div ng-messages="profileform.other2.$error" multiple md-auto-hide="false">
-                                        <div ng-message="required">
-                                            The
-                                            info.is
-                                            required.
-                                        </div>
-                                    </div>
+                        <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                             class="md-inline-form inputdemoBasicUsage">
+                            <!--Email-->
+                            <div layout-gt-xs="row">
+                                <md-input-container>
+                                    <label>Email</label>
+                                    <input ng-model="user.email" type="email">
                                 </md-input-container>
-                                <span ng-if="data2.cb3"></span>
+                            </div>
+
+                            <!--Password-->
+                            <div layout-gt-xs="row" ng-controller="PassCtrl">
+                                <md-input-container>
+                                    <label>Password</label>
+                                    <input type="{[{inputType}]}"/>
+                                    <!-- ng-minlength="8"
+                                           ng-maxlength="20"
+                                           ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required-->
+                                    <!--
+                                    <div ng-messages="profileform.weight.$error" multiple md-auto-hide="false">
+                                        <div ng-message="required">
+                                            Password
+                                            is
+                                            required
+                                        </div>
+                                        <div ng-message="pattern">
+                                            Passwords
+                                            must
+                                            be
+                                            between
+                                            8
+                                            and
+                                            20
+                                            characters.
+                                        </div>
+                                        <div ng-message="min">
+                                            Must
+                                            contain
+                                            one
+                                            lower & uppercase
+                                            letter, and
+                                            one
+                                            non - alpha
+                                            character(a
+                                            number
+                                            or
+                                            a
+                                            symbol.
+                                            )
+                                        </div>
+                                        <div ng-message="max">
+                                            Too
+                                            many
+                                            characters
+                                        </div>
+                                        -->
+                            </md-input-container>
+                            <div>
+                                <md-checkbox id="checkbox" ng-model="passwordCheckbox"
+                                             ng-click="hideShowPassword()"/>
+                                <p for=" checkbox
+                                    " ng-if="passwordCheckbox">Hide password</p>
+                                <p for="checkbox" ng-if="!passwordCheckbox">Show password</p>
+                                </md-checkbox>
                             </div>
                         </div>
 
+                        <!--Confirm password-->
+                        <div layout-gt-xs="row">
+                            <md-input-container>
+                                <label>Confirm password</label>
+                                <input type="password" ng-model=""/>
+                            </md-input-container>
+                        </div>
 
+
+                        <!--Address-->
+                        <md-input-container class="md-block">
+                            <label>Address</label>
+                            <input ng-model="user.address">
+                        </md-input-container>
+
+                        <md-input-container md-no-float="" class="md-block">
+                            <input ng-model="user.address2" placeholder="Address 2">
+                        </md-input-container>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm="">
+                                <label>City</label>
+                                <input ng-model="user.city">
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm="">
+                                <label>Postal Code</label>
+                                <input name="postalCode" ng-model="user.postalCode" placeholder="12345" required=""
+                                       ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+
+                                <div ng-messages="userForm.postalCode.$error" role="alert" multiple="">
+                                    <div ng-message="required" class="my-message">You
+                                    must
+                                    supply
+                                    a
+                                    postal
+                                    code.</div>
+                                    <div ng-message="pattern" class="my-message">That
+                                    doesn
+                                    't look like a valid postal code.
+                                    </div>
+                                    <div ng-message="md-maxlength" class="my-message">
+                                        Don
+                                        't use the long version silly...we don'
+                                        t
+                                        need
+                                        to
+                                        be
+                                        that
+                                        specific...
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
                     </div>
-                    <!-- End main column-->
 
-                    <!--Right side column-->
-                    <div class="col-md-2"></div>
-                    <div class="col-md-5 ">
-                        <div class="md-padding checkboxdemoBasicUsage">
-                            <div ng-controller="MainCtrl">
-                                <br><br>
-                                <fieldset class="standard">
-                                    <legend>Preferences
-                                        <ng-model>
-                                    </legend>
+                    <!--Vegetarian-->
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            <div class="row">
+                                <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                    <md-checkbox ng-model="data.cb1" aria-label="">
+                                        Vegetarian<span ng-if="data.cb1"></span>
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <label>Nutrition</label>
+                    <!--Halal-->
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            <div class="row">
+                                <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                    <md-checkbox ng-model="data.cb2" aria-label="">
+                                        Halal<span ng-if="data.cb2"></span>
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Not preferring-->
+                    <div class="row">
+                        <div class="col-md-4">
+                            Do
+                            not
+                            prefer:
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            <div class="row">
+                                <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                    <md-checkbox ng-model="data.cb3" aria-label="">
+                                        Dairy product
+
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                    <md-checkbox ng-model="data.cb4" aria-label="">
+                                        Seafood<span ng-if="data.cb4"></span>
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                    <md-checkbox ng-model="data.cb5" aria-label="">
+                                    </md-checkbox>
+                                    <span ng-if="!data.cb4"> Others</span>
+                                    <md-input-container ng-if="data.cb5" ng-disabled="false">
+                                        <label>Others, Please Specify</label>
+                                        <input ng-model="data.extra" name="other1" required>
+                                        <div ng-messages="profileform.other1.$error" multiple
+                                             md-auto-hide="false">
+                                            <div ng-message="required">
+                                                The
+                                                info.is
+                                                required.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <span ng-if="data.cb5"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <!--Health Condition-->
+                    <div ng-controller="SelectHealthConCtrl"
+                         class="md-padding selectdemoOptionGroups"
+                         ng-cloak="">
+                        <div>
+                            <div layout="row">
+                                <md-input-container>
+                                    <label>Health Condition</label>
+                                    <md-select ng-model="selectedHealthCon" multiple="">
+
+                                        <md-optgroup label="Common condition">
+                                            <md-option ng-value="healthcon.name"
+                                                       ng-repeat="healthcon in healthcons | filter: {category: 'commoncon' }">
+                                                {[{healthcon.name}]}
+                                            </md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- End main column-->
+
+                <!--Right side column-->
+                <div class="col-md-2"></div>
+                <div class="col-md-5 ">
+                    <div class="md-padding checkboxdemoBasicUsage">
+                        <div ng-controller="MainCtrl">
+                            <br><br>
+                            <fieldset class="standard">
+                                <legend>Preferences
+                                    <ng-model>
+                                </legend>
+
+                                <label>Nutrition</label>
+                                <div>
+                                    <article>
+                                        <p>Calories (calories) : </p>
+                                        <rzslider rz-slider-model="calories.minValue"
+                                                  rz-slider-high="calories.maxValue"
+                                                  rz-slider-options="calories.options"></rzslider>
+                                    </article>
+                                </div>
+
+
+                                <div>
                                     <div>
                                         <article>
-                                            <p>Calories (calories) : </p>
-                                            <rzslider rz-slider-model="calories.minValue"
-                                                      rz-slider-high="calories.maxValue"
-                                                      rz-slider-options="calories.options"></rzslider>
+                                            <p>Proteins (grams): </p>
+                                            <rzslider rz-slider-model="proteins.minValue"
+                                                      rz-slider-high="proteins.maxValue"
+                                                      rz-slider-options="proteins.options"></rzslider>
                                         </article>
                                     </div>
+                                </div>
 
-
+                                <div>
                                     <div>
-                                        <div>
-                                            <article>
-                                                <p>Proteins (grams): </p>
-                                                <rzslider rz-slider-model="proteins.minValue"
-                                                          rz-slider-high="proteins.maxValue"
-                                                          rz-slider-options="proteins.options"></rzslider>
-                                            </article>
-                                        </div>
+                                        <article>
+                                            <p>Carbohydrate (grams): </p>
+                                            <rzslider rz-slider-model="carb.minValue"
+                                                      rz-slider-high="carb.maxValue"
+                                                      rz-slider-options="carb.options"></rzslider>
+                                        </article>
                                     </div>
+                                </div>
 
+                                <div>
                                     <div>
-                                        <div>
-                                            <article>
-                                                <p>Carbohydrate (grams): </p>
-                                                <rzslider rz-slider-model="carb.minValue"
-                                                          rz-slider-high="carb.maxValue"
-                                                          rz-slider-options="carb.options"></rzslider>
-                                            </article>
-                                        </div>
+                                        <article>
+                                            <p>Fats (grams): </p>
+                                            <rzslider rz-slider-model="fats.minValue"
+                                                      rz-slider-high="fats.maxValue"
+                                                      rz-slider-options="fats.options"></rzslider>
+                                        </article>
                                     </div>
+                                </div>
 
+                                <div>
                                     <div>
-                                        <div>
-                                            <article>
-                                                <p>Fats (grams): </p>
-                                                <rzslider rz-slider-model="fats.minValue"
-                                                          rz-slider-high="fats.maxValue"
-                                                          rz-slider-options="fats.options"></rzslider>
-                                            </article>
-                                        </div>
+                                        <article>
+                                            <p>Cholesterol (milligrams): </p>
+                                            <rzslider rz-slider-model="cholesterol.minValue"
+                                                      rz-slider-high="cholesterol.maxValue"
+                                                      rz-slider-options="cholesterol.options"></rzslider>
+                                        </article>
                                     </div>
+                                </div>
 
+
+                                <div ng-controller="SelectOptGroupCtrl"
+                                     class="md-padding selectdemoOptionGroups"
+                                     ng-cloak="">
                                     <div>
-                                        <div>
-                                            <article>
-                                                <p>Cholesterol (milligrams): </p>
-                                                <rzslider rz-slider-model="cholesterol.minValue"
-                                                          rz-slider-high="cholesterol.maxValue"
-                                                          rz-slider-options="cholesterol.options"></rzslider>
-                                            </article>
+                                        <div layout="row">
+                                            <md-input-container>
+                                                <label>Additional Nutrition</label>
+                                                <md-select ng-model="selectedNutrition" multiple="">
+                                                    <md-optgroup label="Vitamin">
+                                                        <md-option ng-value="nutrition.name"
+                                                                   ng-repeat="nutrition in nutritions | filter: {category: 'vitamin' }">
+                                                            {[{nutrition.name}]}
+                                                        </md-option>
+                                                    </md-optgroup>
+                                                    <md-optgroup label="Others">
+                                                        <md-option ng-value="nutrition.name"
+                                                                   ng-repeat="nutrition in nutritions | filter: {category: 'others' }">
+                                                            {[{nutrition.name}]}
+                                                        </md-option>
+                                                    </md-optgroup>
+                                                </md-select>
+                                            </md-input-container>
                                         </div>
                                     </div>
+                                </div>
 
 
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label>Taste preference:</label>
 
-                                    <div ng-controller="SelectOptGroupCtrl" class="md-padding selectdemoOptionGroups"
-                                         ng-cloak="">
-                                        <div>
-                                            <div layout="row">
-                                                <md-input-container>
-                                                    <label>Additional Nutrition</label>
-                                                    <md-select ng-model="selectedNutrition" multiple="">
-                                                        <md-optgroup label="Vitamin">
-                                                            <md-option ng-value="nutrition.name"
-                                                                       ng-repeat="nutrition in nutritions | filter: {category: 'vitamin' }">
-                                                                {[{nutrition.name}]}
-                                                            </md-option>
-                                                        </md-optgroup>
-                                                        <md-optgroup label="Others">
-                                                            <md-option ng-value="nutrition.name"
-                                                                       ng-repeat="nutrition in nutritions | filter: {category: 'others' }">
-                                                                {[{nutrition.name}]}
-                                                            </md-option>
-                                                        </md-optgroup>
-                                                    </md-select>
-                                                </md-input-container>
+                                        <div class="row">
+                                            <div class="col-md-11" ng-controller="TasteCtrl">
+                                                <md-checkbox ng-model="data.cb1" aria-label="">
+                                                    Sweet<span ng-if="data.cb1"></span>
+                                                </md-checkbox>
+                                                <md-checkbox ng-model="data.cb2" aria-label="">
+                                                    Sour<span ng-if="data.cb2"></span>
+                                                </md-checkbox>
                                             </div>
                                         </div>
-                                    </div>
 
 
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <label>Taste preference:</label>
-                                            <div class="row">
-                                                <div class="col-md-1"></div>
-                                                <div class="col-md-11" ng-controller="TasteCtrl">
-                                                    <md-checkbox ng-model="data.cb1" aria-label="">
-                                                        Sweet<span ng-if="data.cb1"></span>
-                                                    </md-checkbox>
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-md-11" ng-controller="TasteCtrl">
+                                                <md-checkbox ng-model="data.cb3" aria-label="">
+                                                    Spicy<span ng-if="data.cb3"></span>
+                                                </md-checkbox>
+                                                <md-checkbox ng-model="data.cb4" aria-label="">
+                                                    Bitter<span ng-if="data.cb4"></span>
+                                                </md-checkbox>
                                             </div>
+                                        </div>
 
-                                            <div class="row">
-                                                <div class="col-md-1"></div>
-                                                <div class="col-md-11" ng-controller="TasteCtrl">
-                                                    <md-checkbox ng-model="data.cb2" aria-label="">
-                                                        Sour<span ng-if="data.cb2"></span>
-                                                    </md-checkbox>
-                                                </div>
-                                            </div>
 
-                                            <div class="row">
-                                                <div class="col-md-1"></div>
-                                                <div class="col-md-11" ng-controller="TasteCtrl">
-                                                    <md-checkbox ng-model="data.cb3" aria-label="">
-                                                        Spicy<span ng-if="data.cb3"></span>
-                                                    </md-checkbox>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-1"></div>
-                                                <div class="col-md-11" ng-controller="TasteCtrl">
-                                                    <md-checkbox ng-model="data.cb4" aria-label="">
-                                                        Bitter<span ng-if="data.cb4"></span>
-                                                    </md-checkbox>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-1"></div>
-                                                <div class="col-md-11" ng-controller="TasteCtrl">
-                                                    <md-checkbox ng-model="data.cb5" aria-label="">
-                                                        Salty<span ng-if="data.cb5"></span>
-                                                    </md-checkbox>
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-md-11" ng-controller="TasteCtrl">
+                                                <md-checkbox ng-model="data.cb5" aria-label="">
+                                                    Salty<span ng-if="data.cb5"></span>
+                                                </md-checkbox>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
 
-                                </fieldset>
+                            </fieldset>
 
-                            </div>
                         </div>
                     </div>
-                    <!--End right side column-->
                 </div>
-                <div class="row">
-                    <div class="col-md-7"></div>
-                    <div class="col-md-5">
-                        <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
-                            <md-content class="btn_group_bg">
-                                <md-button class="md-raised">Save</md-button>
-                                <md-button class="md-raised">Cancel</md-button>
-                            </md-content>
-                        </div>
-                    </div>
-
-
-                </div>
-            </form>
+                <!--End right side column-->
         </div>
+        <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
+                    <md-content class="btn_group_bg">
+                        <md-button class="md-raised">Save</md-button>
+                    </md-content>
+                </div>
+            </div>
 
 
-        <!-- /.container -->
+        </div>
+        </form>
+    </div>
+
+
+    <!-- /.container -->
     </div>
 </section>
 <!-- /.Full Menu List -->

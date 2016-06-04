@@ -36,15 +36,6 @@ app2.controller('Chk1Ctrl', function ($scope) {
     $scope.data.extra = "";
 })
 
-app2.controller('Chk2Ctrl', function ($scope) {
-    $scope.data2 = {};
-    $scope.data2.cb1 = false;
-    $scope.data2.cb2 = false;
-    $scope.data2.cb3 = false;
-    $scope.data2.extra = "";
-})
-
-
 app2.controller('Chk3Ctrl', function ($scope) {
 
     $scope.data = {};
@@ -56,7 +47,36 @@ app2.controller('Chk3Ctrl', function ($scope) {
 
 })
 
+app2.controller('PassCtrl', ['$scope', function ($scope) {
 
+    // Set the default value of inputType
+    $scope.inputType = 'password';
+
+    // Hide & show password function
+    $scope.hideShowPassword = function () {
+        if ($scope.inputType == 'password')
+            $scope.inputType = 'text';
+        else
+            $scope.inputType = 'password';
+    };
+
+
+
+}]);
+
+app2.controller('DemoCtrl', function ($scope) {
+    $scope.user = {
+        email: '',
+        address: '',
+        city: '',
+        postalCode: ''
+    };
+
+    $scope.titles = ('Mr. ' +
+    'Mrs. Miss ').split(' ').map(function (title) {
+        return {abbrev: title};
+    });
+});
 
 
 app2.controller('TasteCtrl', function ($scope) {
@@ -83,7 +103,7 @@ app2.controller('AddNutriCtrl', function ($scope) {
 
 })
 
-app2.controller('SelectOptGroupCtrl', function($scope) {
+app2.controller('SelectOptGroupCtrl', function ($scope) {
     $scope.nutritions = [{
         category: 'vitamin',
         name: 'Vitamin A'
@@ -105,7 +125,7 @@ app2.controller('SelectOptGroupCtrl', function($scope) {
     }, {
         category: 'others',
         name: 'Sodium'
-    } ];
+    }];
     $scope.selectedNutrition = [];
     $scope.printSelectedNutritions = function printSelectedNutritions() {
         var numberOfNutritions = this.selectedNutrition.length;
@@ -125,7 +145,38 @@ app2.controller('SelectOptGroupCtrl', function($scope) {
     };
 });
 
+app2.controller('SelectHealthConCtrl', function ($scope) {
+    $scope.healthcons = [{
+        category: 'commoncon',
+        name: 'High Blood Pressure'
+    }, {
+        category: 'commoncon',
+        name: 'Diabetes'
+    }, {
+        category: 'commoncon',
+        name: 'Anemia'
+    }, {
+        category: 'commoncon',
+        name: 'High Cholesterol'
+    }];
+    $scope.selectedHealthCon = [];
+    $scope.printSelectedHealthCons = function printSelectedHealthCons() {
+        var numberOfHealthCons = this.selectedHealthCon.length;
 
+        // If there is more than one topping, we add an 'and'
+        // to be gramatically correct. If there are 3+ toppings
+        // we also add an oxford comma.
+        if (numberOfHealthCons > 1) {
+            var needsOxfordComma = numberOfHealthCons > 2;
+            var lastHealthConConjunction = (needsOxfordComma ? ',' : '') + ' and ';
+            var lastHealthCon = lastHealthConConjunction +
+                this.selectedHealthCon[this.selectedHealthCon.length - 1];
+            return this.selectedHealthCon.slice(0, -1).join(', ') + lastHealthCon;
+        }
+
+        return this.selectedHealthCon.join('');
+    };
+});
 
 app2.controller('BtnCtrl', function ($scope) {
     $scope.title1 = 'Button';
@@ -141,12 +192,12 @@ app2.config(function ($interpolateProvider) {
     $interpolateProvider.endSymbol('}]}');
 })
 
-.config(function ($mdThemingProvider) {
-    // Configure a dark theme with primary foreground yellow
-    $mdThemingProvider.theme('docs-dark', 'default')
-        .primaryPalette('yellow')
-        .dark();
-});
+    .config(function ($mdThemingProvider) {
+        // Configure a dark theme with primary foreground yellow
+        $mdThemingProvider.theme('docs-dark', 'default')
+            .primaryPalette('yellow')
+            .dark();
+    });
 
 var app3 = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap']);
 app3.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
