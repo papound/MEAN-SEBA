@@ -286,6 +286,50 @@
         }
 
         /*Test Chips*/
+
+        /*Drag n' Drop*/
+        .bin {
+            min-height: 5px;
+            min-width: 140px;
+            max-height: 250px;
+            float: left;
+            border: 2px solid #d9edf7;
+            padding: 10px;
+            color: #31708f;
+            font-size:15px;
+            text-align: center;
+            margin: 0 5px;
+        }
+
+        .bin_inside {
+            min-height: 50px;
+            min-width: 100px;
+            padding-left:7px;
+            float: right;
+            color: #31708f;
+            max-width: 125px;
+        }
+
+        .tasteItem {
+            font-size: 15px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid slategray;
+            margin-top: 2px;
+            padding-top: 2px;
+            min-height: 30px;
+            min-width: 60px;
+            max-height: 30px;
+            max-width: 60px;
+            background:aliceblue;
+            transition: all 0.2s ease;
+        }
+
+        .drag {
+            opacity: 0.5;
+        }
+
+
     </style>
 
 </head>
@@ -793,40 +837,66 @@
 
 
                                     <div class="row">
-                                        <div class="col-md-5" ng-controller="TasteCtrl">
-                                            <label>Taste preference:</label>
+                                        <!--<div class="col-md-5" ng-controller="TasteCtrl">-->
+                                            <label>Taste preference:</label><br><br>
 
-                                            <div class="row">
-                                                <div class="col-md-11">
-                                                    <md-checkbox ng-model="data.sweet" aria-label="">
-                                                        Sweet<span ng-if="data.sweet"></span>
-                                                    </md-checkbox>
-                                                    <md-checkbox ng-model="data.sour" aria-label="">
-                                                        Sour<span ng-if="data.sour"></span>
-                                                    </md-checkbox>
+                                            <!--<div class="row">-->
+                                                <!--<div class="col-md-11">-->
+                                                    <!--<md-checkbox ng-model="data.sweet" aria-label="">-->
+                                                        <!--Sweet<span ng-if="data.sweet"></span>-->
+                                                    <!--</md-checkbox>-->
+                                                    <!--<md-checkbox ng-model="data.sour" aria-label="">-->
+                                                        <!--Sour<span ng-if="data.sour"></span>-->
+                                                    <!--</md-checkbox>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+
+
+                                            <!--<div class="row">-->
+                                                <!--<div class="col-md-11">-->
+                                                    <!--<md-checkbox ng-model="data.spicy" aria-label="">-->
+                                                        <!--Spicy<span ng-if="data.spicy"></span>-->
+                                                    <!--</md-checkbox>-->
+                                                    <!--<md-checkbox ng-model="data.bitter" aria-label="">-->
+                                                        <!--Bitter<span ng-if="data.bitter"></span>-->
+                                                    <!--</md-checkbox>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+
+
+                                            <!--<div class="row">-->
+                                                <!--<div class="col-md-11">-->
+                                                    <!--<md-checkbox ng-model="data.salty" aria-label="">-->
+                                                        <!--Salty<span ng-if="data.salty"></span>-->
+                                                    <!--</md-checkbox>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--Test drag&drop-->
+                                        <div ng-controller="DragDropCtrl">
+
+                                            <div class="bin" ng-repeat="bin in ['Prefering']" bin="bin" id="bin{[{ bin }]}">{[{ bin }]}
+                                                <br>
+                                                <div class="bin_inside" droppable drop="handleDrop" bin="bin" id="bin{[{ bin }]}"></div>
+                                            </div>
+
+                                            <div class="bin" ng-repeat="bin in ['so so']" bin="bin" id="bin{[{ bin }]}">{[{ bin }]}
+                                                <br>
+                                                <div class="bin_inside" droppable drop="handleDrop" bin="bin" id="bin{[{ bin }]}">
+                                                    <div class="tasteItem" id="tasteItem{[{ tasteItem }]}"
+                                                         ng-repeat="tasteItem in ['salty', 'sour','sweet','spicy','bitter']" draggable
+                                                         item="tasteItem">
+                                                        {[{ tasteItem }]}
+                                                    </div>
                                                 </div>
                                             </div>
 
-
-                                            <div class="row">
-                                                <div class="col-md-11">
-                                                    <md-checkbox ng-model="data.spicy" aria-label="">
-                                                        Spicy<span ng-if="data.spicy"></span>
-                                                    </md-checkbox>
-                                                    <md-checkbox ng-model="data.bitter" aria-label="">
-                                                        Bitter<span ng-if="data.bitter"></span>
-                                                    </md-checkbox>
-                                                </div>
+                                            <div class="bin" ng-repeat="bin in ['Not prefering']" bin="bin" id="bin{{ bin }}">{[{ bin }]}
+                                                <br>
+                                                <div class="bin_inside" droppable drop="handleDrop" bin="bin" id="bin{[{ bin }]}"></div>
                                             </div>
 
 
-                                            <div class="row">
-                                                <div class="col-md-11">
-                                                    <md-checkbox ng-model="data.salty" aria-label="">
-                                                        Salty<span ng-if="data.salty"></span>
-                                                    </md-checkbox>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -866,7 +936,7 @@
                         </md-content>
                     </div>
                 </div>
-                <!--Test Chips-->
+
             </form>
         </div>
 

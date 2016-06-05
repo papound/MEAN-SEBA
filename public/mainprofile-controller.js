@@ -29,13 +29,119 @@ app2.factory('getUserData', ['$http', function ($http) {
         });
 }]);
 
+//test drag&drop
+(function () {
+
+    app2.directive('draggable', function () {
+        return function (scope, element) {
+            // this gives us the native JS object
+            var el = element[0];
+
+            el.draggable = true;
+
+            el.addEventListener(
+                'dragstart',
+                function (e) {
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('Text', this.id);
+                    this.classList.add('drag');
+                    return false;
+                },
+                false
+            );
+
+            el.addEventListener(
+                'dragend',
+                function (e) {
+                    this.classList.remove('drag');
+                    return false;
+                },
+                false
+            );
+        }
+    });
+
+    app2.directive('droppable', function () {
+        return {
+            scope: {
+                drop: '&',
+                bin: '='
+            },
+            link: function (scope, element) {
+                // again we need the native object
+                var el = element[0];
+
+                el.addEventListener(
+                    'dragover',
+                    function (e) {
+                        e.dataTransfer.dropEffect = 'move';
+                        // allows us to drop
+                        if (e.preventDefault) e.preventDefault();
+                        this.classList.add('over');
+                        return false;
+                    },
+                    false
+                );
+
+                el.addEventListener(
+                    'dragenter',
+                    function (e) {
+                        this.classList.add('over');
+                        return false;
+                    },
+                    false
+                );
+
+                el.addEventListener(
+                    'dragleave',
+                    function (e) {
+                        this.classList.remove('over');
+                        return false;
+                    },
+                    false
+                );
+
+                el.addEventListener(
+                    'drop',
+                    function (e) {
+                        // Stops some browsers from redirecting.
+                        if (e.stopPropagation) e.stopPropagation();
+
+                        this.classList.remove('over');
+
+                        var binId = this.id;
+                        var item = document.getElementById(e.dataTransfer.getData('Text'));
+                        this.appendChild(item);
+                        // call the passed drop function
+                        scope.$apply(function (scope) {
+                            var fn = scope.drop();
+                            if ('undefined' !== typeof fn) {
+                                fn(item.id, binId);
+                            }
+                        });
+
+                        return false;
+                    },
+                    false
+                );
+            }
+        }
+    });
+
+    app2.controller('DragDropCtrl', function ($scope) {
+
+    });
+
+})();
+//end test drag&drop
+
 //Test Chips
 (function () {
     'use strict';
 
     app2.controller('ContactChipDemoCtrl', DemoCtrl);
 
-    function DemoCtrl ($q, $timeout) {
+    function DemoCtrl($q, $timeout) {
         var self = this;
         var pendingSearch, cancelSearch = angular.noop;
         var cachedQuery, lastSearch;
@@ -51,7 +157,7 @@ app2.factory('getUserData', ['$http', function ($http) {
         /**
          * Search for contacts; use a random delay to simulate a remote call
          */
-        function querySearch (criteria) {
+        function querySearch(criteria) {
             cachedQuery = cachedQuery || criteria;
             return cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];
         }
@@ -62,15 +168,15 @@ app2.factory('getUserData', ['$http', function ($http) {
          */
         function delayedQuerySearch(criteria) {
             cachedQuery = criteria;
-            if ( !pendingSearch || !debounceSearch() )  {
+            if (!pendingSearch || !debounceSearch()) {
                 cancelSearch();
 
-                return pendingSearch = $q(function(resolve, reject) {
+                return pendingSearch = $q(function (resolve, reject) {
                     // Simulate async search... (after debouncing)
                     cancelSearch = reject;
-                    $timeout(function() {
+                    $timeout(function () {
 
-                        resolve( self.querySearch() );
+                        resolve(self.querySearch());
 
                         refreshDebounce();
                     }, Math.random() * 500, true)
@@ -103,7 +209,8 @@ app2.factory('getUserData', ['$http', function ($http) {
             var lowercaseQuery = angular.lowercase(query);
 
             return function filterFn(contact) {
-                return (contact._lowername.indexOf(lowercaseQuery) != -1);;
+                return (contact._lowername.indexOf(lowercaseQuery) != -1);
+                ;
             };
 
         }
@@ -151,49 +258,49 @@ app2.controller('SelectNotPrefCtrl', function ($scope) {
     }, {
         category: 'dairyprod',
         name: 'Milk'
-    },{
+    }, {
         category: 'dairyprod',
         name: 'Custard'
-    },{
+    }, {
         category: 'dairyprod',
         name: 'Magarine'
-    },{
+    }, {
         category: 'dairyprod',
         name: 'Cream'
-    },{
+    }, {
         category: 'dairyprod',
         name: 'Ice cream'
-    },{
+    }, {
         category: 'dairyprod',
         name: 'Egg'
-    },{
+    }, {
         category: 'seafood',
         name: 'Shrimp'
-    },{
+    }, {
         category: 'seafood',
         name: 'Crab'
-    },{
+    }, {
         category: 'seafood',
         name: 'Lobster'
-    },{
+    }, {
         category: 'seafood',
         name: 'Fish'
-    },{
+    }, {
         category: 'seafood',
         name: 'Oyster'
-    },{
+    }, {
         category: 'seafood',
         name: 'Clam'
-    },{
+    }, {
         category: 'seafood',
         name: 'Squid'
-    },{
+    }, {
         category: 'seafood',
         name: 'Shrimp'
-    },{
+    }, {
         category: 'seafood',
         name: 'Octopus'
-    },{
+    }, {
         category: 'seafood',
         name: 'Scallop'
     }];
@@ -327,9 +434,15 @@ app2.controller('Chk3Ctrl', function ($scope) {
 app2.controller('BtnCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
     getUserData.then(function (user) {
         $scope.name = user;
-        $scope.imageurl = user[0].imageurl;
+        if (localStorage.loginChefAtHomeimage) {
+            $scope.imageurl = localStorage.loginChefAtHomeimage;
+        } else {
+            $scope.imageurl = user[0].imageurl;
+        }
+        //$scope.imageurl = user[0].imageurl;
         //console.log(user[0].imageurl)
     });
+
     $scope.title1 = 'Button';
     $scope.title4 = 'Warn';
     $scope.isDisabled = true;
@@ -399,7 +512,7 @@ app2.controller('AddNutriCtrl', function ($scope) {
 
 })
 
-app2.controller('DemoCtrl', ['$scope', 'getUserData',  function ($scope, getUserData) {
+app2.controller('DemoCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
 
     $scope.user = {
         email: '',
@@ -424,7 +537,7 @@ app2.controller('DemoCtrl', ['$scope', 'getUserData',  function ($scope, getUser
     });
 }]);
 
-app2.controller('PassCtrl', ['$scope', 'getUserData',  function ($scope, getUserData) {
+app2.controller('PassCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
     getUserData.then(function (user) {
         $scope.name = user;
         $scope.user.password = user[0].password;
@@ -440,7 +553,6 @@ app2.controller('PassCtrl', ['$scope', 'getUserData',  function ($scope, getUser
         else
             $scope.inputType = 'password';
     };
-
 
 
 }]);
@@ -503,12 +615,12 @@ var app3 = angular.module('rzSliderDemo', ['rzModule']);
 
 //test render slider
 /*app3.controller('MainCtrl', function ($scope, $timeout) {
-    $scope.broadcast = function() {
-        $timeout(function() {
-            $scope.$broadcast('reCalcViewDimensions');
-        });
-    }
-})*/
+ $scope.broadcast = function() {
+ $timeout(function() {
+ $scope.$broadcast('reCalcViewDimensions');
+ });
+ }
+ })*/
 
 app3.controller('MainCtrl', ['$scope', 'getUserData', function ($scope, getUserData, $rootScope, $timeout, $modal) {
 
@@ -519,10 +631,10 @@ app3.controller('MainCtrl', ['$scope', 'getUserData', function ($scope, getUserD
     //     });
     // }
     /*$scope.broadcast= function() {
-        $timeout(function() {
-            $scope.$broadcast('reCalcViewDimensions');
-        });
-    }*/
+     $timeout(function() {
+     $scope.$broadcast('reCalcViewDimensions');
+     });
+     }*/
 
     // modalInstance.rendered.then(function (event, args) {
     //     $timeout(function() {
