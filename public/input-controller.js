@@ -59,9 +59,6 @@ app2.controller('PassCtrl', ['$scope', function ($scope) {
         else
             $scope.inputType = 'password';
     };
-
-
-
 }]);
 
 app2.controller('DemoCtrl', function ($scope) {
@@ -271,3 +268,6 @@ angular.element(document).ready(function () {
     var myDiv1 = document.getElementById("all_modules");
     angular.bootstrap(myDiv1, ["inputBasicDemo", "rzSliderDemo"]);
 });
+
+
+/*Credit Card*/

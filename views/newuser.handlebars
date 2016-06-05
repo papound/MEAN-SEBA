@@ -472,16 +472,83 @@
                                         </div>
                                         <br>
 
+                                        <!--Telephone-->
+                                        <md-input-container md-no-float="" class="md-block">
+                                            <label>Phone Number</label>
+                                            <input ng-model="user.phone" type="text" required>
+                                        </md-input-container>
+
+                                        <!--E-mail-->
+                                        <md-input-container>
+                                            <label>Email</label>
+                                            <input ng-model="user.email" type="email" required>
+                                        </md-input-container>
+
+                                        <!--Password-->
+                                        <div layout-gt-xs="row" ng-controller="PassCtrl">
+                                            <md-input-container>
+                                                <label>Password</label>
+                                                <input type="{[{inputType}]}" required/>
+                                                <!-- ng-minlength="8"
+                                                       ng-maxlength="20"
+                                                       ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required-->
+                                                <!--
+                                                <div ng-messages="profileform.weight.$error" multiple md-auto-hide="false">
+                                                    <div ng-message="required">
+                                                        Password
+                                                        is
+                                                        required
+                                                    </div>
+                                                    <div ng-message="pattern">
+                                                        Passwords
+                                                        must
+                                                        be
+                                                        between
+                                                        8
+                                                        and
+                                                        20
+                                                        characters.
+                                                    </div>
+                                                    <div ng-message="min">
+                                                        Must
+                                                        contain
+                                                        one
+                                                        lower & uppercase
+                                                        letter, and
+                                                        one
+                                                        non - alpha
+                                                        character(a
+                                                        number
+                                                        or
+                                                        a
+                                                        symbol.
+                                                        )
+                                                    </div>
+                                                    <div ng-message="max">
+                                                        Too
+                                                        many
+                                                        characters
+                                                    </div>
+                                                    -->
+                                            </md-input-container>
+                                            <div>
+                                                <md-checkbox id="checkbox" ng-model="passwordCheckbox"
+                                                             ng-click="hideShowPassword()"/>
+                                                <p for=" checkbox" ng-if="passwordCheckbox">Hide password</p>
+                                                <p for="checkbox" ng-if="!passwordCheckbox">Show password</p>
+                                                </md-checkbox>
+                                            </div>
+                                        </div>
+
+                                        <!--Confirm password-->
                                         <div layout-gt-xs="row">
                                             <md-input-container>
-                                                <label>Email</label>
-                                                <!--<md-icon md-svg-src="img/icons/ic_email_24px.svg"
-                                                         class="email"></md-icon>-->
-                                                <input ng-model="user.email" type="email">
+                                                <label>Confirm password</label>
+                                                <input type="{[{inputType}]}"/>
                                             </md-input-container>
                                         </div>
 
-
+                                        <!--Address-->
                                         <md-input-container class="md-block">
                                             <label>Address</label>
                                             <input ng-model="user.address">
@@ -499,14 +566,29 @@
 
                                             <md-input-container class="md-block" flex-gt-sm="">
                                                 <label>Postal Code</label>
-                                                <input name="postalCode" ng-model="user.postalCode" placeholder="12345" required="" ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                                                <input name="postalCode" ng-model="user.postalCode" placeholder="12345"
+                                                       required="" ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
 
                                                 <div ng-messages="userForm.postalCode.$error" role="alert" multiple="">
-                                                    <div ng-message="required" class="my-message">You must supply a postal code.</div>
-                                                    <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
+                                                    <div ng-message="required" class="my-message">You
+                                                    must
+                                                    supply
+                                                    a
+                                                    postal
+                                                    code.</div>
+                                                    <div ng-message="pattern" class="my-message">That
+                                                    doesn
+                                                    't look like a valid postal code.
                                                     </div>
                                                     <div ng-message="md-maxlength" class="my-message">
-                                                        Don't use the long version silly...we don't need to be that specific...
+                                                        Don
+                                                        't use the long version silly...we don'
+                                                        t
+                                                        need
+                                                        to
+                                                        be
+                                                        that
+                                                        specific...
                                                     </div>
                                                 </div>
                                             </md-input-container>

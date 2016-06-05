@@ -32,6 +32,7 @@ app2.controller('DemoCtrl', function($scope) {
         title: '',
         firstName: '',
         familyName: '',
+        phone: '',
         email: '',
         address: '',
         city: '',
@@ -44,7 +45,19 @@ app2.controller('DemoCtrl', function($scope) {
     });
 });
 
+app2.controller('PassCtrl', ['$scope', function ($scope) {
 
+    // Set the default value of inputType
+    $scope.inputType = 'password';
+
+    // Hide & show password function
+    $scope.hideShowPassword = function () {
+        if ($scope.inputType == 'password')
+            $scope.inputType = 'text';
+        else
+            $scope.inputType = 'password';
+    };
+}]);
 
 app2.controller('BtnCtrl', function ($scope) {
     $scope.title1 = 'Button';
