@@ -14,7 +14,8 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/seba-webapp');
 var db = mongoose.connection;
 
-var routes = require('./routes/index');
+// var routes = require('./routes/index');
+
 
 //https://www.youtube.com/watch?v=Z1ktxiqyiLA
 
@@ -22,6 +23,8 @@ var routes = require('./routes/index');
 var app = express();
 app.use(cors());
 app.use(bodyParser());
+
+var routes = require('./routes/index')(app, passport);
 
 db.on('error', console.error);
 db.once('open', function () {
@@ -47,13 +50,42 @@ app.get("/list/database", function(req, res) {
 
 app.get("/list/user", function(req, res) {
     // Locate all the entries using find
-    db_model.find( function(err, results) {
+    //var req_email = req.body.email;
+    user_model.find( function(err, results) {
         //Getting Results
         res.send(results);
         // Close the db
         //db.close();
     });
 })
+
+app.post("/add", function (req, res) {
+    var taste = db.collection('taste');
+    var req_name = req.body.name;
+    taste.insert({ name: req_name }, function (err, result) {
+        res.send(result);
+        console.log("Success");
+    })
+})
+
+// app.get("/main-profile", function(req, res) {
+//     // Locate all the entries using find
+//     //var req_email = req.body.email;
+//     res.render('mainprofile.ejs', {email: req.body.email});
+// })
+
+app.post("/list/user", function(req, res) {
+    // Locate all the entries using find
+    var req_email = req.body.email;
+    user_model.find({email: req_email}, function(err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+})
+
+
 
 // app.post("/list/database", function(req, res) {
 //     if(req.body.email) {
@@ -70,18 +102,10 @@ app.get("/list/user", function(req, res) {
 //     }
 // })
 
-/*app.post("/add/tastes", function (req, res) {
-    var taste = db.collection('Taste');
-    taste.insert({name: "Pound555"}, function (err, result) {
-        res.send(result);
-        console.log("Success");
-    })
-})*/
-
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-app.set('view engine', 'handlebars');
+//app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+app.set('view engine', 'ejs');
 
 // BodyParser Middleware
 app.use(bodyParser.json());
@@ -132,9 +156,10 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/', routes);
-app.use('/profile', routes);
-app.use('/main-profile', routes);
+// app.use('/', routes);
+// app.use('/profile', routes);
+// app.use('/main-profile', routes);
+
 
 // Set Port
 app.set('port', (process.env.PORT || 4000));

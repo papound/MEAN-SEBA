@@ -1,15 +1,21 @@
 var seba = angular.module("seba", []);
 
-seba.controller("AppCtrl", function ($http) {
+seba.controller("AppCtrl", function ($http, $scope) {
     var app = this;
     var url = "http://localhost:4000";
+
+    $scope.isEditing = false;
+    
+    $scope.editTask = document => {
+        $scope.isEditing = !$scope.isEditing;
+    }
 
     app.saveEntry = function (newEntry) {
 
         var textfield_test_var = document.getElementById("textfield_test");
         
         if(textfield_test_var != ""){
-            $http.post(url + "/add", {name:newEntry}).success( function () {
+            $http.post(url + "/add", {name: newEntry }).success( function () {
                 loadEntry();
                 textfield_test_var.value = "";
             })

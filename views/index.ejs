@@ -59,6 +59,10 @@
     <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons"-->
     <!--rel="stylesheet">-->
 
+    <!-- Google Login -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="850042957038-3l9423np2uqruaplafluttpmengct984.apps.googleusercontent.com">
+
     <!--Custom Style-->
     <style is="custom-style">
 
@@ -113,6 +117,12 @@
             right: 80px;
         }
 
+        .login_icon2 {
+            position: fixed;
+            top: inherit;
+            right: 145px;
+        }
+
         .login_col {
             margin-left: -100px;
         }
@@ -125,7 +135,7 @@
 
 </head>
 
-<body data-gr-c-s-loaded="true" onclick="clickHandler(event)">
+<body data-gr-c-s-loaded="true">
 
 <script>
     $(document).ready(function () {
@@ -177,9 +187,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <ul class="nav navbar-nav">
-                                <li><a href="#" class="menubar fixed-right" data-dialog="dialog">Login</a></li>
+                                <li><a href="#" class="menubar fixed-right" data-dialog="dialog" id="login" onclick="clickHandler(event)">Login</a></li>
                                 <li>
-                                    <a class="login_icon"><i class="material-icons">person</i></a>
+                                    <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
                                 </li>
                             </ul>
                         </div>
@@ -211,6 +221,7 @@
                             <paper-button raised class="grey">Clear</paper-button>
                         </div>
                     </div>
+                    <div id="my-signin2" data-onsuccess=""></div>
                     <br>
                     <a href="#">Not a member? Please Register Here!</a>
                     <br><br>
@@ -239,7 +250,7 @@
                         <li><a href="#menu">Menu</a></li>
                         <li><a href="#ingredient">Ingredient</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="#" data-dialog="dialog">Login</a></li>
+                        <li><a href="#" data-dialog="dialog" onclick="clickHandler(event)" id="login_collapse">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -1068,6 +1079,88 @@
     }
 
 </script>
+
+<!-- Google Fetch User data -->
+<script>
+    function onSignIn(googleUser, $http) {
+        var profile = googleUser.getBasicProfile();
+        //console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        var fullName = profile.getName();
+        var firstName = fullName.split(' ').slice(0, -1).join(' ');
+        var lastName = fullName.split(' ').slice(-1).join(' ');
+        var email = profile.getEmail();
+        var image = profile.getImageUrl();
+        $('a#login').text(firstName);
+        $('a#login').removeAttr("onclick");
+        $('a#login').removeAttr('href');
+        $('a#login_collapse').text("Welcome! "+firstName);
+        $('a#login_collapse').removeAttr("onclick");
+        $('a#login_collapse').removeAttr('href');
+        $('#login_icon').addClass('login_icon2').removeClass('login_icon');
+        var url = "http://localhost:4000/main-profile";
+        if(typeof(Storage) !== "undefined") {
+            //localStorage.visitProfile = 1;
+            if (localStorage.loginChefAtHomeEmail) {
+                if(localStorage.loginChefAtHomeEmail != email && localStorage.visitProfile >= 1){
+                    //login on this pc once but on different user
+                    localStorage.loginChefAtHomeEmail = email;
+                    localStorage.loginChefAtHomefullname = fullName;
+                    localStorage.loginChefAtHomefirstname = firstName;
+                    localStorage.loginChefAtHomelastname = lastName;
+                    localStorage.loginChefAtHomeimage = image;
+                }else{
+                    //detect same user
+                    console.log("Welcome Back! "+firstName)
+                    localStorage.loginChefAtHomeEmail = email;
+                    localStorage.loginChefAtHomefullname = fullName;
+                    localStorage.loginChefAtHomefirstname = firstName;
+                    localStorage.loginChefAtHomelastname = lastName;
+                    localStorage.loginChefAtHomeimage = image;
+                    $('a#login').attr('href', url);
+                }
+            } else {
+                //Never login on this pc before
+                localStorage.loginChefAtHomefullname = fullName;
+                localStorage.loginChefAtHomefirstname = firstName;
+                localStorage.loginChefAtHomelastname = lastName;
+                localStorage.loginChefAtHomeimage = image;
+                localStorage.visitProfile = 1;
+                window.location.href = "http://localhost:4000/main-profile";
+            }
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+            console.log("Localstorage Email: "+localStorage.loginChefAtHomeEmail);
+            console.log("Localstorage fullname: "+localStorage.loginChefAtHomefullname);
+            console.log("Localstorage firstname: "+localStorage.loginChefAtHomefirstname);
+            console.log("Localstorage lastname: "+localStorage.loginChefAtHomelastname);
+            console.log("Localstorage Email: "+localStorage.loginChefAtHomeEmail);
+            console.log("Localstorage Visit: "+localStorage.visitProfile);
+        } else {
+            console.log("Sorry, your browser does not support web storage...");
+        }
+    }
+
+    function renderButton() {
+        gapi.signin2.render('my-signin2', {
+            'scope': 'profile email',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSignIn,
+            'onfailure': onFailure
+        });
+    }
+
+    function onFailure(error) {
+        console.log(error);
+    }
+</script>
+
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
 
 </body>
 </html>

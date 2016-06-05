@@ -387,26 +387,10 @@
                     <!-- End left side column-->
 
                     <!--Main column-->
-                    <div class="col-md-4" >
+                    <div class="col-md-4">
                         <!-- Get name from log in-->
-                        <!--<div ng-controller="profileCtrl" ng-model="firstname">-->
-                            <!--<h3>name...<span>{[{ firstname }]}</span></h3>-->
-                        <!--</div>-->
-                        <div ng-controller="profileCtrl">
-                            <table class="table table-hover">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Actions</th>
-                                </tr>
-                                <tr ng-repeat="document in name">
-                                    <td><span>{{ document.name }}</span></td>
-                                    <td>
-                                        <button class="btn btn-success">Edit</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                        <h3>Name</h3>
+
                         <!--Age-->
                         <div class="row">
                             <div class="col-md-3">
@@ -825,7 +809,7 @@
 <link rel="stylesheet"
       href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
 <!--End Script Date Picker-->
-<script type="text/javascript" src="mainprofile-controller.js"></script>
+<script type="text/javascript" src="userprofile-controller.js"></script>
 <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
@@ -837,7 +821,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
 <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
 <link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
-<script type="text/javascript" src="mainprofile.js"></script>
 
 </body>
 </html>
