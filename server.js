@@ -3,55 +3,54 @@ var path = require("path");
 var cors = require("cors");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
-var exphbs = require("express-handlebars");
-var expressValidator = require("express-validator");
-var flash = require("connect-flash");
-var session = require("express-session");
 var passport = require('passport');
-var LocalStrategy = require("passport-local").Strategy
-var mongo = require("mongodb");
+var morgan = require('morgan');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/seba-webapp');
-var db = mongoose.connection;
+var jwt = require('jwt-simple');
+var config = require('./config/database');
+var User = require('./user');
+
+mongoose.connect(config.database);
 
 // var routes = require('./routes/index');
-
-
 //https://www.youtube.com/watch?v=Z1ktxiqyiLA
 
-//Init App
+ //Init App
 var app = express();
 app.use(cors());
 app.use(bodyParser());
 
-var routes = require('./routes/index')(app, passport);
+//For Authentication
+// Use body-parser to get POST requests for API use
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-db.on('error', console.error);
-db.once('open', function () {
-    // Create your schemas and models here.
-});
+// Log requests to console
+app.use(morgan('dev'));
+
+// pass passport for configuration
+require('./config/passport')(passport);
+
+var routes = require('./routes/index')(app);
 
 //var for index-8.html
 
 var db_model = mongoose.model('Nutrition', new mongoose.Schema({ name: String }),
     'taste');
-var user_model = mongoose.model('User', new mongoose.Schema({ firstname: String }),
-    'user');
+//var user_model = mongoose.model('User', new mongoose.Schema({ firstname: String }),'user');
 
 app.get("/list/database", function(req, res) {
     // Locate all the entries using find
     db_model.find( function(err, results) {
         //Getting Results
         res.send(results);
-        // Close the db
-        //db.close();
     });
 })
 
 app.get("/list/user", function(req, res) {
     // Locate all the entries using find
     //var req_email = req.body.email;
-    user_model.find( function(err, results) {
+    User.find( function(err, results) {
         //Getting Results
         res.send(results);
         // Close the db
@@ -68,16 +67,10 @@ app.post("/add", function (req, res) {
     })
 })
 
-// app.get("/main-profile", function(req, res) {
-//     // Locate all the entries using find
-//     //var req_email = req.body.email;
-//     res.render('mainprofile.ejs', {email: req.body.email});
-// })
-
 app.post("/list/user", function(req, res) {
     // Locate all the entries using find
     var req_email = req.body.email;
-    user_model.find({email: req_email}, function(err, results) {
+    User.find({email: req_email}, function(err, results) {
         //Getting Results
         res.send(results);
         // Close the db
@@ -85,80 +78,41 @@ app.post("/list/user", function(req, res) {
     });
 })
 
-
-
-// app.post("/list/database", function(req, res) {
-//     if(req.body.email) {
-//         var email = req.body.email;
-//         // Locate all the entries using find
-//         user_model.find( { email: email}, function (err, results) {
-//             //Getting Results
-//             res.send(results);
-//             // Close the db
-//             db.close();
-//         });
-//     }else{
-//         console.log("Can't get email!!!");
-//     }
-// })
-
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
 //app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
 app.set('view engine', 'ejs');
 
-// BodyParser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
-
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Express Session
-app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
-}));
+// bundle our routes
+var apiRoutes = express.Router();
 
-// Passport init
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Express Validator
-app.use(expressValidator({
-    errorFormatter: function (param, msg, value) {
-        var namespace = param.split('.')
-            , root = namespace.shift()
-            , formParam = root;
-
-        while (namespace.length) {
-            formParam += '[' + namespace.shift() + ']';
-        }
-        return {
-            param: formParam,
-            msg: msg,
-            value: value
-        };
+// create a new user account (POST http://localhost:8080/api/signup)
+apiRoutes.post('/signup', function(req, res) {
+    if (!req.body.username || !req.body.password) {
+        res.json({success: false, msg: 'Please pass name and password.'});
+    } else {
+        // console.log(req.body.username)
+        // console.log(req.body.password)
+        var newUser = new User({
+            username: req.body.username,
+            password: req.body.password
+        });
+        // save the user
+        newUser.save(function(err) {
+            if (err) {
+                console.log(err)
+                return res.json({success: false, msg: 'Username already exists.'});
+            }
+            res.json({success: true, msg: 'Successful created new user.'});
+        });
     }
-}));
-
-// Connect Flash
-app.use(flash());
-
-// Global Vars
-app.use(function (req, res, next) {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
 });
 
-// app.use('/', routes);
-// app.use('/profile', routes);
-// app.use('/main-profile', routes);
+// connect the api routes under /api/*
+app.use('/api', apiRoutes);
 
 
 // Set Port

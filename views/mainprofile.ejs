@@ -69,6 +69,11 @@
     <!-- Angular Material Library -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
+    <!--Credit Card-->
+    <!--<link href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.13.0/css/semantic.css" rel="stylesheet" type="text/css">-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+    <link href="creditcard/demo_css/style.css" rel="stylesheet" type="text/css">
+    <script src="creditcard/angular_card_input.js"></script>
 
     <!--Additional CSS-->
     <!--<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.0-rc.5/docs.css">-->
@@ -87,6 +92,13 @@
         section > paper-button:hover {
             background-color: var(--paper-light-blue-200);
             padding: 5px;
+        }
+
+        section#tryborder {
+            background: #fff;
+            box-shadow: 2px 2px 0 1px rgba(0, 0, 0, .1);
+            margin: 3em auto;
+            padding: 2em;
         }
 
         paper-dialog.colored {
@@ -205,6 +217,10 @@
             background-color: transparent !important;
         }
 
+        .btn_group_save {
+            background-color: transparent !important;
+        }
+
         /**Profile pic*/
         /*.upload-button {*/
         /*!*padding: 4px;*!*/
@@ -285,18 +301,27 @@
             overflow: hidden;
         }
 
+        #menu-header {
+            padding-top: 70px !important;
+        }
+
+        #menu-list {
+            padding-top: 50px !important;
+        }
+
         /*Test Chips*/
 
         /*Drag n' Drop*/
         .bin {
             min-height: 5px;
-            min-width: 140px;
+            /*min-width: 140px;*/
+            max-width: 120px;
             max-height: 250px;
             float: left;
             border: 2px solid #d9edf7;
             padding: 10px;
             color: #31708f;
-            font-size:15px;
+            font-size: 15px;
             text-align: center;
             margin: 0 5px;
         }
@@ -304,7 +329,7 @@
         .bin_inside {
             min-height: 50px;
             min-width: 100px;
-            padding-left:7px;
+            padding-left: 7px;
             float: right;
             color: #31708f;
             max-width: 125px;
@@ -321,7 +346,7 @@
             min-width: 60px;
             max-height: 30px;
             max-width: 60px;
-            background:aliceblue;
+            background: aliceblue;
             transition: all 0.2s ease;
         }
 
@@ -329,12 +354,17 @@
             opacity: 0.5;
         }
 
+        .login_icon2 {
+            position: fixed;
+            top: inherit;
+            right: 145px;
+        }
 
     </style>
 
 </head>
 
-<body data-gr-c-s-loaded="true" onclick="clickHandler(event)">
+<body data-gr-c-s-loaded="true">
 
 <script>
     $(document).ready(function () {
@@ -354,6 +384,15 @@
         $(".upload-button").on('click', function () {
             $(".file-upload").click();
         });
+
+        if (localStorage.loginChefAtHomeEmail) {
+            $('a#login').text(localStorage.loginChefAtHomefirstname);
+            $('a#login_collapse').text("Welcome! " + localStorage.loginChefAtHomefirstname);
+            $('#login_icon').addClass('login_icon2').removeClass('login_icon');
+            setTimeout(checklogin(), 3000);
+        } else {
+            window.location.href = "http://localhost:4000/";
+        }
     });
 </script>
 
@@ -399,9 +438,10 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <ul class="nav navbar-nav">
-                                <li><a href="##" class="menubar fixed-right" data-dialog="dialog">Login</a></li>
+                                <li><a href="#" class="menubar fixed-right" data-dialog="dialog" id="login"
+                                       onclick="clickHandler(e)">Login</a></li>
                                 <li>
-                                    <a class="login_icon"><i class="material-icons">person</i></a>
+                                    <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
                                 </li>
                             </ul>
                         </div>
@@ -461,7 +501,8 @@
                         <li><a href="#menu">Menu</a></li>
                         <li><a href="#ingredient">Ingredient</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="#" data-dialog="dialog">Login</a></li>
+                        <li><a href="##" data-dialog="dialog" onclick="clickHandler(e)"
+                               id="login_collapse">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -479,10 +520,10 @@
         <!-- Title & Divider -->
         <div class="row">
             <div class="col-lg-12 text-center">
-                <p class="wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;"><img
-                            src="newTemplate/svg/chefathome_logo_white.svg" width="500"
-                            height="268" class="img-responsive center-block" alt="">
-                </p>
+                <!--<p class="wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;"><img-->
+                <!--src="newTemplate/svg/chefathome_logo_white.svg" width="500"-->
+                <!--height="268" class="img-responsive center-block" alt="">-->
+                <!--</p>-->
                 <!--
                 <h2 class="mrgn-50-top">Edit profile</h2>
                 <div class="mrgn-20-top-btm text-center"><img src="newTemplate/svg/divider-white.svg" alt=""></div>
@@ -505,6 +546,7 @@
                 <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
                      style="visibility: visible; animation-name: fadeIn;">
                     <h2>Profile</h2>
+                    <br><br>
                     <!--
                     <p class="lead-sm">Our menu is seasonal so you can enjoy the freshest ingredients from local farmers and
                         producers.
@@ -517,7 +559,7 @@
 
 
             <!-- Edit profile-->
-            <form action="" method="post" name="profileform">
+            <form action="" method="post" class="ui form animated fadeInUp" ng-model="newUser" name="profileform">
                 <div class="row">
 
                     <!-- Left side column-->
@@ -532,164 +574,257 @@
                             </md-content>
                         </div>
                         <input class="file-upload" type="file" accept="image/*"/>
+                        <br><br><br>
+                        <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
+                            <md-content class="btn_group_save">
+                                <md-button class="md-raised md-primary">Save</md-button>
+                            </md-content>
+                        </div>
+
+                        <!--<div class="row">
+
+                            <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
+                                <md-content class="btn_group_save">
+                                    <md-button class="md-raised md-primary">Save</md-button>
+                                </md-content>
+                            </div>
+
+
+                        </div>-->
                     </div>
+
+
                     <!-- End left side column-->
 
                     <!--Main column-->
                     <div class="col-md-4">
                         <!-- Get name from log in-->
                         <div ng-controller="DateCtrl">
-                            <div ng-repeat="user in name">
+                            <!--<div ng-repeat="user in name">
                                 <span><h3>{[{ user.firstname }]}
                                     {[{ user.lastname }]}
                                 </h3></span>
-                            </div>
+                            </div>-->
                         </div>
-
-                        <!--Age-->
-                        <div class="row">
-                            <div class="col-md-3">
-                                Birthday
-                            </div>
-                            <div ng-controller="DateCtrl" style='padding: 40px;' ng-cloak>
-                                <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div ng-controller="ErrCtrl">
-                                <!--Height-->
-                                <md-input-container class="md-block-5" flex-gt-sm>
-                                    <label>Height (in cm)</label>
-                                    <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required
-                                           ng-model="project.height" min="1" max="999">
+                        <section id="tryborder">
+                            <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                                 class="md-inline-form inputdemoBasicUsage">
+                                <!--name-->
+                                <!--<div layout-gt-xs="row">-->
+                                <md-input-container class="md-block">
+                                    <label>Firstname</label>
+                                    <input ng-model="user.firstname" required>
                                 </md-input-container>
-
-
-                                <!--Weight-->
-                                <md-input-container class="md-block-10" flex-gt-sm>
-                                    <label>Weight (in kg)</label>
-                                    <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
-                                           ng-model="project.weight" min="1" max="999">
+                                <md-input-container class="md-block">
+                                    <label>Lastname</label>
+                                    <input ng-model="user.lastname" required>
                                 </md-input-container>
-
                             </div>
-                        </div>
 
-                        <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
-                             class="md-inline-form inputdemoBasicUsage">
-                            <!--Email-->
-                            <!--<div layout-gt-xs="row">-->
-                            <md-input-container class="md-block">
-                                <label>Email</label>
-                                <input ng-model="user.email" required>
-                            </md-input-container>
-                            <!--</div>-->
-
-                            <!--Password-->
-                            <div layout-gt-xs="row" ng-controller="PassCtrl">
-                                <md-input-container>
-                                    <label>Password</label>
-                                    <input type="{[{inputType}]}" ng-model="user.password"/>
-
-                                </md-input-container>
-                                <div>
-                                    <md-checkbox id="checkbox" ng-model="passwordCheckbox"
-                                                 ng-click="hideShowPassword()"/>
-                                    <p for=" checkbox
-                                    " ng-if="passwordCheckbox">Hide password</p>
-                                    <p for="checkbox" ng-if="!passwordCheckbox">Show password</p>
-                                    </md-checkbox>
+                            <!--Age-->
+                            <div class="row">
+                                <div class="col-md-3" ng-controller="DateCtrl" ng-cloak>
+                                    Birthday
+                                    <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
                                 </div>
                             </div>
+                            <br>
+                            <div class="row" style="margin-left: 5px">
+                                <div ng-controller="ErrCtrl">
+                                    <!--Height-->
+                                    <md-input-container class="md-block-5" flex-gt-sm>
+                                        <label>Height</label>
+                                        <input name="height" type="number" ng-pattern="/^[0-9]{1,7}$/" required
+                                               ng-model="project.height" min="1" max="999" placeholder="in cm">
+                                    </md-input-container>
 
-                            <!--&lt;!&ndash;Confirm password&ndash;&gt;-->
-                            <!--<div layout-gt-xs="row">-->
-                            <!--<md-input-container>-->
-                            <!--<label>Confirm password</label>-->
-                            <!--<input type="password" ng-model=""/>-->
-                            <!--</md-input-container>-->
-                            <!--</div>-->
+                                    <!--Weight-->
+                                    <md-input-container class="md-block-10" flex-gt-sm>
+                                        <label>Weight</label>
+                                        <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
+                                               ng-model="project.weight" min="1" max="999" placeholder="in kg">
+                                    </md-input-container>
+
+                                </div>
+                            </div>
+                        </section>
+                        <section id="tryborder">
+                            <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                                 class="md-inline-form inputdemoBasicUsage">
+
+                                <!--Email-->
+                                <!--<div layout-gt-xs="row">-->
+                                <md-input-container class="md-block">
+                                    <label>Email</label>
+                                    <input ng-model="user.email" required>
+                                </md-input-container>
+                                <!--</div>-->
+
+                                <!--Password-->
+                                <div layout-gt-xs="row" ng-controller="PassCtrl">
+                                    <md-input-container>
+                                        <label>Password</label>
+                                        <input type="{[{inputType}]}" ng-model="user.password"/>
+
+                                    </md-input-container>
+                                    <div>
+                                        <md-checkbox id="checkbox" ng-model="passwordCheckbox"
+                                                     ng-click="hideShowPassword()"/>
+                                        <p for=" checkbox
+                                    " ng-if="passwordCheckbox">Hide password</p>
+                                        <p for="checkbox" ng-if="!passwordCheckbox">Show password</p>
+                                        </md-checkbox>
+                                    </div>
+                                </div>
+                                <!--</section>-->
+                                <!--Test Password-->
+                                <!--<div ng-controller="stageController">-->
+                                <!--<label>Set a password:</label>-->
+                                <!--<input type="password" id="pw1" name="pw1" ng-model="pw1" ng-required=""/>-->
+                                <!--<label>Confirm the password:</label>-->
+                                <!--<input type="password" id="pw2" name="pw2" ng-model="pw2" ng-required="" />-->
+                                <!--<div class="msg-block" ng-show="myForm.$error">-->
+                                <!--<span class="msg-error" ng-show="myForm.pw2.$error.pwmatch">-->
+                                <!--Passwords don't match.-->
+                                <!--</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--Test Password-->
 
 
-                            <!--Address-->
-                            <md-input-container class="md-block">
-                                <label>Address</label>
-                                <input ng-model="user.address">
-                            </md-input-container>
+                                <!--&lt;!&ndash;Confirm password&ndash;&gt;-->
+                                <!--<div layout-gt-xs="row">-->
+                                <!--<md-input-container>-->
+                                <!--<label>Confirm password</label>-->
+                                <!--<input type="password" ng-model=""/>-->
+                                <!--</md-input-container>-->
+                                <!--</div>-->
+                            </div>
+                        </section>
 
-                            <md-input-container md-no-float="" class="md-block">
-                                <input ng-model="user.address2" placeholder="Address 2">
-                            </md-input-container>
-
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm="">
-                                    <label>City</label>
-                                    <input ng-model="user.city">
+                        <section id="tryborder">
+                            <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                                 class="md-inline-form inputdemoBasicUsage">
+                                <!--Address-->
+                                <md-input-container class="md-block">
+                                    <label>Address</label>
+                                    <input ng-model="user.address">
                                 </md-input-container>
 
-                                <md-input-container class="md-block" flex-gt-sm="">
-                                    <label>Postal Code</label>
-                                    <input name="postalCode" ng-model="user.postalCode" placeholder="12345" required=""
-                                           ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                                <md-input-container md-no-float="" class="md-block">
+                                    <input ng-model="user.address2" placeholder="Address 2">
+                                </md-input-container>
 
-                                    <div ng-messages="profileform.postalCode.$error" multiple md-auto-hide="false">
-                                        <div ng-message="required">You
-                                            must
-                                            supply
-                                            a
-                                            postal
-                                            code.
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm="">
+                                        <label>City</label>
+                                        <input ng-model="user.city">
+                                    </md-input-container>
+
+                                    <md-input-container class="md-block" flex-gt-sm="">
+                                        <label>Postal Code</label>
+                                        <input name="postalCode" ng-model="user.postalCode" placeholder="12345"
+                                               required=""
+                                               ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+
+                                        <div ng-messages="profileform.postalCode.$error" multiple md-auto-hide="false">
+                                            <div ng-message="required">You
+                                                must
+                                                supply
+                                                a
+                                                postal
+                                                code.
+                                            </div>
+                                            <div ng-message="pattern">That
+                                                doesn
+                                                't look like a valid postal code.
+                                            </div>
+                                            <div ng-message="md-maxlength">
+                                                Don
+                                                't use the long version silly...we don'
+                                                t
+                                                need
+                                                to
+                                                be
+                                                that
+                                                specific...
+                                            </div>
                                         </div>
-                                        <div ng-message="pattern">That
-                                            doesn
-                                            't look like a valid postal code.
-                                        </div>
-                                        <div ng-message="md-maxlength">
-                                            Don
-                                            't use the long version silly...we don'
-                                            t
-                                            need
-                                            to
-                                            be
-                                            that
-                                            specific...
+                                    </md-input-container>
+                                </div>
+
+                            </div>
+                        </section>
+                        <section id="tryborder">
+                            <div class="row">
+                                <!--<style scoped>-->
+                                <!--@import "http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.13.0/css/semantic.css";-->
+                                <!--</style>-->
+                                <div class="ui fluid form" ng-controller="DemoCtrl">
+                                    <div class="field" ng-class="{error: mod10Error}">
+                                        <label>Credit Card</label>
+                                        <div class="ui right icon large input">
+                                            <input type="credit card" ng-model="user.cardNumber" ng-required
+                                                   style="font-size:1em" name="card"
+                                                   ng-blur="mod10Error = !!profileform.card.$error.mod10"
+                                                   ng-focus="mod10Error = false"/>
+                                            <i class="icon large icon-credit-card" style="margin-top:-10px"></i>
                                         </div>
                                     </div>
-                                </md-input-container>
+                                    <div class="field" ng-class="{error: lengthError}">
+                                        <label>CVC</label>
+                                        <div class="ui right icon large input">
+                                            <input type="cvc" ng-model="user.cvc" ng-required style="font-size:1em"
+                                                   name="code"
+                                                   ng-blur="lengthError = !!profileform.code.$error.minlength"
+                                                   ng-focus="lengthError = false"/>
+                                            <i class="icon large icon-cvc-code" style="margin-top:-10px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>Expiration</label>
+                                        <!--newUser.exp-->
+                                        <div class="ui right icon large input">
+                                            <input type="month" ng-model="user.validityDate" ng-required
+                                                   style="font-size:1em" name="exp"/>
+                                            <i class="icon large calendar" style="margin-top:-10px"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </section>
 
                         <!--Vegetarian-->
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-11">
-                                <div class="row">
-                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
-                                        <md-checkbox ng-model="data.cb1" aria-label="">
-                                            Vegetarian<span ng-if="data.cb1"></span>
-                                        </md-checkbox>
+                        <section id="tryborder">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    <div class="row">
+                                        <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                            <md-checkbox ng-model="data.cb1" aria-label="">
+                                                Vegetarian<span ng-if="data.cb1"></span>
+                                            </md-checkbox>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!--Halal-->
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-11">
-                                <div class="row">
-                                    <div class="col-md-8" ng-controller="Chk1Ctrl">
-                                        <md-checkbox ng-model="data.cb2" aria-label="">
-                                            Halal<span ng-if="data.cb2"></span>
-                                        </md-checkbox>
+
+                            <!--Halal-->
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    <div class="row">
+                                        <div class="col-md-8" ng-controller="Chk1Ctrl">
+                                            <md-checkbox ng-model="data.cb2" aria-label="">
+                                                Halal<span ng-if="data.cb2"></span>
+                                            </md-checkbox>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!--Not prefer-->
+                        </section>
+                        <!--&lt;!&ndash;Not prefer&ndash;&gt;
                         <div ng-controller="SelectNotPrefCtrl"
                              class="md-padding selectdemoOptionGroups"
                              ng-cloak="">
@@ -714,29 +849,33 @@
                                     </md-input-container>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <!--Health Condition-->
-                        <div ng-controller="SelectHealthConCtrl"
-                             class="md-padding selectdemoOptionGroups"
-                             ng-cloak="">
-                            <div>
-                                <div layout="row">
-                                    <md-input-container>
-                                        <label>Health Condition</label>
-                                        <md-select ng-model="selectedHealthCon" multiple="">
+                        <section id="tryborder">
+                            <div ng-controller="SelectHealthConCtrl"
+                                 class="md-padding selectdemoOptionGroups"
+                                 ng-cloak="">
+                                <div>
+                                    <label>Health Condition</label><br>
+                                    <div layout="row">
 
-                                            <md-optgroup label="Common condition">
-                                                <md-option ng-value="healthcon.name"
-                                                           ng-repeat="healthcon in healthcons | filter: {category: 'commoncon' }">
-                                                    {[{healthcon.name}]}
-                                                </md-option>
-                                            </md-optgroup>
-                                        </md-select>
-                                    </md-input-container>
+                                        <md-input-container>
+                                            <!--<label>Health Condition</label>-->
+                                            <md-select ng-model="selectedHealthCon" multiple="">
+
+                                                <md-optgroup label="Common condition">
+                                                    <md-option ng-value="healthcon.name"
+                                                               ng-repeat="healthcon in healthcons | filter: {category: 'commoncon' }">
+                                                        {[{healthcon.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
 
 
                     </div>
@@ -752,163 +891,202 @@
                                     <legend>Preferences
                                         <ng-model>
                                     </legend>
+                                    <section id="tryborder">
+                                        <label>Nutrition&nbsp;</label><span>(per dish)</span>
 
-                                    <label>Nutrition&nbsp;</label><span>(per dish)</span>
-                                    <div>
-                                        <article>
-                                            <p>Calories (calories) : </p>
-                                            <rzslider rz-slider-model="calories.minValue"
-                                                      rz-slider-high="calories.maxValue"
-                                                      rz-slider-options="calories.options"></rzslider>
-                                        </article>
-                                    </div>
-
-
-                                    <div>
                                         <div>
                                             <article>
-                                                <p>Proteins (grams): </p>
-                                                <rzslider rz-slider-model="proteins.minValue"
-                                                          rz-slider-high="proteins.maxValue"
-                                                          rz-slider-options="proteins.options"></rzslider>
+                                                <p>Calories (calories) : </p>
+                                                <rzslider rz-slider-model="calories.minValue"
+                                                          rz-slider-high="calories.maxValue"
+                                                          rz-slider-options="calories.options"></rzslider>
                                             </article>
                                         </div>
-                                    </div>
 
-                                    <div>
+
                                         <div>
-                                            <article>
-                                                <p>Carbohydrate (grams): </p>
-                                                <rzslider rz-slider-model="carb.minValue"
-                                                          rz-slider-high="carb.maxValue"
-                                                          rz-slider-options="carb.options"></rzslider>
-                                            </article>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div>
-                                            <article>
-                                                <p>Fats (grams): </p>
-                                                <rzslider rz-slider-model="fats.minValue"
-                                                          rz-slider-high="fats.maxValue"
-                                                          rz-slider-options="fats.options"></rzslider>
-                                            </article>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div>
-                                            <article>
-                                                <p>Cholesterol (milligrams): </p>
-                                                <rzslider rz-slider-model="cholesterols.minValue"
-                                                          rz-slider-high="cholesterols.maxValue"
-                                                          rz-slider-options="cholesterols.options"></rzslider>
-                                            </article>
-                                        </div>
-                                    </div>
-
-
-                                    <div ng-controller="SelectOptGroupCtrl"
-                                         class="md-padding selectdemoOptionGroups"
-                                         ng-cloak="">
-                                        <div>
-                                            <div layout="row">
-                                                <md-input-container>
-                                                    <label>Additional Nutrition</label>
-                                                    <md-select ng-model="selectedNutrition" multiple="">
-                                                        <md-optgroup label="Vitamin">
-                                                            <md-option ng-value="nutrition.name"
-                                                                       ng-repeat="nutrition in nutritions | filter: {category: 'vitamin' }">
-                                                                {[{nutrition.name}]}
-                                                            </md-option>
-                                                        </md-optgroup>
-                                                        <md-optgroup label="Others">
-                                                            <md-option ng-value="nutrition.name"
-                                                                       ng-repeat="nutrition in nutritions | filter: {category: 'others' }">
-                                                                {[{nutrition.name}]}
-                                                            </md-option>
-                                                        </md-optgroup>
-                                                    </md-select>
-                                                </md-input-container>
+                                            <div>
+                                                <article>
+                                                    <p>Proteins (grams): </p>
+                                                    <rzslider rz-slider-model="proteins.minValue"
+                                                              rz-slider-high="proteins.maxValue"
+                                                              rz-slider-options="proteins.options"></rzslider>
+                                                </article>
                                             </div>
                                         </div>
-                                    </div>
 
-
-                                    <div class="row">
-                                        <!--<div class="col-md-5" ng-controller="TasteCtrl">-->
-                                            <label>Taste preference:</label><br><br>
-
-                                            <!--<div class="row">-->
-                                                <!--<div class="col-md-11">-->
-                                                    <!--<md-checkbox ng-model="data.sweet" aria-label="">-->
-                                                        <!--Sweet<span ng-if="data.sweet"></span>-->
-                                                    <!--</md-checkbox>-->
-                                                    <!--<md-checkbox ng-model="data.sour" aria-label="">-->
-                                                        <!--Sour<span ng-if="data.sour"></span>-->
-                                                    <!--</md-checkbox>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-
-
-                                            <!--<div class="row">-->
-                                                <!--<div class="col-md-11">-->
-                                                    <!--<md-checkbox ng-model="data.spicy" aria-label="">-->
-                                                        <!--Spicy<span ng-if="data.spicy"></span>-->
-                                                    <!--</md-checkbox>-->
-                                                    <!--<md-checkbox ng-model="data.bitter" aria-label="">-->
-                                                        <!--Bitter<span ng-if="data.bitter"></span>-->
-                                                    <!--</md-checkbox>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-
-
-                                            <!--<div class="row">-->
-                                                <!--<div class="col-md-11">-->
-                                                    <!--<md-checkbox ng-model="data.salty" aria-label="">-->
-                                                        <!--Salty<span ng-if="data.salty"></span>-->
-                                                    <!--</md-checkbox>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--Test drag&drop-->
-                                        <div ng-controller="DragDropCtrl">
-
-                                            <div class="bin" ng-repeat="bin in ['Prefering']" bin="bin" id="bin{[{ bin }]}">{[{ bin }]}
-                                                <br>
-                                                <div class="bin_inside" droppable drop="handleDrop" bin="bin" id="bin{[{ bin }]}"></div>
+                                        <div>
+                                            <div>
+                                                <article>
+                                                    <p>Carbohydrate (grams): </p>
+                                                    <rzslider rz-slider-model="carb.minValue"
+                                                              rz-slider-high="carb.maxValue"
+                                                              rz-slider-options="carb.options"></rzslider>
+                                                </article>
                                             </div>
+                                        </div>
 
-                                            <div class="bin" ng-repeat="bin in ['so so']" bin="bin" id="bin{[{ bin }]}">{[{ bin }]}
-                                                <br>
-                                                <div class="bin_inside" droppable drop="handleDrop" bin="bin" id="bin{[{ bin }]}">
-                                                    <div class="tasteItem" id="tasteItem{[{ tasteItem }]}"
-                                                         ng-repeat="tasteItem in ['salty', 'sour','sweet','spicy','bitter']" draggable
-                                                         item="tasteItem">
-                                                        {[{ tasteItem }]}
+                                        <div>
+                                            <div>
+                                                <article>
+                                                    <p>Fats (grams): </p>
+                                                    <rzslider rz-slider-model="fats.minValue"
+                                                              rz-slider-high="fats.maxValue"
+                                                              rz-slider-options="fats.options"></rzslider>
+                                                </article>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div>
+                                                <article>
+                                                    <p>Cholesterol (milligrams): </p>
+                                                    <rzslider rz-slider-model="cholesterols.minValue"
+                                                              rz-slider-high="cholesterols.maxValue"
+                                                              rz-slider-options="cholesterols.options"></rzslider>
+                                                </article>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section id="tryborder">
+                                        <div ng-controller="SelectOptGroupCtrl"
+                                             class="md-padding selectdemoOptionGroups"
+                                             ng-cloak="">
+                                            <div>
+                                                <label>Choose more nutrition as you like!</label><br>
+                                                <div layout="row">
+
+                                                    <md-input-container>
+                                                        <!--<label>Additional Nutrition</label>-->
+                                                        <md-select ng-model="selectedNutrition" multiple="">
+                                                            <md-optgroup label="Vitamin">
+                                                                <md-option ng-value="nutrition.name"
+                                                                           ng-repeat="nutrition in nutritions | filter: {category: 'vitamin' }">
+                                                                    {[{nutrition.name}]}
+                                                                </md-option>
+                                                            </md-optgroup>
+                                                            <md-optgroup label="Others">
+                                                                <md-option ng-value="nutrition.name"
+                                                                           ng-repeat="nutrition in nutritions | filter: {category: 'others' }">
+                                                                    {[{nutrition.name}]}
+                                                                </md-option>
+                                                            </md-optgroup>
+                                                        </md-select>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section id="tryborder">
+                                        <div class="row">
+                                            <!--<div class="col-md-5" ng-controller="TasteCtrl">-->
+                                            <label>Taste</label><br><br>
+
+                                            <!--<div class="row">-->
+                                            <!--<div class="col-md-11">-->
+                                            <!--<md-checkbox ng-model="data.sweet" aria-label="">-->
+                                            <!--Sweet<span ng-if="data.sweet"></span>-->
+                                            <!--</md-checkbox>-->
+                                            <!--<md-checkbox ng-model="data.sour" aria-label="">-->
+                                            <!--Sour<span ng-if="data.sour"></span>-->
+                                            <!--</md-checkbox>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+
+
+                                            <!--<div class="row">-->
+                                            <!--<div class="col-md-11">-->
+                                            <!--<md-checkbox ng-model="data.spicy" aria-label="">-->
+                                            <!--Spicy<span ng-if="data.spicy"></span>-->
+                                            <!--</md-checkbox>-->
+                                            <!--<md-checkbox ng-model="data.bitter" aria-label="">-->
+                                            <!--Bitter<span ng-if="data.bitter"></span>-->
+                                            <!--</md-checkbox>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+
+
+                                            <!--<div class="row">-->
+                                            <!--<div class="col-md-11">-->
+                                            <!--<md-checkbox ng-model="data.salty" aria-label="">-->
+                                            <!--Salty<span ng-if="data.salty"></span>-->
+                                            <!--</md-checkbox>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--Test drag&drop-->
+                                            <div ng-controller="DragDropCtrl">
+
+                                                <div class="bin" ng-repeat="bin in ['Preferred']" bin="bin"
+                                                     id="{[{ bin }]}">{[{ bin }]}
+                                                    <br>
+                                                    <div class="bin_inside" droppable drop="handleDrop" bin="bin"
+                                                         id="{[{ bin }]}"></div>
+                                                </div>
+                                                <div class="bin" ng-repeat="bin in ['That is fine']" bin="bin"
+                                                     id="{[{ bin }]}">
+                                                    {[{ bin }]}
+                                                    <br>
+                                                    <div class="bin_inside" droppable drop="handleDrop" bin="bin"
+                                                         id="{[{ bin }]}">
+                                                        <div class="tasteItem" id="tasteItem{[{ tasteItem }]}"
+                                                             ng-repeat="tasteItem in ['salty', 'sour','sweet','spicy','bitter']"
+                                                             draggable
+                                                             item="tasteItem">
+                                                            {[{ tasteItem }]}
+                                                        </div>
                                                     </div>
+                                                </div>
+
+                                                <div class="bin" ng-repeat="bin in ['Not preferred']" bin="bin"
+                                                     id="{[{ bin }]}">{[{ bin }]}
+                                                    <br>
+                                                    <div class="bin_inside" droppable drop="handleDrop" bin="bin"
+                                                         id="{[{ bin }]}"></div>
                                                 </div>
                                             </div>
 
-                                            <div class="bin" ng-repeat="bin in ['Not prefering']" bin="bin" id="bin{{ bin }}">{[{ bin }]}
-                                                <br>
-                                                <div class="bin_inside" droppable drop="handleDrop" bin="bin" id="bin{[{ bin }]}"></div>
-                                            </div>
-
 
                                         </div>
-                                    </div>
-
+                                    </section>
 
                                 </fieldset>
 
                             </div>
                         </div>
+                        <!--Not prefer-->
+                        <section id="tryborder">
+                            <div ng-controller="SelectNotPrefCtrl"
+                                 class="md-padding selectdemoOptionGroups"
+                                 ng-cloak="">
+                                <div>
+                                    <label>Allegic to/ Do not prefer</label>
+                                    <div layout="row">
+                                        <md-input-container>
+                                            <!--<label>Not Preferring</label>-->
+                                            <md-select ng-model="selectedNotPref" multiple="">
+                                                <md-optgroup label="Dairy Product">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'dairyprod' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Seafood">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'seafood' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                     <!--End right side column-->
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
                         <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
@@ -919,9 +1097,9 @@
                     </div>
 
 
-                </div>
+                </div>-->
                 <!--Test Chips-->
-                <div>
+                <!--<div>
                     <div ng-controller="ContactChipDemoCtrl as ctrl" layout="column" ng-cloak=""
                          class="chipsdemoContactChips">
 
@@ -936,7 +1114,8 @@
                         </md-content>
                     </div>
                 </div>
-
+                </div>-->
+                <!--Test Chips-->
             </form>
         </div>
 
@@ -1033,7 +1212,7 @@
                         <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-pinterest"></i></a></li>
                         <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-google"></i></a></li>
+                        <!--<li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-google"></i></a></li>-->
                         <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
@@ -1087,6 +1266,28 @@
         var clear2 = document.getElementById('inputWithButton2');
         clear2.value = "";
     }
+
+    function passmatch(e) {
+        var password = encodeURIComponent(this.pass);
+        var confirmPassword = encodeURIComponent(this.repass);
+        if (password != confirmPassword) {
+            // do something
+        }
+    }
+
+    function checklogin() {
+        if (localStorage.loginChefAtHomeEmail) {
+            console.log("checklogin")
+            //$('a#login').text(localStorage.loginChefAtHomefirstname);
+            document.getElementById("login").removeAttribute("onclick");
+            document.getElementById("login").removeAttribute("href");
+            document.getElementById("login_collapse").removeAttribute("onclick");
+            document.getElementById("login_collapse").removeAttribute("href");
+        } else {
+        }
+    }
+
+
 </script>
 
 <!--Script for Date Picker-->
