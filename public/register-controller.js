@@ -77,7 +77,8 @@ app2.controller('formCtrl', function ($scope, $http) {
                 $scope.register.email == "" ||
                 $scope.register.address[0].name == "" ||
                 $scope.register.address[2].name == "" ||
-                $scope.register.address[3].name == "") {
+                $scope.register.address[3].name == "")
+            {
                 $scope.showFailed("Incomplete Credentials!");
             } else {
                 //alert("Ready to Submit!");
@@ -87,7 +88,6 @@ app2.controller('formCtrl', function ($scope, $http) {
                     email: $scope.register.email,
                     password: $scope.register.password,
                     telephone: $scope.register.telephone,
-                    password: $scope.register.password,
                     birthdate: $scope.register.birthdate.toISOString,
                     address1: $scope.register.address[0].name,
                     address2: $scope.register.address[1].name,

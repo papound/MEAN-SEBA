@@ -109,12 +109,12 @@ apiRoutes.post('/register', function (req, res) {
             address: [{address1: req.body.address1}, {address2: req.body.address2}, {city: req.body.city}, {postalcode: req.body.postalcode}]
         });
         // save the user
-        newUser.save(function (err, res) {
+        newUser.save(function (err) {
             if (err) {
                 console.log(err)
                 return res.json({success: false, msg: 'Username already exists.'});
             }
-            res.json({success: true, msg: 'Successful created new user.'});
+            return res.json({success: true, msg: 'Successful created new user.'});
 
         });
     }

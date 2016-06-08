@@ -102,10 +102,6 @@ var UserSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    tastePreference: {
-        type: String,
-        default: ""
-    },
     validityDate: {
         type: Date,
         default: Date.now
