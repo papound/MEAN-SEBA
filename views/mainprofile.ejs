@@ -407,7 +407,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-left">
-                                <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="http://localhost:4000" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                                 <li><a href="#menu" class="menubar">Menu</a></li>
 
                             </ul>
@@ -415,7 +415,7 @@
                         <!-- /.Links 01 -->
                         <!-- Logo -->
                         <div class="col-sm-4">
-                            <a href="index-x.html" id="bellafirenze-lg"></a>
+                            <a href="http://localhost:4000" id="bellafirenze-lg"></a>
                         </div>
                         <!-- /.Logo -->
 
@@ -520,14 +520,6 @@
         <!-- Title & Divider -->
         <div class="row">
             <div class="col-lg-12 text-center">
-                <!--<p class="wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;"><img-->
-                <!--src="newTemplate/svg/chefathome_logo_white.svg" width="500"-->
-                <!--height="268" class="img-responsive center-block" alt="">-->
-                <!--</p>-->
-                <!--
-                <h2 class="mrgn-50-top">Edit profile</h2>
-                <div class="mrgn-20-top-btm text-center"><img src="newTemplate/svg/divider-white.svg" alt=""></div>
-                -->
             </div>
         </div>
         <!-- /.Title & Divider -->
@@ -547,11 +539,6 @@
                      style="visibility: visible; animation-name: fadeIn;">
                     <h2>Profile</h2>
                     <br><br>
-                    <!--
-                    <p class="lead-sm">Our menu is seasonal so you can enjoy the freshest ingredients from local farmers and
-                        producers.
-                    </p>
-                    -->
                 </div>
             </div>
 
@@ -559,11 +546,11 @@
 
 
             <!-- Edit profile-->
-            <form action="" method="post" class="ui form animated fadeInUp" ng-model="newUser" name="profileform">
+            <form class="ui form animated fadeInUp" ng-model="newUser" name="profileform" ng-controller="MainCtrl">
                 <div class="row">
 
                     <!-- Left side column-->
-                    <div class="col-md-3" ng-controller="BtnCtrl">
+                    <div class="col-md-3">
                         <!--Space for uploading profile picture-->
                         <img class="profile-pic"
                              src="{[{ imageurl }]}"/>
@@ -575,39 +562,66 @@
                         </div>
                         <input class="file-upload" type="file" accept="image/*"/>
                         <br><br><br>
-                        <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
+                        <div ng-cloak="" class="buttondemoBasicUsage">
                             <md-content class="btn_group_save">
-                                <md-button class="md-raised md-primary">Save</md-button>
+                                <md-button class="md-raised md-primary" ng-click="checkElementToUpdate()">Save
+                                </md-button>
                             </md-content>
                         </div>
 
-                        <!--<div class="row">
+                        <!--Successful-->
+                        <div class="visible-sm visible-xs visible-md visible-lg">
+                            <paper-dialog id="update-success">
+                                <h2>Update Successful!</h2>
+                                <p>Update {[{ user.email }]}'s profile complete!</p>
+                                <div class="buttons">
+                                    <paper-button dialog-confirm autofocus onclick="">OK!</paper-button>
+                                </div>
+                            </paper-dialog>
+                        </div>
 
-                            <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
-                                <md-content class="btn_group_save">
-                                    <md-button class="md-raised md-primary">Save</md-button>
-                                </md-content>
-                            </div>
+                        <!--Confirm Dialog-->
+                        <div class="visible-sm visible-xs visible-md visible-lg">
+                            <paper-dialog id="confirm-update">
+                                <h2>Confirm Update?</h2>
+                                <p>This will update {[{ user.email }]}'s profile!</p>
+                                <div class="buttons">
+                                    <paper-button dialog-dismiss>No</paper-button>
+                                    <paper-button dialog-confirm autofocus ng-click="updateProfile()">Yes</paper-button>
+                                </div>
+                            </paper-dialog>
+                        </div>
+
+                        <!--Invalid Credentials-->
+                        <div class="visible-sm visible-xs visible-md visible-lg">
+                            <paper-dialog id="incomplete">
+                                <h2>Invalid Credentials!</h2>
+                                <p>Your information is incomplete!</p>
+                                <div class="buttons">
+                                    <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                                </div>
+                            </paper-dialog>
+                        </div>
+
+                        <!--DB Error-->
+                        <div class="visible-sm visible-xs visible-md visible-lg">
+                            <paper-dialog id="login-error">
+                                <h2>Update Error!</h2>
+                                <p>Problem with updating {[{ user.email }]}'s profile!</p>
+                                <div class="buttons">
+                                    <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                                </div>
+                            </paper-dialog>
+                        </div>
 
 
-                        </div>-->
                     </div>
-
-
                     <!-- End left side column-->
 
                     <!--Main column-->
                     <div class="col-md-4">
-                        <!-- Get name from log in-->
-                        <div ng-controller="DateCtrl">
-                            <!--<div ng-repeat="user in name">
-                                <span><h3>{[{ user.firstname }]}
-                                    {[{ user.lastname }]}
-                                </h3></span>
-                            </div>-->
-                        </div>
                         <section id="tryborder">
-                            <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                            <div layout="column" ng-cloak=""
                                  class="md-inline-form inputdemoBasicUsage">
                                 <!--name-->
                                 <!--<div layout-gt-xs="row">-->
@@ -623,14 +637,14 @@
 
                             <!--Age-->
                             <div class="row">
-                                <div class="col-md-3" ng-controller="DateCtrl" ng-cloak>
+                                <div class="col-md-3" ng-cloak>
                                     Birthday
                                     <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
                                 </div>
                             </div>
                             <br>
                             <div class="row" style="margin-left: 5px">
-                                <div ng-controller="ErrCtrl">
+                                <div>
                                     <!--Height-->
                                     <md-input-container class="md-block-5" flex-gt-sm>
                                         <label>Height</label>
@@ -644,12 +658,11 @@
                                         <input name="weight" type="number" ng-pattern="/^[0-9]{1,7}$/" required
                                                ng-model="project.weight" min="1" max="999" placeholder="in kg">
                                     </md-input-container>
-
                                 </div>
                             </div>
                         </section>
                         <section id="tryborder">
-                            <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                            <div layout="column" ng-cloak=""
                                  class="md-inline-form inputdemoBasicUsage">
 
                                 <!--Email-->
@@ -661,7 +674,7 @@
                                 <!--</div>-->
 
                                 <!--Password-->
-                                <div layout-gt-xs="row" ng-controller="PassCtrl">
+                                <div layout-gt-xs="row">
                                     <md-input-container>
                                         <label>Password</label>
                                         <input type="{[{inputType}]}" ng-model="user.password"/>
@@ -670,40 +683,16 @@
                                     <div>
                                         <md-checkbox id="checkbox" ng-model="passwordCheckbox"
                                                      ng-click="hideShowPassword()"/>
-                                        <p for=" checkbox
-                                    " ng-if="passwordCheckbox">Hide password</p>
+                                        <p for="checkbox" ng-if="passwordCheckbox">Hide password</p>
                                         <p for="checkbox" ng-if="!passwordCheckbox">Show password</p>
                                         </md-checkbox>
                                     </div>
                                 </div>
-                                <!--</section>-->
-                                <!--Test Password-->
-                                <!--<div ng-controller="stageController">-->
-                                <!--<label>Set a password:</label>-->
-                                <!--<input type="password" id="pw1" name="pw1" ng-model="pw1" ng-required=""/>-->
-                                <!--<label>Confirm the password:</label>-->
-                                <!--<input type="password" id="pw2" name="pw2" ng-model="pw2" ng-required="" />-->
-                                <!--<div class="msg-block" ng-show="myForm.$error">-->
-                                <!--<span class="msg-error" ng-show="myForm.pw2.$error.pwmatch">-->
-                                <!--Passwords don't match.-->
-                                <!--</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--Test Password-->
-
-
-                                <!--&lt;!&ndash;Confirm password&ndash;&gt;-->
-                                <!--<div layout-gt-xs="row">-->
-                                <!--<md-input-container>-->
-                                <!--<label>Confirm password</label>-->
-                                <!--<input type="password" ng-model=""/>-->
-                                <!--</md-input-container>-->
-                                <!--</div>-->
                             </div>
                         </section>
 
                         <section id="tryborder">
-                            <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                            <div layout="column" ng-cloak=""
                                  class="md-inline-form inputdemoBasicUsage">
                                 <!--Address-->
                                 <md-input-container class="md-block">
@@ -760,7 +749,7 @@
                                 <!--<style scoped>-->
                                 <!--@import "http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.13.0/css/semantic.css";-->
                                 <!--</style>-->
-                                <div class="ui fluid form" ng-controller="DemoCtrl">
+                                <div class="ui fluid form">
                                     <div class="field" ng-class="{error: mod10Error}">
                                         <label>Credit Card</label>
                                         <div class="ui right icon large input">
@@ -800,9 +789,9 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-11">
                                     <div class="row">
-                                        <div class="col-md-8" ng-controller="Chk1Ctrl">
-                                            <md-checkbox ng-model="data.cb1" aria-label="">
-                                                Vegetarian<span ng-if="data.cb1"></span>
+                                        <div class="col-md-8">
+                                            <md-checkbox ng-model="user.vegetarian" aria-label="">
+                                                Vegetarian<span ng-if="user.vegetarian"></span>
                                             </md-checkbox>
                                         </div>
                                     </div>
@@ -815,51 +804,23 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-11">
                                     <div class="row">
-                                        <div class="col-md-8" ng-controller="Chk1Ctrl">
-                                            <md-checkbox ng-model="data.cb2" aria-label="">
-                                                Halal<span ng-if="data.cb2"></span>
+                                        <div class="col-md-8">
+                                            <md-checkbox ng-model="user.halal" aria-label="">
+                                                Halal<span ng-if="user.halal"></span>
                                             </md-checkbox>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        <!--&lt;!&ndash;Not prefer&ndash;&gt;
-                        <div ng-controller="SelectNotPrefCtrl"
-                             class="md-padding selectdemoOptionGroups"
-                             ng-cloak="">
-                            <div>
-                                <div layout="row">
-                                    <md-input-container>
-                                        <label>Not Preferring</label>
-                                        <md-select ng-model="selectedNotPref" multiple="">
-                                            <md-optgroup label="Dairy Product">
-                                                <md-option ng-value="notpref.name"
-                                                           ng-repeat="notpref in notprefs | filter: {category: 'dairyprod' }">
-                                                    {[{notpref.name}]}
-                                                </md-option>
-                                            </md-optgroup>
-                                            <md-optgroup label="Seafood">
-                                                <md-option ng-value="notpref.name"
-                                                           ng-repeat="notpref in notprefs | filter: {category: 'seafood' }">
-                                                    {[{notpref.name}]}
-                                                </md-option>
-                                            </md-optgroup>
-                                        </md-select>
-                                    </md-input-container>
-                                </div>
-                            </div>
-                        </div>-->
 
                         <!--Health Condition-->
                         <section id="tryborder">
-                            <div ng-controller="SelectHealthConCtrl"
-                                 class="md-padding selectdemoOptionGroups"
+                            <div class="md-padding selectdemoOptionGroups"
                                  ng-cloak="">
                                 <div>
                                     <label>Health Condition</label><br>
                                     <div layout="row">
-
                                         <md-input-container>
                                             <!--<label>Health Condition</label>-->
                                             <md-select ng-model="selectedHealthCon" multiple="">
@@ -876,8 +837,6 @@
                                 </div>
                             </div>
                         </section>
-
-
                     </div>
                     <!-- End main column-->
 
@@ -885,7 +844,7 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-5 ">
                         <div class="md-padding checkboxdemoBasicUsage">
-                            <div ng-controller="MainCtrl">
+                            <div>
                                 <br><br>
                                 <fieldset class="standard">
                                     <legend>Preferences
@@ -949,9 +908,7 @@
                                         </div>
                                     </section>
                                     <section id="tryborder">
-                                        <div ng-controller="SelectOptGroupCtrl"
-                                             class="md-padding selectdemoOptionGroups"
-                                             ng-cloak="">
+                                        <div class="md-padding selectdemoOptionGroups" ng-cloak="">
                                             <div>
                                                 <label>Choose more nutrition as you like!</label><br>
                                                 <div layout="row">
@@ -979,42 +936,8 @@
                                     </section>
                                     <section id="tryborder">
                                         <div class="row">
-                                            <!--<div class="col-md-5" ng-controller="TasteCtrl">-->
                                             <label>Taste</label><br><br>
 
-                                            <!--<div class="row">-->
-                                            <!--<div class="col-md-11">-->
-                                            <!--<md-checkbox ng-model="data.sweet" aria-label="">-->
-                                            <!--Sweet<span ng-if="data.sweet"></span>-->
-                                            <!--</md-checkbox>-->
-                                            <!--<md-checkbox ng-model="data.sour" aria-label="">-->
-                                            <!--Sour<span ng-if="data.sour"></span>-->
-                                            <!--</md-checkbox>-->
-                                            <!--</div>-->
-                                            <!--</div>-->
-
-
-                                            <!--<div class="row">-->
-                                            <!--<div class="col-md-11">-->
-                                            <!--<md-checkbox ng-model="data.spicy" aria-label="">-->
-                                            <!--Spicy<span ng-if="data.spicy"></span>-->
-                                            <!--</md-checkbox>-->
-                                            <!--<md-checkbox ng-model="data.bitter" aria-label="">-->
-                                            <!--Bitter<span ng-if="data.bitter"></span>-->
-                                            <!--</md-checkbox>-->
-                                            <!--</div>-->
-                                            <!--</div>-->
-
-
-                                            <!--<div class="row">-->
-                                            <!--<div class="col-md-11">-->
-                                            <!--<md-checkbox ng-model="data.salty" aria-label="">-->
-                                            <!--Salty<span ng-if="data.salty"></span>-->
-                                            <!--</md-checkbox>-->
-                                            <!--</div>-->
-                                            <!--</div>-->
-                                            <!--</div>-->
-                                            <!--Test drag&drop-->
                                             <div ng-controller="DragDropCtrl">
 
                                                 <div class="bin" ng-repeat="bin in ['Preferred']" bin="bin"
@@ -1056,9 +979,7 @@
                         </div>
                         <!--Not prefer-->
                         <section id="tryborder">
-                            <div ng-controller="SelectNotPrefCtrl"
-                                 class="md-padding selectdemoOptionGroups"
-                                 ng-cloak="">
+                            <div class="md-padding selectdemoOptionGroups" ng-cloak="">
                                 <div>
                                     <label>Allegic to/ Do not prefer</label>
                                     <div layout="row">
@@ -1086,36 +1007,6 @@
                     </div>
                     <!--End right side column-->
                 </div>
-                <!--<div class="row">
-                    <div class="col-md-10"></div>
-                    <div class="col-md-2">
-                        <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
-                            <md-content class="btn_group_bg">
-                                <md-button class="md-raised">Save</md-button>
-                            </md-content>
-                        </div>
-                    </div>
-
-
-                </div>-->
-                <!--Test Chips-->
-                <!--<div>
-                    <div ng-controller="ContactChipDemoCtrl as ctrl" layout="column" ng-cloak=""
-                         class="chipsdemoContactChips">
-
-                        <md-content class="md-padding autocomplete" layout="column">
-                            <h2 class="md-title">Searching asynchronously.</h2>
-                            <md-contact-chips ng-model="ctrl.asyncContacts"
-                                              md-contacts="ctrl.delayedQuerySearch($query)" md-contact-name="name"
-                                              md-contact-image="image" md-contact-email="email" md-require-match="true"
-                                              md-highlight-flags="i" filter-selected="ctrl.filterSelected"
-                                              placeholder="To">
-                            </md-contact-chips>
-                        </md-content>
-                    </div>
-                </div>
-                </div>-->
-                <!--Test Chips-->
             </form>
         </div>
 
@@ -1125,68 +1016,22 @@
 </section>
 <!-- /.Full Menu List -->
 
-
 <!-- Contact Information -->
 <section id="contact">
     <div class="container">
         <!-- Title & Divider -->
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"
-                 style="visibility: visible; animation-name: fadeInDown;">
+                 style="visibility: hidden; animation-name: none;">
                 <h2>Contact us</h2>
-                <p class="lead">Stop by whenever you would like a tasty bite and delicious glass of wine. Stay in touch
-                    on social media to know more about our special events.</p>
+                <p class="lead">Stop by whenever you would like a to cook at your house with fresh ingredients. Save
+                    your time from grocery shopping,
+                    and have a great time with your family and friends.</p>
             </div>
         </div>
         <div class="mrgn-50-top-btm text-center"><img
                     src="newTemplate/svg/divider-white.svg" alt=""></div>
         <!-- Title & Divider -->
-
-        <!-- Contact Information Content -->
-        <div class="row">
-            <!-- Address, Phone & Email -->
-            <div class="col-md-5 col-md-offset-1 col-sm-5 wow fadeIn"
-                 style="visibility: visible; animation-name: fadeIn;">
-                <h3 class="mrgn-30-top ">Stay in Touch</h3>
-                <p class="mrgn-30-top lead">Bella Firenze </p>
-                <p class="lead">655 A, King Street<br>
-                    Manchester, M3 3BE </p>
-                <p class="lead">0752 654 85 855<br>
-                    <a href="mailto:giorgo@bellafirenze.com">giorgo@bellafirenze.com</a></p>
-            </div>
-            <!-- /.Address, Phone & Email -->
-
-            <!-- Opening Times -->
-            <div class="col-md-5 col-sm-7 wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
-                <h3>Opening Times</h3>
-                <div class="row">
-                    <div class="col-xs-5">
-                        <ul class="list-unstyled weekdays">
-                            <li>Monday</li>
-                            <li>Tuesday</li>
-                            <li>Wednesday</li>
-                            <li>Thursday</li>
-                            <li>Friday</li>
-                            <li>Saturday</li>
-                            <li>Sunday</li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-7">
-                        <ul class="list-unstyled">
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>11:00 AM - 2:00 AM</li>
-                            <li>11:00 AM - 1:00 AM</li>
-                            <li>11:00 AM - 1:00 AM</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /.Opening Times -->
-        </div>
-        <!-- /.Contact Information Content -->
     </div>
     <!-- /.container -->
 </section>
@@ -1198,9 +1043,9 @@
         <!-- Footer Content -->
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
-                 style="visibility: visible; animation-name: fadeIn;">
+                 style="visibility: hidden; animation-name: none;">
                 <!-- Restaurant Name & Divider -->
-                <h2>Bella Firenze</h2>
+                <h2>Chef@Home</h2>
                 <div class="mrgn-50-top-btm text-center"><img
                             src="newTemplate/svg/divider-black.svg" alt=""></div>
                 <!-- /.Restaurant Name & Divider -->
@@ -1208,17 +1053,21 @@
                 <!-- Social Profiles -->
                 <div class="mrgn-30-top-btm">
                     <ul class="list-inline social-buttons">
-                        <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-pinterest"></i></a></li>
-                        <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-youtube"></i></a></li>
-                        <!--<li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-google"></i></a></li>-->
-                        <li><a href="http://bella.designershare.net/menu.html#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                                        class="fa fa-twitter"></i></a></li>
+                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                                        class="fa fa-facebook"></i></a></li>
+                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                                        class="fa fa-pinterest"></i></a></li>
+                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                                        class="fa fa-youtube"></i></a></li>
+                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                                        class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
                 <!-- /.Social Profiles -->
                 <!-- Copyright -->
-                <p>Bella Firenze © 2015 | All Rights Reserved</p>
+                <p>Chef@Home © 2016 | All Rights Reserved</p>
                 <!-- /.Copyright -->
             </div>
         </div>

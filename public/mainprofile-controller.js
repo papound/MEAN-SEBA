@@ -2,7 +2,7 @@
  * Created by Chanawatn Pound on 02-Jun-16.
  */
 //var bodyparser = require('../node_modules/body-parser');
-var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages']);
+var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'rzModule']);
 
 var url = "http://localhost:4000";
 
@@ -20,7 +20,7 @@ app2.factory('getUserData', ['$http', function ($http) {
     if (localStorage.loginChefAtHomeEmail) {
         this_email = localStorage.loginChefAtHomeEmail;
     } else {
-        this_email = "sam@smith.com";
+        window.location.href = "http://localhost:4000/"
     }
     return $http.post(url + "/list/user", {email: this_email})
         .then(function (response) {
@@ -28,31 +28,11 @@ app2.factory('getUserData', ['$http', function ($http) {
             return response.data;
         });
 }]);
-//Test password
-/* Controllers */
-// function stageController($scope) {
-//     $scope.pw1 = 'password';
-// }
-/* Directives */
-// app2.directive('pwCheck', [function () {
-//     return {
-//         require: 'ngModel',
-//         link: function (scope, elem, attrs, ctrl) {
-//             var firstPassword = '#' + attrs.pwCheck;
-//             elem.add(firstPassword).on('keyup', function () {
-//                 scope.$apply(function () {
-//                     // console.info(elem.val() === $(firstPassword).val());
-//                     ctrl.$setValidity('pwmatch', elem.val() === $(firstPassword).val());
-//                 });
-//             });
-//         }
-//     }
-// }]);
 
 //Test Credit Cards
 (function () {
 
-    app2.provider('creditCardInput', function (){
+    app2.provider('creditCardInput', function () {
 
         // getUserData.then(function (user) {
         //     $scope.name = user;
@@ -231,116 +211,6 @@ app2.factory('getUserData', ['$http', function ($http) {
 }).call(this);
 //End Test Credit Cards
 
-//Test Chips
-(function () {
-    'use strict';
-
-    app2.controller('ContactChipDemoCtrl', DemoCtrl);
-
-    function DemoCtrl($q, $timeout) {
-        var self = this;
-        var pendingSearch, cancelSearch = angular.noop;
-        var cachedQuery, lastSearch;
-
-        self.allContacts = loadContacts();
-        self.contacts = [self.allContacts[0]];
-        self.asyncContacts = [];
-        self.filterSelected = true;
-
-        self.querySearch = querySearch;
-        self.delayedQuerySearch = delayedQuerySearch;
-
-        /**
-         * Search for contacts; use a random delay to simulate a remote call
-         */
-        function querySearch(criteria) {
-            cachedQuery = cachedQuery || criteria;
-            return cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];
-        }
-
-        /**
-         * Async search for contacts
-         * Also debounce the queries; since the md-contact-chips does not support this
-         */
-        function delayedQuerySearch(criteria) {
-            cachedQuery = criteria;
-            if (!pendingSearch || !debounceSearch()) {
-                cancelSearch();
-
-                return pendingSearch = $q(function (resolve, reject) {
-                    // Simulate async search... (after debouncing)
-                    cancelSearch = reject;
-                    $timeout(function () {
-
-                        resolve(self.querySearch());
-
-                        refreshDebounce();
-                    }, Math.random() * 500, true)
-                });
-            }
-
-            return pendingSearch;
-        }
-
-        function refreshDebounce() {
-            lastSearch = 0;
-            pendingSearch = null;
-            cancelSearch = angular.noop;
-        }
-
-        /**
-         * Debounce if querying faster than 300ms
-         */
-        function debounceSearch() {
-            var now = new Date().getMilliseconds();
-            lastSearch = lastSearch || now;
-
-            return ((now - lastSearch) < 300);
-        }
-
-        /**
-         * Create filter function for a query string
-         */
-        function createFilterFor(query) {
-            var lowercaseQuery = angular.lowercase(query);
-
-            return function filterFn(contact) {
-                return (contact._lowername.indexOf(lowercaseQuery) != -1);
-                ;
-            };
-
-        }
-
-        function loadContacts() {
-            var contacts = [
-                'Marina Augustine',
-                'Oddr Sarno',
-                'Nick Giannopoulos',
-                'Narayana Garner',
-                'Anita Gros',
-                'Megan Smith',
-                'Tsvetko Metzger',
-                'Hector Simek',
-                'Some-guy withalongalastaname'
-            ];
-
-            return contacts.map(function (c, index) {
-                var cParts = c.split(' ');
-                var contact = {
-                    name: c,
-                    email: cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com',
-                    image: 'http://lorempixel.com/50/50/people?' + index
-                };
-                contact._lowername = contact.name.toLowerCase();
-                return contact;
-            });
-        }
-    }
-
-
-})();
-//Test Chips
-
 //test drag&drop
 (function () {
 
@@ -357,8 +227,8 @@ app2.factory('getUserData', ['$http', function ($http) {
                     e.dataTransfer.effectAllowed = 'move';
                     e.dataTransfer.setData('Text', this.id);
                     this.classList.add('drag');
-                    console.log("Remove old: "+this.id);
-                    console.log("From id: "+this.classList+"..");
+                    console.log("Remove old: " + this.id);
+                    console.log("From id: " + this.classList + "..");
                     return false;
                 },
                 false
@@ -368,7 +238,7 @@ app2.factory('getUserData', ['$http', function ($http) {
                 'dragend',
                 function (e) {
                     this.classList.remove('drag');
-                    console.log("add new: "+this.id);
+                    console.log("add new: " + this.id);
                     return false;
                 },
                 false
@@ -410,7 +280,7 @@ app2.factory('getUserData', ['$http', function ($http) {
 
                 el.addEventListener(
                     'dragleave',
-                    function (e) {                        
+                    function (e) {
                         this.classList.remove('over');
                         return false;
                     },
@@ -426,7 +296,7 @@ app2.factory('getUserData', ['$http', function ($http) {
                         this.classList.remove('over');
 
                         var binId = this.id;
-                        console.log("To id: "+this.id+"..");
+                        console.log("To id: " + this.id + "..");
                         var item = document.getElementById(e.dataTransfer.getData('Text'));
                         this.appendChild(item);
                         //console.log("newItem: "+item.getAttribute())
@@ -454,283 +324,12 @@ app2.factory('getUserData', ['$http', function ($http) {
 })();
 //end test drag&drop
 
-app2.controller('SelectNotPrefCtrl', function ($scope) {
-    $scope.notprefs = [{
-        category: 'dairyprod',
-        name: 'Cheese'
-    }, {
-        category: 'dairyprod',
-        name: 'Yoghurt'
-    }, {
-        category: 'dairyprod',
-        name: 'Butter'
-    }, {
-        category: 'dairyprod',
-        name: 'Milk'
-    }, {
-        category: 'dairyprod',
-        name: 'Custard'
-    }, {
-        category: 'dairyprod',
-        name: 'Magarine'
-    }, {
-        category: 'dairyprod',
-        name: 'Cream'
-    }, {
-        category: 'dairyprod',
-        name: 'Ice cream'
-    }, {
-        category: 'dairyprod',
-        name: 'Egg'
-    }, {
-        category: 'seafood',
-        name: 'Shrimp'
-    }, {
-        category: 'seafood',
-        name: 'Crab'
-    }, {
-        category: 'seafood',
-        name: 'Lobster'
-    }, {
-        category: 'seafood',
-        name: 'Fish'
-    }, {
-        category: 'seafood',
-        name: 'Oyster'
-    }, {
-        category: 'seafood',
-        name: 'Clam'
-    }, {
-        category: 'seafood',
-        name: 'Squid'
-    }, {
-        category: 'seafood',
-        name: 'Shrimp'
-    }, {
-        category: 'seafood',
-        name: 'Octopus'
-    }, {
-        category: 'seafood',
-        name: 'Scallop'
-    }];
-    $scope.selectedNotPref = [];
-    $scope.printSelectedNotPrefs = function printSelectedNotPrefs() {
-        var numberOfSelectedNotPrefs = this.selectedNotPref.length;
-
-        // If there is more than one topping, we add an 'and'
-        // to be gramatically correct. If there are 3+ toppings
-        // we also add an oxford comma.
-        if (numberOfNotPrefs > 1) {
-            var needsOxfordComma = numberOfNotPrefs > 2;
-            var lastNotPrefConjunction = (needsOxfordComma ? ',' : '') + ' and ';
-            var lastNotPref = lastNotPrefConjunction +
-                this.selectedNotPref[this.selectedNotPref.length - 1];
-            return this.selectedNotPref.slice(0, -1).join(', ') + lastNotPref;
-        }
-
-        return this.selectedNotPref.join('');
-    };
-});
-
-app2.controller('ErrCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
-    getUserData.then(function (user) {
-        $scope.name = user;
-        $scope.project.height = user[0].height;
-        $scope.project.weight = user[0].weight;
-    });
-    $scope.project = {
-        description: 'Nuclear Missile Defense System',
-    };
-}])
-
-//Use factory like this!
-app2.controller('DateCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
-    getUserData.then(function (user) {
-        $scope.name = user;
-        /*$scope.user.firstname = user[0].firstname;
-        $scope.user.lastname = user[0].lastname;*/
-        $scope.myDate = new Date(user[0].birthdate);
-    });
-    $scope.myDate = new Date();
-    //console.log($scope.myDate);
-    $scope.minDate = new Date(
-        $scope.myDate.getFullYear(),
-        $scope.myDate.getMonth() - 2,
-        $scope.myDate.getDate());
-    $scope.maxDate = new Date(
-        $scope.myDate.getFullYear(),
-        $scope.myDate.getMonth() + 2,
-        $scope.myDate.getDate());
-    $scope.onlyWeekendsPredicate = function (date) {
-        var day = date.getDay();
-        return day === 0 || day === 6;
-    }
-}])
-
-
-app2.controller('Chk1Ctrl', ['$scope', 'getUserData', function ($scope, getUserData) {
-    $scope.data = {};
-    $scope.data.cb1 = false;
-    $scope.data.cb2 = false;
-    $scope.data.cb3 = false;
-    $scope.data.cb4 = false;
-    $scope.data.cb5 = false;
-    $scope.data.extra = "";
-
-    getUserData.then(function (user) {
-        $scope.name = user;
-        $scope.data.cb1 = user[0].vegetarian;
-        $scope.data.cb2 = user[0].halal;
-        //console.log("vegetarian: " + $scope.data.cb1)
-    });
-}])
-
-app2.controller('SelectHealthConCtrl', function ($scope) {
-    $scope.healthcons = [{
-        category: 'commoncon',
-        name: 'High Blood Pressure'
-    }, {
-        category: 'commoncon',
-        name: 'Diabetes'
-    }, {
-        category: 'commoncon',
-        name: 'Anemia'
-    }, {
-        category: 'commoncon',
-        name: 'High Cholesterol'
-    }];
-    $scope.selectedHealthCon = [];
-    $scope.printSelectedHealthCons = function printSelectedHealthCons() {
-        var numberOfHealthCons = this.selectedHealthCon.length;
-
-        // If there is more than one topping, we add an 'and'
-        // to be gramatically correct. If there are 3+ toppings
-        // we also add an oxford comma.
-        if (numberOfHealthCons > 1) {
-            var needsOxfordComma = numberOfHealthCons > 2;
-            var lastHealthConConjunction = (needsOxfordComma ? ',' : '') + ' and ';
-            var lastHealthCon = lastHealthConConjunction +
-                this.selectedHealthCon[this.selectedHealthCon.length - 1];
-            return this.selectedHealthCon.slice(0, -1).join(', ') + lastHealthCon;
-        }
-
-        return this.selectedHealthCon.join('');
-    };
-});
-
-app2.controller('Chk2Ctrl', function ($scope) {
-    $scope.data2 = {};
-    $scope.data2.cb1 = false;
-    $scope.data2.cb2 = false;
-    $scope.data2.cb3 = false;
-    $scope.data2.extra = "";
-})
-
-
-app2.controller('Chk3Ctrl', function ($scope) {
-    getUserData.then(function (user) {
-        $scope.name = user;
-        $scope.data.cb1 = user[0].vegetarian;
-        //console.log("vegetarian: " + $scope.data.cb1)
-    });
-    $scope.data = {};
-    $scope.data.cb1 = true;
-    $scope.data.cb2 = false;
-    $scope.data.cb3 = false;
-    $scope.data.cb4 = false;
-    $scope.data.cb5 = false;
-
-})
-
-app2.controller('BtnCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
-    getUserData.then(function (user) {
-        $scope.name = user;
-        if (localStorage.loginChefAtHomeimage) {
-            $scope.imageurl = localStorage.loginChefAtHomeimage;
-        } else {
-            $scope.imageurl = user[0].imageurl;
-        }
-        //$scope.imageurl = user[0].imageurl;
-        //console.log(user[0].imageurl)
-    });
-
-    $scope.title1 = 'Button';
-    $scope.title4 = 'Warn';
-    $scope.isDisabled = true;
-    $scope.googleUrl = 'http://google.com';
-
-}]);
-
-app2.controller('TasteCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
-    getUserData.then(function (user) {
-        $scope.name = user;
-        var taste_collection = user[0].tastePreference;
-        //console.log(taste_collection)
-        if (taste_collection == null) {
-            $scope.data = {};
-            $scope.data.sweet = false;
-            $scope.data.sour = false;
-            $scope.data.spicy = false;
-            $scope.data.bitter = false;
-            $scope.data.salty = false;
-
-        } else {
-            $scope.data = {};
-            $scope.data.sweet = false;
-            $scope.data.sour = false;
-            $scope.data.spicy = false;
-            $scope.data.bitter = false;
-            $scope.data.salty = false;
-
-            for (var i = 0; i < taste_collection.length; i++) {
-                switch (taste_collection[i].name) {
-                    case "Sweet":
-                        $scope.data.sweet = true;
-                        break;
-                    case "Sour":
-                        $scope.data.sour = true;
-                        break;
-                    case "Spicy":
-                        $scope.data.spicy = true;
-                        break;
-                    case "Bitter":
-                        $scope.data.bitter = true;
-                        break;
-                    case "Salty":
-                        $scope.data.salty = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-    });
-
-
-}])
-
-
-app2.controller('AddNutriCtrl', function ($scope) {
-
-    $scope.data = {};
-    $scope.data.cb1 = false;
-    $scope.data.cb2 = false;
-    $scope.data.cb3 = false;
-    $scope.data.cb4 = false;
-    $scope.data.cb5 = false;
-    $scope.data.cb6 = false;
-
-})
-
-
-var cardno = "";
-
-app2.controller('DemoCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
-
+app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope, getUserData, $http, $rootScope, $timeout, $modal) {
+    $scope.formStatus = true;
     $scope.user = {
         firstname: '',
         lastname: '',
+        password: '',
         email: '',
         address: '',
         city: '',
@@ -738,136 +337,55 @@ app2.controller('DemoCtrl', ['$scope', 'getUserData', function ($scope, getUserD
         cardNumber: '',
         cvc: '',
         validityDate: '',
+        vegetarian: false,
+        halal: false,
+        height: '',
+        weight: ''
     };
 
     getUserData.then(function (user) {
         $scope.name = user;
+        //$scope.user.password = user[0].password;
         $scope.user.firstname = user[0].firstname;
         $scope.user.lastname = user[0].lastname;
         $scope.user.email = user[0].email;
-        $scope.user.address = user[0].address[0].name;
-        $scope.user.address2 = user[0].address[1].name;
-        $scope.user.city = user[0].address[2].name;
-        $scope.user.postalCode = user[0].address[3].name;
+        $scope.user.address = user[0].address[0].address1;
+        $scope.user.address2 = user[0].address[1].address2;
+        $scope.user.city = user[0].address[2].city;
+        $scope.user.postalCode = user[0].address[3].postalcode;
         $scope.user.cardNumber = user[0].cardNumber;
+        $scope.project.height = user[0].height;
+        $scope.project.weight = user[0].weight;
         cardno = user[0].cardNumber;
-        console.log("cardno: "+cardno);
+        console.log("cardno: " + cardno);
         $scope.user.cvc = user[0].cvc;
         $scope.user.validityDate = new Date(user[0].validityDate);
+        if (localStorage.loginChefAtHomeimage) {
+            $scope.imageurl = localStorage.loginChefAtHomeimage;
+        } else {
+            $scope.imageurl = user[0].imageurl;
+        }
+        $scope.user.vegetarian = user[0].vegetarian;
+        $scope.user.halal = user[0].halal;
+        $scope.myDate = new Date(user[0].birthdate);
     });
+
+    //Birthdate
+
+    $scope.myDate = new Date();
+
+    //End Birthdate
+
+    //Title
 
     $scope.titles = ('Mr. ' +
     'Mrs. Miss ').split(' ').map(function (title) {
         return {abbrev: title};
     });
-}]);
 
-app2.controller('PassCtrl', ['$scope', 'getUserData', function ($scope, getUserData) {
+    //End Title
 
-    console.log("cardno in passctrl: "+cardno);
-    getUserData.then(function (user) {
-        $scope.name = user;
-        $scope.user.password = user[0].password;
-        //console.log(user[0].imageurl)
-    });
-    // Set the default value of inputType
-    $scope.inputType = 'password';
-
-    // Hide & show password function
-    $scope.hideShowPassword = function () {
-        if ($scope.inputType == 'password')
-            $scope.inputType = 'text';
-        else
-            $scope.inputType = 'password';
-    };
-
-
-}]);
-
-app2.controller('SelectOptGroupCtrl', function ($scope) {
-    $scope.nutritions = [{
-        category: 'vitamin',
-        name: 'Vitamin A'
-    }, {
-        category: 'vitamin',
-        name: 'Vitamin B'
-    }, {
-        category: 'vitamin',
-        name: 'Vitamin C'
-    }, {
-        category: 'vitamin',
-        name: 'Vitamin D'
-    }, {
-        category: 'vitamin',
-        name: 'Vitamin K'
-    }, {
-        category: 'others',
-        name: 'Fiber'
-    }, {
-        category: 'others',
-        name: 'Sodium'
-    }];
-    $scope.selectedNutrition = [];
-    $scope.printSelectedNutritions = function printSelectedNutritions() {
-        var numberOfNutritions = this.selectedNutrition.length;
-
-        // If there is more than one topping, we add an 'and'
-        // to be gramatically correct. If there are 3+ toppings
-        // we also add an oxford comma.
-        if (numberOfNutritions > 1) {
-            var needsOxfordComma = numberOfNutritions > 2;
-            var lastNutritionConjunction = (needsOxfordComma ? ',' : '') + ' and ';
-            var lastNutrition = lastNutritionConjunction +
-                this.selectedNutrition[this.selectedNutrition.length - 1];
-            return this.selectedNutrition.slice(0, -1).join(', ') + lastNutrition;
-        }
-
-        return this.selectedNutrition.join('');
-    };
-});
-
-app2.config(function ($interpolateProvider) {
-    $interpolateProvider.startSymbol('{[{');
-    $interpolateProvider.endSymbol('}]}');
-})
-
-    .config(function ($mdThemingProvider) {
-        // Configure a dark theme with primary foreground yellow
-        $mdThemingProvider.theme('docs-dark', 'default')
-            .primaryPalette('yellow')
-            .dark();
-    });
-
-var app3 = angular.module('rzSliderDemo', ['rzModule']);
-
-//test render slider
-/*app3.controller('MainCtrl', function ($scope, $timeout) {
- $scope.broadcast = function() {
- $timeout(function() {
- $scope.$broadcast('reCalcViewDimensions');
- });
- }
- })*/
-
-app3.controller('MainCtrl', ['$scope', 'getUserData', function ($scope, getUserData, $rootScope, $timeout, $modal) {
-
-    //noinspection JSAnnotator
-    // $scope.$broadcast() = function() {
-    //     $timeout(function() {
-    //         $scope.$broadcast('reCalcViewDimension');
-    //     });
-    // }
-    /*$scope.broadcast= function() {
-     $timeout(function() {
-     $scope.$broadcast('reCalcViewDimensions');
-     });
-     }*/
-
-    // modalInstance.rendered.then(function (event, args) {
-    //     $timeout(function() {
-    //         $scope.$broadcast('rzCalcViewDimension');
-    //     });
-    // })
+    //Slider
 
     var vm = this;
     //Minimal slider config
@@ -950,14 +468,323 @@ app3.controller('MainCtrl', ['$scope', 'getUserData', function ($scope, getUserD
         $scope.fats.maxValue = nutrition_range[3].maxValue;
         $scope.cholesterols.minValue = nutrition_range[4].minValue;
         $scope.cholesterols.maxValue = nutrition_range[4].maxValue;
-        
+
     });
+
+    //End Slider
+
+    //Nutritions
+
+    $scope.nutritions = [{
+        category: 'vitamin',
+        name: 'Vitamin A'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin B'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin C'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin D'
+    }, {
+        category: 'vitamin',
+        name: 'Vitamin K'
+    }, {
+        category: 'others',
+        name: 'Fiber'
+    }, {
+        category: 'others',
+        name: 'Sodium'
+    }];
+    $scope.selectedNutrition = [];
+    $scope.printSelectedNutritions = function printSelectedNutritions() {
+        var numberOfNutritions = this.selectedNutrition.length;
+
+        // If there is more than one topping, we add an 'and'
+        // to be gramatically correct. If there are 3+ toppings
+        // we also add an oxford comma.
+        if (numberOfNutritions > 1) {
+            var needsOxfordComma = numberOfNutritions > 2;
+            var lastNutritionConjunction = (needsOxfordComma ? ',' : '') + ' and ';
+            var lastNutrition = lastNutritionConjunction +
+                this.selectedNutrition[this.selectedNutrition.length - 1];
+            return this.selectedNutrition.slice(0, -1).join(', ') + lastNutrition;
+        }
+
+        return this.selectedNutrition.join('');
+    };
+
+    //End Nutrition
+
+    //Password
+
+    $scope.inputType = 'password';
+
+    // Hide & show password function
+    $scope.hideShowPassword = function () {
+        if ($scope.inputType == 'password')
+            $scope.inputType = 'text';
+        else
+            $scope.inputType = 'password';
+    };
+
+    //End Password
+
+    //HealthCond
+    $scope.healthcons = [{
+        category: 'commoncon',
+        name: 'High Blood Pressure'
+    }, {
+        category: 'commoncon',
+        name: 'Diabetes'
+    }, {
+        category: 'commoncon',
+        name: 'Anemia'
+    }, {
+        category: 'commoncon',
+        name: 'High Cholesterol'
+    }];
+    $scope.selectedHealthCon = [];
+    $scope.printSelectedHealthCons = function printSelectedHealthCons() {
+        var numberOfHealthCons = this.selectedHealthCon.length;
+
+        // If there is more than one topping, we add an 'and'
+        // to be gramatically correct. If there are 3+ toppings
+        // we also add an oxford comma.
+        if (numberOfHealthCons > 1) {
+            var needsOxfordComma = numberOfHealthCons > 2;
+            var lastHealthConConjunction = (needsOxfordComma ? ',' : '') + ' and ';
+            var lastHealthCon = lastHealthConConjunction +
+                this.selectedHealthCon[this.selectedHealthCon.length - 1];
+            return this.selectedHealthCon.slice(0, -1).join(', ') + lastHealthCon;
+        }
+
+        return this.selectedHealthCon.join('');
+    };
+    //End HealthCond
+
+    //Extra
+    $scope.title1 = 'Button';
+    $scope.title4 = 'Warn';
+    $scope.isDisabled = true;
+    $scope.googleUrl = 'http://google.com';
+    $scope.project = {
+        description: 'Nuclear Missile Defense System',
+    };
+
+    //NoPrefs
+
+    $scope.notprefs = [{
+        category: 'dairyprod',
+        name: 'Cheese'
+    }, {
+        category: 'dairyprod',
+        name: 'Yoghurt'
+    }, {
+        category: 'dairyprod',
+        name: 'Butter'
+    }, {
+        category: 'dairyprod',
+        name: 'Milk'
+    }, {
+        category: 'dairyprod',
+        name: 'Custard'
+    }, {
+        category: 'dairyprod',
+        name: 'Magarine'
+    }, {
+        category: 'dairyprod',
+        name: 'Cream'
+    }, {
+        category: 'dairyprod',
+        name: 'Ice cream'
+    }, {
+        category: 'dairyprod',
+        name: 'Egg'
+    }, {
+        category: 'seafood',
+        name: 'Shrimp'
+    }, {
+        category: 'seafood',
+        name: 'Crab'
+    }, {
+        category: 'seafood',
+        name: 'Lobster'
+    }, {
+        category: 'seafood',
+        name: 'Fish'
+    }, {
+        category: 'seafood',
+        name: 'Oyster'
+    }, {
+        category: 'seafood',
+        name: 'Clam'
+    }, {
+        category: 'seafood',
+        name: 'Squid'
+    }, {
+        category: 'seafood',
+        name: 'Shrimp'
+    }, {
+        category: 'seafood',
+        name: 'Octopus'
+    }, {
+        category: 'seafood',
+        name: 'Scallop'
+    }];
+    $scope.selectedNotPref = [];
+    $scope.printSelectedNotPrefs = function printSelectedNotPrefs() {
+        var numberOfSelectedNotPrefs = this.selectedNotPref.length;
+
+        // If there is more than one topping, we add an 'and'
+        // to be gramatically correct. If there are 3+ toppings
+        // we also add an oxford comma.
+        if (numberOfNotPrefs > 1) {
+            var needsOxfordComma = numberOfNotPrefs > 2;
+            var lastNotPrefConjunction = (needsOxfordComma ? ',' : '') + ' and ';
+            var lastNotPref = lastNotPrefConjunction +
+                this.selectedNotPref[this.selectedNotPref.length - 1];
+            return this.selectedNotPref.slice(0, -1).join(', ') + lastNotPref;
+        }
+
+        return this.selectedNotPref.join('');
+    };
+
+    //End NoPrefs
+
+    $scope.checkElementToUpdate = function () {
+        if ($scope.user.firstname != "" &&
+            $scope.user.lastname != "" &&
+            $scope.project.height != "" &&
+            $scope.project.weight != "" &&
+            $scope.user.email != "" &&
+            $scope.user.password != "" &&
+            $scope.user.address != "" &&
+            $scope.user.city != "" &&
+            $scope.user.postalCode != "") 
+        {
+            $scope.confirmUpdateProfile();
+
+        } else {
+
+            var dialog = document.getElementById("incomplete");
+            if (dialog) {
+                dialog.open();
+            }
+        }
+    }
+
+    $scope.confirmUpdateProfile = function () {
+
+        var dialog = document.getElementById("confirm-update");
+        if (dialog) {
+            dialog.open();
+        }
+    }
+
+
+    $scope.showSuccess = function (email) {
+
+        var dialog = document.getElementById("update-success");
+        if (dialog) {
+            dialog.open();
+        }
+    }
+
+    $scope.showFailed = function (err) {
+
+        if (err = "Error Updating") {
+            var dialog = document.getElementById("db-error");
+            if (dialog) {
+                dialog.open();
+            }
+        } else {
+            var dialog = document.getElementById("incomplete");
+            if (dialog) {
+                dialog.open();
+            }
+        }
+
+    }
+
+    $scope.updateProfile = function () {
+        var birthdate = $scope.myDate.toISOString()
+        var valid_date = $scope.user.validityDate.toISOString()
+        return $http.post(url + "/api/update/profile", {
+            firstname: $scope.user.firstname,
+            lastname: $scope.user.lastname,
+            email: $scope.user.email,
+            password: $scope.user.password,
+            birthdate: birthdate,
+            height: $scope.project.height,
+            weight: $scope.project.weight,
+            address1: $scope.user.address,
+            address2: $scope.user.address2,
+            city: $scope.user.city,
+            postalcode: $scope.user.postalCode,
+            vegetarian: $scope.user.vegetarian,
+            halal: $scope.user.halal,
+            cardNumber: $scope.user.cardNumber,
+            cvc: $scope.user.cvc,
+            validityDate: valid_date,
+            nutritionRange: [
+                {
+                    name: "Calories",
+                    minValue: $scope.calories.minValue,
+                    maxValue: $scope.calories.maxValue
+                },
+                {
+                    name: "Proteins",
+                    minValue: $scope.proteins.minValue,
+                    maxValue: $scope.proteins.maxValue
+                },
+                {
+                    name: "Carbohydrates",
+                    minValue: $scope.carb.minValue,
+                    maxValue: $scope.carb.maxValue
+                },
+                {
+                    name: "Fats",
+                    minValue: $scope.fats.minValue,
+                    maxValue: $scope.fats.maxValue
+                },
+                {
+                    name: "Cholesterols",
+                    minValue: $scope.cholesterols.minValue,
+                    maxValue: $scope.cholesterols.maxValue
+                }
+            ]
+
+        }).then(function (response) {
+
+            console.log(response.data.success);
+
+            if (response.data.success = true) {
+                $scope.showSuccess($scope.user.email);
+            } else {
+                $scope.showFailed("Error Updating");
+            }
+
+        });
+    }
 
 }]);
 
+app2.config(function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('{[{');
+    $interpolateProvider.endSymbol('}]}');
+})
+
+    .config(function ($mdThemingProvider) {
+        // Configure a dark theme with primary foreground yellow
+        $mdThemingProvider.theme('docs-dark', 'default')
+            .primaryPalette('yellow')
+            .dark();
+    });
+
 angular.element(document).ready(function () {
     var myDiv1 = document.getElementById("all_modules");
-    angular.bootstrap(myDiv1, ["inputBasicDemo", "rzSliderDemo"]);
+    // angular.bootstrap(myDiv1, ["inputBasicDemo", "rzSliderDemo"]);
+    angular.bootstrap(myDiv1, ["inputBasicDemo"]);
 });
-
-

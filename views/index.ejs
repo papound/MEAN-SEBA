@@ -59,10 +59,29 @@
     <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons"-->
     <!--rel="stylesheet">-->
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
     <!-- Google Login -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id"
           content="850042957038-3l9423np2uqruaplafluttpmengct984.apps.googleusercontent.com">
+
+    <!--Passport-JWT Login-->
+    <!--<script src="loginApp.js"></script>-->
+    <!--<script src="controllers.js"></script>-->
+    <!--<script src="services.js"></script>-->
+    <!--<script src="constants.js"></script>-->
 
     <!--Custom Style-->
     <style is="custom-style">
@@ -132,6 +151,13 @@
             margin-left: 60px;
         }
 
+        .login_input {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+
+
     </style>
 
 </head>
@@ -143,123 +169,180 @@
 
         $("#position").hide();
 
+        if(localStorage.loginChefAtHomeEmail){
+            var url = "http://localhost:4000/main-profile"
+            var email = localStorage.loginChefAtHomeEmail
+            var firstname = localStorage.loginChefAtHomefirstname
+            $('a#login').text(firstname);
+            $('a#login').removeAttr("onclick");
+            $('a#login').removeAttr('href');
+            $('a#login_collapse').text("Welcome! " + email);
+            $('a#login_collapse').removeAttr("onclick");
+            $('a#login_collapse').removeAttr('href');
+            $('#login_icon').addClass('login_icon2').removeClass('login_icon');
+            $('a#login').attr('href', url);
+        }
+
     });
 </script>
+
 
 <!-- Main Navigation -->
 <div id="mainnavigation">
     <!-- Nav -->
-    <nav class="navbar navbar-fixed-top affix-top" data-spy="affix" data-offset-top="100">
-        <div class="container">
-            <div class="row hidden-sm hidden-xs">
-                <div class="col-sm-11 menu_center">
-                    <!-- Links 01 -->
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <ul class="nav navbar-nav pull-left">
-                                <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                                <li><a href="#menu" class="menubar">Menu</a></li>
+    <nav id="all_modules" class="navbar navbar-fixed-top affix-top" data-spy="affix" data-offset-top="100">
+        <div ng-controller="loginCtrl">
+            <div class="container">
+                <div class="row hidden-sm hidden-xs">
+                    <div class="col-sm-11 menu_center">
+                        <!-- Links 01 -->
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <ul class="nav navbar-nav pull-left">
+                                    <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                    <li><a href="#menu" class="menubar">Menu</a></li>
 
-                            </ul>
+                                </ul>
+                            </div>
+                            <!-- /.Links 01 -->
+                            <!-- Logo -->
+                            <div class="col-sm-4">
+                                <a href="http://localhost:4000" id="bellafirenze-lg"></a>
+                            </div>
+                            <!-- /.Logo -->
+
+                            <!-- Links 02 -->
+                            <div class="col-sm-4">
+                                <ul class="nav navbar-nav pull-right">
+
+                                    <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    </li>
+
+                                    <li><a href="#ingredient" class="menubar">Ingredient</a></li>
+
+                                </ul>
+
+                            </div>
+                            <!-- Links 02 -->
                         </div>
-                        <!-- /.Links 01 -->
-                        <!-- Logo -->
-                        <div class="col-sm-4">
-                            <a href="index-x.html" id="bellafirenze-lg"></a>
+
+                    </div>
+                    <div class="col-sm-1 login_col">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="#" class="menubar fixed-right" data-dialog="dialog" id="login"
+                                           onclick="clickHandler(event)">Login</a></li>
+                                    <li>
+                                        <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <!-- /.Logo -->
-
-                        <!-- Links 02 -->
-                        <div class="col-sm-4">
-                            <ul class="nav navbar-nav pull-right">
-
-                                <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-
-                                <li><a href="#ingredient" class="menubar">Ingredient</a></li>
-
-                            </ul>
-
-                        </div>
-                        <!-- Links 02 -->
                     </div>
 
                 </div>
-                <div class="col-sm-1 login_col">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#" class="menubar fixed-right" data-dialog="dialog" id="login"
-                                       onclick="clickHandler(event)">Login</a></li>
-                                <li>
-                                    <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
-                                </li>
-                            </ul>
+
+                <!--Login Dialog-->
+                <div class="visible-sm visible-xs visible-md visible-lg" ng-controller="loginCtrl">
+                    <paper-dialog id="dialog" class="size-position">
+                        <h2>Login</h2>
+                        <!--<paper-input label="&nbsp;&nbsp;Username" id="inputWithButton" ng-model="user.email">-->
+                        <!--<iron-icon icon="social:person" prefix></iron-icon>-->
+                        <!--<paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">-->
+                        <!--</paper-icon-button>-->
+                        <!--</paper-input>-->
+                        <br>
+                        <div class="login_input">
+                            <md-input-container class="md-icon-float md-block">
+                                <!-- Use floating label instead of placeholder -->
+                                <label>Email</label>
+                                <md-icon md-svg-src="images/svg/ic_person_24px.svg" class="name"></md-icon>
+                                <input ng-model="user.email" type="text">
+                            </md-input-container>
+
+                            <md-input-container class="md-icon-float md-block">
+                                <!-- Use floating label instead of placeholder -->
+                                <label>Password</label>
+                                <md-icon md-svg-src="images/svg/ic_lock_black_24px.svg" class="name"></md-icon>
+                                <input ng-model="user.password" type="password">
+                            </md-input-container>
                         </div>
+
+                        <div class="row in-login-popup">
+                            <div class="col-sm-6 col-centered">
+                                <md-button class="md-raised md-primary" ng-click="login()">Login
+                                </md-button>
+                            </div>
+                            <div class="col-sm-6 col-centered">
+                                <md-button class="md-raised" ng-click="closeDialog()">Cancel
+                                </md-button>
+                            </div>
+                        </div>
+                        <div id="my-signin2" data-onsuccess=""></div>
+                        <br>
+                        <a href="http://localhost:4000/register">Not a member? Please Register Here!</a>
+                        <br><br>
+                    </paper-dialog>
+
+                    <!--Invalid Credentials-->
+                    <div class="visible-sm visible-xs visible-md visible-lg">
+                        <paper-dialog id="incomplete">
+                            <h2>Invalid Credentials!</h2>
+                            <p>Your information is incomplete!</p>
+                            <div class="buttons">
+                                <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                            </div>
+                        </paper-dialog>
                     </div>
+
+                    <!--Invalid Credentials-->
+                    <div class="visible-sm visible-xs visible-md visible-lg">
+                        <paper-dialog id="login-failed">
+                            <h2>Invalid email or password!</h2>
+                            <p>Please type it again!</p>
+                            <div class="buttons">
+                                <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                            </div>
+                        </paper-dialog>
+                    </div>
+
                 </div>
 
-            </div>
 
-            <!--Login Dialog-->
-            <div class="visible-sm visible-xs visible-md visible-lg">
-                <paper-dialog id="dialog" class="size-position">
-                    <h2>Login</h2>
-                    <paper-input label="&nbsp;&nbsp;Username" id="inputWithButton">
-                        <iron-icon icon="social:person" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <paper-input label="&nbsp;&nbsp;Password" id="inputWithButton2" type="password">
-                        <iron-icon icon="icons:https" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput2()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <br><br>
-                    <div class="row in-login-popup">
-                        <div class="col-sm-6 col-centered">
-                            <paper-button raised class="green">Login</paper-button>
-                        </div>
-                        <div class="col-sm-6 col-centered">
-                            <paper-button raised class="grey">Clear</paper-button>
-                        </div>
-                    </div>
-                    <div id="my-signin2" data-onsuccess=""></div>
-                    <br>
-                    <a href="#">Not a member? Please Register Here!</a>
-                    <br><br>
-                </paper-dialog>
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
+            <!-- /.container -->
+
+            <!-- Nav for small screens -->
+            <div class="container-fluid no-padding">
+                <div class="visible-sm visible-xs">
+                    <!-- Navbar Header -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#navbar_collapse"><span class="sr-only">Toggle navigation</span> <span
+                                    class="icon-bar first"></span> <span class="icon-bar hide-bar"></span> <span
+                                    class="icon-bar last"></span></button>
+                        <a class="navbar-brand" href="index-x.html" id="bellafirenze-sm"></a>
+                    </div>
+                    <!-- /.Navbar Header -->
+                    <!-- Navbar Collapse -->
+                    <div class="collapse navbar-collapse" id="navbar_collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#menu">Menu</a></li>
+                            <li><a href="#ingredient">Ingredient</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#" data-dialog="dialog" onclick="clickHandler(event)"
+                                   id="login_collapse">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <!-- /.Nav for small screens -->
         </div>
-        <!-- /.container -->
-
-        <!-- Nav for small screens -->
-        <div class="container-fluid no-padding">
-            <div class="visible-sm visible-xs">
-                <!-- Navbar Header -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar_collapse"><span class="sr-only">Toggle navigation</span> <span
-                                class="icon-bar first"></span> <span class="icon-bar hide-bar"></span> <span
-                                class="icon-bar last"></span></button>
-                    <a class="navbar-brand" href="index-x.html" id="bellafirenze-sm"></a>
-                </div>
-                <!-- /.Navbar Header -->
-                <!-- Navbar Collapse -->
-                <div class="collapse navbar-collapse" id="navbar_collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#menu">Menu</a></li>
-                        <li><a href="#ingredient">Ingredient</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#" data-dialog="dialog" onclick="clickHandler(event)" id="login_collapse">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-        <!-- /.Nav for small screens -->
     </nav>
     <!-- /.Nav -->
 </div>
@@ -313,11 +396,14 @@
             <!-- /.Image -->
             <!-- About us description -->
             <div class="col-lg-6 wow fadeInRight" style="visibility: hidden; animation-name: none;">
+                <br>
                 <p class="lead-sm mrgn-30-top-btm">Have you ever experienced problems with grocery shopping? Too much
-                    quantity being sold, Run out of time to go for one
-                    , Not available on holidays etc. </p>
-                <p class="lead-sm mrgn-30-top-btm">Chef@Home can now solve your problems!</p>
-                <p class="lead-sm mrgn-30-top-btm">Choose your favourite dishes & we deliver their ingredients right to
+                    quantity being sold? Run out of time to go for one?
+                     Not available on holidays?, etc. </p>
+                <p class="lead-sm mrgn-30-top-btm">
+                    Chef@Home can now solve your problems!
+                </p>
+                <p class="lead-sm mrgn-30-top-btm">Choose your favourite dishes & we deliver the ingredients right to
                     your doorsteps!</p>
                 <p class="lead-sm mrgn-30-top-btm">Don't hesitate to Contact us or Sign up :)</p>
             </div>
@@ -434,99 +520,99 @@
 </section>
 <!-- /.Chefs -->
 
-<!-- Recommendations -->
-<section id="recommendations">
-    <div class="container">
-        <!-- Title & Divider -->
-        <div class="row text-center mrgn-40-top">
-            <div class="col-sm-12">
-                <h3 class="wow fadeInDown">Chefs' recommendations</h3>
-            </div>
-        </div>
-        <!-- Title & Divider -->
+<!--&lt;!&ndash; Recommendations &ndash;&gt;-->
+<!--<section id="recommendations">-->
+<!--<div class="container">-->
+<!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
+<!--<div class="row text-center mrgn-40-top">-->
+<!--<div class="col-sm-12">-->
+<!--<h3 class="wow fadeInDown">Chefs' recommendations</h3>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
 
-        <!-- Recommendation Content -->
-        <div class="row text-center">
-            <div class="col-xs-10 col-xs-offset-1">
-                <!-- Owl Carousel Recommendations -->
-                <div id="owl-recommendation" class="owl-carousel">
+<!--&lt;!&ndash; Recommendation Content &ndash;&gt;-->
+<!--<div class="row text-center">-->
+<!--<div class="col-xs-10 col-xs-offset-1">-->
+<!--&lt;!&ndash; Owl Carousel Recommendations &ndash;&gt;-->
+<!--<div id="owl-recommendation" class="owl-carousel">-->
 
-                    <!-- Recomendation 01 -->
+<!--&lt;!&ndash; Recomendation 01 &ndash;&gt;-->
 
-                    <div class="item wow fadeIn">
-                        <div class="bg-white mrgn-40-top-btm pddn-10">
-                            <h4>Steak with vegetables</h4>
-                            <img src="newTemplate/img/bf-dishes-01.jpg" width="1000" height="500"
-                                 class="img-responsive center-block" alt=""/>
-                            <p class="mrgn-10-top"><span class="accent-price">€14.49</span></p>
-                            <p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed
-                                pulvinar euismod eros ac congue.</p>
-                        </div>
-                    </div>
+<!--<div class="item wow fadeIn">-->
+<!--<div class="bg-white mrgn-40-top-btm pddn-10">-->
+<!--<h4>Steak with vegetables</h4>-->
+<!--<img src="newTemplate/img/bf-dishes-01.jpg" width="1000" height="500"-->
+<!--class="img-responsive center-block" alt=""/>-->
+<!--<p class="mrgn-10-top"><span class="accent-price">€14.49</span></p>-->
+<!--<p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed-->
+<!--pulvinar euismod eros ac congue.</p>-->
+<!--</div>-->
+<!--</div>-->
 
-                    <!-- /.Recomendation 01 -->
+<!--&lt;!&ndash; /.Recomendation 01 &ndash;&gt;-->
 
-                    <!-- Recomendation 02 -->
-                    <div class="item wow fadeIn">
-                        <div class="bg-white mrgn-40-top-btm pddn-10">
-                            <h4>Veggie &amp; Lemon Risoto</h4>
-                            <img src="newTemplate/img/bf-dishes-02.jpg" width="1000" height="500"
-                                 class="img-responsive center-block" alt=""/>
-                            <p class="mrgn-10-top"><span class="accent-price">€11.99</span></p>
-                            <p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed
-                                pulvinar euismod eros ac congue.</p>
-                        </div>
-                    </div>
-                    <!-- /.Recomendation 02 -->
+<!--&lt;!&ndash; Recomendation 02 &ndash;&gt;-->
+<!--<div class="item wow fadeIn">-->
+<!--<div class="bg-white mrgn-40-top-btm pddn-10">-->
+<!--<h4>Veggie &amp; Lemon Risoto</h4>-->
+<!--<img src="newTemplate/img/bf-dishes-02.jpg" width="1000" height="500"-->
+<!--class="img-responsive center-block" alt=""/>-->
+<!--<p class="mrgn-10-top"><span class="accent-price">€11.99</span></p>-->
+<!--<p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed-->
+<!--pulvinar euismod eros ac congue.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Recomendation 02 &ndash;&gt;-->
 
-                    <!-- Recomendation 03 -->
-                    <div class="item wow fadeIn">
-                        <div class="bg-white mrgn-40-top-btm pddn-10">
-                            <h4>Mozarella Oregano Salad</h4>
-                            <img src="newTemplate/img/bf-dishes-03.jpg" width="1000" height="500"
-                                 class="img-responsive center-block" alt=""/>
-                            <p class="mrgn-10-top"><span class="accent-price">€6.45</span></p>
-                            <p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed
-                                pulvinar euismod eros ac congue.</p>
-                        </div>
-                    </div>
-                    <!-- /.Recomendation 03 -->
+<!--&lt;!&ndash; Recomendation 03 &ndash;&gt;-->
+<!--<div class="item wow fadeIn">-->
+<!--<div class="bg-white mrgn-40-top-btm pddn-10">-->
+<!--<h4>Mozarella Oregano Salad</h4>-->
+<!--<img src="newTemplate/img/bf-dishes-03.jpg" width="1000" height="500"-->
+<!--class="img-responsive center-block" alt=""/>-->
+<!--<p class="mrgn-10-top"><span class="accent-price">€6.45</span></p>-->
+<!--<p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed-->
+<!--pulvinar euismod eros ac congue.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Recomendation 03 &ndash;&gt;-->
 
-                    <!-- Recomendation 04 -->
-                    <div class="item wow fadeIn">
-                        <div class="bg-white mrgn-40-top-btm pddn-10">
-                            <h4>Parmigiano &amp; Arugula Pizza</h4>
-                            <img src="newTemplate/img/bf-dishes-04.jpg" width="1000" height="500"
-                                 class="img-responsive center-block" alt=""/>
-                            <p class="mrgn-10-top"><span class="accent-price">€9.00</span></p>
-                            <p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed
-                                pulvinar euismod eros ac congue.</p>
-                        </div>
-                    </div>
-                    <!-- /.Recomendation 04 -->
+<!--&lt;!&ndash; Recomendation 04 &ndash;&gt;-->
+<!--<div class="item wow fadeIn">-->
+<!--<div class="bg-white mrgn-40-top-btm pddn-10">-->
+<!--<h4>Parmigiano &amp; Arugula Pizza</h4>-->
+<!--<img src="newTemplate/img/bf-dishes-04.jpg" width="1000" height="500"-->
+<!--class="img-responsive center-block" alt=""/>-->
+<!--<p class="mrgn-10-top"><span class="accent-price">€9.00</span></p>-->
+<!--<p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed-->
+<!--pulvinar euismod eros ac congue.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Recomendation 04 &ndash;&gt;-->
 
-                    <!-- Recomendation 05 -->
-                    <div class="item wow fadeIn">
-                        <div class="bg-white mrgn-40-top-btm pddn-10">
-                            <h4>White Cheddar Chicken</h4>
-                            <img src="newTemplate/img/bf-dishes-05.jpg" width="1000" height="500"
-                                 class="img-responsive center-block" alt=""/>
-                            <p class="mrgn-10-top"><span class="accent-price">€12.49</span></p>
-                            <p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed
-                                pulvinar euismod eros ac congue.</p>
-                        </div>
-                    </div>
-                    <!-- /.Recomendation 05 -->
+<!--&lt;!&ndash; Recomendation 05 &ndash;&gt;-->
+<!--<div class="item wow fadeIn">-->
+<!--<div class="bg-white mrgn-40-top-btm pddn-10">-->
+<!--<h4>White Cheddar Chicken</h4>-->
+<!--<img src="newTemplate/img/bf-dishes-05.jpg" width="1000" height="500"-->
+<!--class="img-responsive center-block" alt=""/>-->
+<!--<p class="mrgn-10-top"><span class="accent-price">€12.49</span></p>-->
+<!--<p class="text-muted">Suspendisse est orci, vehicula in porttitor at, eleifend nec erat. Sed-->
+<!--pulvinar euismod eros ac congue.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Recomendation 05 &ndash;&gt;-->
 
-                </div>
-                <!-- /.Owl Carousel Recommendations -->
-            </div>
-        </div>
-        <!-- /.Recommendations Content -->
-    </div>
-    <!-- /.container -->
-</section>
-<!-- /.Recommendations -->
+<!--</div>-->
+<!--&lt;!&ndash; /.Owl Carousel Recommendations &ndash;&gt;-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Recommendations Content &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.container &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; /.Recommendations &ndash;&gt;-->
 
 <!-- Menu -->
 <section id="menu">
@@ -536,8 +622,8 @@
             <div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"
                  style="visibility: hidden; animation-name: none;">
                 <h2>Menu</h2>
-                <p class="lead">Bella Firenze is a happy home for famous chefs who love Italian food and prepare it with
-                    lots of love and attention.</p>
+                <p class="lead">Chef@Home never stop inventing a truly great dish and recipes with high quality
+                    ingredients.</p>
             </div>
         </div>
         <div class="mrgn-50-top-btm text-center"><img
@@ -554,13 +640,13 @@
                 </p>
                 <h3 class="mrgn-50-top">Easy Summer Meatloaf <span class="accent">€4.95</span></h3>
                 <p>1 1/2 Pounds Ground Beef, 1 Cup Milk, Chopped Onion, 1/3 Cup Ketchup, 1 Egg, Salt and Pepper</p>
-                <h3>Chef Alonzo's Stuffed Peppers<span class="accent">€4.95</span></h3>
+                <h3>Chef Alonzo's Stuffed Peppers<span class="accent">€6.60</span></h3>
                 <p>1 Cup Rice, 1 Tbs Olive Oil, 1 Cup Beef Broth, Diced Tomatoes, Salt, Black, Bell and Cayenne Pepper,
                     Minced Garlic</p>
-                <h3>Chicken Marsala <span class="accent">€4.95</span></h3>
+                <h3>Chicken Marsala <span class="accent">€5.50</span></h3>
                 <p>1/4 Cup All-Purpose Flour, Butter, Dried Oregano, 1/2 Cup Marsala Wine, Sliced Mushroom, 4 Skinless,
                     Boneless Chicken Breast Halves</p>
-                <h3>Sweet, Sticky and Spicy Chicken<span class="accent">€4.95</span></h3>
+                <h3>Sweet, Sticky and Spicy Chicken<span class="accent">€4.00</span></h3>
                 <p>1/4 Cup Soy Sauce, Minced Garlic, 2 Tbs Honey, 4 Skinless, Boneless Chicken Breast Halves, Chopped
                     Fresh Ginger Root, 1 Tbs Brown Sugar.</p>
             </div>
@@ -569,15 +655,15 @@
             <!-- Menu List 02 -->
             <div class="col-md-4 wow fadeIn" style="visibility: hidden; animation-name: none;">
                 <p class="text-center mrgn-30-top"><span class="label label-menugroup text-uppercase">Vegan</span></p>
-                <h3 class="mrgn-50-top">Easy Alfredo Sauce <span class="accent">€4.95</span></h3>
+                <h3 class="mrgn-50-top">Easy Alfredo Sauce <span class="accent">€8.90</span></h3>
                 <p>2 Cups Milk, 8 Ounce Cream Cheese, 180 g Parmesan Cheese, 1/8 Tsp Ground Black
                     Pepper</p>
-                <h3>SEASONAL ROASTED BRUSSELS SPROUTS <span class="accent">€4.95</span></h3>
+                <h3>Seasonal Roasted Brussel Sprouts <span class="accent">€5.50</span></h3>
                 <p>1.5 kg Brussels Sprouts, 3 Tbsp Olive Oil, 1 Tsp Kosher Salt, 1/2 Tsp Freshly Ground Black Pepper</p>
-                <h3>ADDICTIVE POTATO BURRITOS <span class="accent">€4.95</span></h3>
+                <h3>Addictive Potato Burritos <span class="accent">€4.95</span></h3>
                 <p>1 Onion, 4 Cloves Garlic, 3 Tbsp Chilli Powder< 4 Tsp Mustard,1 Pinch Cayenne Pepper,4 Cups Mashed
                     Cooked Sweet Potatoes, 12 Flour Tortillas, 200 g Shredded Cheddar Cheese</p>
-                <h3>ROASTED GARLIC CAULIPOWDER <span class="accent">€4.95</span></h3>
+                <h3>Roasted Garlic Cualipowder <span class="accent">€7.60</span></h3>
                 <p>2 Tbsp Minced Garlic, 3 Tbsp Olive Oil, 1 Head Cauliflower, 1/3 CUP Parmesan Cheese,
                     Salt n' Black Pepper, 1 Tbsp Chopped Fresh Parsley</p>
             </div>
@@ -587,16 +673,17 @@
             <div class="col-md-4 wow fadeIn" style="visibility: hidden; animation-name: none;">
                 <p class="text-center mrgn-30-top"><span class="label label-menugroup text-uppercase">Desserts</span>
                 </p>
-                <h3 class="mrgn-50-top">Cottage Pudding Cake <br>(Strawberry Shortcake) <span class="accent">4.95£</span>
+                <h3 class="mrgn-50-top">Cottage Pudding Cake <br>(Strawberry Shortcake) <span
+                            class="accent">€7.50</span>
                 </h3>
                 <p>2 Cups All-Purpose Flour, 1 Cup White Sugar, 1 Egg, 1/2 Tbs Vanilla Extract, 2 1/2 Tbs Baking
                     Powder</p>
-                <h3>Award Winning Soft Chocolate Chip Cookies <span class="accent">4.95£</span></h3>
+                <h3>Award Winning Soft Chocolate Chip Cookies <span class="accent">€5.00</span></h3>
                 <p>1/2 Cup White sugar, 4 1/2 Cups All-Purpose Flour, 2 Cups Butter, Chopped Walnuts, 2 Tbs Vanilla
                     Extract</p>
-                <h3>Mrs.Pumpkin's favourite <span class="accent">4.95£</span></h3>
+                <h3>Mrs.Pumpkin's favourite <span class="accent">€5.50</span></h3>
                 <p>Chopped Pumpkin, 2 Cups All-Purpose Flour, 2 Cups Sugar, Salt, Fresh Peach, Fresh Banana</p>
-                <h3>Lemon Meringue Pie<span class="accent">4.95£</span></h3>
+                <h3>Lemon Meringue Pie<span class="accent">€3.50</span></h3>
                 <p>2 Tbs Cornstarch, Zested Lemons, 4 Eggs, Baked Pie Crust, 1 Cup White-Brown Sugar</p>
             </div>
             <!-- /.Menu List 03 -->
@@ -679,86 +766,86 @@
 <!-- /.Events -->
 
 
-<!-- Testimonials -->
-<section id="testimonials">
-    <div class="container">
+<!--&lt;!&ndash; Testimonials &ndash;&gt;-->
+<!--<section id="testimonials">-->
+<!--<div class="container">-->
 
-        <!-- Owl Carousel Testimonial -->
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 wow fadeIn">
-                <div id="owl-testimonials" class="owl-carousel">
+<!--&lt;!&ndash; Owl Carousel Testimonial &ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 wow fadeIn">-->
+<!--<div id="owl-testimonials" class="owl-carousel">-->
 
-                    <!-- Testimonial 01 -->
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <p class="mrgn-20-top-btm"><img src="newTemplate/img/testimonial-portrait-01.jpg"
-                                                                class="img-responsive center-block img-circle" alt=""/>
-                                </p>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3 class="accent">Lovely food, Gorgeous Atmosphere</h3>
-                                <p class="mrgn-20-top-btm">Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster
-                                    tamquam, eu tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>
-                                <p class="accent"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                            class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                            class="fa fa-star"></i>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.Testimonial 01 -->
+<!--&lt;!&ndash; Testimonial 01 &ndash;&gt;-->
+<!--<div class="item">-->
+<!--<div class="row">-->
+<!--<div class="col-sm-4">-->
+<!--<p class="mrgn-20-top-btm"><img src="newTemplate/img/testimonial-portrait-01.jpg"-->
+<!--class="img-responsive center-block img-circle" alt=""/>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="col-sm-8">-->
+<!--<h3 class="accent">Lovely food, Gorgeous Atmosphere</h3>-->
+<!--<p class="mrgn-20-top-btm">Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster-->
+<!--tamquam, eu tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>-->
+<!--<p class="accent"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--class="fa fa-star"></i>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Testimonial 01 &ndash;&gt;-->
 
-                    <!-- Testimonial 02 -->
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <p class="mrgn-20-top-btm"><img src="newTemplate/img/testimonial-portrait-02.jpg"
-                                                                class="img-responsive center-block img-circle" alt=""/>
-                                </p>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3 class="accent">Lovely food, Gorgeous Atmosphere</h3>
-                                <p class="mrgn-20-top-btm">Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster
-                                    tamquam, eu tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>
-                                <p class="accent"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                            class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                            class="fa fa-star"></i>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.Testimonial 02 -->
+<!--&lt;!&ndash; Testimonial 02 &ndash;&gt;-->
+<!--<div class="item">-->
+<!--<div class="row">-->
+<!--<div class="col-sm-4">-->
+<!--<p class="mrgn-20-top-btm"><img src="newTemplate/img/testimonial-portrait-02.jpg"-->
+<!--class="img-responsive center-block img-circle" alt=""/>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="col-sm-8">-->
+<!--<h3 class="accent">Lovely food, Gorgeous Atmosphere</h3>-->
+<!--<p class="mrgn-20-top-btm">Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster-->
+<!--tamquam, eu tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>-->
+<!--<p class="accent"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--class="fa fa-star"></i>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Testimonial 02 &ndash;&gt;-->
 
-                    <!-- Testimonial 03 -->
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <p class="mrgn-20-top-btm"><img src="newTemplate/img/testimonial-portrait-03.jpg"
-                                                                class="img-responsive center-block img-circle" alt=""/>
-                                </p>
-                            </div>
-                            <div class="col-sm-8">
-                                <h3 class="accent">Lovely food, Gorgeous Atmosphere</h3>
-                                <p class="mrgn-20-top-btm">Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster
-                                    tamquam, eu tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>
-                                <p class="accent"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                            class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                            class="fa fa-star-o"></i>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.Testimonial 03 -->
+<!--&lt;!&ndash; Testimonial 03 &ndash;&gt;-->
+<!--<div class="item">-->
+<!--<div class="row">-->
+<!--<div class="col-sm-4">-->
+<!--<p class="mrgn-20-top-btm"><img src="newTemplate/img/testimonial-portrait-03.jpg"-->
+<!--class="img-responsive center-block img-circle" alt=""/>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="col-sm-8">-->
+<!--<h3 class="accent">Lovely food, Gorgeous Atmosphere</h3>-->
+<!--<p class="mrgn-20-top-btm">Labore pertinax et eos, mei dicat scaevola ei. Ei cum noster-->
+<!--tamquam, eu tation tincidunt dissentiunt vel, ad nam scripta constituto.</p>-->
+<!--<p class="accent"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--class="fa fa-star-o"></i>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Testimonial 03 &ndash;&gt;-->
 
-                </div>
-            </div>
-        </div>
-        <!-- Owl Carousel Testimonials -->
-    </div>
-    <!-- /.container -->
-</section>
-<!-- /.Testimonials -->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Owl Carousel Testimonials &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.container &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; /.Testimonials &ndash;&gt;-->
 
 <!-- Fresh Food CTA -->
 <section id="fresh-food">
@@ -768,9 +855,9 @@
             <div class="col-md-10 col-md-offset-1 text-center wow fadeInDown"
                  style="visibility: hidden; animation-name: none;">
                 <h2>Food should be fresh, delicious and beautiful.</h2>
-                <p class="lead mrgn-40-top-btm text-uppercase text-bold">Come to Bella Firenze to fall in love.</p>
+                <p class="lead mrgn-40-top-btm text-uppercase text-bold">Come to Chef@Home to fall in love.</p>
                 <p><a href="http://bella.designershare.net/index-bella-firenze.html#booktable"
-                      class="btn btn-lg btn-main-white">Book a Table</a></p>
+                      class="btn btn-lg btn-main-white">Choose Dishes</a></p>
             </div>
         </div>
         <!-- /.Fresh Food Content -->
@@ -779,163 +866,163 @@
 </section>
 <!-- /.Fresh Food CTA -->
 
-<!-- Locations -->
-<section id="locations">
-    <div class="container">
-        <!-- Title & Divider -->
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"
-                 style="visibility: hidden; animation-name: none;">
-                <h2>Locations</h2>
-                <p class="lead">Our chefs love gathering the community to taste their new dishes, try new ideas and
-                    present the loveliest wine from the region and world.</p>
-            </div>
-        </div>
-        <div class="mrgn-50-top-btm text-center"><img
-                    src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"
-                    alt=""></div>
-        <!-- /.Title & Divider -->
+<!--&lt;!&ndash; Locations &ndash;&gt;-->
+<!--<section id="locations">-->
+<!--<div class="container">-->
+<!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"-->
+<!--style="visibility: hidden; animation-name: none;">-->
+<!--<h2>Locations</h2>-->
+<!--<p class="lead">Our chefs love gathering the community to taste their new dishes, try new ideas and-->
+<!--present the loveliest wine from the region and world.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="mrgn-50-top-btm text-center"><img-->
+<!--src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"-->
+<!--alt=""></div>-->
+<!--&lt;!&ndash; /.Title & Divider &ndash;&gt;-->
 
-        <!-- Locations List -->
-        <div class="row text-center">
-            <!-- Location 01 -->
-            <div class="col-md-4 wow fadeIn mrgn-40-btm" style="visibility: hidden; animation-name: none;"><img
-                        src="newTemplate/img/location01.jpg" class="img-responsive location"
-                        alt="">
-                <h3>Bella Firenze - Pizza &amp; Gellato</h3>
-                <p class="lead-sm mrgn-30-top">655 A, King Street<br>
-                    Manchester, M3 3BE </p>
-                <p class="mrgn-20-top"><a href="http://bella.designershare.net/index-bella-firenze.html#"
-                                          class="btn btn-sm btn-main">Book a table</a></p>
-            </div>
-            <!-- /.Location 01 -->
-            <!-- Location 02 -->
-            <div class="col-md-4 wow fadeIn mrgn-40-btm" style="visibility: hidden; animation-name: none;"><img
-                        src="newTemplate/img/location02.jpg" class="img-responsive location"
-                        alt="">
-                <h3>Bella Firenze - Pizza &amp; Grill</h3>
-                <p class="lead-sm mrgn-30-top">21, Gilmearn Road<br>
-                    Birmingham, B8 6VT </p>
-                <p class="mrgn-20-top"><a href="http://bella.designershare.net/index-bella-firenze.html#"
-                                          class="btn btn-sm btn-main">Book a table</a></p>
-            </div>
-            <!-- /.Location 02 -->
-            <!-- Location 03 -->
-            <div class="col-md-4 wow fadeIn mrgn-40-btm" style="visibility: hidden; animation-name: none;"><img
-                        src="newTemplate/img/location03.jpg" class="img-responsive location"
-                        alt="">
-                <h3>Bella Firenze - Winery</h3>
-                <p class="lead-sm mrgn-30-top">64, Bearn Place<br>
-                    Cornwall, TR22 0MN </p>
-                <p class="mrgn-20-top"><a href="http://bella.designershare.net/index-bella-firenze.html#"
-                                          class="btn btn-sm btn-main">Book a table</a></p>
-            </div>
-            <!-- /.Location 03 -->
-        </div>
-        <!-- /.Location List -->
-    </div>
-    <!-- /.container -->
-</section>
-<!-- /.Locations -->
+<!--&lt;!&ndash; Locations List &ndash;&gt;-->
+<!--<div class="row text-center">-->
+<!--&lt;!&ndash; Location 01 &ndash;&gt;-->
+<!--<div class="col-md-4 wow fadeIn mrgn-40-btm" style="visibility: hidden; animation-name: none;"><img-->
+<!--src="newTemplate/img/location01.jpg" class="img-responsive location"-->
+<!--alt="">-->
+<!--<h3>Bella Firenze - Pizza &amp; Gellato</h3>-->
+<!--<p class="lead-sm mrgn-30-top">655 A, King Street<br>-->
+<!--Manchester, M3 3BE </p>-->
+<!--<p class="mrgn-20-top"><a href="http://bella.designershare.net/index-bella-firenze.html#"-->
+<!--class="btn btn-sm btn-main">Book a table</a></p>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Location 01 &ndash;&gt;-->
+<!--&lt;!&ndash; Location 02 &ndash;&gt;-->
+<!--<div class="col-md-4 wow fadeIn mrgn-40-btm" style="visibility: hidden; animation-name: none;"><img-->
+<!--src="newTemplate/img/location02.jpg" class="img-responsive location"-->
+<!--alt="">-->
+<!--<h3>Bella Firenze - Pizza &amp; Grill</h3>-->
+<!--<p class="lead-sm mrgn-30-top">21, Gilmearn Road<br>-->
+<!--Birmingham, B8 6VT </p>-->
+<!--<p class="mrgn-20-top"><a href="http://bella.designershare.net/index-bella-firenze.html#"-->
+<!--class="btn btn-sm btn-main">Book a table</a></p>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Location 02 &ndash;&gt;-->
+<!--&lt;!&ndash; Location 03 &ndash;&gt;-->
+<!--<div class="col-md-4 wow fadeIn mrgn-40-btm" style="visibility: hidden; animation-name: none;"><img-->
+<!--src="newTemplate/img/location03.jpg" class="img-responsive location"-->
+<!--alt="">-->
+<!--<h3>Bella Firenze - Winery</h3>-->
+<!--<p class="lead-sm mrgn-30-top">64, Bearn Place<br>-->
+<!--Cornwall, TR22 0MN </p>-->
+<!--<p class="mrgn-20-top"><a href="http://bella.designershare.net/index-bella-firenze.html#"-->
+<!--class="btn btn-sm btn-main">Book a table</a></p>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Location 03 &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Location List &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.container &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; /.Locations &ndash;&gt;-->
 
-<!-- Book a Table -->
-<section id="booktable">
-    <div class="container">
-        <!-- Title & Divider -->
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"
-                 style="visibility: hidden; animation-name: none;">
-                <h2>Book a table</h2>
-                <p class="lead">Although we do have available tables now and then, be sure that most of the time we
-                    cannot seat you in so it is better to book a table in advance.</p>
-            </div>
-        </div>
-        <div class="mrgn-50-top-btm text-center"><img
-                    src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"
-                    alt=""></div>
-        <!-- /.Title & Divider -->
+<!--&lt;!&ndash; Book a Table &ndash;&gt;-->
+<!--<section id="booktable">-->
+<!--<div class="container">-->
+<!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"-->
+<!--style="visibility: hidden; animation-name: none;">-->
+<!--<h2>Book a table</h2>-->
+<!--<p class="lead">Although we do have available tables now and then, be sure that most of the time we-->
+<!--cannot seat you in so it is better to book a table in advance.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="mrgn-50-top-btm text-center"><img-->
+<!--src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"-->
+<!--alt=""></div>-->
+<!--&lt;!&ndash; /.Title & Divider &ndash;&gt;-->
 
-        <!-- Book a Table Form -->
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 wow fadeIn"
-                 style="visibility: hidden; animation-name: none;">
-                <form id="contactForm" name="sentMessage" novalidate="">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="form-control" data-validation-required-message="Please enter the date."
-                                       id="date" placeholder="Date *" required="" type="text">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" data-validation-required-message="Please enter the time."
-                                       id="time" placeholder="Time *" required="" type="text">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control"
-                                       data-validation-required-message="Please enter the occasion." id="occasion"
-                                       placeholder="Occasion *" required="" type="text">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control">
-                                    <option> Location</option>
-                                    <option> Bella Firenze - Pizza &amp; Gellato</option>
-                                    <option> Bella Firenze - Pizza &amp; Grill</option>
-                                    <option> Bella Firenze - Winery</option>
-                                </select>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="form-control" data-validation-required-message="How many people?"
-                                       id="howmany" placeholder="How many people? *" required="" type="text">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" data-validation-required-message="Please enter your Name."
-                                       id="name" placeholder="Name *" required="" type="text">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" data-validation-required-message="Please enter your Email."
-                                       id="email" placeholder="Email *" required="" type="text">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" data-validation-required-message="Please enter your Phone."
-                                       id="phone" placeholder="Phone *" required="" type="text">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <textarea class="form-control"
-                                          data-validation-required-message="Please enter a message." id="message"
-                                          name="message" placeholder="Do You Have Any Special Requirements? *"
-                                          required=""></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <div id="success"></div>
-                            <button class="btn btn-main" type="submit">Book</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- /.Book a Table Form -->
-    </div>
-    <!-- /.container -->
-</section>
-<!-- /.Book a Table -->
+<!--&lt;!&ndash; Book a Table Form &ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 wow fadeIn"-->
+<!--style="visibility: hidden; animation-name: none;">-->
+<!--<form id="contactForm" name="sentMessage" novalidate="">-->
+<!--<div class="row">-->
+<!--<div class="col-md-6">-->
+<!--<div class="form-group">-->
+<!--<input class="form-control" data-validation-required-message="Please enter the date."-->
+<!--id="date" placeholder="Date *" required="" type="text">-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input class="form-control" data-validation-required-message="Please enter the time."-->
+<!--id="time" placeholder="Time *" required="" type="text">-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input class="form-control"-->
+<!--data-validation-required-message="Please enter the occasion." id="occasion"-->
+<!--placeholder="Occasion *" required="" type="text">-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<select class="form-control">-->
+<!--<option> Location</option>-->
+<!--<option> Bella Firenze - Pizza &amp; Gellato</option>-->
+<!--<option> Bella Firenze - Pizza &amp; Grill</option>-->
+<!--<option> Bella Firenze - Winery</option>-->
+<!--</select>-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--<div class="form-group">-->
+<!--<input class="form-control" data-validation-required-message="How many people?"-->
+<!--id="howmany" placeholder="How many people? *" required="" type="text">-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input class="form-control" data-validation-required-message="Please enter your Name."-->
+<!--id="name" placeholder="Name *" required="" type="text">-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input class="form-control" data-validation-required-message="Please enter your Email."-->
+<!--id="email" placeholder="Email *" required="" type="text">-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input class="form-control" data-validation-required-message="Please enter your Phone."-->
+<!--id="phone" placeholder="Phone *" required="" type="text">-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<div class="form-group">-->
+<!--<textarea class="form-control"-->
+<!--data-validation-required-message="Please enter a message." id="message"-->
+<!--name="message" placeholder="Do You Have Any Special Requirements? *"-->
+<!--required=""></textarea>-->
+<!--<p class="help-block text-danger"></p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-lg-12 text-center">-->
+<!--<div id="success"></div>-->
+<!--<button class="btn btn-main" type="submit">Book</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.Book a Table Form &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.container &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; /.Book a Table &ndash;&gt;-->
 
 <!-- Contact Information -->
 <section id="contact">
@@ -945,58 +1032,14 @@
             <div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"
                  style="visibility: hidden; animation-name: none;">
                 <h2>Contact us</h2>
-                <p class="lead">Stob by whenever you would like a tasty bite and delicious glass of wine. Stay in touch
-                    on social media to know more about our special events.</p>
+                <p class="lead">Stop by whenever you would like a to cook at your house with fresh ingredients. Save
+                    your time from grocery shopping,
+                    and have a great time with your family and friends.</p>
             </div>
         </div>
         <div class="mrgn-50-top-btm text-center"><img
                     src="newTemplate/svg/divider-white.svg" alt=""></div>
         <!-- Title & Divider -->
-
-        <!-- Contact Information Content -->
-        <div class="row">
-            <!-- Address, Phone & Email -->
-            <div class="col-md-5 col-md-offset-1 col-sm-5 wow fadeIn" style="visibility: hidden; animation-name: none;">
-                <h3 class="mrgn-30-top ">Stay in Touch</h3>
-                <p class="mrgn-30-top lead">Bella Firenze </p>
-                <p class="lead">655 A, King Street<br>
-                    Manchester, M3 3BE </p>
-                <p class="lead">0752 654 85 855<br>
-                    <a href="mailto:giorgo@bellafirenze.com">giorgo@bellafirenze.com</a></p>
-            </div>
-            <!-- /.Address, Phone & Email -->
-
-            <!-- Opening Times -->
-            <div class="col-md-5 col-sm-7 wow fadeIn" style="visibility: hidden; animation-name: none;">
-                <h3>Opening Times</h3>
-                <div class="row">
-                    <div class="col-xs-5">
-                        <ul class="list-unstyled weekdays">
-                            <li>Monday</li>
-                            <li>Tuesday</li>
-                            <li>Wednesday</li>
-                            <li>Thursday</li>
-                            <li>Friday</li>
-                            <li>Saturday</li>
-                            <li>Sunday</li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-7">
-                        <ul class="list-unstyled">
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>8:00 AM - 11:00 PM</li>
-                            <li>11:00 AM - 2:00 AM</li>
-                            <li>11:00 AM - 1:00 AM</li>
-                            <li>11:00 AM - 1:00 AM</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /.Opening Times -->
-        </div>
-        <!-- /.Contact Information Content -->
     </div>
     <!-- /.container -->
 </section>
@@ -1134,11 +1177,11 @@
                 window.location.href = "http://localhost:4000/main-profile";
             }
             console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-            console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
-            console.log("Localstorage fullname: " + localStorage.loginChefAtHomefullname);
-            console.log("Localstorage firstname: " + localStorage.loginChefAtHomefirstname);
-            console.log("Localstorage lastname: " + localStorage.loginChefAtHomelastname);
-            console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
+            //console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
+            //console.log("Localstorage fullname: " + localStorage.loginChefAtHomefullname);
+            //console.log("Localstorage firstname: " + localStorage.loginChefAtHomefirstname);
+            //console.log("Localstorage lastname: " + localStorage.loginChefAtHomelastname);
+            //console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
             console.log("Localstorage Visit: " + localStorage.visitProfile);
         } else {
             console.log("Sorry, your browser does not support web storage...");
@@ -1162,7 +1205,14 @@
     }
 </script>
 
+<script type="text/javascript" src="index-controller.js"></script>
+
 <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
 
 
 </body>

@@ -1118,7 +1118,7 @@ ul.social-buttons li a:hover, ul.social-buttons li a:focus, ul.social-buttons li
 
 /* Main Button */
 .btn-main {
-    color: #bda881;
+    color: #bda881 !important;
     background-color: transparent;
     border-color: #bda881;
     border: 2px solid;
@@ -1135,8 +1135,9 @@ ul.social-buttons li a:hover, ul.social-buttons li a:focus, ul.social-buttons li
 
 .btn-main:hover {
     color: #FFF;
-    background-color: #bda881;
-    border-color: #bda881
+    background-color: transparent;
+    border-color: #bda881;
+    border-style: dashed;
 }
 
 .btn-main:active, .btn-main.active {
@@ -1147,7 +1148,7 @@ ul.social-buttons li a:hover, ul.social-buttons li a:focus, ul.social-buttons li
 
 /* Main White Button */
 .btn-main-white {
-    color: #FFF;
+    color: #FFF !important;
     background-color: transparent;
     border-color: #FFF;
     border: 2px solid;
@@ -1164,8 +1165,9 @@ ul.social-buttons li a:hover, ul.social-buttons li a:focus, ul.social-buttons li
 
 .btn-main-white:hover {
     color: #bda881;
-    background-color: #FFF;
-    border-color: #FFF
+    /*background-color: #FFF;*/
+    border-color: #FFF;
+    border-style: dashed;
 }
 
 .btn-main-white:active, .btn-main-white.active {

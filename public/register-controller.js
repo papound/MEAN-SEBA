@@ -3,49 +3,59 @@
  */
 var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages']);
 
-app2.controller('ErrCtrl', function ($scope) {
-    $scope.project = {
-        description: 'Nuclear Missile Defense System',
-        rate: ""
-    };
-})
+var url = "http://localhost:4000"
 
-app2.controller('DateCtrl', function ($scope) {
-    $scope.myDate = new Date();
-    $scope.minDate = new Date(
-        $scope.myDate.getFullYear(),
-        $scope.myDate.getMonth() - 2,
-        $scope.myDate.getDate());
-    $scope.maxDate = new Date(
-        $scope.myDate.getFullYear(),
-        $scope.myDate.getMonth() + 2,
-        $scope.myDate.getDate());
-    $scope.onlyWeekendsPredicate = function (date) {
-        var day = date.getDay();
-        return day === 0 || day === 6;
+app2.controller('formCtrl', function ($scope, $http) {
+
+    $scope.status = '  ';
+
+    $scope.register = {
+        firstname: "",
+        lastname: "",
+        birthdate: "",
+        telephone: "",
+        email: "",
+        password: "",
+        confirmpassword: "",
+        address: [
+            {
+                name: ""
+            },
+            {
+                name: ""
+            },
+            {
+                name: ""
+            },
+            {
+                name: ""
+            }
+        ]
     }
-})
 
+    $scope.showSuccess = function (firstname, email) {
 
-app2.controller('DemoCtrl', function($scope) {
-    $scope.user = {
-        title: '',
-        firstName: '',
-        familyName: '',
-        phone: '',
-        email: '',
-        address: '',
-        city: '',
-        postalCode: ''
-    };
+        var dialog = document.getElementById("regis-success");
+        if (dialog) {
+            dialog.open();
+        }
+    }
 
-    $scope.titles = ('Mr. ' +
-    'Mrs. Miss ').split(' ').map(function(title) {
-        return {abbrev: title};
-    });
-});
+    $scope.showFailed = function (err) {
+        if (err == "Incorrect Password!") {
 
-app2.controller('PassCtrl', ['$scope', function ($scope) {
+            var dialog = document.getElementById("incorrect-pass");
+            if (dialog) {
+                dialog.open();
+            }
+
+        } else {
+            var dialog = document.getElementById("incomplete");
+            if (dialog) {
+                dialog.open();
+            }
+        }
+    }
 
     // Set the default value of inputType
     $scope.inputType = 'password';
@@ -57,16 +67,50 @@ app2.controller('PassCtrl', ['$scope', function ($scope) {
         else
             $scope.inputType = 'password';
     };
-}]);
 
-app2.controller('BtnCtrl', function ($scope) {
-    $scope.title1 = 'Button';
-    $scope.title4 = 'Warn';
-    $scope.isDisabled = true;
+    $scope.submit = function () {
+        if ($scope.register.password == $scope.register.confirmpassword) {
+            if ($scope.register.firstname == "" ||
+                $scope.register.lastname == "" ||
+                $scope.register.telephone == "" ||
+                $scope.register.birthdate == "" ||
+                $scope.register.email == "" ||
+                $scope.register.address[0].name == "" ||
+                $scope.register.address[2].name == "" ||
+                $scope.register.address[3].name == "") {
+                $scope.showFailed("Incomplete Credentials!");
+            } else {
+                //alert("Ready to Submit!");
+                return $http.post(url + "/api/register", {
+                    firstname: $scope.register.firstname,
+                    lastname: $scope.register.lastname,
+                    email: $scope.register.email,
+                    password: $scope.register.password,
+                    telephone: $scope.register.telephone,
+                    password: $scope.register.password,
+                    birthdate: $scope.register.birthdate.toISOString,
+                    address1: $scope.register.address[0].name,
+                    address2: $scope.register.address[1].name,
+                    city: $scope.register.address[2].name,
+                    postalcode: $scope.register.address[3].name
+                }).then(function (response) {
 
-    $scope.googleUrl = 'http://google.com';
+                    console.log(response.data.success);
 
-});
+                    localStorage.loginChefAtHomeEmail = $scope.register.email
+                    console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
+
+                    $scope.showSuccess($scope.register.firstname, $scope.register.email);
+
+                });
+            }
+        } else {
+            $scope.showFailed("Incorrect Password!");
+        }
+    }
+
+
+})
 
 app2.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[{');

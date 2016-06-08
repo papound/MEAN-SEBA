@@ -228,6 +228,23 @@
             color: red;
         }
 
+        section > paper-button {
+            background-color: var(--google-grey-300);
+            padding: 5px;
+        }
+
+        section > paper-button:hover {
+            background-color: var(--paper-light-blue-200);
+            padding: 5px;
+        }
+
+        paper-dialog.colored {
+            border: 2px solid;
+            border-color: var(--paper-green-500);
+            background-color: var(--paper-light-green-50);
+            color: var(--paper-green-500);
+        }
+
     </style>
 
 </head>
@@ -238,6 +255,9 @@
     $(document).ready(function () {
 
         $("#position").hide();
+        $("#regis-success").hide();
+        $("#incorrect-pass").hide();
+        $("#incomplete").hide();
 
         var readURL = function (input) {
             if (input.files && input.files[0]) {
@@ -282,7 +302,7 @@
                         <!-- /.Links 01 -->
                         <!-- Logo -->
                         <div class="col-sm-4">
-                            <a href="index-x.html" id="bellafirenze-lg"></a>
+                            <a href="http://localhost:4000" id="bellafirenze-lg"></a>
                         </div>
                         <!-- /.Logo -->
 
@@ -318,7 +338,7 @@
 
             <!--Login Dialog-->
             <div class="visible-sm visible-xs visible-md visible-lg">
-                <paper-dialog id="dialog" class="size-position">
+                <paper-dialog id="login" class="size-position">
                     <h2>Login</h2>
                     <paper-input label="&nbsp;&nbsp;Username" id="inputWithButton">
                         <iron-icon icon="social:person" prefix></iron-icon>
@@ -344,6 +364,8 @@
                     <br><br>
                 </paper-dialog>
             </div>
+
+
             <!-- /.row -->
         </div>
         <!-- /.container -->
@@ -415,7 +437,41 @@
 
 
             <!-- Register form-->
-            <form action="" method="post" name="profileform">
+            <form name="registerform" ng-controller="formCtrl" class="dialogdemoBasicUsage" id="popupContainer">
+
+                <!--Successful-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="regis-success" >
+                        <h2>Registration Successful!</h2>
+                        <p>Welcome to Chef@Home {[{ register.firstname }]}</p>
+                        <div class="buttons">
+                            <paper-button dialog-confirm autofocus onclick="gotoMainProfile()">OK!</paper-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
+                <!--Incorrect Password-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="incorrect-pass" >
+                        <h2>Incorrect Password!</h2>
+                        <p>Your confirmation password doesn't match!</p>
+                        <div class="buttons">
+                            <paper-button dialog-confirm autofocus onclick="">OK!</paper-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
+                <!--Invalid Credentials-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="incomplete" >
+                        <h2>Invalid Credentials!</h2>
+                        <p>Your information is incomplete!</p>
+                        <div class="buttons">
+                            <paper-button dialog-confirm autofocus onclick="">OK!</paper-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
                 <div class="row">
 
                     <!-- Left side column-->
@@ -424,7 +480,7 @@
                         <img class="profile-pic"
                              src="http://www.insite.io/browser/home/accounts/assets/images/no-profile-image.jpg"/>
                         <br>
-                        <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage upload-button">
+                        <div ng-cloak="" class="buttondemoBasicUsage upload-button">
                             <md-content class="btn_group_bg">
                                 <md-button class="md-raised">Upload Picture</md-button>
                             </md-content>
@@ -435,26 +491,26 @@
 
                     <!--Main column-->
                     <div class="col-md-8">
-                        <div ng-controller="DemoCtrl" layout="column" ng-cloak=""
+                        <div layout="column" ng-cloak=""
                              class="md-inline-form inputdemoBasicUsage">
                             <md-content layout-padding="">
                                 <div>
-                                    <form name="userForm">
-                                        <md-input-container class="md-block" flex-gt-sm="">
-                                            <label>Title</label>
-                                            <md-select ng-model="user.title">
-                                                <md-option ng-repeat="title in titles" value="{[{title.abbrev}]}">
-                                                    {[{title.abbrev}]}
-                                                </md-option>
-                                            </md-select>
-                                        </md-input-container>
+
+                                        <!--<md-input-container class="md-block" flex-gt-sm="">-->
+                                            <!--<label>Title</label>-->
+                                            <!--<md-select ng-model="user.title">-->
+                                                <!--<md-option ng-repeat="title in titles" value="{[{title.abbrev}]}">-->
+                                                    <!--{[{title.abbrev}]}-->
+                                                <!--</md-option>-->
+                                            <!--</md-select>-->
+                                        <!--</md-input-container>-->
 
                                         <div layout-gt-xs="row">
                                             <md-input-container class="md-block" flex-gt-sm="">
                                                 <label>First name</label>
                                                 <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg"
                                                          class="name"></md-icon>-->
-                                                <input ng-model="user.firstName" type="text">
+                                                <input ng-model="register.firstname" type="text">
                                             </md-input-container>
                                         </div>
 
@@ -463,12 +519,12 @@
                                                 <label>Family name</label>
                                                 <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg"
                                                          class="name"></md-icon>-->
-                                                <input ng-model="user.familyName" type="text">
+                                                <input ng-model="register.lastname" type="text">
                                             </md-input-container>
                                         </div>
 
                                         <div layout-gt-xs="row">
-                                            <md-datepicker ng-model="user.submissionDate" md-placeholder="Birth date">
+                                            <md-datepicker ng-model="register.birthdate" md-placeholder="Birth date">
                                             </md-datepicker>
                                         </div>
                                         <br>
@@ -476,61 +532,20 @@
                                         <!--Telephone-->
                                         <md-input-container md-no-float="" class="md-block">
                                             <label>Phone Number</label>
-                                            <input ng-model="user.phone" type="text" required>
+                                            <input ng-model="register.telephone" type="text" required>
                                         </md-input-container>
 
                                         <!--E-mail-->
                                         <md-input-container>
                                             <label>Email</label>
-                                            <input ng-model="user.email" type="email" required>
+                                            <input ng-model="register.email" type="email" required>
                                         </md-input-container>
 
                                         <!--Password-->
-                                        <div layout-gt-xs="row" ng-controller="PassCtrl">
+                                        <div layout-gt-xs="row">
                                             <md-input-container>
                                                 <label>Password</label>
-                                                <input type="{[{inputType}]}" required/>
-                                                <!-- ng-minlength="8"
-                                                       ng-maxlength="20"
-                                                       ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required-->
-                                                <!--
-                                                <div ng-messages="profileform.weight.$error" multiple md-auto-hide="false">
-                                                    <div ng-message="required">
-                                                        Password
-                                                        is
-                                                        required
-                                                    </div>
-                                                    <div ng-message="pattern">
-                                                        Passwords
-                                                        must
-                                                        be
-                                                        between
-                                                        8
-                                                        and
-                                                        20
-                                                        characters.
-                                                    </div>
-                                                    <div ng-message="min">
-                                                        Must
-                                                        contain
-                                                        one
-                                                        lower & uppercase
-                                                        letter, and
-                                                        one
-                                                        non - alpha
-                                                        character(a
-                                                        number
-                                                        or
-                                                        a
-                                                        symbol.
-                                                        )
-                                                    </div>
-                                                    <div ng-message="max">
-                                                        Too
-                                                        many
-                                                        characters
-                                                    </div>
-                                                    -->
+                                                <input type="{[{inputType}]}" required ng-model="register.password"/>
                                             </md-input-container>
                                             <div>
                                                 <md-checkbox id="checkbox" ng-model="passwordCheckbox"
@@ -545,32 +560,33 @@
                                         <div layout-gt-xs="row">
                                             <md-input-container>
                                                 <label>Confirm password</label>
-                                                <input type="{[{inputType}]}"/>
+                                                <input type="password" ng-model="register.confirmpassword"/>
                                             </md-input-container>
                                         </div>
 
                                         <!--Address-->
                                         <md-input-container class="md-block">
                                             <label>Address</label>
-                                            <input ng-model="user.address">
+                                            <input ng-model="register.address[0].name">
                                         </md-input-container>
 
                                         <md-input-container md-no-float="" class="md-block">
-                                            <input ng-model="user.address2" placeholder="Address 2">
+                                            <label>Address 2</label>
+                                            <input ng-model="register.address[1].name">
                                         </md-input-container>
 
                                         <div layout-gt-sm="row">
                                             <md-input-container class="md-block" flex-gt-sm="">
                                                 <label>City</label>
-                                                <input ng-model="user.city">
+                                                <input ng-model="register.address[2].name">
                                             </md-input-container>
 
                                             <md-input-container class="md-block" flex-gt-sm="">
                                                 <label>Postal Code</label>
-                                                <input name="postalCode" ng-model="user.postalCode" placeholder="12345"
+                                                <input name="postalCode" ng-model="register.address[3].name" placeholder="12345"
                                                        required="" ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
 
-                                                <div ng-messages="userForm.postalCode.$error" role="alert" multiple="">
+                                                <div ng-messages="registerform.postalCode.$error" role="alert" multiple="">
                                                     <div ng-message="required" class="my-message">You
                                                         must
                                                         supply
@@ -594,7 +610,18 @@
                                                 </div>
                                             </md-input-container>
                                         </div>
-                                    </form>
+                                        <div class="row">
+                                            <div class="col-md-7"></div>
+                                            <div class="col-md-5">
+                                                <div ng-cloak="" class="buttondemoBasicUsage">
+                                                    <md-content class="btn_group_bg">
+                                                        <md-button class="md-raised" ng-click="submit()">Save</md-button>
+                                                        <md-button class="md-raised">Cancel</md-button>
+                                                    </md-content>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                 </div>
                             </md-content>
                         </div>
@@ -603,17 +630,7 @@
 
 
                 </div>
-                <div class="row">
-                    <div class="col-md-7"></div>
-                    <div class="col-md-5">
-                        <div ng-controller="BtnCtrl" ng-cloak="" class="buttondemoBasicUsage">
-                            <md-content class="btn_group_bg">
-                                <md-button class="md-raised">Save</md-button>
-                                <md-button class="md-raised">Cancel</md-button>
-                            </md-content>
-                        </div>
-                    </div>
-                </div>
+
             </form>
         </div>
 
@@ -766,6 +783,10 @@
     function clearInput2() {
         var clear2 = document.getElementById('inputWithButton2');
         clear2.value = "";
+    }
+
+    function gotoMainProfile(){
+        window.location.href = "http://localhost:4000/main-profile"
     }
 
 </script>
