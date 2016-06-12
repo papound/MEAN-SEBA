@@ -40,6 +40,10 @@ var UserSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    profilePicture: {
+        data: String,
+        contentType: String
+    },
     vegetarian: {
         type: Boolean,
         default: ""
@@ -72,23 +76,23 @@ var UserSchema = new mongoose.Schema({
         type: [],
         default: [
             {
-                maxValue : 2000 + Math.floor((Math.random() * 1000) + 1),
-                minValue : 1900 + Math.floor((Math.random() * 100) + 1),
+                maxValue : 0,
+                minValue : 0,
                 name : "Calories"
             },
             {
-                maxValue: 70,
-                minValue: 40,
+                maxValue: 0,
+                minValue: 0,
                 name: "Proteins"
             },
             {
-                maxValue: 450,
-                minValue: 250,
+                maxValue: 0,
+                minValue: 0,
                 name: "Carbohydrates"
             },
             {
-                maxValue: 70,
-                minValue: 60,
+                maxValue: 0,
+                minValue: 0,
                 name: "Fats"
             },
             {
@@ -99,6 +103,10 @@ var UserSchema = new mongoose.Schema({
         ]
     },
     cardNumber: {
+        type: String,
+        default: ""
+    },
+    cvc: {
         type: String,
         default: ""
     },

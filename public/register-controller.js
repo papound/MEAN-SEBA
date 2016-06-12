@@ -10,25 +10,25 @@ app2.controller('formCtrl', function ($scope, $http) {
     $scope.status = '  ';
 
     $scope.register = {
-        firstname: "",
-        lastname: "",
+        firstname: "Sam",
+        lastname: "Smith",
         birthdate: "",
-        telephone: "",
-        email: "",
+        telephone: "0123456789",
+        email: "sam@smith.com",
         password: "",
         confirmpassword: "",
         address: [
             {
-                name: ""
+                name: "123 Oxford Str."
             },
             {
                 name: ""
             },
             {
-                name: ""
+                name: "Munich, Germany"
             },
             {
-                name: ""
+                name: "80939"
             }
         ]
     }
@@ -99,7 +99,7 @@ app2.controller('formCtrl', function ($scope, $http) {
 
                     localStorage.loginChefAtHomeEmail = $scope.register.email
                     console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
-
+                    localStorage.loginChefAtHomefirstname = $scope.register.firstname
                     $scope.showSuccess($scope.register.firstname, $scope.register.email);
 
                 });

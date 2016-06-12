@@ -2,6 +2,39 @@
  * Created by Chanawatn Pound on 02-Jun-16.
  */
 //var bodyparser = require('../node_modules/body-parser');
+
+// //Test UploadPic
+(function () {
+    'use strict';
+    angular.module('ng-file-model', [])
+        .directive("ngFileModel", [function () {
+            return {
+                scope: {
+                    ngFileModel: "="
+                },
+                link: function (scope, element, attributes) {
+                    element.bind("change", function (changeEvent) {
+                        var reader = new FileReader();
+                        reader.onload = function (loadEvent) {
+                            scope.$apply(function () {
+                                scope.ngFileModel = {
+                                    lastModified: changeEvent.target.files[0].lastModified,
+                                    lastModifiedDate: changeEvent.target.files[0].lastModifiedDate,
+                                    name: changeEvent.target.files[0].name,
+                                    size: changeEvent.target.files[0].size,
+                                    type: changeEvent.target.files[0].type,
+                                    data: loadEvent.target.result
+                                };
+                            });
+                        }
+                        reader.readAsDataURL(changeEvent.target.files[0]);
+                    });
+                }
+            }
+        }]);
+})();
+//End Test UploadPic
+
 var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'rzModule']);
 
 var url = "http://localhost:4000";
@@ -18,8 +51,10 @@ app2.factory('getUserData', ['$http', function ($http) {
     console.log(localStorage.loginChefAtHomeimage)
     console.log(localStorage.loginChefAtHomeEmail);
     if (localStorage.loginChefAtHomeEmail) {
+        //if already logged in
         this_email = localStorage.loginChefAtHomeEmail;
     } else {
+        //link back to homepage on accessing unauthorized url
         window.location.href = "http://localhost:4000/"
     }
     return $http.post(url + "/list/user", {email: this_email})
@@ -28,6 +63,7 @@ app2.factory('getUserData', ['$http', function ($http) {
             return response.data;
         });
 }]);
+
 
 //Test Credit Cards
 (function () {
@@ -325,7 +361,9 @@ app2.factory('getUserData', ['$http', function ($http) {
 //end test drag&drop
 
 app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope, getUserData, $http, $rootScope, $timeout, $modal) {
-    $scope.formStatus = true;
+    $scope.formStatus = true; //comment out after testing
+
+    //pre-define user's variables
     $scope.user = {
         firstname: '',
         lastname: '',
@@ -340,9 +378,13 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         vegetarian: false,
         halal: false,
         height: '',
-        weight: ''
+        weight: '',
+        profilePicture: null
     };
 
+    $scope.imageurl = "";
+
+    //this will call factory
     getUserData.then(function (user) {
         $scope.name = user;
         //$scope.user.password = user[0].password;
@@ -357,31 +399,35 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         $scope.project.height = user[0].height;
         $scope.project.weight = user[0].weight;
         cardno = user[0].cardNumber;
-        console.log("cardno: " + cardno);
+        //console.log("cardno: " + cardno);
         $scope.user.cvc = user[0].cvc;
         $scope.user.validityDate = new Date(user[0].validityDate);
-        if (localStorage.loginChefAtHomeimage) {
-            $scope.imageurl = localStorage.loginChefAtHomeimage;
-        } else {
-            $scope.imageurl = user[0].imageurl;
+        if (user[0].profilePicture.data != null) {
+            $scope.imageurl = user[0].profilePicture.data;
+        } else if( user[0].imageurl != null){
+            $scope.imageurl = user[0].imageurl
+        }else{
+            $scope.imageurl = localStorage.loginChefAtHomeimage
         }
         $scope.user.vegetarian = user[0].vegetarian;
         $scope.user.halal = user[0].halal;
+        $scope.myDate = new Date();
+        //$scope.myDate = user[0].birthdate;
         $scope.myDate = new Date(user[0].birthdate);
     });
 
     //Birthdate
 
-    $scope.myDate = new Date();
+    //$scope.myDate = new Date();
 
     //End Birthdate
 
     //Title
 
-    $scope.titles = ('Mr. ' +
-    'Mrs. Miss ').split(' ').map(function (title) {
-        return {abbrev: title};
-    });
+    /*    $scope.titles = ('Mr. ' +
+     'Mrs. Miss ').split(' ').map(function (title) {
+     return {abbrev: title};
+     });*/
 
     //End Title
 
@@ -662,8 +708,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
             $scope.user.password != "" &&
             $scope.user.address != "" &&
             $scope.user.city != "" &&
-            $scope.user.postalCode != "") 
-        {
+            $scope.user.postalCode != "") {
             $scope.confirmUpdateProfile();
 
         } else {
@@ -711,12 +756,15 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
     $scope.updateProfile = function () {
         var birthdate = $scope.myDate.toISOString()
         var valid_date = $scope.user.validityDate.toISOString()
+        console.log($scope.user.profilePicture)
         return $http.post(url + "/api/update/profile", {
             firstname: $scope.user.firstname,
             lastname: $scope.user.lastname,
             email: $scope.user.email,
             password: $scope.user.password,
             birthdate: birthdate,
+            imageurl: $scope.imageurl,
+            profilePicture: $scope.user.profilePicture.data,
             height: $scope.project.height,
             weight: $scope.project.weight,
             address1: $scope.user.address,
@@ -771,6 +819,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
 
 }]);
 
+
 app2.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[{');
     $interpolateProvider.endSymbol('}]}');
@@ -786,5 +835,5 @@ app2.config(function ($interpolateProvider) {
 angular.element(document).ready(function () {
     var myDiv1 = document.getElementById("all_modules");
     // angular.bootstrap(myDiv1, ["inputBasicDemo", "rzSliderDemo"]);
-    angular.bootstrap(myDiv1, ["inputBasicDemo"]);
+    angular.bootstrap(myDiv1, ["inputBasicDemo", "ng-file-model"]);
 });

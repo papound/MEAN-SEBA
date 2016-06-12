@@ -75,6 +75,10 @@
     <link href="creditcard/demo_css/style.css" rel="stylesheet" type="text/css">
     <script src="creditcard/angular_card_input.js"></script>
 
+    <!-- Google Login -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="850042957038-3l9423np2uqruaplafluttpmengct984.apps.googleusercontent.com">
+
     <!--Additional CSS-->
     <!--<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.0-rc.5/docs.css">-->
 
@@ -552,15 +556,14 @@
                     <!-- Left side column-->
                     <div class="col-md-3">
                         <!--Space for uploading profile picture-->
-                        <img class="profile-pic"
-                             src="{[{ imageurl }]}"/>
+                        <img class="profile-pic" src="{[{ imageurl }]}" />
                         <br>
                         <div ng-cloak="" class="buttondemoBasicUsage upload-button">
                             <md-content class="btn_group_bg">
                                 <md-button class="md-raised">Upload Picture</md-button>
                             </md-content>
                         </div>
-                        <input class="file-upload" type="file" accept="image/*"/>
+                        <input class="file-upload" type="file" accept="image/*" ng-file-model="user.profilePicture"/>
                         <br><br><br>
                         <div ng-cloak="" class="buttondemoBasicUsage">
                             <md-content class="btn_group_save">

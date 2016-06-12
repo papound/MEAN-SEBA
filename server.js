@@ -23,7 +23,7 @@ mongoose.connect(config.database);
 //Init App
 var app = express();
 app.use(cors());
-app.use(bodyParser());
+app.use(bodyParser({limit: '50mb'}));
 
 //For Authentication
 // Use body-parser to get POST requests for API use
@@ -140,6 +140,11 @@ apiRoutes.post('/update/profile', function (req, res) {
             birthdate: req.body.birthdate,
             height: req.body.height,
             weight: req.body.weight,
+            imageurl: req.body.imageurl,
+            profilePicture: {
+                data: req.body.profilePicture,
+                contentType: "image/jpeg"
+            },
             vegetarian: req.body.vegetarian,
             halal: req.body.halal,
             address: [
