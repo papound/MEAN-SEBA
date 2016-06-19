@@ -34,7 +34,7 @@ var UserSchema = new mongoose.Schema({
     },
     address: {
         type: [],
-        default: [{address1: "Address1"}, {address2: "Address2"}, {city: "City"}, {postalcode: "Postal Code"}]
+        default: [{address1: "Address1"}, {address2: "Address2"}, {city: "City"}, {postalcode: "12345"}]
     },
     imageurl: {
         type: String,
@@ -42,7 +42,8 @@ var UserSchema = new mongoose.Schema({
     },
     profilePicture: {
         data: String,
-        contentType: String
+        contentType: String,
+        default: ""
     },
     vegetarian: {
         type: Boolean,

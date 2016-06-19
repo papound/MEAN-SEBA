@@ -44,6 +44,7 @@ var url = "http://localhost:4000";
 app2.factory('getUserData', ['$http', function ($http) {
     //Create request for User data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
+    //localStorage.loginChefAtHomeEmail = "chanawatnpound@gmail.com"
     var this_email = "";
     console.log(localStorage.loginChefAtHomefullname)
     console.log(localStorage.loginChefAtHomefirstname)
@@ -360,6 +361,30 @@ app2.factory('getUserData', ['$http', function ($http) {
 })();
 //end test drag&drop
 
+//Test Calendar
+app2.controller("calendarCtrl", function($scope, $filter) {
+    $scope.selectedDate = null;
+    $scope.firstDayOfWeek = 0;
+    $scope.setDirection = function(direction) {
+        $scope.direction = direction;
+    };
+    $scope.dayClick = function(date) {
+        $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
+    };
+    $scope.prevMonth = function(data) {
+        $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
+    };
+    $scope.nextMonth = function(data) {
+        $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
+    };
+    $scope.setDayContent = function(date) {
+        // You would inject any HTML you wanted for
+        // that particular date here.
+        return "<p></p>";
+    };
+});
+//End Test Calendar
+
 app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope, getUserData, $http, $rootScope, $timeout, $modal) {
     $scope.formStatus = true; //comment out after testing
 
@@ -383,6 +408,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
     };
 
     $scope.imageurl = "";
+    $scope.imageurl_bak = "";
 
     //this will call factory
     getUserData.then(function (user) {
@@ -401,11 +427,15 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         cardno = user[0].cardNumber;
         //console.log("cardno: " + cardno);
         $scope.user.cvc = user[0].cvc;
+        $scope.user.profilePicture = user[0].profilePicture.data;
         $scope.user.validityDate = new Date(user[0].validityDate);
+        $scope.imageurl_bak = user[0].imageurl
         if (user[0].profilePicture.data != null) {
             $scope.imageurl = user[0].profilePicture.data;
         } else if( user[0].imageurl != null){
             $scope.imageurl = user[0].imageurl
+            $scope.imageurl_bak = user[0].imageurl
+            //console.log($scope.imageurl_bak)
         }else{
             $scope.imageurl = localStorage.loginChefAtHomeimage
         }
@@ -763,7 +793,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
             email: $scope.user.email,
             password: $scope.user.password,
             birthdate: birthdate,
-            imageurl: $scope.imageurl,
+            imageurl: $scope.imageurl_bak,
             profilePicture: $scope.user.profilePicture.data,
             height: $scope.project.height,
             weight: $scope.project.weight,

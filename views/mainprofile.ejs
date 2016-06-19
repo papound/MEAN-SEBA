@@ -1011,6 +1011,22 @@
                     <!--End right side column-->
                 </div>
             </form>
+            <div ng-controller="calendarCtrl">
+                <calendar-md flex layout layout-fill
+                             calendar-direction="direction"
+                             on-prev-month="prevMonth"
+                             on-next-month="nextMonth"
+                             on-day-click="dayClick"
+                             title-format="'MMMM y'"
+                             ng-model='selectedDate'
+                             day-format="'d'"
+                             day-label-format="'EEE'"
+                             day-label-tooltip-format="'EEEE'"
+                             day-tooltip-format="'fullDate'"
+                             week-starts-on="firstDayOfWeek"
+                             day-content="setDayContent"></calendar-md>
+            </div>
+
         </div>
 
 
@@ -1164,6 +1180,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
 <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
 <link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
+
+<script type="text/javascript" src="bower_components/material-calendar/angular-material-calendar.js"></script>
 
 </body>
 </html>

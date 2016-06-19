@@ -21,4 +21,12 @@ module.exports = function(app) {
         res.render('register.ejs');
     });
 
+    app.get('/order', function(req, res){
+        res.render('order.ejs');
+    });
+
+    app.get('/feedback', function(req, res){
+        res.render('feedback.ejs');
+    });
+
 };

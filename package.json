@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "angular-material-calendar": "^0.2.14",
     "angular-ui-router": "^0.3.0",
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.1",

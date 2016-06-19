@@ -41,7 +41,8 @@ var routes = require('./routes/index')(app);
 //var for index-8.html
 
 var db_model = mongoose.model('Taste', new mongoose.Schema({name: String}), 'taste');
-//var user_model = mongoose.model('User', new mongoose.Schema({ firstname: String }),'user');
+//var user_model = mongoose.model('User1', new mongoose.Schema({ firstname: String }),'user');
+var db_order = mongoose.model('Order', new mongoose.Schema({customer: String}), 'order'); //table order
 
 app.get("/list/database", function (req, res) {
     // Locate all the entries using find
@@ -82,6 +83,17 @@ app.post("/list/user", function (req, res) {
     });
 })
 
+app.post("/list/order", function (req, res) {
+    // Locate all the entries using find
+    var req_email = req.body.customer;
+    db_order.find({customer: req_email}, function (err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+})
+
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
 //app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
@@ -107,6 +119,26 @@ apiRoutes.post('/register', function (req, res) {
             lastname: req.body.lastname,
             telephone: req.body.telephone,
             address: [{address1: req.body.address1}, {address2: req.body.address2}, {city: req.body.city}, {postalcode: req.body.postalcode}]
+        });
+        // save the user
+        newUser.save(function (err) {
+            if (err) {
+                console.log(err)
+                return res.json({success: false, msg: 'Username already exists.'});
+            }
+            return res.json({success: true, msg: 'Successful created new user.'});
+
+        });
+    }
+});
+
+apiRoutes.post('/register/google', function (req, res) {
+    if (!req.body.email) {
+        res.json({success: false, msg: 'Please pass name and password.'});
+    } else {
+        var newUser = new User({
+            email: req.body.email,
+            password: "",
         });
         // save the user
         newUser.save(function (err) {
@@ -295,7 +327,7 @@ app.use('/api', apiRoutes);
 
 
 // Set Port
-app.set('port', (process.env.PORT || 4000));
+app.set('port', (4000));
 
 app.listen(app.get('port'), function () {
     console.log('Server runs at port: ' + app.get('port'));
