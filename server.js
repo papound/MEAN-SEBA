@@ -10,6 +10,8 @@ var jwt = require('jwt-simple');
 var config = require('./config/database');
 var db = mongoose.connection;
 var User = require('./user');
+var Order = require('./order');
+var Feedback = require('./feedback');
 var bcrypt = require('bcryptjs');
 
 //mongoose.connect('mongodb://localhost/seba-webapp');
@@ -42,7 +44,8 @@ var routes = require('./routes/index')(app);
 
 var db_model = mongoose.model('Taste', new mongoose.Schema({name: String}), 'taste');
 //var user_model = mongoose.model('User1', new mongoose.Schema({ firstname: String }),'user');
-var db_order = mongoose.model('Order', new mongoose.Schema({customer: String}), 'order'); //table order
+var db_order = mongoose.model('Order1', new mongoose.Schema({customer: String}), 'order'); //table order
+var db_dish = mongoose.model('Dish1', new mongoose.Schema({name: String}), 'dish');
 
 app.get("/list/database", function (req, res) {
     // Locate all the entries using find
@@ -81,12 +84,99 @@ app.post("/list/user", function (req, res) {
         // Close the db
         //db.close();
     });
-})
+});
 
 app.post("/list/order", function (req, res) {
     // Locate all the entries using find
     var req_email = req.body.customer;
     db_order.find({customer: req_email}, function (err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+});
+
+app.post("/place/order", function (req, res) {
+    // Locate all the entries using find
+    var newOrder = new Order({
+        customer: req.body.customer,
+        orderItems: req.body.orderItems,
+        paymentType: req.body.paymentType,
+        paymentStatus: req.body.paymentStatus,
+        totalPrice: req.body.totalPrice
+    });
+    // save the user
+    newOrder.save(function (err) {
+        if (err) {
+            console.log(err)
+            return res.json({success: false, msg: 'Error!'});
+        }
+        return res.json({success: true, msg: 'Successful!'});
+
+    });
+});
+
+app.get("/ingredients", function (req, res) {
+    ingredient_model.find( function (err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+})
+
+app.post("/save/feedback", function (req, res) {
+
+    var newFeedback = new Feedback({
+        customer: req.body.customer,
+        suggestion: req.body.suggestion,
+        option: req.body.option,
+        message: req.body.message
+    });
+
+    // save the user
+    newFeedback.save(function (err) {
+        if (err) {
+            console.log(err)
+            return res.json({success: false, msg: 'Error!.'});
+        }
+        return res.json({success: true, msg: 'Successful!'});
+
+    });
+
+})
+
+app.get("/list/dish", function (req, res) {
+    // Locate all the entries using find
+    var name = req.body.name;
+    db_dish.find({name: name}, function (err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+})
+
+
+app.post("/list/dish", function (req, res) {
+    // Locate all the entries using find
+    var name = req.body.name;
+    db_dish.findOne({name: name}, function (err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+})
+
+/*For feedback page (dish) */
+var db_feedback = mongoose.model('Dish',new mongoose.Schema({name : String}), 'dish');
+
+app.post("/list/feedback_dish", function (req, res) {
+    // Locate all the entries using find
+    // var req_email = req.body.email;
+    db_feedback.find(function (err, results) {
         //Getting Results
         res.send(results);
         // Close the db
@@ -172,7 +262,6 @@ apiRoutes.post('/update/profile', function (req, res) {
             birthdate: req.body.birthdate,
             height: req.body.height,
             weight: req.body.weight,
-            imageurl: req.body.imageurl,
             profilePicture: {
                 data: req.body.profilePicture,
                 contentType: "image/jpeg"

@@ -6,6 +6,22 @@ var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages']);
 var url = "http://localhost:4000"
 
 app2.controller('loginCtrl', function ($scope, $http) {
+    
+    $scope.firstname = localStorage.loginChefAtHomefirstname;
+
+    $scope.openProfile = function () {
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/main-profile"
+    }
+
+    $scope.signout = function () {
+        console.log("email before signout="+localStorage.loginChefAtHomeEmail)
+        localStorage.removeItem('loginChefAtHomeEmail');
+        console.log("email after signout="+localStorage.loginChefAtHomeEmail)
+        //localStorage.removeItem('current_ingredient');
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/"
+    }
 
     $scope.user = {
         email: '',

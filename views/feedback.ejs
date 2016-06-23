@@ -51,6 +51,8 @@
     <link rel="import" href="bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="bower_components/iron-icons/social-icons.html">
     <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+    <!--<link rel="import" href="bower_components/paper-radio-group/paper-radio-group.html">-->
+    <!--<link rel="import" href="bower_components/paper-radio-button/paper-radio-button.html">-->
     <link rel="import" href="bower_components/paper-styles/color.html">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
@@ -227,7 +229,6 @@
             background-color: transparent !important;
         }
 
-
         .tabsdemoDynamicHeight md-content md-tabs md-tabs-wrapper {
             background: white;
         }
@@ -235,6 +236,7 @@
         .tabsdemoDynamicHeight md-content h1:first-child {
             margin-top: 0;
         }
+
         /*End Tabs menu Suggestion-Rating*/
 
         /*Star Rating*/
@@ -261,11 +263,11 @@
         .star-rating.readonly .star.filled {
             color: #666;
         }
+
         /*End Star Rating*/
 
         /* Responsive multi column list */
-        #content
-        {
+        #content {
             font-size: .75em; /* 12/16 */
             width: 71.875%; /* 650/960 */
             max-width: 960px;
@@ -273,59 +275,69 @@
             margin: 0px auto; /*auto centers the container */
             padding: 3.84615384615385%; /* 25/650 */
         }
+
         /*CSS3 multiple columns.*/
         /* Get em size for colums: 184/16 */
-        .columns
-        {
+        .columns {
             -moz-column-width: 11.5em; /* Firefox */
             -webkit-column-width: 11.5em; /* webkit, Safari, Chrome */
             column-width: 11.5em;
         }
+
         /*remove standard list and bullet formatting from ul*/
-        .columns ul
-        {
+        .columns ul {
             margin: 0;
             padding: 0;
             list-style-type: none;
         }
+
         /* correct webkit/chrome uneven margin on the first column*/
-        .columns ul li:first-child
-        {
-            margin-top:0px;
+        .columns ul li:first-child {
+            margin-top: 0px;
         }
+
         /*End Responsive multi column list*/
 
         /*Radio Button for rating*/
         .radioButtondemoBasicUsage body {
-            padding: 20px; }
+            padding: 20px;
+        }
 
         .radioButtondemoBasicUsage hr {
             margin-left: -20px;
-            opacity: 0.3; }
+            opacity: 0.3;
+        }
 
         .radioButtondemoBasicUsage md-radio-group {
-            width: 150px; }
+            width: 150px;
+        }
 
         .radioButtondemoBasicUsage p:last-child {
-            padding-bottom: 50px; }
+            padding-bottom: 50px;
+        }
 
         .radioButtondemoBasicUsage [ng-controller] {
-            padding: 0 20px; }
+            padding: 0 20px;
+        }
 
         .radioButtondemoBasicUsage .radioValue {
             margin-left: 5px;
             color: #0f9d58;
             font-weight: bold;
-            padding: 5px; }
+            padding: 5px;
+        }
 
         .radioButtondemoBasicUsage md-icon {
             margin: 0 20px 20px;
             width: 128px;
-            height: 128px; }
+            height: 128px;
+        }
 
         .radioButtondemoBasicUsage .ipsum {
             color: saddlebrown;
-            font-size: 0.9em; }
+            font-size: 0.9em;
+        }
+
         /*End Radio Button*/
 
     </style>
@@ -373,116 +385,174 @@
 <div id="mainnavigation">
     <!-- Nav -->
     <nav class="navbar navbar-fixed-top affix-top" data-spy="affix" data-offset-top="100">
-        <div class="container">
-            <div class="row hidden-sm hidden-xs">
-                <div class="col-sm-11 menu_center">
-                    <!-- Links 01 -->
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <ul class="nav navbar-nav pull-left">
-                                <li><a href="http://localhost:4000"
-                                       class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                                <li><a href="#menu" class="menubar">Menu</a></li>
+        <div ng-controller="loginCtrl">
+            <div class="container">
+                <div class="row hidden-sm hidden-xs">
+                    <div class="col-sm-11 menu_center">
+                        <!-- Links 01 -->
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <ul class="nav navbar-nav pull-left">
+                                    <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                    <li><a href="#menu" class="menubar">Menu</a></li>
 
-                            </ul>
+                                </ul>
+                            </div>
+                            <!-- /.Links 01 -->
+                            <!-- Logo -->
+                            <div class="col-sm-4">
+                                <a href="http://localhost:4000" id="bellafirenze-lg"></a>
+                            </div>
+                            <!-- /.Logo -->
+
+                            <!-- Links 02 -->
+                            <div class="col-sm-4">
+                                <ul class="nav navbar-nav pull-right">
+
+                                    <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    </li>
+
+                                    <li><a href="#ingredient" class="menubar">Ingredient</a></li>
+
+                                </ul>
+
+                            </div>
+                            <!-- Links 02 -->
                         </div>
-                        <!-- /.Links 01 -->
-                        <!-- Logo -->
-                        <div class="col-sm-4">
-                            <a href="http://localhost:4000" id="bellafirenze-lg"></a>
+
+                    </div>
+                    <div class="col-sm-1 login_col">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="#" class="menubar fixed-right" data-dialog="dialog" id="login"
+                                           onclick="loginPopup();">Login</a></li>
+                                    <li>
+                                        <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <!-- /.Logo -->
-
-                        <!-- Links 02 -->
-                        <div class="col-sm-4">
-                            <ul class="nav navbar-nav pull-right">
-
-                                <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-
-                                <li><a href="#ingredient" class="menubar">Ingredient</a></li>
-
-                            </ul>
-
-                        </div>
-                        <!-- Links 02 -->
                     </div>
 
                 </div>
-                <div class="col-sm-1 login_col">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#" class="menubar fixed-right" data-dialog="dialog" id="login"
-                                       onclick="clickHandler(e)">Login</a></li>
-                                <li>
-                                    <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
-                                </li>
-                            </ul>
+
+                <!--Login Dialog-->
+                <div class="visible-sm visible-xs visible-md visible-lg" ng-controller="loginCtrl">
+                    <paper-dialog id="dialog" class="size-position">
+                        <h2>Login</h2>
+                        <!--<paper-input label="&nbsp;&nbsp;Username" id="inputWithButton" ng-model="user.email">-->
+                        <!--<iron-icon icon="social:person" prefix></iron-icon>-->
+                        <!--<paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">-->
+                        <!--</paper-icon-button>-->
+                        <!--</paper-input>-->
+                        <br>
+                        <div class="login_input">
+                            <md-input-container class="md-icon-float md-block">
+                                <!-- Use floating label instead of placeholder -->
+                                <label>Email</label>
+                                <md-icon md-svg-src="images/svg/ic_person_24px.svg" class="name"></md-icon>
+                                <input ng-model="user.email" type="text">
+                            </md-input-container>
+
+                            <md-input-container class="md-icon-float md-block">
+                                <!-- Use floating label instead of placeholder -->
+                                <label>Password</label>
+                                <md-icon md-svg-src="images/svg/ic_lock_black_24px.svg" class="name"></md-icon>
+                                <input ng-model="user.password" type="password">
+                            </md-input-container>
                         </div>
+
+                        <div class="row in-login-popup">
+                            <div class="col-sm-6 col-centered">
+                                <md-button class="md-raised md-primary" ng-click="login()">Login
+                                </md-button>
+                            </div>
+                            <div class="col-sm-6 col-centered">
+                                <md-button class="md-raised" ng-click="closeDialog()">Cancel
+                                </md-button>
+                            </div>
+                        </div>
+                        <div id="my-signin2" data-onsuccess=""></div>
+                        <br>
+                        <a href="http://localhost:4000/register">Not a member? Please Register Here!</a>
+                        <br><br>
+                    </paper-dialog>
+
+                    <!--After Login-->
+                    <div class="visible-sm visible-xs visible-md visible-lg">
+                        <paper-dialog id="afterLogin" class="size-position">
+                            <h2>Welcome! {[{ firstname }]}</h2>
+                            <br><br>
+                            <div class="col-sm-6 col-centered">
+                                <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
+                                </md-button>
+                            </div>
+                            <div class="col-sm-6 col-centered">
+                                <md-button class="md-warn" ng-click="signout()">Sign Out
+                                </md-button>
+                            </div>
+                        </paper-dialog>
                     </div>
+
+                    <!--Invalid Credentials-->
+                    <div class="visible-sm visible-xs visible-md visible-lg">
+                        <paper-dialog id="incomplete">
+                            <h2>Invalid Credentials!</h2>
+                            <p>Your information is incomplete!</p>
+                            <div class="buttons">
+                                <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                            </div>
+                        </paper-dialog>
+                    </div>
+
+                    <!--Invalid Credentials-->
+                    <div class="visible-sm visible-xs visible-md visible-lg">
+                        <paper-dialog id="login-failed">
+                            <h2>Invalid email or password!</h2>
+                            <p>Please type it again!</p>
+                            <div class="buttons">
+                                <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                            </div>
+                        </paper-dialog>
+                    </div>
+
                 </div>
 
-            </div>
 
-            <!--Login Dialog-->
-            <div class="visible-sm visible-xs visible-md visible-lg">
-                <paper-dialog id="dialog" class="size-position">
-                    <h2>Login</h2>
-                    <paper-input label="&nbsp;&nbsp;Username" id="inputWithButton">
-                        <iron-icon icon="social:person" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <paper-input label="&nbsp;&nbsp;Password" id="inputWithButton2" type="password">
-                        <iron-icon icon="icons:https" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput2()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <br><br>
-                    <div class="row in-login-popup">
-                        <div class="col-sm-6 col-centered">
-                            <paper-button raised class="green">Login</paper-button>
-                        </div>
-                        <div class="col-sm-6 col-centered">
-                            <paper-button raised class="grey">Clear</paper-button>
-                        </div>
-                    </div>
-                    <br>
-                    <a href="#">Not a member? Please Register Here!</a>
-                    <br><br>
-                </paper-dialog>
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
+            <!-- /.container -->
+
+            <!-- Nav for small screens -->
+            <div class="container-fluid no-padding">
+                <div class="visible-sm visible-xs">
+                    <!-- Navbar Header -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#navbar_collapse"><span class="sr-only">Toggle navigation</span> <span
+                                    class="icon-bar first"></span> <span class="icon-bar hide-bar"></span> <span
+                                    class="icon-bar last"></span></button>
+                        <a class="navbar-brand" href="index-x.html" id="bellafirenze-sm"></a>
+                    </div>
+                    <!-- /.Navbar Header -->
+                    <!-- Navbar Collapse -->
+                    <div class="collapse navbar-collapse" id="navbar_collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#menu">Menu</a></li>
+                            <li><a href="#ingredient">Ingredient</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#" data-dialog="dialog" onclick="clickHandler(event)"
+                                   id="login_collapse">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <!-- /.Nav for small screens -->
         </div>
-        <!-- /.container -->
-
-        <!-- Nav for small screens -->
-        <div class="container-fluid no-padding">
-            <div class="visible-sm visible-xs">
-                <!-- Navbar Header -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar_collapse"><span class="sr-only">Toggle navigation</span> <span
-                                class="icon-bar first"></span> <span class="icon-bar hide-bar"></span> <span
-                                class="icon-bar last"></span></button>
-                    <a class="navbar-brand" href="index-x.html" id="bellafirenze-sm"></a>
-                </div>
-                <!-- /.Navbar Header -->
-                <!-- Navbar Collapse -->
-                <div class="collapse navbar-collapse" id="navbar_collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#menu">Menu</a></li>
-                        <li><a href="#ingredient">Ingredient</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="##" data-dialog="dialog" onclick="clickHandler(e)"
-                               id="login_collapse">Login</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-        <!-- /.Nav for small screens -->
     </nav>
     <!-- /.Nav -->
 </div>
@@ -564,11 +634,25 @@
                                                               md-select-on-focus=""></textarea>
                                                 </md-input-container>
                                             </md-content>
+                                            <div class="col-md-12">
+                                                <div ng-cloak="" class="buttondemoBasicUsage">
+                                                    <md-content class="btn_group_save" style="align-items: center">
+                                                        <md-button class="md-raised md-primary"
+                                                                   ng-click="submitFeedback()">Save
+                                                        </md-button>
+                                                    </md-content>
+                                                    <!--<md-content class="btn_group_cancel">
+                                                        <md-button class="md-raised md-primary">Cancel
+                                                        </md-button>
+                                                    </md-content>-->
+                                                </div>
+                                            </div>
 
                                         </md-tab>
 
+
                                         <md-tab label="Rating">
-                                            <div  class="tabsdemoDynamicHeight" >
+                                            <div class="tabsdemoDynamicHeight">
                                                 <md-content>
                                                     <md-tabs md-dynamic-height="" md-border-bottom="">
                                                         <md-tab label="Appetizer">
@@ -576,29 +660,30 @@
                                                                 <div id="content">
                                                                     <div>
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <md-radio-button value="cs" class="md-primary">
-                                                                                <img src="https://pixabay.com/static/uploads/photo/2010/12/13/10/25/appetizer-2802_960_720.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Smoked salmon served with wholewheat crackers
-                                                                            </md-radio-button>
+                                                                            <table ng-repeat="dishAppetizer in appetizer">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <img style="width: 150px; height: 150px"
+                                                                                             src="{[{ dishAppetizer.img[0].data }]}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <md-radio-button
+                                                                                                value="{[{dishAppetizer.name}]}"
+                                                                                                class="md-primary">
+                                                                                            {[{ dishAppetizer.name }]}
+                                                                                        </md-radio-button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </md-radio-group>
-                                                                    </div><br>
-                                                                </div>
-                                                                <div class="row">
-                                                                <div ng-controller="RatingController as rating" class="container">
-                                                                    <!--<h1>Angular Star Rating Directive</h1>-->
-                                                                    <div star-rating ng-model="rating.rating1" max="5"
-                                                                         on-rating-select="rating.rateFunction(rating)"></div>
-                                                                    <star-rating ng-model="rating.rating2"
-                                                                                 readonly="rating.isReadonly"></star-rating>
-                                                                    <label>
-                                                                        <input type="checkbox" ng-model="rating.isReadonly"/>
-                                                                        Is Readonly
-                                                                    </label>
-
-                                                                    <div><strong>Rating 1:</strong> {[{ rating.rating1 }]}</div>
-                                                                    <div><strong>Rating 2:</strong> {[{ rating.rating2 }]}</div>
-                                                                </div>
+                                                                    </div>
+                                                                    <br>
                                                                 </div>
                                                             </md-content>
                                                         </md-tab>
@@ -608,35 +693,47 @@
                                                             <md-content class="md-padding">
                                                                 <div id="content">
                                                                     <div>
+                                                                        <!--<md-radio-group ng-model="data.group1">-->
+                                                                        <!--<table border="1" style="width: 100%">-->
+                                                                        <!--<tr>-->
+                                                                        <!--<td ng-repeat="dishMain in soup"-->
+                                                                        <!--style="padding-left: 5%">-->
+                                                                        <!--&lt;!&ndash;<img class="profile-pic" src="{[{ imageurl }]}" />&ndash;&gt;-->
+                                                                        <!--<md-radio-button-->
+                                                                        <!--value="{[{dishMain.name}]}"-->
+                                                                        <!--class="md-primary"-->
+                                                                        <!--&gt;-->
+                                                                        <!--{[{dishMain.name}]}-->
+                                                                        <!--</md-radio-button>-->
+                                                                        <!--</td>-->
+                                                                        <!--</tr>-->
+                                                                        <!--</table>-->
+                                                                        <!--</md-radio-group>-->
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <md-radio-button value="cs" class="md-primary">
-                                                                                <img src="https://pixabay.com/static/uploads/photo/2015/09/25/11/08/ramen-957173_960_720.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Ramen
-                                                                            </md-radio-button>
-                                                                            <md-radio-button value="pb">
-                                                                                <img src="https://pixabay.com/static/uploads/photo/2012/02/26/10/51/beef-17040_960_720.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Spaghetti Bolognese
-                                                                            </md-radio-button>
+                                                                            <table ng-repeat="dishMainDish in mainDish">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <img style="width: 150px; height: 150px"
+                                                                                             src="{[{ dishMainDish.img[0].data }]}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <md-radio-button
+                                                                                                value="{[{dishMainDish.name}]}"
+                                                                                                class="md-primary">
+                                                                                            {[{ dishMainDish.name }]}
+                                                                                        </md-radio-button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </md-radio-group>
-                                                                    </div><br>
-                                                                </div>
-
-                                                                <div class="row">
-                                                                <div ng-controller="RatingController as rating" class="container">
-                                                                    <div star-rating ng-model="rating.rating1" max="5"
-                                                                         on-rating-select="rating.rateFunction(rating)"></div>
-                                                                    <star-rating ng-model="rating.rating2"
-                                                                                 readonly="rating.isReadonly"></star-rating>
-                                                                    <label>
-                                                                        <input type="checkbox" ng-model="rating.isReadonly"/>
-                                                                        Is Readonly
-                                                                    </label>
-
-                                                                    <div><strong>Rating 1:</strong> {[{ rating.rating1 }]}</div>
-                                                                    <div><strong>Rating 2:</strong> {[{ rating.rating2 }]}</div>
-                                                                </div>
+                                                                    </div>
+                                                                    <br>
                                                                 </div>
                                                             </md-content>
                                                         </md-tab>
@@ -645,69 +742,119 @@
                                                             <md-content class="md-padding">
                                                                 <div id="content">
                                                                     <div>
+                                                                        <!--<md-radio-group ng-model="data.group1">-->
+                                                                        <!--<table border="1" style="width: 100%">-->
+                                                                        <!--<tr>-->
+                                                                        <!--<td ng-repeat="dishMain in soup"-->
+                                                                        <!--style="padding-left: 5%">-->
+                                                                        <!--&lt;!&ndash;<img class="profile-pic" src="{[{ imageurl }]}" />&ndash;&gt;-->
+                                                                        <!--<md-radio-button-->
+                                                                        <!--value="{[{dishMain.name}]}"-->
+                                                                        <!--class="md-primary"-->
+                                                                        <!--&gt;-->
+                                                                        <!--{[{dishMain.name}]}-->
+                                                                        <!--</md-radio-button>-->
+                                                                        <!--</td>-->
+                                                                        <!--</tr>-->
+                                                                        <!--</table>-->
+                                                                        <!--</md-radio-group>-->
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <md-radio-button value="cs" class="md-primary">
-                                                                                <img src="https://pixabay.com/static/uploads/photo/2015/01/30/10/35/glass-617387_960_720.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Apple almond yoghurt
-                                                                            </md-radio-button>
-                                                                            <md-radio-button value="pb">
-                                                                                <img src="https://pixabay.com/static/uploads/photo/2015/03/26/09/39/cupcakes-690040_960_720.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Chocolate buttercream cake
-                                                                            </md-radio-button>
+                                                                            <table ng-repeat="dishMainDish in dessert">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <img style="width: 150px; height: 150px"
+                                                                                             src="{[{ dishMainDish.img[0].data }]}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <md-radio-button
+                                                                                                value="{[{dishMainDish.name}]}"
+                                                                                                class="md-primary">
+                                                                                            {[{ dishMainDish.name }]}
+                                                                                        </md-radio-button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </md-radio-group>
-                                                                    </div><br>
-                                                                </div>
-
-                                                                <div class="row">
-                                                                <div ng-controller="RatingController as rating" class="container">
-                                                                    <div star-rating ng-model="rating.rating1" max="5"
-                                                                         on-rating-select="rating.rateFunction(rating)"></div>
-                                                                    <star-rating ng-model="rating.rating2"
-                                                                                 readonly="rating.isReadonly"></star-rating>
-                                                                    <label>
-                                                                        <input type="checkbox" ng-model="rating.isReadonly"/>
-                                                                        Is Readonly
-                                                                    </label>
-
-                                                                    <div><strong>Rating 1:</strong> {[{ rating.rating1 }]}</div>
-                                                                    <div><strong>Rating 2:</strong> {[{ rating.rating2 }]}</div>
-                                                                </div>
+                                                                    </div>
+                                                                    <br>
                                                                 </div>
                                                             </md-content>
                                                         </md-tab>
+
+                                                        <!--<md-tab label="Dessert">
+                                                            <md-content class="md-padding">
+                                                                <div id="content">
+                                                                    <div>
+                                                                        <table>
+                                                                            <md-radio-group ng-model="data.group1">
+                                                                                <table ng-repeat="dishDessert in dessert">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                    &lt;!&ndash;<tr><td><img style="width: 150px; height: 150px" src="{[{ dishDessert.img[0].data }]}" /></td></tr>
+                                                                                    <tr><td><md-radio-button value="{[{dishDessert.name}]}"
+                                                                                                             class="md-primary">
+                                                                                                {[{ dishDessert.name }]}
+                                                                                            </md-radio-button></td></tr>
+                                                                                    </td>
+                                                                                    </tr>&ndash;&gt;
+                                                                                    <tr><td><img style="width: 150px; height: 150px" src="{[{ dishDessert.img[0].data }]}" /></td></tr>
+                                                                                    <tr><td><md-radio-button value="{[{dishDessert.name}]}"
+                                                                                                             class="md-primary">
+                                                                                                {[{ dishDessert.name }]}
+                                                                                            </md-radio-button></td></tr>
+                                                                                    </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </md-radio-group>
+                                                                        </table>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                            </md-content>
+                                                        </md-tab>-->
 
                                                         <md-tab label="Salad">
                                                             <md-content class="md-padding">
                                                                 <div id="content">
                                                                     <div>
+                                                                        <!--<md-radio-group ng-model="data.group1">-->
+                                                                        <!--<md-radio-button value="{[{dishSal.name}]}"-->
+                                                                        <!--class="md-primary"-->
+                                                                        <!--ng-repeat="dishSal in salad ">-->
+                                                                        <!--&lt;!&ndash;<img src="https://pixabay.com/static/uploads/photo/2010/12/13/10/25/appetizer-2802_960_720.jpg"&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">&ndash;&gt;-->
+                                                                        <!--{[{dishSal.name}]}-->
+                                                                        <!--</md-radio-button>-->
+                                                                        <!--</md-radio-group>-->
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <md-radio-button value="cs" class="md-primary">
-                                                                                <img src="http://cdn.hairybikers.com/uploads/images/_recipeImage/Chicken-Ceaser-Salad.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Caesar Salad
-                                                                            </md-radio-button>
-                                                                            <md-radio-button value="pb">
-                                                                                <img src="http://www.framedcooks.com/wp-content/uploads/2012/02/820163138_hg8By-M.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Tuna salad</md-radio-button>
+                                                                            <table ng-repeat="dishSalad in salad">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <img style="width: 150px; height: 150px"
+                                                                                             src="{[{ dishSalad.img[0].data }]}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <md-radio-button
+                                                                                                value="{[{dishSalad.name}]}"
+                                                                                                class="md-primary">
+                                                                                            {[{ dishSalad.name }]}
+                                                                                        </md-radio-button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </md-radio-group>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div ng-controller="RatingController as rating" class="container">
-                                                                        <!--<h1>Angular Star Rating Directive</h1>-->
-                                                                        <div star-rating ng-model="rating.rating1" max="5"
-                                                                             on-rating-select="rating.rateFunction(rating)"></div>
-                                                                        <star-rating ng-model="rating.rating2"
-                                                                                     readonly="rating.isReadonly"></star-rating>
-                                                                        <label>
-                                                                            <input type="checkbox" ng-model="rating.isReadonly"/>
-                                                                            Is Readonly
-                                                                        </label>
-                                                                        <div><strong>Rating 1:</strong> {[{ rating.rating1 }]}</div>
-                                                                        <div><strong>Rating 2:</strong> {[{ rating.rating2 }]}</div>
                                                                     </div>
                                                                 </div>
                                                             </md-content>
@@ -717,58 +864,65 @@
                                                             <md-content class="md-padding">
                                                                 <div id="content">
                                                                     <div>
+
+
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <md-radio-button value="cs" class="md-primary">
-                                                                                <img src="http://tastykitchen.com/recipes/wp-content/uploads/sites/2/2011/11/pumpkin-420x280.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Pumpkin soup
-                                                                            </md-radio-button>
-                                                                            <md-radio-button value="pb">
-                                                                                <img src="https://pixabay.com/static/uploads/photo/2015/02/03/16/31/soup-622737_960_720.jpg"
-                                                                                     class="img-circle" alt="Cinque Terre" width="70" height="70" style="margin-top: -20px;">
-                                                                                Tomato soup
-                                                                                </md-radio-button>
+                                                                            <table ng-repeat="dishSoup in soup">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <img style="width: 150px; height: 150px"
+                                                                                             src="{[{ dishSoup.img[0].data }]}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <md-radio-button
+                                                                                                value="{[{dishSoup.name}]}"
+                                                                                                class="md-primary">
+                                                                                            {[{ dishSoup.name }]}
+                                                                                        </md-radio-button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </md-radio-group>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row" >
-                                                                    <div ng-controller="RatingController as rating" class="container">
-                                                                        <!--<h1>Angular Star Rating Directive</h1>-->
-                                                                        <div star-rating ng-model="rating.rating1" max="5"
-                                                                             on-rating-select="rating.rateFunction(rating)"></div>
-                                                                        <star-rating ng-model="rating.rating2"
-                                                                                     readonly="rating.isReadonly"></star-rating>
-                                                                        <label>
-                                                                            <input type="checkbox" ng-model="rating.isReadonly"/>
-                                                                            Is Readonly
-                                                                        </label>
-                                                                        <div><strong>Rating 1:</strong> {[{ rating.rating1 }]}</div>
-                                                                        <div><strong>Rating 2:</strong> {[{ rating.rating2 }]}</div>
-                                                                    </div>
 
+
+                                                                    </div>
                                                                 </div>
                                                             </md-content>
                                                         </md-tab>
 
-                                                        <md-tab label="Star Rating">
-                                                            <md-content class="md-padding">
-                                                                <div ng-controller="RatingController as rating" class="container">
-                                                                    <!--<h1>Angular Star Rating Directive</h1>-->
-                                                                    <div star-rating ng-model="rating.rating1" max="5"
-                                                                         on-rating-select="rating.rateFunction(rating)"></div>
-                                                                    <star-rating ng-model="rating.rating2"
-                                                                                 readonly="rating.isReadonly"></star-rating>
-                                                                    <label>
-                                                                        <input type="checkbox" ng-model="rating.isReadonly"/>
-                                                                        Is Readonly
-                                                                    </label>
-                                                                    <div><strong>Rating 1:</strong> {[{ rating.rating1 }]}</div>
-                                                                    <div><strong>Rating 2:</strong> {[{ rating.rating2 }]}</div>
-                                                                </div>
-                                                            </md-content>
-                                                        </md-tab>
                                                     </md-tabs>
                                                 </md-content>
+                                            </div>
+                                            <div class="row" style="width: inherit; align-content: center" >
+
+
+                                                <div ng-controller="RatingController as rating"
+                                                     class="container">
+                                                    <div star-rating ng-model="rating.rating1" max="5"
+                                                         on-rating-select="rating.rateFunction(rating)">
+
+                                                    </div>
+                                                    <input ng-model="rating.rating_value" ng-value="bob">{[{rating.rating1}]}</input>
+                                                </div>
+
+                                                <div ng-cloak="" class="buttondemoBasicUsage">
+                                                    <md-content class="btn_group_save"
+                                                                style="align-items: center">
+                                                        <md-button class="md-raised md-primary"
+                                                                   ng-click="submitRating()">Send
+                                                        </md-button>
+
+                                                    </md-content>
+
+
+                                                </div>
+
                                             </div>
                                         </md-tab>
 
@@ -788,19 +942,24 @@
 
                 <!--Submit suggestion-->
                 <div class="row">
-                    <div class="col-md-8"></div>
                     <div class="col-md-4">
+                        <!--<h4 style="text-align: right;"><b>Overall Rating: </b></h4>-->
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                    <!--<div class="col-md-4">
                         <div ng-cloak="" class="buttondemoBasicUsage">
                             <md-content class="btn_group_save">
-                                <md-button class="md-raised md-primary" ng-click="checkElementToUpdate()">Save
+                                <md-button class="md-raised md-primary" ng-click="submitFeedback()">Save
                                 </md-button>
                             </md-content>
                             <md-content class="btn_group_cancel">
-                                <md-button class="md-raised md-primary" ng-click="checkElementToUpdate()">Cancel
+                                <md-button class="md-raised md-primary">Cancel
                                 </md-button>
                             </md-content>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <!-- End submit suggestion-->
             </form>

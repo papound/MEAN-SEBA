@@ -426,12 +426,12 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         $scope.project.weight = user[0].weight;
         cardno = user[0].cardNumber;
         //console.log("cardno: " + cardno);
-        $scope.user.cvc = user[0].cvc;
-        $scope.user.profilePicture = user[0].profilePicture.data;
+        $scope.user.cvc = '';
+        $scope.user.profilePicture = user[0].profilePicture[0].data;
         $scope.user.validityDate = new Date(user[0].validityDate);
         $scope.imageurl_bak = user[0].imageurl
-        if (user[0].profilePicture.data != null) {
-            $scope.imageurl = user[0].profilePicture.data;
+        if (user[0].profilePicture[0].data != null) {
+            $scope.imageurl = user[0].profilePicture[0].data;
         } else if( user[0].imageurl != null){
             $scope.imageurl = user[0].imageurl
             $scope.imageurl_bak = user[0].imageurl
@@ -786,7 +786,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
     $scope.updateProfile = function () {
         var birthdate = $scope.myDate.toISOString()
         var valid_date = $scope.user.validityDate.toISOString()
-        console.log($scope.user.profilePicture)
+        //console.log($scope.user.profilePicture)
         return $http.post(url + "/api/update/profile", {
             firstname: $scope.user.firstname,
             lastname: $scope.user.lastname,
@@ -794,7 +794,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
             password: $scope.user.password,
             birthdate: birthdate,
             imageurl: $scope.imageurl_bak,
-            profilePicture: $scope.user.profilePicture.data,
+            profilePicture: $scope.user.profilePicture,
             height: $scope.project.height,
             weight: $scope.project.weight,
             address1: $scope.user.address,

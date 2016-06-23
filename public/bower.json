@@ -11,6 +11,8 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "ng-file-model": "*",
     "material-calendar": "^0.2.14",
-    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#1.0.0"
+    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#1.0.0",
+    "paper-radio-group": "PolymerElements/paper-radio-group#1.0.0",
+    "paper-radio-button": "PolymerElements/paper-radio-button#1.0.0"
   }
 }

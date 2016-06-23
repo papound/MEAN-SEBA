@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0048)http://bella.designershare.net/menu.html#contact -->
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -278,7 +278,7 @@
             overflow: auto;
         }
 
-        paper-dialog-scrollable{
+        paper-dialog-scrollable {
             @apply(--layout-flex);
         }
 
@@ -293,7 +293,43 @@
         .test_scroll {
             height: inherit;
         }
+
         /*end tab css*/
+
+        /*Material Icons*/
+        .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 15px; /* Preferred icon size */
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+
+            /* Support for all WebKit browsers. */
+            -webkit-font-smoothing: antialiased;
+            /* Support for Safari and Chrome. */
+            text-rendering: optimizeLegibility;
+
+            /* Support for Firefox. */
+            -moz-osx-font-smoothing: grayscale;
+
+            /* Support for IE. */
+            font-feature-settings: 'liga';
+        }
+
+        /*quantity button css*/
+        .small_number {
+            width: 50px;
+            /*margin: 40px auto;*/
+
+        }
+
+        /*end quantity button css*/
 
     </style>
 </head>
@@ -333,6 +369,10 @@
         } else {
             window.location.href = "http://localhost:4000/";
         }
+
+        //test quatity button js
+
+        //end test quantity button js
 
     });
 </script>
@@ -474,81 +514,164 @@
 <section id="menu-list">
     <div class="container">
         <div id="all_modules" layout="column" ng-cloak class="md-inline-form" ng-controller="calendarCtrl">
-
-            <!-- Title & Divider -->
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
-                     style="visibility: visible; animation-name: fadeIn;">
-                    <h2>Order</h2>
-                    <br><br>
+            <form name="orderForm">
+                <!-- Title & Divider -->
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
+                         style="visibility: visible; animation-name: fadeIn;">
+                        <h2>Order</h2>
+                        <br><br>
+                    </div>
                 </div>
-            </div>
 
-            <!--Dialog-->
-            <paper-dialog id="calendar_popup">
-                <h2>Order: <span>{[{ show_date_dialog }]}</span></h2>
-                <paper-dialog-scrollable class="scrolling_dialog">
-                    <p style="padding-left: 10%;" ng-bind-html="full_data"></p>
-                </paper-dialog-scrollable>
-                <div class="buttons">
-                    <paper-button dialog-confirm autofocus>OK</paper-button>
-                </div>
-            </paper-dialog>
-            <!--End Dialog-->
+                <!--Dialog-->
+                <paper-dialog id="calendar_popup">
+                    <h2>Order: <span style="color: #0b50bf">{[{ show_date_dialog }]}</span></h2>
+                    <paper-dialog-scrollable class="scrolling_dialog">
+                        <p style="padding-left: 10%;" ng-bind-html="full_data"></p>
+                    </paper-dialog-scrollable>
+                    <div class="buttons">
+                        <paper-button dialog-confirm autofocus>OK</paper-button>
+                    </div>
+                </paper-dialog>
+                <!--End Dialog-->
 
-            <!--begin test tab-->
-            <div ng-cloak="" class="tabsdemoDynamicHeight">
-                <md-content>
-                    <md-tabs md-dynamic-height md-border-bottom>
-                        <md-tab label="CURRENT">
-                            <span>test current</span>
-                        </md-tab>
-                        <md-tab label="HISTORY">
-                            <md-content class="md-padding">
-                                <!--calendar-->
-                                <div>
-                                    <div style="height: 800px;">
-                                        <calendar-md id="calendar-demo" flex layout layout-fill
-                                                     calendar-direction="direction"
-                                                     on-prev-month="prevMonth"
-                                                     on-next-month="nextMonth"
-                                                     on-day-click="dayClick"
-                                                     title-format="'MMMM y'"
-                                                     ng-model='selectedDate'
-                                                     day-format="dayFormat"
-                                                     day-label-format="'EEE'"
-                                                     day-label-tooltip-format="'EEEE'"
-                                                     day-tooltip-format="'fullDate'"
-                                                     week-starts-on="weekStartsOn"
-                                                     start-Date-of-month="1"
-                                                     no-of-days="30"
-                                                     tooltips="false"
-                                                     day-content="setDayContent"
-                                                     disable-future-selection="disableFutureDates">
-                                            /calendar-md>
+                <!--begin test tab-->
+                <div ng-cloak="" class="tabsdemoDynamicHeight">
+                    <md-content>
+                        <md-tabs md-dynamic-height md-border-bottom>
+                            <md-tab label="CURRENT">
+                                <!--<p ng-if="!order_status">-->
+                                    <!--No Orders in your basket-->
+                                <!--</p>-->
+                                <!--<div ng-if="order_status">-->
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr class="info">
+                                                <th width="33%">Dish</th>
+                                                <th width="33%">Quantity</th>
+                                                <th width="34%">Price</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="d in dishes">
+                                                <td>{[{d.name}]}</td>
+                                                <td>
+                                                    <md-input-container class="md-block small_number">
+                                                        <label></label>
+                                                        <input required type="number" step="any" name="rate"
+                                                               value="{[{ d.amount }]}" ng-init="amount = d.amount"
+                                                               ng-model="amount" min="0"
+                                                               max="999" ng-change="quantityChanged(d.name)"/>
+                                                    </md-input-container>
+                                                </td>
+                                                <td>
+                                                    € <span ng-init="$parent.total = $parent.total + (amount * d.ratio);"
+                                                            ng-model="total">{[{ amount * d.ratio | number:2}]}</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <thead>
+                                            <tr class="info">
+                                                <th>Ingredient</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="i in ingredients">
+                                                <td>{[{i.name}]}</td>
+                                                <td>
+                                                    <md-input-container class="md-block small_number">
+                                                        <label></label>
+                                                        <input required type="number" step="any" name="rate"
+                                                               value="{[{ i.amount }]}" ng-init="amount = i.amount"
+                                                               ng-model="amount" min="0"
+                                                               max="999" ng-change="quantityChanged(i.name)"/>
+                                                    </md-input-container>
+                                                </td>
+                                                <td>€ <span ng-init="$parent.total = $parent.total + (amount * i.ratio)"
+                                                            ng-model="total">{[{ amount * i.ratio | number:2 }]}</span>
+                                                    <!--<br><span ng-init="totalDish" ng-model="totalDish">{[{ amount * i.ratio | number:2 + totalDish}]}</span>-->
+                                                </td>
+                                            </tr>
+                                            <!--<tr>-->
+                                            <!--<span ng-init="totalDish" ng-model="totalDish">{[{ totalDish }]}</span>-->
+                                            <!--</tr>-->
+                                            </tbody>
+                                            <thead>
+                                            <tr class="success">
+                                                <th colspan="2">
+                                                    <md-radio-group ng-model="paymentType">
+                                                        <md-radio-button value="cash"
+                                                                         class="md-primary">Cash
+                                                        </md-radio-button>
+                                                        <md-radio-button value="creditcard" class="md-primary"
+                                                                         id="creditcard"> Credit Card
+                                                        </md-radio-button>
+                                                    </md-radio-group>
+                                                </th>
+                                                <th><span style="color: dimgray; ">Total
+                                                price</span>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span
+                                                            style="color: darkgreen " ng-model="totalprice">€ {[{ totalprice | number:2 }]}</span>
+                                                    <md-button class="md-raised" style="margin-left: 20%"
+                                                               ng-click="placeOrder()">CONFIRM
+                                                    </md-button>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                        </table>
                                     </div>
-                                    <!--<p>{[{ msg || "Click on a date/button to get started"}]}</p>-->
-                                    <!--<pre>$scope.selectedDate = {[{ selectedDate | json }]}</pre>-->
-                                </div>
-                                <!--end calendar-->
-                            </md-content>
-                        </md-tab>
-                        <!--<md-tab label="three">
-                            <md-content class="md-padding">
-                                <h1 class="md-display-2">Tab Three</h1>
-                                <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-                            </md-content>
-                        </md-tab>-->
-                    </md-tabs>
-                </md-content>
-            </div>
+                                <!--</div>-->
+                            </md-tab>
+                            <md-tab label="HISTORY">
+                                <md-content class="md-padding">
+                                    <!--calendar-->
+                                    <div>
+                                        <div style="height: 800px;">
+                                            <calendar-md id="calendar-demo" flex layout layout-fill
+                                                         calendar-direction="direction"
+                                                         on-prev-month="prevMonth"
+                                                         on-next-month="nextMonth"
+                                                         on-day-click="dayClick"
+                                                         title-format="'MMMM y'"
+                                                         ng-model='selectedDate'
+                                                         day-format="dayFormat"
+                                                         day-label-format="'EEE'"
+                                                         day-label-tooltip-format="'EEEE'"
+                                                         day-tooltip-format="'fullDate'"
+                                                         week-starts-on="weekStartsOn"
+                                                         start-Date-of-month="1"
+                                                         no-of-days="30"
+                                                         tooltips="false"
+                                                         day-content="setDayContent"
+                                                         disable-future-selection="disableFutureDates">
+                                                /calendar-md>
+                                        </div>
+                                        <!--<p>{[{ msg || "Click on a date/button to get started"}]}</p>-->
+                                        <!--<pre>$scope.selectedDate = {[{ selectedDate | json }]}</pre>-->
+                                    </div>
+                                    <!--end calendar-->
+                                </md-content>
+                            </md-tab>
+                            <!--<md-tab label="three">
+                                <md-content class="md-padding">
+                                    <h1 class="md-display-2">Tab Three</h1>
+                                    <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                                </md-content>
+                            </md-tab>-->
+                        </md-tabs>
+                    </md-content>
+                </div>
 
-            <!--
-            Copyright 2016 Google Inc. All Rights Reserved.
-            Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
-            -->
+                <!--
+                Copyright 2016 Google Inc. All Rights Reserved.
+                Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+                -->
 
-            <!--end test tab-->
+                <!--end test tab-->
+            </form>
 
         </div>
 
@@ -688,6 +811,7 @@
 <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>-->
 <!--<script type="text/javascript" src="calendar-holidays.js"></script>-->
 <script type="text/javascript" src="order-controller.js"></script>
+<script type="text/javascript" src="bootstrap-spinner.js"></script>
 
 
 </body>

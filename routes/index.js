@@ -29,4 +29,8 @@ module.exports = function(app) {
         res.render('feedback.ejs');
     });
 
+    app.get('/dish-profile', function(req, res){
+        res.render('dishprofile.ejs');
+    });
+
 };
