@@ -9,9 +9,9 @@ module.exports = function(app) {
         res.render('index.ejs');
     });
 
-    app.get('/profile', function(req, res){
+    /*app.get('/profile', function(req, res){
         res.render('userprofile.ejs');
-    });
+    });*/
 
     app.get('/main-profile', function(req, res){
         res.render('mainprofile.ejs');
@@ -33,4 +33,7 @@ module.exports = function(app) {
         res.render('dishprofile.ejs');
     });
 
+    app.get('/search', function(req, res){
+        res.render('search.ejs');
+    });
 };

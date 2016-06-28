@@ -3,35 +3,68 @@
  */
 var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages']);
 
-var url = "http://localhost:4000"
+var url = "http://localhost:4000";
+
+// //Test UploadPic
+(function () {
+    'use strict';
+    angular.module('ng-file-model', [])
+        .directive("ngFileModel", [function () {
+            return {
+                scope: {
+                    ngFileModel: "="
+                },
+                link: function (scope, element, attributes) {
+                    element.bind("change", function (changeEvent) {
+                        var reader = new FileReader();
+                        reader.onload = function (loadEvent) {
+                            scope.$apply(function () {
+                                scope.ngFileModel = {
+                                    lastModified: changeEvent.target.files[0].lastModified,
+                                    lastModifiedDate: changeEvent.target.files[0].lastModifiedDate,
+                                    name: changeEvent.target.files[0].name,
+                                    size: changeEvent.target.files[0].size,
+                                    type: changeEvent.target.files[0].type,
+                                    data: loadEvent.target.result
+                                };
+                            });
+                        };
+                        reader.readAsDataURL(changeEvent.target.files[0]);
+                    });
+                }
+            }
+        }]);
+})();
+//End Test UploadPic
 
 app2.controller('formCtrl', function ($scope, $http) {
 
-    $scope.status = '  ';
+    $scope.status = '';
 
     $scope.register = {
-        firstname: "Sam",
-        lastname: "Smith",
+        firstname: "",
+        lastname: "",
         birthdate: "",
-        telephone: "0123456789",
-        email: "sam@smith.com",
+        telephone: "",
+        email: "",
+        profilePicture: null,
         password: "",
         confirmpassword: "",
         address: [
             {
-                name: "123 Oxford Str."
+                name: ""
             },
             {
                 name: ""
             },
             {
-                name: "Munich, Germany"
+                name: ""
             },
             {
-                name: "80939"
+                name: ""
             }
         ]
-    }
+    };
 
     $scope.showSuccess = function (firstname, email) {
 
@@ -39,7 +72,7 @@ app2.controller('formCtrl', function ($scope, $http) {
         if (dialog) {
             dialog.open();
         }
-    }
+    };
 
     $scope.showFailed = function (err) {
         if (err == "Incorrect Password!") {
@@ -55,7 +88,7 @@ app2.controller('formCtrl', function ($scope, $http) {
                 dialog.open();
             }
         }
-    }
+    };
 
     // Set the default value of inputType
     $scope.inputType = 'password';
@@ -82,27 +115,58 @@ app2.controller('formCtrl', function ($scope, $http) {
                 $scope.showFailed("Incomplete Credentials!");
             } else {
                 //alert("Ready to Submit!");
-                return $http.post(url + "/api/register", {
-                    firstname: $scope.register.firstname,
-                    lastname: $scope.register.lastname,
-                    email: $scope.register.email,
-                    password: $scope.register.password,
-                    telephone: $scope.register.telephone,
-                    birthdate: $scope.register.birthdate.toISOString,
-                    address1: $scope.register.address[0].name,
-                    address2: $scope.register.address[1].name,
-                    city: $scope.register.address[2].name,
-                    postalcode: $scope.register.address[3].name
-                }).then(function (response) {
+                if($scope.register.profilePicture.lastModified != null){
+                    console.log("data 6 elements");
+                    $scope.register.profilePicture = $scope.register.profilePicture.data;
+                    console.log("changed to data 2 elements");
+                    //console.log(JSON.stringify($scope.register.profilePicture));
+                    return $http.post(url + "/api/register", {
+                        firstname: $scope.register.firstname,
+                        lastname: $scope.register.lastname,
+                        email: $scope.register.email,
+                        password: $scope.register.password,
+                        telephone: $scope.register.telephone,
+                        profilePicture: $scope.register.profilePicture,
+                        birthdate: $scope.register.birthdate.toISOString,
+                        address1: $scope.register.address[0].name,
+                        address2: $scope.register.address[1].name,
+                        city: $scope.register.address[2].name,
+                        postalcode: $scope.register.address[3].name
+                    }).then(function (response) {
 
-                    console.log(response.data.success);
+                        console.log(response.data.success);
 
-                    localStorage.loginChefAtHomeEmail = $scope.register.email
-                    console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
-                    localStorage.loginChefAtHomefirstname = $scope.register.firstname
-                    $scope.showSuccess($scope.register.firstname, $scope.register.email);
+                        localStorage.loginChefAtHomeEmail = $scope.register.email;
+                        console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
+                        localStorage.loginChefAtHomefirstname = $scope.register.firstname;
+                        $scope.showSuccess($scope.register.firstname, $scope.register.email);
 
-                });
+                    });
+                }else{
+                    console.log("data 2 elements");
+                    return $http.post(url + "/api/register", {
+                        firstname: $scope.register.firstname,
+                        lastname: $scope.register.lastname,
+                        email: $scope.register.email,
+                        password: $scope.register.password,
+                        telephone: $scope.register.telephone,
+                        profilePicture: $scope.register.profilePicture,
+                        birthdate: $scope.register.birthdate.toISOString,
+                        address1: $scope.register.address[0].name,
+                        address2: $scope.register.address[1].name,
+                        city: $scope.register.address[2].name,
+                        postalcode: $scope.register.address[3].name
+                    }).then(function (response) {
+
+                        console.log(response.data.success);
+
+                        localStorage.loginChefAtHomeEmail = $scope.register.email;
+                        console.log("Localstorage Email: " + localStorage.loginChefAtHomeEmail);
+                        localStorage.loginChefAtHomefirstname = $scope.register.firstname;
+                        $scope.showSuccess($scope.register.firstname, $scope.register.email);
+
+                    });
+                }
             }
         } else {
             $scope.showFailed("Incorrect Password!");
@@ -110,7 +174,7 @@ app2.controller('formCtrl', function ($scope, $http) {
     }
 
 
-})
+});
 
 app2.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[{');
@@ -127,5 +191,5 @@ app2.config(function ($interpolateProvider) {
 
 angular.element(document).ready(function () {
     var myDiv1 = document.getElementById("all_modules");
-    angular.bootstrap(myDiv1, ["inputBasicDemo"]);
+    angular.bootstrap(myDiv1, ["inputBasicDemo", "ng-file-model"]);
 });

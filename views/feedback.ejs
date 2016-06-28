@@ -237,6 +237,7 @@
             margin-top: 0;
         }
 
+
         /*End Tabs menu Suggestion-Rating*/
 
         /*Star Rating*/
@@ -339,6 +340,15 @@
         }
 
         /*End Radio Button*/
+
+        /*Footer*/
+        section#contact{
+            padding: 50px;
+        }
+
+        ul.social-buttons li a {
+            border: 2px solid white;
+        }
 
     </style>
 
@@ -573,7 +583,7 @@
 <!-- /. Menu Header -->
 
 <!-- Full Menu List -->
-<section id="menu-list">
+<section id="menu-list" style="padding-top: 2%">
     <div class="container">
         <div id="all_modules" layout="column" ng-cloak class="md-inline-form">
 
@@ -660,22 +670,19 @@
                                                                 <div id="content">
                                                                     <div>
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <table ng-repeat="dishAppetizer in appetizer">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                <tr>
+                                                                            <table ng-repeat="dishAppetizer in appetizer" class="table">
+                                                                                <tr style="padding-bottom: 5%">
                                                                                     <td>
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishAppetizer.img[0].data }]}"/>
                                                                                     </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
+                                                                                    <td style="padding-left: 2%; vertical-align: middle; text-align: left;">
                                                                                         <md-radio-button
                                                                                                 value="{[{dishAppetizer.name}]}"
-                                                                                                class="md-primary">
-                                                                                            {[{ dishAppetizer.name }]}
+                                                                                                class="md-primary" >
+                                                                                            <h4>{[{ dishAppetizer.name }]}</h4>
                                                                                         </md-radio-button>
+
                                                                                     </td>
                                                                                 </tr>
                                                                                 </td>
@@ -710,27 +717,25 @@
                                                                         <!--</table>-->
                                                                         <!--</md-radio-group>-->
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <table ng-repeat="dishMainDish in mainDish">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                <tr>
+                                                                            <table ng-repeat="dishMainDish in mainDish" class="table">
+                                                                                <tr style="padding-bottom: 5%">
                                                                                     <td>
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
+                                                                                    <td style="padding-left: 2%; vertical-align: middle; text-align: left;">
                                                                                         <md-radio-button
                                                                                                 value="{[{dishMainDish.name}]}"
-                                                                                                class="md-primary">
-                                                                                            {[{ dishMainDish.name }]}
+                                                                                                class="md-primary" >
+                                                                                            <h4>{[{ dishMainDish.name }]}</h4>
                                                                                         </md-radio-button>
+
                                                                                     </td>
                                                                                 </tr>
                                                                                 </td>
                                                                                 </tr>
                                                                             </table>
+
                                                                         </md-radio-group>
                                                                     </div>
                                                                     <br>
@@ -759,22 +764,19 @@
                                                                         <!--</table>-->
                                                                         <!--</md-radio-group>-->
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <table ng-repeat="dishMainDish in dessert">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                <tr>
+                                                                            <table ng-repeat="dishMainDish in dessert" class="table">
+                                                                                <tr style="padding-bottom: 5%">
                                                                                     <td>
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
+                                                                                    <td style="padding-left: 2%; vertical-align: middle; text-align: left;">
                                                                                         <md-radio-button
                                                                                                 value="{[{dishMainDish.name}]}"
-                                                                                                class="md-primary">
-                                                                                            {[{ dishMainDish.name }]}
+                                                                                                class="md-primary" >
+                                                                                            <h4>{[{ dishMainDish.name }]}</h4>
                                                                                         </md-radio-button>
+
                                                                                     </td>
                                                                                 </tr>
                                                                                 </td>
@@ -833,22 +835,19 @@
                                                                         <!--</md-radio-button>-->
                                                                         <!--</md-radio-group>-->
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <table ng-repeat="dishSalad in salad">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                <tr>
+                                                                            <table ng-repeat="dishMainDish in salad" class="table">
+                                                                                <tr style="padding-bottom: 5%">
                                                                                     <td>
                                                                                         <img style="width: 150px; height: 150px"
-                                                                                             src="{[{ dishSalad.img[0].data }]}"/>
+                                                                                             src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
+                                                                                    <td style="padding-left: 2%; vertical-align: middle; text-align: left;">
                                                                                         <md-radio-button
-                                                                                                value="{[{dishSalad.name}]}"
-                                                                                                class="md-primary">
-                                                                                            {[{ dishSalad.name }]}
+                                                                                                value="{[{dishMainDish.name}]}"
+                                                                                                class="md-primary" >
+                                                                                            <h4>{[{ dishMainDish.name }]}</h4>
                                                                                         </md-radio-button>
+
                                                                                     </td>
                                                                                 </tr>
                                                                                 </td>
@@ -867,22 +866,19 @@
 
 
                                                                         <md-radio-group ng-model="data.group1">
-                                                                            <table ng-repeat="dishSoup in soup">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                <tr>
+                                                                            <table ng-repeat="dishMainDish in soup" class="table">
+                                                                                <tr style="padding-bottom: 5%">
                                                                                     <td>
                                                                                         <img style="width: 150px; height: 150px"
-                                                                                             src="{[{ dishSoup.img[0].data }]}"/>
+                                                                                             src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
+                                                                                    <td style="padding-left: 2%; vertical-align: middle; text-align: left;">
                                                                                         <md-radio-button
-                                                                                                value="{[{dishSoup.name}]}"
-                                                                                                class="md-primary">
-                                                                                            {[{ dishSoup.name }]}
+                                                                                                value="{[{dishMainDish.name}]}"
+                                                                                                class="md-primary" >
+                                                                                            <h4>{[{ dishMainDish.name }]}</h4>
                                                                                         </md-radio-button>
+
                                                                                     </td>
                                                                                 </tr>
                                                                                 </td>
@@ -899,30 +895,21 @@
                                                     </md-tabs>
                                                 </md-content>
                                             </div>
-                                            <div class="row" style="width: inherit; align-content: center" >
+                                            <div class="row" style="width: inherit;">
+                                                <div class="col-md-6" align="right" style="height: 50px; align-content: center">
+                                                    <uib-rating ng-model="rate" max="max" read-only="isReadonly_rating"></uib-rating>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div ng-cloak="" class="buttondemoBasicUsage" align="right">
+                                                        <md-content class="btn_group_save"
+                                                                    style="align-items: center">
+                                                            <md-button class="md-raised md-primary"
+                                                                       ng-click="submitRating()">Send
+                                                            </md-button>
 
-
-                                                <div ng-controller="RatingController as rating"
-                                                     class="container">
-                                                    <div star-rating ng-model="rating.rating1" max="5"
-                                                         on-rating-select="rating.rateFunction(rating)">
-
+                                                        </md-content>
                                                     </div>
-                                                    <input ng-model="rating.rating_value" ng-value="bob">{[{rating.rating1}]}</input>
                                                 </div>
-
-                                                <div ng-cloak="" class="buttondemoBasicUsage">
-                                                    <md-content class="btn_group_save"
-                                                                style="align-items: center">
-                                                        <md-button class="md-raised md-primary"
-                                                                   ng-click="submitRating()">Send
-                                                        </md-button>
-
-                                                    </md-content>
-
-
-                                                </div>
-
                                             </div>
                                         </md-tab>
 
@@ -978,33 +965,12 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center wow fadeInDown"
                  style="visibility: hidden; animation-name: none;">
-                <h2>Contact us</h2>
+                <h2>Chef@Home</h2>
                 <p class="lead">Stop by whenever you would like a to cook at your house with fresh ingredients. Save
                     your time from grocery shopping,
                     and have a great time with your family and friends.</p>
-            </div>
-        </div>
-        <div class="mrgn-50-top-btm text-center"><img
-                    src="newTemplate/svg/divider-white.svg" alt=""></div>
-        <!-- Title & Divider -->
-    </div>
-    <!-- /.container -->
-</section>
-<!-- /.Contact Information -->
-
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <!-- Footer Content -->
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
-                 style="visibility: hidden; animation-name: none;">
-                <!-- Restaurant Name & Divider -->
-                <h2>Chef@Home</h2>
                 <div class="mrgn-50-top-btm text-center"><img
-                            src="newTemplate/svg/divider-black.svg" alt=""></div>
-                <!-- /.Restaurant Name & Divider -->
-
+                            src="newTemplate/svg/divider-white.svg" alt=""></div>
                 <!-- Social Profiles -->
                 <div class="mrgn-30-top-btm">
                     <ul class="list-inline social-buttons">
@@ -1026,6 +992,21 @@
                 <!-- /.Copyright -->
             </div>
         </div>
+
+
+
+
+
+        <!-- Title & Divider -->
+    </div>
+    <!-- /.container -->
+</section>
+<!-- /.Contact Information -->
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <!-- Footer Content -->
         <!-- /.Footer Content -->
     </div>
     <!-- /.container -->
@@ -1098,6 +1079,7 @@
 <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
 <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
 
 
 </body>

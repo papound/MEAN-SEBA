@@ -8,6 +8,7 @@ var url = "http://localhost:4000"
 app2.controller('loginCtrl', function ($scope, $http) {
     
     $scope.firstname = localStorage.loginChefAtHomefirstname;
+    //$scope.firstname = "Chanawatn";
 
     $scope.openProfile = function () {
         setTimeout(1000);

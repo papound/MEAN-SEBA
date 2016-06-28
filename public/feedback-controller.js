@@ -1,7 +1,7 @@
 /**
  * Created by Jaupat Ch on 12-Jun-16.
  */
-var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages']);
+var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages','ngAnimate', 'ui.bootstrap']);
 
 var url = "http://localhost:4000";
 
@@ -46,142 +46,26 @@ var suggestlist2 = [["Type", "Ingredients"],
     ["None"]
 ];
 
-// (function() {
-//
-//     'use strict';
-//
-//     app2.directive('starRating', starRating);
-//
-//     function starRating() {
-//         return {
-//             restrict: 'EA',
-//             template: '<ul class="star-rating" ng-class="{readonly: readonly}">' +
-//             '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}" ng-click="toggle($index)">' +
-//             '    <i class="fa fa-star"></i>' + // or &#9733
-//             '  </li>' +
-//             '</ul>',
-//             scope: {
-//                 ratingValue: '=ngModel',
-//                 max: '=?', // optional (default is 5)
-//                 onRatingSelect: '&?',
-//                 readonly: '=?'
-//             },
-//             link: function (scope, element, attributes) {
-//                 if (scope.max == undefined) {
-//                     scope.max = 5;
-//                 }
-//                 function updateStars() {
-//                     scope.stars = [];
-//                     for (var i = 0; i < scope.max; i++) {
-//                         scope.stars.push({
-//                             filled: i < scope.ratingValue
-//                         });
-//                     }
-//                 };
-//                 scope.toggle = function (index) {
-//                     if (scope.readonly == undefined || scope.readonly === false) {
-//                         scope.ratingValue = index + 1;
-//                         scope.onRatingSelect({
-//                             rating: index + 1
-//                         });
-//                     }
-//                 };
-//                 scope.$watch('ratingValue', function (oldValue, newValue) {
-//                     if (newValue) {
-//                         updateStars();
-//                     }
-//                 });
-//             }
-//         };
-//     }
-// })();
+app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData) {
 
-(function(){
+    //New Ratings
+    $scope.rate = 3;
+    $scope.max = 5;
+    $scope.isReadonly_rating = false;
 
-    'use strict';
+    $scope.hoveringOver = function(value) {
+        $scope.overStar = value;
+        $scope.percent = 100 * (value / $scope.max);
+    };
 
-    app2
-        .controller('RatingController', RatingController)
-        .directive('starRating', starRating);
-
-    var rate = "";
-
-    function RatingController() {
-        this.rating1 = 5;
-        rate = this.rating1
-        this.rating2 = 2;
-        this.isReadonly = true;
-        this.rateFunction = function(rating) {
-            console.log('Rating selected: ' + rating);
-        };
-    }
-
-    app2.service('sendRatingData', function () {
-        var _rate_service = rate
-
-        this.rate_service = _rate_service
-    })
-
-    function starRating() {
-        return {
-            restrict: 'EA',
-            template:
-            '<ul class="star-rating" ng-class="{readonly: readonly}">' +
-            '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}" ng-click="toggle($index)">' +
-            '    <i class="fa fa-star"></i>' + // or &#9733
-            '  </li>' +
-            '</ul>',
-            scope: {
-                ratingValue: '=ngModel',
-                max: '=?', // optional (default is 5)
-                onRatingSelect: '&?',
-                readonly: '=?'
-            },
-            link: function(scope, element, attributes) {
-                if (scope.max == undefined) {
-                    scope.max = 5;
-                }
-                function updateStars() {
-                    scope.stars = [];
-                    for (var i = 0; i < scope.max; i++) {
-                        scope.stars.push({
-                            filled: i < scope.ratingValue
-                        });
-                    }
-                };
-                scope.toggle = function(index) {
-                    if (scope.readonly == undefined || scope.readonly === false){
-                        scope.ratingValue = index + 1;
-                        scope.onRatingSelect({
-                            rating: index + 1
-                        });
-                    }
-                };
-                scope.$watch('ratingValue', function(oldValue, newValue) {
-                    if (newValue) {
-                        updateStars();
-                    }
-                });
-            }
-        };
-    }
-
-})();
-
-app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData, sendRatingData) {
-
-    //$scope.rating1 = "";
-
-    // function RatingController() {
-    //     this.rating1 = 3;
-    //     this.rating2 = 3;
-    //     this.isReadonly = true;
-    //     this.rateFunction = function(rating) {
-    //         console.log('Rating selected: ' + rating);
-    //     };
-    // }
-
-    console.log("sendRatingData: "+sendRatingData.rate_service)
+    $scope.ratingStates = [
+        {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+        {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
+        {stateOn: 'glyphicon-heart', stateOff: 'glyphicon-ban-circle'},
+        {stateOn: 'glyphicon-heart'},
+        {stateOff: 'glyphicon-off'}
+    ];
+    //End
 
     $scope.suggests = suggestlist1;
     $scope.suggestdetail = [];
@@ -203,18 +87,18 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData, 
     $scope.salad = [];
 
     getFeedbackDishData.then(function (feedback) {
-        console.log(feedback)
+        console.log(feedback);
         for(var i = 0;i<feedback.length;i++){
-            console.log(i+ " " +feedback[i].type)
-            if(feedback[i].type=="Main Dish"){
+            console.log(i+ " " +feedback[i].type);
+            if(feedback[i].type=="Main Dish" || feedback[i].type=="main dish"){
                 $scope.mainDish.push(feedback[i]);
-            }else if(feedback[i].type=="Dessert"){
+            }else if(feedback[i].type=="Dessert" || feedback[i].type=="dessert"){
                 $scope.dessert.push(feedback[i]);
-            }else if(feedback[i].type=="Appetizer"){
+            }else if(feedback[i].type=="Appetizer" || feedback[i].type=="appetizer"){
                 $scope.appetizer.push(feedback[i]);
-            }else if(feedback[i].type=="Soup"){
+            }else if(feedback[i].type=="Soup" || feedback[i].type=="soup"){
                 $scope.soup.push(feedback[i]);
-            }else{
+            }else if(feedback[i].type=="Salad" || feedback[i].type=="salad"){
                 $scope.salad.push(feedback[i]);
             }
         }
@@ -222,98 +106,7 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData, 
         //console.log($scope.mainDish)
         //$scope.get_feedback_data_soup();
 
-    })
-
-
-    // $scope.get_feedback_data_soup = function () {
-    //     var open_table = "<span><table>"
-    //     var close_table = "</table></span>"
-    //     var data = ""
-    //     $scope.full_data_soup = ""
-    //     console.log("length: "+$scope.soup.length)
-    //
-    //     for(var i=0; i<$scope.soup.length;i++){
-    //
-    //         if(i%2 == 0){
-    //             if(i == 0){
-    //                 data += "<tr>" +
-    //                     "<td>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     //"<img style='width: 50px; height: 50px;' src="+$scope.soup[i].img[0].data+" />" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     //"<paper-radio-group>" +
-    //                     "<md-radio-group ng-model='data.group1'>" +
-    //                     "<md-radio-button value='"+$scope.soup[i].name+"' class='md-primary'>"+ $scope.soup[i].name +"</md-radio-button>" +
-    //                     //"<paper-radio-button name='"+ $scope.soup[i].name +"'>"+ $scope.soup[i].name +"</paper-radio-button>" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "</td>"
-    //             }else{
-    //                 data += "<tr>" +
-    //                     "<td>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     //"<img style='width: 50px; height: 50px;' src="+$scope.soup[i].img[0].data+" />" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     //<paper-radio-group selected="small">
-    //                     "<md-radio-button value='"+$scope.soup[i].name+"' class='md-primary'>"+ $scope.soup[i].name +"</md-radio-button>" +
-    //                     //"<paper-radio-button name='"+ $scope.soup[i].name +"'>"+ $scope.soup[i].name +"</paper-radio-button>" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "</td>"
-    //             }
-    //
-    //         }else{
-    //
-    //             if(i = ($scope.soup.length)-1){
-    //                 data += "<td>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     //"<img style='width: 50px; height: 50px;' src="+$scope.soup[i].img[0].data+" />" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     "<md-radio-button value='"+$scope.soup[i].name+"' class='md-primary'>"+ $scope.soup[i].name +"</md-radio-button>" +
-    //                     //"<paper-radio-button name='"+ $scope.soup[i].name +"'>"+ $scope.soup[i].name +"</paper-radio-button>" +
-    //                     //"</paper-radio-group>" +
-    //                     "</md-radio-group>" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "</td>" +
-    //                     "</tr>"
-    //             }else{
-    //                 data += "<td>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     //"<img style='width: 50px; height: 50px;' src="+$scope.soup[i].img[0].data+" />" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "<tr>" +
-    //                     "<td>" +
-    //                     "<md-radio-button value='"+$scope.soup[i].name+"' class='md-primary'>"+ $scope.soup[i].name +"</md-radio-button>" +
-    //                     //"<paper-radio-button name='"+ $scope.soup[i].name +"'>"+ $scope.soup[i].name +"</paper-radio-button>" +
-    //                     "</td>" +
-    //                     "</tr>" +
-    //                     "</td>" +
-    //                     "</tr>"
-    //             }
-    //
-    //         }
-    //     }
-    //     $scope.full_data_soup = open_table.concat(data).concat(close_table);
-    //     console.log($scope.full_data_soup);
-    //     $scope.full_data_soup = $sce.trustAsHtml($scope.full_data_soup)
-    //     //console.log(full_data_soup)
-    //
-    // };
+    });
 
     //Initialize Radio Button Data and Rating Data
     $scope.data = {
@@ -329,7 +122,7 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData, 
                 suggestion: $scope.option1,
                 option: $scope.option2,
                 message: $scope.user.msg,
-                customer: localStorage.loginChefAtHomeEmail,
+                customer: localStorage.loginChefAtHomeEmail
             }).then(function (response) {
                 console.log(response.data);
                 $scope.option1 = "";
@@ -337,26 +130,67 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData, 
                 $scope.user.msg = "";
             });
         }else{return 0;}
-    }
+    };
 
     $scope.data = {
         group1 : ""
-    }
-    $scope.rating = {
-        rating_value : ""
-    }
+    };
+
+    // function updateDish (name, rating, noRater) {
+    //     console.log("Inside Update Dish");
+    //     return $http.post(url + "/update/one_dish",
+    //         {
+    //             name: name,
+    //             rating: rating,
+    //             noRater: noRater
+    //         }
+    //     )
+    //         .then(function (response) {
+    //             console.log(response)
+    //         });
+    // };
+
     //method to submit rating
     $scope.submitRating = function (){
         // if dish is not selected
-
+        if($scope.data.group1 == ""){
+            console.log("No Dish selected!")
+        }
         //else if dish is selected
+        else{
+            $http.post(url + "/list/one_dish", {name: $scope.data.group1})
+                .then(function (response) {
+                    var one_dish = response.data;
+                    var old_rating = one_dish.rating;
+                    var old_noRater = one_dish.noRater;
+                    var new_rating = ((old_rating*old_noRater)+$scope.rate)/(old_noRater + 1);
+                    // var new_rating = Math.floor((((old_rating*old_noRater)+$scope.rate)/(old_noRater + 1)));
+                    console.log((((old_rating*old_noRater)+$scope.rate)/(old_noRater + 1)))
+                    console.log("Name: "+$scope.data.group1);
+                    console.log("You rate: "+$scope.rate);
+                    console.log("old_rating: "+old_rating);
+                    console.log("new_rating: "+new_rating);
+                    var new_noRater = old_noRater+1;
+                    console.log("old_noRater: "+old_noRater);
+                    console.log("new_noRater: "+new_noRater);
+                    //updateDish($scope.data.group1, new_rating, new_noRater)
 
-        console.log("dish selected = " +$scope.data.group1)
-        console.log("star selected = " +$scope.rating.rating_value)
+                    $http.post(url + "/update/one_dish",
+                        {
+                            name: $scope.data.group1,
+                            rating: new_rating,
+                            noRater: new_noRater
+                        }
+                    )
+                        .then(function (response) {
+                            console.log(response)
+                        });
+                });
+        }
 
     }
 
-})
+});
 
 app2.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[{');

@@ -416,7 +416,7 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
             for (var i = 0; i < (noOfOrder[dateInOrder][0].orderItems).length; i++) {
                 //console.log("i="+i+",time="+noOfOrder[dateInOrder][0].orderItems[i].time+",length="+(noOfOrder[dateInOrder][0].orderItems.items).length);
                 //$scope.outerTime[i] = noOfOrder[dateInOrder][0].orderItems[i].time;
-                data += "<p><h5><i class='material-icons'>alarm</i><i>" + " <b>" + noOfOrder[dateInOrder][0].orderItems[i].time + "</b> &nbsp;&nbsp; <i class='material-icons'>euro_symbol</i> <b>" + noOfOrder[dateInOrder][0].orderItems[i].price + "</b></i></h5><br>";
+                data += "<p><h5><i class='material-icons'>alarm</i><i>" + " <b>" + noOfOrder[dateInOrder][0].orderItems[i].time + "</b> &nbsp;&nbsp; <i class='material-icons'>euro_symbol</i> <b>" + (noOfOrder[dateInOrder][0].orderItems[i].price).toFixed(2) + "</b></i></h5><br>";
 
                 for (var j = 0; j < (noOfOrder[dateInOrder][0].orderItems[i].items).length; j++) {
                     //console.log("name=" + noOfOrder[dateInOrder][0].orderItems[i].items[j].name);

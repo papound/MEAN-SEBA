@@ -45,7 +45,7 @@ var routes = require('./routes/index')(app);
 var db_model = mongoose.model('Taste', new mongoose.Schema({name: String}), 'taste');
 //var user_model = mongoose.model('User1', new mongoose.Schema({ firstname: String }),'user');
 var db_order = mongoose.model('Order1', new mongoose.Schema({customer: String}), 'order'); //table order
-var db_dish = mongoose.model('Dish1', new mongoose.Schema({name: String}), 'dish');
+var db_dish = mongoose.model('Dish1', new mongoose.Schema({name: String}), 'dish'); //update dish collection
 
 app.get("/list/database", function (req, res) {
     // Locate all the entries using find
@@ -97,6 +97,17 @@ app.post("/list/order", function (req, res) {
     });
 });
 
+app.get("/list/recommended", function (req, res) {
+    // Locate all the entries using find
+    //var req_email = req.body.customer;
+    db_order.find(function (err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+});
+
 app.post("/place/order", function (req, res) {
     // Locate all the entries using find
     var newOrder = new Order({
@@ -118,7 +129,7 @@ app.post("/place/order", function (req, res) {
 });
 
 app.get("/ingredients", function (req, res) {
-    ingredient_model.find( function (err, results) {
+    ingredient_model.find(function (err, results) {
         //Getting Results
         res.send(results);
         // Close the db
@@ -150,14 +161,29 @@ app.post("/save/feedback", function (req, res) {
 app.get("/list/dish", function (req, res) {
     // Locate all the entries using find
     var name = req.body.name;
-    db_dish.find({name: name}, function (err, results) {
-        //Getting Results
+    var dish_only_name = [];
+    db_dish.find(function (err, results) {
+        //Getting Results only dish name
+        for (var i = 0; i < results.length; i++) {
+            dish_only_name.push(results[i].name)
+        }
+        res.send(dish_only_name);
+        // Close the db
+        //db.close();
+    });
+});
+
+app.post("/list/one_dish", function (req, res) {
+    // Locate all the entries using find
+    var name = req.body.name;
+    //var group_response = [];
+    db_dish.findOne({name: name}, function (err, results) {
+        //Getting Results only dish name
         res.send(results);
         // Close the db
         //db.close();
     });
-})
-
+});
 
 app.post("/list/dish", function (req, res) {
     // Locate all the entries using find
@@ -168,10 +194,41 @@ app.post("/list/dish", function (req, res) {
         // Close the db
         //db.close();
     });
-})
+});
+
+app.post("/update/one_dish", function (req, res) {
+    // Locate all the entries using find
+    var name = req.body.name;
+    // var 
+    // //var group_response = [];
+    // db_dish.findOne({name: name}, function (err, results) {
+    //     //Getting Results
+    //     name =  results.data.name
+    // });
+    var dish_collection = db.collection('dish')
+    dish_collection.update({name: name}, {
+            /*  db.dish.update({name : name},
+             {*/
+            $set: {
+                "rating": req.body.rating,
+                "noRater": req.body.noRater
+            }
+        }, function (err) {
+            if (err) {
+                console.log("Error!")
+                res.json({success: false, msg: 'Error update new rating.'});
+            } else {
+                console.log("Success!")
+                res.json({success: true, msg: 'Successfully update new rating.'});
+            }
+        }
+    );
+
+
+});
 
 /*For feedback page (dish) */
-var db_feedback = mongoose.model('Dish',new mongoose.Schema({name : String}), 'dish');
+var db_feedback = mongoose.model('Dish', new mongoose.Schema({name: String}), 'dish');
 
 app.post("/list/feedback_dish", function (req, res) {
     // Locate all the entries using find
@@ -182,7 +239,7 @@ app.post("/list/feedback_dish", function (req, res) {
         // Close the db
         //db.close();
     });
-})
+});
 
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -208,12 +265,16 @@ apiRoutes.post('/register', function (req, res) {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             telephone: req.body.telephone,
+            profilePicture: {
+                data: req.body.profilePicture,
+                contentType: "image/jpeg"
+            },
             address: [{address1: req.body.address1}, {address2: req.body.address2}, {city: req.body.city}, {postalcode: req.body.postalcode}]
         });
         // save the user
         newUser.save(function (err) {
             if (err) {
-                console.log(err)
+                console.log(err);
                 return res.json({success: false, msg: 'Username already exists.'});
             }
             return res.json({success: true, msg: 'Successful created new user.'});
@@ -228,12 +289,12 @@ apiRoutes.post('/register/google', function (req, res) {
     } else {
         var newUser = new User({
             email: req.body.email,
-            password: "",
+            password: ""
         });
         // save the user
         newUser.save(function (err) {
             if (err) {
-                console.log(err)
+                console.log(err);
                 return res.json({success: false, msg: 'Username already exists.'});
             }
             return res.json({success: true, msg: 'Successful created new user.'});
@@ -251,9 +312,9 @@ apiRoutes.post('/update/profile', function (req, res) {
 
     //console.log(pass_hashed)
 
-    var user_collection = db.collection('user')
+    var user_collection = db.collection('user');
     user_collection.update({email: req.body.email}, {
-        
+
         $set: {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
@@ -313,7 +374,7 @@ apiRoutes.post('/update/profile', function (req, res) {
                 }
             ]
         }
-    }, function(err){
+    }, function (err) {
         if (err) {
             console.log("Error!")
             res.json({success: false, msg: 'Error created new user.'});
@@ -342,7 +403,7 @@ apiRoutes.post('/authenticate', function (req, res) {
                     // if user is found and password is right create a token
                     var token = jwt.encode(user, config.secret);
                     // return the information including token as JSON
-                    res.send({success: "true", token: 'JWT ' + token, firstname: ""+user.firstname });
+                    res.send({success: "true", token: 'JWT ' + token, firstname: "" + user.firstname});
                     //localStorage.token = "JWT "+token;
                 } else {
                     res.send({success: "false", msg: 'Authentication failed. Wrong password.'});

@@ -45,7 +45,7 @@ app2.factory('getUserData', ['$http', function ($http) {
     //Create request for User data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
     //localStorage.loginChefAtHomeEmail = "chanawatnpound@gmail.com"
-    var this_email = "";
+    var this_email = "chanawatnpound@gmail.com";
     console.log(localStorage.loginChefAtHomefullname)
     console.log(localStorage.loginChefAtHomefirstname)
     console.log(localStorage.loginChefAtHomelastname)
@@ -53,7 +53,7 @@ app2.factory('getUserData', ['$http', function ($http) {
     console.log(localStorage.loginChefAtHomeEmail);
     if (localStorage.loginChefAtHomeEmail) {
         //if already logged in
-        this_email = localStorage.loginChefAtHomeEmail;
+        // this_email = localStorage.loginChefAtHomeEmail;
     } else {
         //link back to homepage on accessing unauthorized url
         window.location.href = "http://localhost:4000/"
@@ -427,14 +427,14 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         cardno = user[0].cardNumber;
         //console.log("cardno: " + cardno);
         $scope.user.cvc = '';
-        $scope.user.profilePicture = user[0].profilePicture[0].data;
+        $scope.user.profilePicture = user[0].profilePicture.data;
         $scope.user.validityDate = new Date(user[0].validityDate);
-        $scope.imageurl_bak = user[0].imageurl
-        if (user[0].profilePicture[0].data != null) {
-            $scope.imageurl = user[0].profilePicture[0].data;
+        $scope.imageurl_bak = user[0].imageurl;
+        if (user[0].profilePicture.data != null) {
+            $scope.imageurl = user[0].profilePicture.data;
         } else if( user[0].imageurl != null){
-            $scope.imageurl = user[0].imageurl
-            $scope.imageurl_bak = user[0].imageurl
+            $scope.imageurl = user[0].imageurl;
+            $scope.imageurl_bak = user[0].imageurl;
             //console.log($scope.imageurl_bak)
         }else{
             $scope.imageurl = localStorage.loginChefAtHomeimage
@@ -646,7 +646,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
     $scope.isDisabled = true;
     $scope.googleUrl = 'http://google.com';
     $scope.project = {
-        description: 'Nuclear Missile Defense System',
+        description: 'Nuclear Missile Defense System'
     };
 
     //NoPrefs
@@ -748,7 +748,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
                 dialog.open();
             }
         }
-    }
+    };
 
     $scope.confirmUpdateProfile = function () {
 
@@ -756,7 +756,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         if (dialog) {
             dialog.open();
         }
-    }
+    };
 
 
     $scope.showSuccess = function (email) {
@@ -765,7 +765,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         if (dialog) {
             dialog.open();
         }
-    }
+    };
 
     $scope.showFailed = function (err) {
 
@@ -781,12 +781,20 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
             }
         }
 
-    }
+    };
 
     $scope.updateProfile = function () {
-        var birthdate = $scope.myDate.toISOString()
-        var valid_date = $scope.user.validityDate.toISOString()
-        //console.log($scope.user.profilePicture)
+        var birthdate = $scope.myDate.toISOString();
+        var valid_date = $scope.user.validityDate.toISOString();
+
+        if($scope.user.profilePicture.lastModified != null){
+            console.log("data 6 elements");
+            $scope.user.profilePicture = $scope.user.profilePicture.data;
+            console.log("changed to data 2 elements");
+            //console.log(JSON.stringify($scope.user.profilePicture))
+        }else{
+            console.log("data 2 elements");
+        }
         return $http.post(url + "/api/update/profile", {
             firstname: $scope.user.firstname,
             lastname: $scope.user.lastname,
