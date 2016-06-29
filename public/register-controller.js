@@ -1,7 +1,7 @@
 /**
  * Created by Jaupat Ch on 04-Jun-16.
  */
-var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages']);
+var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'ion.rangeslider']);
 
 var url = "http://localhost:4000";
 
@@ -36,6 +36,16 @@ var url = "http://localhost:4000";
         }]);
 })();
 //End Test UploadPic
+
+app2.controller("Controller", function ($scope) {
+
+    $scope.model = {
+        age: {
+            min: 18,
+            max: 99
+        }
+    }
+});
 
 app2.controller('formCtrl', function ($scope, $http) {
 

@@ -524,6 +524,13 @@
             border: 2px solid white;
         }
 
+        /*Euro sign*/
+        .material-icons.gray123 {
+            color: slategray;
+            font-size: 18px;
+        }
+        /*End Euro sign*/
+
     </style>
 
 </head>
@@ -889,23 +896,8 @@
                                         Search bar
                                     </md-button>
                                 </div>
-                                <div>
-                                    <md-button ng-click="toggleRight()" class="md-primary" z>
-                                        Our Partner
-                                    </md-button>
-                                </div>
                             </div>
                         </md-content>
-
-                        <md-sidenav class="md-sidenav-right md-whiteframe-4dp" style="margin-top: 500px;"
-                                    md-component-id="right">
-                            <md-toolbar style="background: #bda881;">
-                                <h1 class="md-toolbar-tools">Our partner</h1>
-                            </md-toolbar>
-                            <md-content layout-padding="" ng-controller="RightCtrl">
-
-                            </md-content>
-                        </md-sidenav>
                     </section>
                 </div>
                 <!-- End Nav Bar-->
@@ -915,7 +907,7 @@
                 <div ng-controller="MainCtrl">
 
                     <script type="text/ng-template" id="tabDialog.tmpl.html">
-                        <md-dialog aria-label="{[{ dishName }]}">
+                        <md-dialog aria-label="{[{ dishName }]}" >
                             <ng-form name="addtocart">
                                 <md-toolbar>
                                     <div class="md-toolbar-tools">
@@ -972,10 +964,11 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th width="20%" style="color: #0b50bf">Quantity</th>
+                                                        <th width="15%" style="color: #0b50bf">Quantity</th>
                                                         <th width="20%" style="color: #9e5406">Unit</th>
-                                                        <th width="40%" style="color: forestgreen">Ingredient</th>
-                                                        <th width="20%" style="color: steelblue">+ Top up</th>
+                                                        <th width="35%" style="color: forestgreen">Ingredient</th>
+                                                        <th width="15%" style="color: steelblue">+ Top up</th>
+                                                        <th width="15%" style="color: dimgray">price/unit</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -992,9 +985,10 @@
                                                                        name="{[{ di.name }]}"
                                                                        type="number" step="any" min="0" max="999"
                                                                        ng-model="topup_quantity"
-                                                                       ng-change="change_topUpQuantity(dishName, di.name, topup_quantity)" />
+                                                                       ng-change="change_topUpQuantity(dishName, di.name, topup_quantity, di.price)" />
                                                             </md-input-container>
                                                         </td>
+                                                        <td>{[{ di.price }]}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -1005,6 +999,14 @@
                                                 <!--<h1 class="md-display-2">Recipe</h1>-->
                                                 <ul>
                                                     <li ng-repeat="dr in dishRecipe">{[{ dr.detail }]}</li>
+                                                </ul>
+                                            </md-content>
+                                        </md-tab>
+                                        <md-tab label="Utensils">
+                                            <md-content class="md-padding">
+                                                <!--<h1 class="md-display-2"></h1>-->
+                                                <ul>
+                                                    <li ng-repeat="du in dishUtensils">{[{ du.name }]}</li>
                                                 </ul>
                                             </md-content>
                                         </md-tab>
@@ -1042,10 +1044,16 @@
                                     <!--<p class="lead">Recommended</p>-->
                                 </div>
                             </div>
+
+                            <!--<div ng-controller="slider">-->
+                                <!--<ion-range-slider min="model.min" max="model.max" from="model.from" to="model.until" type="model.type"></ion-range-slider>-->
+                            <!--</div>-->
                             <!--<div class="mrgn-50-top-btm text-center"><img
                                         src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"
                                         alt=""></div>-->
                             <!-- /.Title & Divider -->
+
+
 
                             <!-- Chefs List -->
                             <div class="row text-center">
@@ -1062,11 +1070,23 @@
                                         <md-card-content>
                                             <div class="row">
                                                 <div class="col-sm-6">
+                                                    <!--typeveg symbol-->
+                                                    <img src="{[{ dish1_typeveg }]}" style="height: 30px; ">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img src="{[{ dish1_typedairy }]}" style="height: 30px; ">
+                                                </div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
                                                     <uib-rating ng-model="dish1.rating" max="max"
                                                                 read-only="isReadonly_rating"></uib-rating>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <i class='material-icons'>euro_symbol</i><b>{[{ dish1.price |
+                                                    <i class='material-icons gray123'>euro_symbol</i>
+                                                    <b style="color: slategray;">{[{ dish1.price |
                                                         number:2 }]}</b>
                                                 </div>
                                             </div>
@@ -1087,11 +1107,22 @@
                                         <md-card-content>
                                             <div class="row">
                                                 <div class="col-sm-6">
+                                                    <!--typeveg symbol-->
+                                                    <img src="{[{ dish2_typeveg }]}"  style="height: 30px; ">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img src="{[{ dish2_typedairy }]}" style="height: 30px; ">
+                                                </div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
                                                     <uib-rating ng-model="dish2.rating" max="max"
                                                                 read-only="isReadonly_rating"></uib-rating>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <i class='material-icons'>euro_symbol</i><b>{[{ dish2.price |
+                                                    <i class='material-icons gray123'>euro_symbol</i>
+                                                    <b style="color: slategray;">{[{ dish2.price |
                                                         number:2 }]}</b>
                                                 </div>
                                             </div>
@@ -1112,11 +1143,22 @@
                                         <md-card-content>
                                             <div class="row">
                                                 <div class="col-sm-6">
+                                                    <!--typeveg symbol-->
+                                                    <img src="{[{ dish3_typeveg }]}" style="height: 30px; ">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img src="{[{ dish3_typedairy }]}" style="height: 30px; ">
+                                                </div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
                                                     <uib-rating ng-model="dish3.rating" max="max"
                                                                 read-only="isReadonly_rating"></uib-rating>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <i class='material-icons'>euro_symbol</i><b>{[{ dish3.price |
+                                                    <i class='material-icons gray123'>euro_symbol</i>
+                                                    <b style="color: slategray;">{[{ dish3.price |
                                                         number:2 }]}</b>
                                                 </div>
                                             </div>
@@ -1137,11 +1179,22 @@
                                         <md-card-content>
                                             <div class="row">
                                                 <div class="col-sm-6">
+                                                    <!--typeveg symbol-->
+                                                    <img src="{[{ dish4_typeveg }]}" style="height: 30px; ">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img src="{[{ dish4_typedairy }]}" style="height: 30px; ">
+                                                </div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
                                                     <uib-rating ng-model="dish4.rating" max="max"
                                                                 read-only="isReadonly_rating"></uib-rating>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <i class='material-icons'>euro_symbol</i><b>{[{ dish4.price |
+                                                    <i class='material-icons gray123'>euro_symbol</i>
+                                                    <b style="color: slategray;">{[{ dish4.price |
                                                         number:2 }]}</b>
                                                 </div>
                                             </div>
@@ -1271,12 +1324,28 @@
 
                                             <md-card-content>
                                                 <div class="row">
+                                                    <div class="col-sm-6" align="center">
+                                                        <!--typeveg symbol-->
+                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
+
+                                                    </div>
                                                     <div class="col-sm-6">
+                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">&nbsp;</div>
+                                                <div class="row">
+                                                    <div class="col-sm-6" align="center">
                                                         <uib-rating ng-model="a.rating" max="max"
                                                                     read-only="isReadonly_rating"></uib-rating>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
+                                                        <i class='material-icons gray123'>euro_symbol</i>
+                                                        <b style="color: slategray;">{[{ a.price |
                                                             number:2 }]}</b>
                                                     </div>
                                                 </div>
@@ -1318,6 +1387,21 @@
                                             </md-card-title>
 
                                             <md-card-content>
+                                                <div class="row">
+                                                    <div class="col-sm-6" align="center">
+                                                        <!--typeveg symbol-->
+                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">&nbsp;</div>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <uib-rating ng-model="a.rating" max="max"
@@ -1368,6 +1452,21 @@
 
                                             <md-card-content>
                                                 <div class="row">
+                                                    <div class="col-sm-6" align="center">
+                                                        <!--typeveg symbol-->
+                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">&nbsp;</div>
+                                                <div class="row">
                                                     <div class="col-sm-6">
                                                         <uib-rating ng-model="a.rating" max="max"
                                                                     read-only="isReadonly_rating"></uib-rating>
@@ -1416,6 +1515,21 @@
 
                                             <md-card-content>
                                                 <div class="row">
+                                                    <div class="col-sm-6" align="center">
+                                                        <!--typeveg symbol-->
+                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">&nbsp;</div>
+                                                <div class="row">
                                                     <div class="col-sm-6">
                                                         <uib-rating ng-model="a.rating" max="max"
                                                                     read-only="isReadonly_rating"></uib-rating>
@@ -1463,6 +1577,21 @@
                                             </md-card-title>
 
                                             <md-card-content>
+                                                <div class="row">
+                                                    <div class="col-sm-6" align="center">
+                                                        <!--typeveg symbol-->
+                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
+                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">&nbsp;</div>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <uib-rating ng-model="a.rating" max="max"
@@ -1642,6 +1771,12 @@
 
 <script type="text/javascript" src="bower_components/material-calendar/angular-material-calendar.js"></script>
 <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
+
+<!--&lt;!&ndash;The new slider&ndash;&gt;-->
+<!--<link href="bower_components/ionRangeslider/css/normalize.css" rel="stylesheet" type="text/css">-->
+<!--<link href="bower_components/ionRangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css">-->
+<!--<link href="bower_components/ionRangeslider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet" type="text/css">-->
+<!--<script src="bower_components/ionRangeslider/js/ion.rangeSlider.js"></script>-->
 
 
 </body>

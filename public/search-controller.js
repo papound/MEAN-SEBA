@@ -1,7 +1,7 @@
 /**
  * Created by Jatupat Ch on 16-Jun-16.
  */
-var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'rzModule','ngAnimate', 'ui.bootstrap', 'material.svgAssetsCache']);
+var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'rzModule' ,'ngAnimate', 'ui.bootstrap', 'material.svgAssetsCache']);
 
 var url = "http://localhost:4000";
 
@@ -187,7 +187,104 @@ app2.directive("angularRatings", function () {
     }
 })();
 
-app2.controller('MainCtrl', ['$scope', 'getRecommended', 'getDish', 'getFeedbackDishData', '$mdDialog', '$http',
+// app2.directive("ionRangeSlider", [
+//     function () {
+//
+//         return {
+//             restrict: "E",
+//             scope: {
+//                 min: "=",
+//                 max: "=",
+//                 type: "@",
+//                 prefix: "@",
+//                 maxPostfix: "@",
+//                 prettify: "@",
+//                 grid: "@",
+//                 gridMargin: "@",
+//                 postfix: "@",
+//                 step: "@",
+//                 hideMinMax: "@",
+//                 hideFromTo: "@",
+//                 from: "=",
+//                 to: "=",
+//                 disable: "=",
+//                 onChange: "&onChange",
+//                 onFinish: "&"
+//             },
+//             replace: true,
+//             link: function ($scope, $element) {
+//                 $element.ionRangeSlider({
+//                     min: $scope.min,
+//                     max: $scope.max,
+//                     type: $scope.type,
+//                     prefix: $scope.prefix,
+//                     maxPostfix: $scope.maxPostfix,
+//                     prettify: $scope.prettify,
+//                     grid: $scope.grid,
+//                     gridMargin: $scope.gridMargin,
+//                     postfix: $scope.postfix,
+//                     step: $scope.step,
+//                     hideMinMax: $scope.hideMinMax,
+//                     hideFromTo: $scope.hideFromTo,
+//                     from: $scope.from,
+//                     to: $scope.to,
+//                     disable: $scope.disable,
+//                     onChange: function (a) {
+//                         $scope.onChange && $scope.onChange({
+//                             a: a
+//                         });
+//                     },
+//                     onFinish: $scope.onFinish
+//                 });
+//                 var watchers = [];
+//                 watchers.push($scope.$watch("min", function (value) {
+//                     $element.data("ionRangeSlider").update({
+//                         min: value
+//                     });
+//                 }));
+//                 watchers.push($scope.$watch('max', function (value) {
+//                     $element.data("ionRangeSlider").update({
+//                         max: value
+//                     });
+//                 }));
+//                 watchers.push($scope.$watch('from', function (value) {
+//                     $element.data("ionRangeSlider").update({
+//                         from: value
+//                     });
+//                 }));
+//                 watchers.push($scope.$watch('disable', function (value) {
+//                     $element.data("ionRangeSlider").update({
+//                         disable: value
+//                     });
+//                 }));
+//             }
+//         }
+//
+//     }
+// ]);
+
+// app2.controller("slider", function ($scope) {
+//     $scope.model = {
+//         type: "double",
+//         from: 30,
+//         until: 40,
+//         min: 25,
+//         max: 50
+//
+//     }
+// });
+
+//var to localStorage
+//localStorage.setItem('current_dish', JSON.stringify(current_dish));
+var retrieve_dish = localStorage.getItem('current_dish');  //String
+console.log('local_current_dish: ',JSON.parse(retrieve_dish));
+
+//localStorage.setItem('current_ingredient', JSON.stringify(current_ingredient));
+var retrieve_ingredient = localStorage.getItem('current_ingredient'); //String
+console.log('local_current_ingredient: ',JSON.parse(retrieve_ingredient));
+//End var to localStorage
+
+app2.controller('MainCtrl', ['$scope','getRecommended', 'getDish', 'getFeedbackDishData', '$mdDialog', '$http',
     function ($scope, getRecommended, getDish, getFeedbackDishData, $mdDialog, $http, $rootScope, $timeout, $modal) {
 
         $scope.dish_only_name = [];
@@ -197,12 +294,25 @@ app2.controller('MainCtrl', ['$scope', 'getRecommended', 'getDish', 'getFeedback
         $scope.dish2 = "";
         $scope.dish3 = "";
         $scope.dish4 = "";
+        
+        //TypeVeg
+        $scope.dish1_typeveg = "";
+        $scope.dish2_typeveg = "";
+        $scope.dish3_typeveg = "";
+        $scope.dish4_typeveg = "";
+
+        //TypeVeg
+        $scope.dish1_typedairy = "";
+        $scope.dish2_typedairy = "";
+        $scope.dish3_typedairy = "";
+        $scope.dish4_typedairy = "";
 
         //Dish Information
         $scope.dish_dialog_name = "";
         $scope.dish_dialog_ingredients = [];
         $scope.dish_dialog_recipe = [];
         $scope.dish_dialog_nutritions = [];
+        $scope.dish_dialog_utensils = [];
 
         //Dish Categories
         $scope.appetizer = [];
@@ -297,18 +407,78 @@ app2.controller('MainCtrl', ['$scope', 'getRecommended', 'getDish', 'getFeedback
 
                         if (dish[i].name == $scope.dish_recommended[0].dishName) {
                             $scope.dish1 = dish[i];
+
+                            if(dish[i].typeveg == 'veg'){
+                                $scope.dish1_typeveg = "newTemplate/svg/salad.svg";
+                            }else if(dish[i].typeveg == 'pork'){
+                                $scope.dish1_typeveg = "newTemplate/svg/pig.svg";
+                            }else if(dish[i].typeveg == 'meat'){
+                                $scope.dish1_typeveg = "newTemplate/svg/steak.svg";
+                            }
+
+                            if(dish[i].typedairy == 'dairy'){
+                                $scope.dish1_typedairy = "newTemplate/svg/milk.svg";
+                            }else if(dish[i].typedairy == 'no'){
+                                $scope.dish1_typedairy = "newTemplate/svg/milk_no.svg";
+                            }
+                            
                             $scope.dish1.rating = Math.ceil($scope.dish1.rating);
                         }
                         if (dish[i].name == $scope.dish_recommended[1].dishName) {
                             $scope.dish2 = dish[i];
+
+                            if(dish[i].typeveg == 'veg'){
+                                $scope.dish2_typeveg = "newTemplate/svg/salad.svg";
+                            }else if(dish[i].typeveg == 'pork'){
+                                $scope.dish2_typeveg = "newTemplate/svg/pig.svg";
+                            }else if(dish[i].typeveg == 'meat'){
+                                $scope.dish2_typeveg = "newTemplate/svg/steak.svg";
+                            }
+
+                            if(dish[i].typedairy == 'dairy'){
+                                $scope.dish2_typedairy = "newTemplate/svg/milk.svg";
+                            }else if(dish[i].typedairy == 'no'){
+                                $scope.dish2_typedairy = "newTemplate/svg/milk_no.svg";
+                            }
+
                             $scope.dish2.rating = Math.ceil($scope.dish2.rating);
                         }
                         if (dish[i].name == $scope.dish_recommended[2].dishName) {
                             $scope.dish3 = dish[i];
+
+                            if(dish[i].typeveg == 'veg'){
+                                $scope.dish3_typeveg = "newTemplate/svg/salad.svg";
+                            }else if(dish[i].typeveg == 'pork'){
+                                $scope.dish3_typeveg = "newTemplate/svg/pig.svg";
+                            }else if(dish[i].typeveg == 'meat'){
+                                $scope.dish3_typeveg = "newTemplate/svg/steak.svg";
+                            }
+
+                            if(dish[i].typedairy == 'dairy'){
+                                $scope.dish3_typedairy = "newTemplate/svg/milk.svg";
+                            }else if(dish[i].typedairy == 'no'){
+                                $scope.dish3_typedairy = "newTemplate/svg/milk_no.svg";
+                            }
+
                             $scope.dish3.rating = Math.ceil($scope.dish3.rating);
                         }
                         if (dish[i].name == $scope.dish_recommended[3].dishName) {
                             $scope.dish4 = dish[i];
+
+                            if(dish[i].typeveg == 'veg'){
+                                $scope.dish4_typeveg = "newTemplate/svg/salad.svg";
+                            }else if(dish[i].typeveg == 'pork'){
+                                $scope.dish4_typeveg = "newTemplate/svg/pig.svg";
+                            }else if(dish[i].typeveg == 'meat'){
+                                $scope.dish4_typeveg = "newTemplate/svg/steak.svg";
+                            }
+
+                            if(dish[i].typedairy == 'dairy'){
+                                $scope.dish4_typedairy = "newTemplate/svg/milk.svg";
+                            }else if(dish[i].typedairy == 'no'){
+                                $scope.dish4_typedairy = "newTemplate/svg/milk_no.svg";
+                            }
+
                             $scope.dish4.rating = Math.ceil($scope.dish4.rating);
                         }
                     }
@@ -381,6 +551,7 @@ app2.controller('MainCtrl', ['$scope', 'getRecommended', 'getDish', 'getFeedback
                         $scope.dish_dialog_ingredients = response.data.ingredients;
                         $scope.dish_dialog_recipe = response.data.recipe;
                         $scope.dish_dialog_nutritions = response.data.nutritions;
+                        $scope.dish_dialog_utensils = response.data.utensils;
 
                         //console.log($scope.dish_dialog_ingredients);
 
@@ -395,15 +566,17 @@ app2.controller('MainCtrl', ['$scope', 'getRecommended', 'getDish', 'getFeedback
                                 dishIngredients: $scope.dish_dialog_ingredients,
                                 dishRecipe: $scope.dish_dialog_recipe,
                                 dishNutritions: $scope.dish_dialog_nutritions,
+                                dishUtensils: $scope.dish_dialog_utensils,
                                 dishPrice : price
                             },
-                            controller: ['$scope', 'dishName', 'dishIngredients', 'dishRecipe', 'dishNutritions', 'dishPrice', '$mdDialog',
-                                function ($scope, dishName, dishIngredients, dishRecipe, dishNutritions, dishPrice, $mdDialog) {
+                            controller: ['$scope', 'dishName', 'dishIngredients', 'dishUtensils', 'dishRecipe', 'dishNutritions', 'dishPrice', '$mdDialog',
+                                function ($scope, dishName, dishIngredients, dishUtensils, dishRecipe, dishNutritions, dishPrice, $mdDialog) {
                                     $scope.dishName = dishName;
                                     $scope.dishIngredients = dishIngredients;
                                     $scope.dishRecipe = dishRecipe;
                                     $scope.dishNutritions = dishNutritions;
                                     $scope.dishPrice = dishPrice;
+                                    $scope.dishUtensils = dishUtensils;
 
                                     $scope.hide = function () {
                                         current_ingredient_onchange = [];
@@ -429,21 +602,23 @@ app2.controller('MainCtrl', ['$scope', 'getRecommended', 'getDish', 'getFeedback
                                     $scope.dish_quantity = 1;
                                     $scope.topup_quantity = 0;
 
-                                    function getRandomPrice(min, max) {
+                                    /*function getRandomPrice(min, max) {
                                         return Math.random() * (max - min) + min;
-                                    }
+                                    }*/
 
-                                    $scope.change_topUpQuantity = function (dish_name, ingredient_name, quantity) {
-                                        console.log("Adding topup "+ingredient_name+" X"+quantity+" of "+ dish_name +"to cart");
+                                    $scope.change_topUpQuantity = function (dish_name, ingredient_name, quantity, ingredient_price) {
+                                        console.log("Adding topup "+ingredient_name+" x"+quantity+" (price="+ingredient_price+") of "+ dish_name +"to cart");
+                                        console.log(ingredient_name +"- total price = "+quantity*ingredient_price);
 
-                                        var random_price = getRandomPrice(0.5,3);
+                                        /*var random_price = getRandomPrice(0.5,3);
 
-                                        random_price = random_price.toFixed(2);
+                                        random_price = random_price.toFixed(2);*/
 
                                         var topup_obj = {
                                             "name": ingredient_name,
                                             "amount": quantity,
-                                            "price": random_price*quantity
+                                            /*"price": random_price*quantity*/
+                                            "price": ingredient_price*quantity
                                         };
 
                                         //console.log(topup_obj);
