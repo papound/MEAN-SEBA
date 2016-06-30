@@ -77,10 +77,15 @@
 
     <!-- Google Login -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="850042957038-3l9423np2uqruaplafluttpmengct984.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+          content="850042957038-3l9423np2uqruaplafluttpmengct984.apps.googleusercontent.com">
 
-    <!--Additional CSS-->
-    <!--<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.0-rc.5/docs.css">-->
+    <!--The new slider-->
+    <link href="bower_components/ionRangeslider/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/ionRangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/ionRangeslider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet" type="text/css">
+    <script src="bower_components/ionRangeslider/js/ion.rangeSlider.js"></script>
+    <script src="ionic-range-slider.js"></script>
 
     <!--Custom Style-->
     <style is="custom-style">
@@ -226,11 +231,7 @@
         }
 
         /**Profile pic*/
-        /*.upload-button {*/
-        /*!*padding: 4px;*!*/
-        /*!*border: 1px solid black;*!*/
-        /*!*border-radius: 5px;*!*/
-        /*}*/
+
         .profile-pic {
             width: 135px;
             height: 145px;
@@ -365,7 +366,7 @@
         }
 
         /*Footer*/
-        section#contact{
+        section#contact {
             padding: 50px;
         }
 
@@ -420,7 +421,8 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-left">
-                                <li><a href="http://localhost:4000" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="http://localhost:4000"
+                                       class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                                 <li><a href="#menu" class="menubar">Menu</a></li>
 
                             </ul>
@@ -565,7 +567,7 @@
                     <!-- Left side column-->
                     <div class="col-md-3">
                         <!--Space for uploading profile picture-->
-                        <img class="profile-pic" src="{[{ imageurl }]}" />
+                        <img class="profile-pic" src="{[{ imageurl }]}"/>
                         <br>
                         <div ng-cloak="" class="buttondemoBasicUsage upload-button">
                             <md-content class="btn_group_bg">
@@ -835,7 +837,7 @@
                                     <div layout="row">
                                         <md-input-container>
                                             <!--<label>Health Condition</label>-->
-                                            <md-select ng-model="selectedHealthCon" multiple="">
+                                            <md-select ng-model="user.healthCond" multiple="" ng-init="user.healthCond">
 
                                                 <md-optgroup label="Common condition">
                                                     <md-option ng-value="healthcon.name"
@@ -857,135 +859,128 @@
                     <div class="col-md-5 ">
                         <div class="md-padding checkboxdemoBasicUsage">
                             <div>
-                                <br><br>
-                                <fieldset class="standard">
+                                <!--<br>-->
+                                <!--<fieldset class="standard">-->
+
+                                <!--Preference Range-->
+                                <section id="tryborder">
                                     <legend>Preferences
-                                        <ng-model>
+                                        <!--<ng-model>-->
                                     </legend>
-                                    <section id="tryborder">
-                                        <label>Nutrition&nbsp;</label><span>(per dish)</span>
+                                    <label>Nutrition&nbsp;</label><span>(per dish)</span>
 
+                                    <!--Calories-->
+                                    <!--<div>-->
+                                    <!--<article>-->
+                                    <!--<p>Calories (calories) : </p>-->
+                                    <!--<rzslider rz-slider-model="calories.minValue"-->
+                                    <!--rz-slider-high="calories.maxValue"-->
+                                    <!--rz-slider-options="calories.options"></rzslider>-->
+                                    <!--</article>-->
+                                    <!--</div>-->
+                                    <div>
+                                        <h5>Calories (calories): </h5>
+                                        <ion-range-slider min="calories.floor" max="calories.ceil"
+                                                          from="calories.minValue"
+                                                          to="calories.maxValue"
+                                                          type="model.type"></ion-range-slider>
+                                    </div>
+                                    <br>
+
+                                    <!--Proteins-->
+                                    <div>
+                                        <h5>Proteins (grams): </h5>
+                                        <ion-range-slider min="proteins.floor" max="proteins.ceil"
+                                                          from="proteins.minValue" to="proteins.maxValue"
+                                                          type="model.type"></ion-range-slider>
+                                    </div>
+                                    <br>
+
+                                    <!--Carbohydrates-->
+                                    <div>
+                                        <h5>Carbohydrate (grams): </h5>
+                                        <ion-range-slider min="carb.floor" max="carb.ceil"
+                                                          from="carb.minValue" to="carb.maxValue"
+                                                          type="model.type"></ion-range-slider>
+                                    </div>
+                                    <br>
+                                    <!--Fats-->
+                                    <div>
+                                        <h5>Fats (grams): </h5>
+                                        <ion-range-slider min="fats.floor" max="fats.ceil"
+                                                          from="fats.minValue" to="fats.maxValue"
+                                                          type="model.type"></ion-range-slider>
+                                    </div>
+                                    <br>
+
+                                    <!--Cholesterol-->
+                                    <div>
+                                        <h5>Cholesterol (milligrams): </h5>
+                                        <ion-range-slider min="cholesterols.floor" max="cholesterols.ceil"
+                                                          from="cholesterols.minValue" to="cholesterols.maxValue"
+                                                          type="model.type"></ion-range-slider>
+                                    </div>
+
+                                </section>
+                                <!--End Preference Range-->
+
+                                <!--More Nutrition Preference (e.g. Vitamin)-->
+                                <section id="tryborder">
+                                    <div class="md-padding selectdemoOptionGroups" ng-cloak="">
                                         <div>
-                                            <article>
-                                                <p>Calories (calories) : </p>
-                                                <rzslider rz-slider-model="calories.minValue"
-                                                          rz-slider-high="calories.maxValue"
-                                                          rz-slider-options="calories.options"></rzslider>
-                                            </article>
-                                        </div>
+                                            <label>Choose more nutrition as you like!</label><br>
+                                            <div layout="row">
 
-
-                                        <div>
-                                            <div>
-                                                <article>
-                                                    <p>Proteins (grams): </p>
-                                                    <rzslider rz-slider-model="proteins.minValue"
-                                                              rz-slider-high="proteins.maxValue"
-                                                              rz-slider-options="proteins.options"></rzslider>
-                                                </article>
+                                                <md-input-container>
+                                                    <!--<label>Additional Nutrition</label>-->
+                                                    <md-select ng-model="selectedNutrition" multiple="">
+                                                        <md-optgroup label="Vitamin">
+                                                            <md-option ng-value="nutrition.name"
+                                                                       ng-repeat="nutrition in nutritions | filter: {category: 'vitamin' }">
+                                                                {[{nutrition.name}]}
+                                                            </md-option>
+                                                        </md-optgroup>
+                                                        <md-optgroup label="Others">
+                                                            <md-option ng-value="nutrition.name"
+                                                                       ng-repeat="nutrition in nutritions | filter: {category: 'others' }">
+                                                                {[{nutrition.name}]}
+                                                            </md-option>
+                                                        </md-optgroup>
+                                                    </md-select>
+                                                </md-input-container>
                                             </div>
                                         </div>
+                                    </div>
+                                </section>
+                                <!--End more nutrition preference-->
 
-                                        <div>
-                                            <div>
-                                                <article>
-                                                    <p>Carbohydrate (grams): </p>
-                                                    <rzslider rz-slider-model="carb.minValue"
-                                                              rz-slider-high="carb.maxValue"
-                                                              rz-slider-options="carb.options"></rzslider>
-                                                </article>
-                                            </div>
+                                <!--Taste Preference-->
+                                <section id="tryborder">
+                                    <div class="row">
+                                        <label>Taste</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <md-checkbox ng-model="user.sweet"  aria-label="">
+                                                Sweet
+                                            </md-checkbox>
+                                            <md-checkbox ng-model="user.sour" aria-label="">
+                                                Sour
+                                            </md-checkbox>
+                                            <md-checkbox ng-model="user.bitter" aria-label="">
+                                                Bitter
+                                            </md-checkbox>
+                                            <md-checkbox ng-model="user.spicy" aria-label="">
+                                                Spicy
+                                            </md-checkbox>
+                                            <md-checkbox ng-model="user.salty" aria-label="">
+                                                Salty
+                                            </md-checkbox>
                                         </div>
-
-                                        <div>
-                                            <div>
-                                                <article>
-                                                    <p>Fats (grams): </p>
-                                                    <rzslider rz-slider-model="fats.minValue"
-                                                              rz-slider-high="fats.maxValue"
-                                                              rz-slider-options="fats.options"></rzslider>
-                                                </article>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div>
-                                                <article>
-                                                    <p>Cholesterol (milligrams): </p>
-                                                    <rzslider rz-slider-model="cholesterols.minValue"
-                                                              rz-slider-high="cholesterols.maxValue"
-                                                              rz-slider-options="cholesterols.options"></rzslider>
-                                                </article>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section id="tryborder">
-                                        <div class="md-padding selectdemoOptionGroups" ng-cloak="">
-                                            <div>
-                                                <label>Choose more nutrition as you like!</label><br>
-                                                <div layout="row">
-
-                                                    <md-input-container>
-                                                        <!--<label>Additional Nutrition</label>-->
-                                                        <md-select ng-model="selectedNutrition" multiple="">
-                                                            <md-optgroup label="Vitamin">
-                                                                <md-option ng-value="nutrition.name"
-                                                                           ng-repeat="nutrition in nutritions | filter: {category: 'vitamin' }">
-                                                                    {[{nutrition.name}]}
-                                                                </md-option>
-                                                            </md-optgroup>
-                                                            <md-optgroup label="Others">
-                                                                <md-option ng-value="nutrition.name"
-                                                                           ng-repeat="nutrition in nutritions | filter: {category: 'others' }">
-                                                                    {[{nutrition.name}]}
-                                                                </md-option>
-                                                            </md-optgroup>
-                                                        </md-select>
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section id="tryborder">
-                                        <div class="row">
-                                            <label>Taste</label><br><br>
-
-                                            <div ng-controller="DragDropCtrl">
-
-                                                <div class="bin" ng-repeat="bin in ['Preferred']" bin="bin"
-                                                     id="{[{ bin }]}">{[{ bin }]}
-                                                    <br>
-                                                    <div class="bin_inside" droppable drop="handleDrop" bin="bin"
-                                                         id="{[{ bin }]}"></div>
-                                                </div>
-                                                <div class="bin" ng-repeat="bin in ['That is fine']" bin="bin"
-                                                     id="{[{ bin }]}">
-                                                    {[{ bin }]}
-                                                    <br>
-                                                    <div class="bin_inside" droppable drop="handleDrop" bin="bin"
-                                                         id="{[{ bin }]}">
-                                                        <div class="tasteItem" id="tasteItem{[{ tasteItem }]}"
-                                                             ng-repeat="tasteItem in ['salty', 'sour','sweet','spicy','bitter']"
-                                                             draggable
-                                                             item="tasteItem">
-                                                            {[{ tasteItem }]}
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="bin" ng-repeat="bin in ['Not preferred']" bin="bin"
-                                                     id="{[{ bin }]}">{[{ bin }]}
-                                                    <br>
-                                                    <div class="bin_inside" droppable drop="handleDrop" bin="bin"
-                                                         id="{[{ bin }]}"></div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </section>
-
-                                </fieldset>
+                                    </div>
+                                </section>
+                                <!--End Taste Preference-->
+                                <!--</fieldset>-->
 
                             </div>
                         </div>
@@ -997,16 +992,59 @@
                                     <div layout="row">
                                         <md-input-container>
                                             <!--<label>Not Preferring</label>-->
-                                            <md-select ng-model="selectedNotPref" multiple="">
+                                            <md-select ng-model="user.noIngredient" multiple="">
                                                 <md-optgroup label="Dairy Product">
-                                                    <md-option ng-value="notpref.name"
-                                                               ng-repeat="notpref in notprefs | filter: {category: 'dairyprod' }">
+                                                    <md-option
+                                                            ng-repeat="notpref in notprefs | filter: {category: 'dairy product' }"
+                                                            ng-value="notpref.name">
                                                         {[{notpref.name}]}
                                                     </md-option>
                                                 </md-optgroup>
                                                 <md-optgroup label="Seafood">
                                                     <md-option ng-value="notpref.name"
                                                                ng-repeat="notpref in notprefs | filter: {category: 'seafood' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Meat">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'meat' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Vegetable">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'vegetable' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Fruits">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'fruits' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Sugar">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'sugar' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Oil">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'Oil' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Seasoning">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'seasoning' }">
+                                                        {[{notpref.name}]}
+                                                    </md-option>
+                                                </md-optgroup>
+                                                <md-optgroup label="Others">
+                                                    <md-option ng-value="notpref.name"
+                                                               ng-repeat="notpref in notprefs | filter: {category: 'others' }">
                                                         {[{notpref.name}]}
                                                     </md-option>
                                                 </md-optgroup>
@@ -1078,9 +1116,6 @@
                 <!-- /.Copyright -->
             </div>
         </div>
-
-
-
 
 
         <!-- Title & Divider -->
@@ -1180,9 +1215,9 @@
 
 <!-- Angular Slider-->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
-<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>-->
+<!--<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>-->
+<!--<link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">-->
 
 <script type="text/javascript" src="bower_components/material-calendar/angular-material-calendar.js"></script>
 

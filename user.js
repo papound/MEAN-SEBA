@@ -55,7 +55,7 @@ var UserSchema = new mongoose.Schema({
     },
     tastePreference: {
         type: [],
-        default: null
+        default: [false,false,false,false,false]
     },
     tasteDisfavor: {
         type: [],

@@ -85,12 +85,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-    <!--Slider bower components-->
-    <!--<link rel="stylesheet" href="bower_components/nouislider/jquery.nouislider.css"/>-->
-    <script src="bower_components/angular/angular.js"></script>
-    <!--<script src="bower_components/nouislilder/jquery.nouislider.js"></script>-->
-    <!--<script src="bower_components/nouislider/Link.js"></script>-->
-    <scipt src="bower_components/angular-nouislider/src/nouislider.js"></scipt>
+    <!--The new slider-->
+    <link href="bower_components/ionRangeslider/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/ionRangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/ionRangeslider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet" type="text/css">
+    <script src="bower_components/ionRangeslider/js/ion.rangeSlider.js"></script>
+    <script src="ionic-range-slider.js"></script>
 
     <!--Fuzzy-->
     <!--<script src="http://kiro.me/javascript/projects/fuse.min.js"></script>-->
@@ -204,14 +204,6 @@
             margin-left: 60px;
         }
 
-        .buttondemoBasicUsage {
-            border-radius: 3px;
-            text-align: center;
-            margin: 1em;
-            position: relative !important;
-            padding-bottom: 10px;
-        }
-
         .buttondemoBasicUsage md-content {
             margin-right: 7px;
             /*display: block;*/
@@ -221,14 +213,6 @@
         .buttondemoBasicUsage .md-button {
             margin-top: 16px;
             margin-bottom: 16px;
-        }
-
-        .btn_group_bg {
-            background-color: transparent !important;
-        }
-
-        .btn_group_save {
-            background-color: transparent !important;
         }
 
         /*Fuzzy Search*/
@@ -283,7 +267,7 @@
         .chipsdemoContactChips .contact-item .md-list-item-text h3, .chipsdemoContactChips .contact-item .md-list-item-text p {
             text-overflow: ellipsis;
             white-space: nowrap;
-            overflow: hidden;
+            overflow: auto;
         }
 
         .tabsdemoDynamicHeight md-content {
@@ -490,7 +474,7 @@
 
         md-backdrop {
             opacity: 0.5;
-            height: 3000px;
+            height: 5410px;
         }
 
         .img_slide {
@@ -516,7 +500,7 @@
         }
 
         /*Footer*/
-        section#contact{
+        section#contact {
             padding: 50px;
         }
 
@@ -529,7 +513,15 @@
             color: slategray;
             font-size: 18px;
         }
+
         /*End Euro sign*/
+
+        /*position fixed button*/
+        .fixbutton {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
 
     </style>
 
@@ -582,6 +574,7 @@
     <!-- Nav -->
     <nav class="navbar navbar-fixed-top affix-top" data-spy="affix" data-offset-top="100">
         <div class="container">
+
             <div class="row hidden-sm hidden-xs">
                 <div class="col-sm-11 menu_center">
                     <!-- Links 01 -->
@@ -714,907 +707,1145 @@
 <section id="menu-list">
     <div class="container">
         <div id="all_modules" layout="column" ng-cloak class="md-inline-form">
-
-            <!-- Title & Divider -->
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center wow fadeIn"
-                     style="visibility: visible; animation-name: fadeIn;">
-                    <h2>Recommended Dish/ Ingredients</h2>
-                    <br><br>
+            <!--<md-content flex="" layout-padding="">-->
+            <div ng-controller="AppCtrl">
+                <div>
+                    <!--<md-button ng-click="toggleLeft()" class="md-primary fixbutton">-->
+                    <!--...-->
+                    <!--</md-button>-->
+                    <md-button ng-click="toggleLeft()" class="md-fab fixbutton" aria-label="Preference">
+                        <md-icon md-svg-src="newTemplate/svg/pencil.svg"></md-icon>
+                    </md-button>
                 </div>
             </div>
+            <!--</md-content>-->
+            <!-- Title & Divider -->
+            <!--<div class="row">-->
+            <!--<div class="col-md-8 col-md-offset-2 text-center wow fadeIn"-->
+            <!--style="visibility: visible; animation-name: fadeIn;">-->
+            <!--<h2>Menu</h2>-->
+            <!--<br><br>-->
+            <!--</div>-->
+            <!--</div>-->
 
             <!-- /.Title & Divider -->
 
 
             <!-- Search Dish/Ingredients-->
             <!--<div class="row">-->
-                <!--Nav bar-->
-                <div ng-controller="AppCtrl" layout="column" style="height:1000px;" class="sidenavdemoBasicUsage">
-                    <section layout="row" flex="">
-                        <md-sidenav class="md-sidenav-left md-whiteframe-4dp" style="margin-top: 500px;"
-                                    md-component-id="left">
-                            <md-toolbar style="background: #bda881;">
-                                <h1 class="md-toolbar-tools">Search Dish/ Ingredients</h1>
-                            </md-toolbar>
-                            <md-content layout-padding="" ng-controller="LeftCtrl">
-                                <div class="tabsdemoDynamicHeight">
-                                    <form class="ui form animated fadeInUp" ng-model="newUser" name="profileform"
-                                          ng-controller="SearchCtrl">
-                                        <md-content>
-                                            <md-tabs md-dynamic-height="" md-border-bottom="">
-                                                <!--Dish Preference-->
-                                                <md-tab label="Dish">
-                                                    <md-content class="md-padding">
-                                                        <!--Disable default preference Checkbox-->
-                                                        <div class="row">
-                                                            <label>
-                                                                <md-checkbox ng-model="checked" ng-init="checked=true"/>
-                                                                Disable default preference
-                                                            </label>
-                                                            <fieldset class="standard" ng-disabled="checked">
-                                                                <label>Nutrition&nbsp;</label><span>(per dish)</span>
-                                                                <!--Start slider-->
-                                                                <div>
-                                                                    <article>
-                                                                        <p>Calories (calories) : </p>
-                                                                        <rzslider rz-slider-model="calories.minValue"
-                                                                                  rz-slider-high="calories.maxValue"
-                                                                                  rz-slider-options="calories.options"
-                                                                                  ng-disabled="checked"></rzslider>
-                                                                    </article>
-                                                                </div>
-                                                                <div>
-                                                                    <article>
-                                                                        <p>Proteins (grams): </p>
-                                                                        <rzslider rz-slider-model="proteins.minValue"
-                                                                                  rz-slider-high="proteins.maxValue"
-                                                                                  rz-slider-options="proteins.options"
-                                                                                  ng-disabled="checked"></rzslider>
-                                                                    </article>
-                                                                </div>
+            <!--Nav bar-->
+            <div ng-controller="AppCtrl" layout="column" style="height:10px;" class="sidenavdemoBasicUsage">
+                <section layout="row" flex="">
+                    <md-sidenav class="md-sidenav-left md-whiteframe-4dp" style="margin-top: 10px; position: fixed; top: 10%;  "
+                                md-component-id="left">
+                        <md-toolbar style="background: #bda881;">
+                            <h1 class="md-toolbar-tools">Search Dish/ Ingredients</h1>
+                        </md-toolbar>
+                        <md-content layout-padding="" ng-controller="LeftCtrl" style="position: relative; overflow:scroll;">
+                            <div class="tabsdemoDynamicHeight">
+                                <form class="ui form animated fadeInUp" ng-model="newUser" name="profileform"
+                                      ng-controller="SearchCtrl">
+                                    <md-content>
+                                        <md-tabs md-dynamic-height="" md-border-bottom="">
+                                            <!--Dish Preference-->
+                                            <md-tab label="Dish">
+                                                <md-content class="md-padding">
+                                                    <!--Disable default preference Checkbox-->
+                                                    <div class="row">
+                                                        <label>
+                                                            <md-checkbox ng-model="checked" ng-init="checked=true"/>
+                                                            Enable default preference
+                                                        </label>
+                                                        <!--<fieldset class="standard" ng-disabled="checked">-->
+                                                        <br><label>Nutrition&nbsp;</label><span>(per dish)</span>
+                                                        <!--Start slider-->
+                                                        <!--Calories-->
+                                                        <div>
+                                                            <h5>Calories (calories): </h5>
+                                                            <ion-range-slider min="calories.floor"
+                                                                              max="calories.ceil"
+                                                                              from="calories.minValue"
+                                                                              to="calories.maxValue"
+                                                                              type="model.type"></ion-range-slider>
+                                                        </div>
+                                                        <!--<br>-->
 
-                                                                <div>
-                                                                    <article>
-                                                                        <p>Carbohydrate (grams): </p>
-                                                                        <rzslider rz-slider-model="carb.minValue"
-                                                                                  rz-slider-high="carb.maxValue"
-                                                                                  rz-slider-options="carb.options"
-                                                                                  ng-disabled="checked"></rzslider>
-                                                                    </article>
-                                                                </div>
+                                                        <!--Proteins-->
+                                                        <div>
+                                                            <h5>Proteins (grams): </h5>
+                                                            <ion-range-slider min="proteins.floor"
+                                                                              max="proteins.ceil"
+                                                                              from="proteins.minValue"
+                                                                              to="proteins.maxValue"
+                                                                              type="model.type"></ion-range-slider>
+                                                        </div>
+                                                        <!--<br>-->
 
-                                                                <div>
-                                                                    <article>
-                                                                        <p>Fats (grams): </p>
-                                                                        <rzslider rz-slider-model="fats.minValue"
-                                                                                  rz-slider-high="fats.maxValue"
-                                                                                  rz-slider-options="fats.options"
-                                                                                  ng-disabled="checked"></rzslider>
-                                                                    </article>
-                                                                </div>
+                                                        <!--Carbohydrates-->
+                                                        <div>
+                                                            <h5>Carbohydrate (grams): </h5>
+                                                            <ion-range-slider min="carb.floor" max="carb.ceil"
+                                                                              from="carb.minValue"
+                                                                              to="carb.maxValue"
+                                                                              type="model.type"></ion-range-slider>
+                                                        </div>
+                                                        <!--<br>-->
 
+                                                        <!--Fats-->
+                                                        <div>
+                                                            <h5>Fats (grams): </h5>
+                                                            <ion-range-slider min="fats.floor" max="fats.ceil"
+                                                                              from="fats.minValue"
+                                                                              to="fats.maxValue"
+                                                                              type="model.type"></ion-range-slider>
+                                                        </div>
+                                                        <!--<br>-->
 
-                                                                <div>
-                                                                    <article>
-                                                                        <p>Cholesterol (milligrams): </p>
-                                                                        <rzslider
-                                                                                rz-slider-model="cholesterols.minValue"
-                                                                                rz-slider-high="cholesterols.maxValue"
-                                                                                rz-slider-options="cholesterols.options"
-                                                                                ng-disabled="checked"></rzslider>
-                                                                    </article>
-                                                                </div>
-                                                                <!--End slider-->
-
-                                                                <!--Taste Preference-->
-                                                                <div class="row">
-                                                                    <div class="col-md-1"></div>
-                                                                    <div class="col-md-11">
-                                                                        <label>Tastes</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-1"></div>
-                                                                    <div class="col-md-5">
-                                                                        <md-checkbox ng-model="user.sweet" aria-label=""
-                                                                                     ng-disabled="checked">
-                                                                            Sweet<span ng-if="user.sweet"></span>
-                                                                        </md-checkbox>
-                                                                    </div>
-                                                                    <div class="col-md-5">
-                                                                        <md-checkbox ng-model="user.spicy" aria-label=""
-                                                                                     ng-disabled="checked">
-                                                                            Spicy<span ng-if="user.spicy"></span>
-                                                                        </md-checkbox>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-1"></div>
-                                                                    <div class="col-md-5">
-                                                                        <md-checkbox ng-model="user.sour" aria-label=""
-                                                                                     ng-disabled="checked">
-                                                                            Sour<span ng-if="user.sour"></span>
-                                                                        </md-checkbox>
-                                                                    </div>
-                                                                    <div class="col-md-5">
-                                                                        <md-checkbox ng-model="user.bitter"
-                                                                                     aria-label=""
-                                                                                     ng-disabled="checked">
-                                                                            Bitter<span ng-if="user.bitter"></span>
-                                                                        </md-checkbox>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-1"></div>
-                                                                    <div class="col-md-5">
-                                                                        <md-checkbox ng-model="user.salty" aria-label=""
-                                                                                     ng-disabled="checked">
-                                                                            Salty<span ng-if="user.salty"></span>
-                                                                        </md-checkbox>
-                                                                    </div>
-                                                                </div>
-                                                                <!--End Taste Preference-->
-                                                            </fieldset>
+                                                        <!--Cholesterol-->
+                                                        <div>
+                                                            <h5>Cholesterol (milligrams): </h5>
+                                                            <ion-range-slider min="cholesterols.floor"
+                                                                              max="cholesterols.ceil"
+                                                                              from="cholesterols.minValue"
+                                                                              to="cholesterols.maxValue"
+                                                                              type="model.type"></ion-range-slider>
                                                         </div>
                                                         <br>
-                                                        <!--End Disable default preference Checkbox-->
-                                                    </md-content>
-                                                </md-tab>
+                                                        <!--End slider-->
 
-                                                <!--Ingredient preference-->
-                                                <md-tab label="Ingredient">
-                                                    <div class="tabsdemoDynamicHeight">
-                                                        <md-content>
-                                                            <div class="row">
-                                                                <div class="col-md-1">&nbsp</div>
-                                                                <div class="col-md-11">
-                                                                    <md-input-container class="md-block">
-                                                                        <label>Search Ingredient:</label>
+                                                        <!--Taste Preference-->
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-11">
+                                                                <label>Taste</label>
+                                                            </div>
+                                                        </div>
+                                                        <!--<div class="row">-->
+                                                            <!--<div class="col-md-1"></div>-->
+                                                            <!--<div class="col-md-5">-->
+                                                                <!--<md-checkbox ng-model="user.sweet" aria-label=""-->
+                                                                             <!--ng-disabled="checked">-->
+                                                                    <!--Sweet<span ng-if="user.sweet"></span>-->
+                                                                <!--</md-checkbox>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="col-md-5">-->
+                                                                <!--<md-checkbox ng-model="user.spicy" aria-label=""-->
+                                                                             <!--ng-disabled="checked">-->
+                                                                    <!--Spicy<span ng-if="user.spicy"></span>-->
+                                                                <!--</md-checkbox>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="row">-->
+                                                            <!--<div class="col-md-1"></div>-->
+                                                            <!--<div class="col-md-5">-->
+                                                                <!--<md-checkbox ng-model="user.sour" aria-label=""-->
+                                                                             <!--ng-disabled="checked">-->
+                                                                    <!--Sour<span ng-if="user.sour"></span>-->
+                                                                <!--</md-checkbox>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="col-md-5">-->
+                                                                <!--<md-checkbox ng-model="user.bitter"-->
+                                                                             <!--aria-label=""-->
+                                                                             <!--ng-disabled="checked">-->
+                                                                    <!--Bitter<span ng-if="user.bitter"></span>-->
+                                                                <!--</md-checkbox>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="row">-->
+                                                            <!--<div class="col-md-1"></div>-->
+                                                            <!--<div class="col-md-5">-->
+                                                                <!--<md-checkbox ng-model="user.salty" aria-label=""-->
+                                                                             <!--ng-disabled="checked">-->
+                                                                    <!--Salty<span ng-if="user.salty"></span>-->
+                                                                <!--</md-checkbox>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+
+                                                        <div ng-controller="MainCtrl" class="row">
+                                                            <div class="col-md-8">
+                                                                <md-checkbox ng-model="user.sweet"  aria-label="">
+                                                                    Sweet
+                                                                </md-checkbox>
+                                                                <md-checkbox ng-model="user.sour" aria-label="">
+                                                                    Sour
+                                                                </md-checkbox>
+                                                                <md-checkbox ng-model="user.bitter" aria-label="">
+                                                                    Bitter
+                                                                </md-checkbox>
+                                                                <md-checkbox ng-model="user.spicy" aria-label="">
+                                                                    Spicy
+                                                                </md-checkbox>
+                                                                <md-checkbox ng-model="user.salty" aria-label="">
+                                                                    Salty
+                                                                </md-checkbox>
+                                                            </div>
+                                                        </div>
+
+                                                        <!--End Taste Preference-->
+                                                        <!--</fieldset>-->
+                                                    </div>
+                                                    <br>
+                                                    <!--End Disable default preference Checkbox-->
+                                                </md-content>
+                                            </md-tab>
+
+                                            <!--Ingredient preference-->
+                                            <md-tab label="Ingredient">
+                                                <div class="tabsdemoDynamicHeight">
+                                                    <md-content>
+                                                        <div class="row">
+                                                            <div class="col-md-1">&nbsp</div>
+                                                            <div class="col-md-11">
+                                                                <md-input-container class="md-block">
+                                                                    <label>Search Ingredient:</label>
                                                             <textarea id="searchTextbox" ng-model="test"
                                                                       md-maxlength="32"
                                                                       md-slelect-on-focus="">
                                                             </textarea>
-                                                                    </md-input-container>
-                                                                </div>
+                                                                </md-input-container>
                                                             </div>
-                                                        </md-content>
-                                                    </div>
-                                                </md-tab>
+                                                        </div>
+                                                    </md-content>
+                                                </div>
+                                            </md-tab>
 
-                                            </md-tabs>
-                                        </md-content>
-                                    </form>
-                                </div>
-                            </md-content>
-                        </md-sidenav>
-
-                        <md-content flex="" layout-padding="">
-                            <div layout="column" layout-fill="" layout-align="top center">
-                                <div>
-                                    <md-button ng-click="toggleLeft()" class="md-primary" z>
-                                        Search bar
-                                    </md-button>
-                                </div>
+                                        </md-tabs>
+                                    </md-content>
+                                </form>
                             </div>
                         </md-content>
-                    </section>
-                </div>
-                <!-- End Nav Bar-->
+                    </md-sidenav>
 
-
-                <!--Main data-->
-                <div ng-controller="MainCtrl">
-
-                    <script type="text/ng-template" id="tabDialog.tmpl.html">
-                        <md-dialog aria-label="{[{ dishName }]}" >
-                            <ng-form name="addtocart">
-                                <md-toolbar>
-                                    <div class="md-toolbar-tools">
-                                        <h2 ng-model="dish_name">{[{ dishName }]}</h2>
-                                        <span flex></span>
-                                        <md-button class="md-icon-button" ng-click="cancel()">
-                                            <md-icon md-svg-src="img/icons/ic_close_24px.svg"
-                                                     aria-label="Close dialog"></md-icon>
-                                        </md-button>
-                                    </div>
-                                </md-toolbar>
-                                <md-dialog-content style="max-width:800px;max-height:810px; ">
-                                    <md-tabs md-dynamic-height md-border-bottom>
-                                        <md-tab label="Nutrition facts">
-                                            <md-content class="md-padding">
-                                                <h1 class="md-display-2"></h1>
-                                                <table class="table">
-                                                    <tr>
-                                                        <td><b style="color: red">Calories : </b>{[{
-                                                            dishNutritions[0].Calories }]}
-                                                        </td>
-                                                        <td><b style="color: #fdd835">Carbohydrates : </b>{[{
-                                                            dishNutritions[0].Carbohydrates }]}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b style="color: #673ab7">Cholesterols : </b>{[{
-                                                            dishNutritions[0].Cholesterols }]}
-                                                        </td>
-                                                        <td><b style="color: #d58512">Fats : </b>{[{
-                                                            dishNutritions[0].Fats }]}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b style="color: #0b8043">Fiber : </b>{[{
-                                                            dishNutritions[0].Fiber }]}
-                                                        </td>
-                                                        <td><b style="color: #8a6d3b">Proteins : </b>{[{
-                                                            dishNutritions[0].Proteins }]}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b style="color: darkblue">Sodium : </b>{[{
-                                                            dishNutritions[0].Sodium }]}
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                            </md-content>
-                                        </md-tab>
-                                        <md-tab label="Ingredients">
-                                            <md-content class="md-padding">
-                                                <!--<h1 class="md-display-2">Ingredients</h1>-->
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th width="15%" style="color: #0b50bf">Quantity</th>
-                                                        <th width="20%" style="color: #9e5406">Unit</th>
-                                                        <th width="35%" style="color: forestgreen">Ingredient</th>
-                                                        <th width="15%" style="color: steelblue">+ Top up</th>
-                                                        <th width="15%" style="color: dimgray">price/unit</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr ng-repeat="di in dishIngredients">
-                                                        <td>{[{ di.amount }]}</td>
-                                                        <td>{[{ di.unit }]}</td>
-                                                        <td>
-                                                            <b>{[{ di.name }]}</b>
-                                                            &nbsp;&nbsp;<i>{[{ di.detail }]}</i>
-                                                        </td>
-                                                        <td>
-                                                            <md-input-container class="md-block">
-                                                                <input id="{[{ di.name }]}"
-                                                                       name="{[{ di.name }]}"
-                                                                       type="number" step="any" min="0" max="999"
-                                                                       ng-model="topup_quantity"
-                                                                       ng-change="change_topUpQuantity(dishName, di.name, topup_quantity, di.price)" />
-                                                            </md-input-container>
-                                                        </td>
-                                                        <td>{[{ di.price }]}</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </md-content>
-                                        </md-tab>
-                                        <md-tab label="Recipe">
-                                            <md-content class="md-padding">
-                                                <!--<h1 class="md-display-2">Recipe</h1>-->
-                                                <ul>
-                                                    <li ng-repeat="dr in dishRecipe">{[{ dr.detail }]}</li>
-                                                </ul>
-                                            </md-content>
-                                        </md-tab>
-                                        <md-tab label="Utensils">
-                                            <md-content class="md-padding">
-                                                <!--<h1 class="md-display-2"></h1>-->
-                                                <ul>
-                                                    <li ng-repeat="du in dishUtensils">{[{ du.name }]}</li>
-                                                </ul>
-                                            </md-content>
-                                        </md-tab>
-                                    </md-tabs>
-                                </md-dialog-content>
-
-                                <md-dialog-actions layout="row">
-                                    <span flex></span>
-                                    <h5>Quantity: </h5>
-                                    <md-input-container class="md-block" style="max-width: 50px">
-                                        <input type="number" step="any" ng-model="dish_quantity" />
-                                    </md-input-container>
-                                    <md-button ng-click="addToCart(dishName, dish_quantity)">
-                                        Add to Cart
-                                    </md-button>
-                                </md-dialog-actions>
-                            </ng-form>
-                        </md-dialog>
-                    </script>
+                    <!--<md-content flex="" layout-padding="">-->
+                    <!--<div layout="column" layout-fill="" layout-align="top center">-->
+                    <!--<div>-->
+                    <!--<md-button ng-click="toggleLeft()" class="md-primary">-->
+                    <!--Search bar-->
+                    <!--</md-button>-->
                     <!--</div>-->
+                    <!--</div>-->
+                    <!--</md-content>-->
+                </section>
+            </div>
+            <!-- End Nav Bar-->
 
-                    <!--<div ng-include src="'tabDialog.tmpl.html'"></div>-->
 
-                    <!-- Chefs -->
-                    <section id="chefs" class="reducePadding">
-                        <div class="container">
-                            <!-- Title & Divider -->
-                            <div class="row">
-                                <!--<p class="lead">&nbsp;&nbsp;&nbsp;&nbsp;Best Seller</p>-->
-                                <h2>&nbsp;&nbsp;&nbsp;&nbsp;Best Seller</h2>
-                                <div class="col-md-8 col-md-offset-2 wow "
-                                     style="visibility: hidden; animation-name: none;">
-                                    <!--<h2>Our Chefs</h2>-->
+            <!--Main data-->
+            <div ng-controller="MainCtrl">
 
-                                    <!--<p class="lead">Recommended</p>-->
+                <script type="text/ng-template" id="tabDialog.tmpl.html">
+                    <md-dialog aria-label="{[{ dishName }]}">
+                        <ng-form name="addtocart">
+                            <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                    <h2 ng-model="dish_name">{[{ dishName }]}</h2>
+                                    <span flex></span>
+                                    <md-button class="md-icon-button" ng-click="cancel()">
+                                        <md-icon md-svg-src="img/icons/ic_close_24px.svg"
+                                                 aria-label="Close dialog"></md-icon>
+                                    </md-button>
                                 </div>
-                            </div>
+                            </md-toolbar>
+                            <md-dialog-content style="max-width:800px;max-height:810px; ">
+                                <md-tabs md-dynamic-height md-border-bottom>
+                                    <md-tab label="Nutrition facts">
+                                        <md-content class="md-padding">
+                                            <h1 class="md-display-2"></h1>
+                                            <table class="table">
+                                                <tr>
+                                                    <td><b style="color: red">Calories : </b>{[{
+                                                        dishNutritions[0].Calories }]}
+                                                    </td>
+                                                    <td><b style="color: #fdd835">Carbohydrates : </b>{[{
+                                                        dishNutritions[0].Carbohydrates }]}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b style="color: #673ab7">Cholesterols : </b>{[{
+                                                        dishNutritions[0].Cholesterols }]}
+                                                    </td>
+                                                    <td><b style="color: #d58512">Fats : </b>{[{
+                                                        dishNutritions[0].Fats }]}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b style="color: #0b8043">Fiber : </b>{[{
+                                                        dishNutritions[0].Fiber }]}
+                                                    </td>
+                                                    <td><b style="color: #8a6d3b">Proteins : </b>{[{
+                                                        dishNutritions[0].Proteins }]}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b style="color: darkblue">Sodium : </b>{[{
+                                                        dishNutritions[0].Sodium }]}
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Ingredients">
+                                        <md-content class="md-padding">
+                                            <!--<h1 class="md-display-2">Ingredients</h1>-->
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th width="15%" style="color: #0b50bf">Quantity</th>
+                                                    <th width="20%" style="color: #9e5406">Unit</th>
+                                                    <th width="35%" style="color: forestgreen">Ingredient</th>
+                                                    <th width="15%" style="color: steelblue">+ Top up</th>
+                                                    <th width="15%" style="color: dimgray">price/unit</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="di in dishIngredients">
+                                                    <td>{[{ di.amount }]}</td>
+                                                    <td>{[{ di.unit }]}</td>
+                                                    <td>
+                                                        <b>{[{ di.name }]}</b>
+                                                        &nbsp;&nbsp;<i>{[{ di.detail }]}</i>
+                                                    </td>
+                                                    <td>
+                                                        <md-input-container class="md-block">
+                                                            <input id="{[{ di.name }]}"
+                                                                   name="{[{ di.name }]}"
+                                                                   type="number" step="any" min="0" max="999"
+                                                                   ng-model="topup_quantity"
+                                                                   ng-change="change_topUpQuantity(dishName, di.name, topup_quantity, di.price)"/>
+                                                        </md-input-container>
+                                                    </td>
+                                                    <td>{[{ di.price }]}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Recipe">
+                                        <md-content class="md-padding">
+                                            <!--<h1 class="md-display-2">Recipe</h1>-->
+                                            <ul>
+                                                <li ng-repeat="dr in dishRecipe">{[{ dr.detail }]}</li>
+                                            </ul>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Utensils">
+                                        <md-content class="md-padding">
+                                            <!--<h1 class="md-display-2"></h1>-->
+                                            <ul>
+                                                <li ng-repeat="du in dishUtensils">{[{ du.name }]}</li>
+                                            </ul>
+                                        </md-content>
+                                    </md-tab>
+                                </md-tabs>
+                            </md-dialog-content>
 
-                            <!--<div ng-controller="slider">-->
-                                <!--<ion-range-slider min="model.min" max="model.max" from="model.from" to="model.until" type="model.type"></ion-range-slider>-->
+                            <md-dialog-actions layout="row">
+                                <span flex></span>
+                                <h5>Quantity: </h5>
+                                <md-input-container class="md-block" style="max-width: 50px">
+                                    <input type="number" step="any" ng-model="dish_quantity"/>
+                                </md-input-container>
+                                <md-button ng-click="addToCart(dishName, dish_quantity)">
+                                    Add to Cart
+                                </md-button>
+                            </md-dialog-actions>
+                        </ng-form>
+                    </md-dialog>
+                </script>
+                <!--</div>-->
+
+                <!--<div ng-include src="'tabDialog.tmpl.html'"></div>-->
+
+                <!-- Chefs -->
+                <section id="chefs" class="reducePadding">
+                    <div class="container">
+                        <!-- Title & Divider -->
+                        <div class="row">
+                            <!--<p class="lead">&nbsp;&nbsp;&nbsp;&nbsp;Best Seller</p>-->
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Best Seller</h2>
+                            <div class="col-md-8 col-md-offset-2 wow "
+                                 style="visibility: hidden; animation-name: none;">
+                                <!--<h2>Our Chefs</h2>-->
+
+                                <!--<p class="lead">Recommended</p>-->
+                            </div>
+                        </div>
+
+                        <!--<div ng-controller="slider">-->
+                        <!--<ion-range-slider min="model.min" max="model.max" from="model.from" to="model.until" type="model.type"></ion-range-slider>-->
+                        <!--</div>-->
+                        <!--<div class="mrgn-50-top-btm text-center"><img
+                                    src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"
+                                    alt=""></div>-->
+                        <!-- /.Title & Divider -->
+
+
+                        <!-- Chefs List -->
+                        <div class="row text-center">
+                            <!-- Img 01 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, dish1.name, dish1.price)">
+                                    <img src="{[{ dish1.img[0].data }]}" class="md-card-image card_image_bestseller"
+                                         alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title">{[{ dish1.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ dish1_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ dish1_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="dish1.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ dish1.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Img 01 -->
+                            <!-- Img 02 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, dish2.name, dish2.price)">
+                                    <img src="{[{ dish2.img[0].data }]}" class="md-card-image card_image_bestseller"
+                                         alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title">{[{ dish2.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ dish2_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ dish2_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="dish2.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ dish2.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Chef 02 -->
+                            <!-- Chef 03 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, dish3.name, dish3.price)">
+                                    <img src="{[{ dish3.img[0].data }]}" class="md-card-image card_image_bestseller"
+                                         alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title card_title">{[{ dish3.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ dish3_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ dish3_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="dish3.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ dish3.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Chef 03 -->
+                            <!-- Img 04 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, dish4.name, dish4.price)">
+                                    <img src="{[{ dish4.img[0].data }]}" class="md-card-image card_image_bestseller"
+                                         alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title">{[{ dish4.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ dish4_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ dish4_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="dish4.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ dish4.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Chef 03 -->
+                        </div>
+                        <!-- Chefs List -->
+                    </div>
+                    <!-- /.container -->
+                </section>
+                <!-- /.Chefs -->
+
+
+                <!-- Suggested -->
+                <section id="chefs" class="reducePadding">
+                    <div class="container">
+                        <!-- Title & Divider -->
+                        <div class="row">
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for you</h2>
+                            <div class="col-md-8 col-md-offset-2 wow "
+                                 style="visibility: hidden; animation-name: none;">
+                            </div>
+                        </div>
+
+
+                        <!-- Chefs List -->
+                        <div class="row text-center">
+                            <!-- Img 01 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, best.one.name, best.one.price)">
+                                    <img src="{[{ best.one.img[0].data }]}" class="md-card-image card_image_bestseller"
+                                         alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title">{[{ best.one.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ best1_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ best1_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="best.one.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ best.one.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Img 01 -->
+                            <!-- Img 02 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, best.two.name, best.two.price)">
+                                    <img src="{[{ best.two.img[0].data }]}" class="md-card-image card_image_bestseller"
+                                         alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title">{[{ best.two.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ best2_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ best2_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="best.two.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ best.two.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Img 02 -->
+                            <!-- Img 03 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, best.three.name, best.three.price)">
+                                    <img src="{[{ best.three.img[0].data }]}"
+                                         class="md-card-image card_image_bestseller" alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title">{[{ best.three.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ best3_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ best3_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="best.three.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ best.three.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Img 03 -->
+                            <!-- Img 04 -->
+                            <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
+                                <md-card ng-click="showTabDialog($event, best.four.name, best.four.price)">
+                                    <img src="{[{ best.four.img[0].data }]}" class="md-card-image card_image_bestseller"
+                                         alt="">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline card_title">{[{ best.four.name }]}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <!--typeveg symbol-->
+                                                <img src="{[{ best4_typeveg }]}" style="height: 30px; ">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <img src="{[{ best4_typedairy }]}" style="height: 30px; ">
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <uib-rating ng-model="best.four.rating" max="max"
+                                                            read-only="isReadonly_rating"></uib-rating>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <i class='material-icons gray123'>euro_symbol</i>
+                                                <b style="color: slategray;">{[{ best.four.price |
+                                                    number:2 }]}</b>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <!-- /.Img 04 -->
+
+                        </div>
+                        <!-- Chefs List -->
+                    </div>
+                    <!-- /.container -->
+                </section>
+                <!-- /.Suggested -->
+
+                <!-- Chefs -->
+                <!--<section id="chefs" class="reducePadding">-->
+                    <!--<div class="container">-->
+                        <!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
+                        <!--<div class="row">-->
+                            <!--<h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for you</h2>-->
+                            <!--<div class="col-md-8 col-md-offset-2 wow "-->
+                                 <!--style="visibility: hidden; animation-name: none;">-->
+                                <!--&lt;!&ndash;<h2>Best for you</h2>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<p class="lead">Best for you</p>&ndash;&gt;-->
                             <!--</div>-->
-                            <!--<div class="mrgn-50-top-btm text-center"><img
-                                        src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"
-                                        alt=""></div>-->
-                            <!-- /.Title & Divider -->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class="mrgn-50-top-btm text-center"><img-->
+                                    <!--src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"-->
+                                    <!--alt=""></div>&ndash;&gt;-->
+                        <!--&lt;!&ndash; /.Title & Divider &ndash;&gt;-->
 
+                        <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
+                        <!--<div class="row text-center">-->
+                            <!--&lt;!&ndash; Chef 01 &ndash;&gt;-->
+                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                                <!--<img-->
+                                        <!--src="newTemplate/img/chef1.jpg"-->
+                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                                        <!--alt="">-->
+                                <!--<h3>Mark Robert</h3>-->
+                                <!--<p class="text-muted">Recipe Inventor</p>-->
+                                <!--<p class="mrgn-20-top">Mark is a brilliant dish-designer who believes in creating a-->
+                                    <!--whole new food-->
+                                    <!--world-->
+                                <!--<p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; /.Chef 01 &ndash;&gt;-->
+                            <!--&lt;!&ndash; Chef 02 &ndash;&gt;-->
+                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                                <!--<img-->
+                                        <!--src="newTemplate/img/chef2.jpg"-->
+                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                                        <!--alt="">-->
+                                <!--<h3>Alonzo Xavier</h3>-->
+                                <!--<p class="text-muted">Chef</p>-->
+                                <!--<p class="mrgn-20-top">Alonzo has been in food industry for more than years. His-->
+                                    <!--experiences will-->
+                                    <!--never-->
+                                    <!--stop to enlighten you</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; /.Chef 02 &ndash;&gt;-->
+                            <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
+                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                                <!--<img-->
+                                        <!--src="newTemplate/img/chef3.jpg"-->
+                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                                        <!--alt="">-->
+                                <!--<h3>Les Leo Terrance</h3>-->
+                                <!--<p class="text-muted">Sous-Chef</p>-->
+                                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
+                                    <!--awesome tastes.</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
+                            <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
+                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                                <!--<img-->
+                                        <!--src="newTemplate/img/chef3.jpg"-->
+                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                                        <!--alt="">-->
+                                <!--<h3>Les Leo Terrance</h3>-->
+                                <!--<p class="text-muted">Sous-Chef</p>-->
+                                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
+                                    <!--awesome tastes.</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.container &ndash;&gt;-->
+                <!--</section>-->
+                <!-- /.Chefs -->
 
+                <!-- Dishes -->
+                <section id="chefs" class="reducePadding">
+                    <div class="container">
+                        <!-- Title & Divider -->
+                        <div class="row">
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Appetizer</h2>
+                            <!--<h2>&nbsp;&nbsp;&nbsp;&nbsp;Appetizer</h2>-->
+                            <div class="col-md-8 col-md-offset-2 wow "
+                                 style="visibility: hidden; animation-name: none;">
 
-                            <!-- Chefs List -->
-                            <div class="row text-center">
-                                <!-- Img 01 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <md-card ng-click="showTabDialog($event, dish1.name, dish1.price)">
-                                        <img src="{[{ dish1.img[0].data }]}" class="md-card-image card_image_bestseller" alt="">
-                                        <md-card-title>
-                                            <md-card-title-text>
-                                                <span class="md-headline card_title">{[{ dish1.name }]}</span>
-                                            </md-card-title-text>
-                                        </md-card-title>
-
-                                        <md-card-content>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <!--typeveg symbol-->
-                                                    <img src="{[{ dish1_typeveg }]}" style="height: 30px; ">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <img src="{[{ dish1_typedairy }]}" style="height: 30px; ">
-                                                </div>
-                                            </div>
-                                            <div class="row">&nbsp;</div>
-
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <uib-rating ng-model="dish1.rating" max="max"
-                                                                read-only="isReadonly_rating"></uib-rating>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <i class='material-icons gray123'>euro_symbol</i>
-                                                    <b style="color: slategray;">{[{ dish1.price |
-                                                        number:2 }]}</b>
-                                                </div>
-                                            </div>
-                                        </md-card-content>
-                                    </md-card>
-                                </div>
-                                <!-- /.Img 01 -->
-                                <!-- Img 02 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <md-card ng-click="showTabDialog($event, dish2.name, dish2.price)">
-                                        <img src="{[{ dish2.img[0].data }]}" class="md-card-image card_image_bestseller" alt="">
-                                        <md-card-title>
-                                            <md-card-title-text>
-                                                <span class="md-headline card_title">{[{ dish2.name }]}</span>
-                                            </md-card-title-text>
-                                        </md-card-title>
-
-                                        <md-card-content>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <!--typeveg symbol-->
-                                                    <img src="{[{ dish2_typeveg }]}"  style="height: 30px; ">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <img src="{[{ dish2_typedairy }]}" style="height: 30px; ">
-                                                </div>
-                                            </div>
-                                            <div class="row">&nbsp;</div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <uib-rating ng-model="dish2.rating" max="max"
-                                                                read-only="isReadonly_rating"></uib-rating>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <i class='material-icons gray123'>euro_symbol</i>
-                                                    <b style="color: slategray;">{[{ dish2.price |
-                                                        number:2 }]}</b>
-                                                </div>
-                                            </div>
-                                        </md-card-content>
-                                    </md-card>
-                                </div>
-                                <!-- /.Chef 02 -->
-                                <!-- Chef 03 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <md-card ng-click="showTabDialog($event, dish3.name, dish3.price)">
-                                        <img src="{[{ dish3.img[0].data }]}" class="md-card-image card_image_bestseller" alt="">
-                                        <md-card-title>
-                                            <md-card-title-text>
-                                                <span class="md-headline card_title card_title">{[{ dish3.name }]}</span>
-                                            </md-card-title-text>
-                                        </md-card-title>
-
-                                        <md-card-content>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <!--typeveg symbol-->
-                                                    <img src="{[{ dish3_typeveg }]}" style="height: 30px; ">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <img src="{[{ dish3_typedairy }]}" style="height: 30px; ">
-                                                </div>
-                                            </div>
-                                            <div class="row">&nbsp;</div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <uib-rating ng-model="dish3.rating" max="max"
-                                                                read-only="isReadonly_rating"></uib-rating>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <i class='material-icons gray123'>euro_symbol</i>
-                                                    <b style="color: slategray;">{[{ dish3.price |
-                                                        number:2 }]}</b>
-                                                </div>
-                                            </div>
-                                        </md-card-content>
-                                    </md-card>
-                                </div>
-                                <!-- /.Chef 03 -->
-                                <!-- Img 04 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <md-card ng-click="showTabDialog($event, dish4.name, dish4.price)">
-                                        <img src="{[{ dish4.img[0].data }]}" class="md-card-image card_image_bestseller" alt="">
-                                        <md-card-title>
-                                            <md-card-title-text>
-                                                <span class="md-headline card_title">{[{ dish4.name }]}</span>
-                                            </md-card-title-text>
-                                        </md-card-title>
-
-                                        <md-card-content>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <!--typeveg symbol-->
-                                                    <img src="{[{ dish4_typeveg }]}" style="height: 30px; ">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <img src="{[{ dish4_typedairy }]}" style="height: 30px; ">
-                                                </div>
-                                            </div>
-                                            <div class="row">&nbsp;</div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <uib-rating ng-model="dish4.rating" max="max"
-                                                                read-only="isReadonly_rating"></uib-rating>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <i class='material-icons gray123'>euro_symbol</i>
-                                                    <b style="color: slategray;">{[{ dish4.price |
-                                                        number:2 }]}</b>
-                                                </div>
-                                            </div>
-                                        </md-card-content>
-                                    </md-card>
-                                </div>
-                                <!-- /.Chef 03 -->
+                                <!--<h2>Our Chefs</h2>-->
+                                <!--<p class="lead">Appetizer</p>-->
                             </div>
-                            <!-- Chefs List -->
                         </div>
-                        <!-- /.container -->
-                    </section>
-                    <!-- /.Chefs -->
-                    <!-- Chefs -->
-                    <section id="chefs" class="reducePadding">
-                        <div class="container">
-                            <!-- Title & Divider -->
-                            <div class="row">
-                                <h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for you</h2>
-                                <div class="col-md-8 col-md-offset-2 wow "
-                                     style="visibility: hidden; animation-name: none;">
-                                    <!--<h2>Best for you</h2>-->
-                                    <!--<p class="lead">Best for you</p>-->
-                                </div>
-                            </div>
-                            <!--<div class="mrgn-50-top-btm text-center"><img
-                                        src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"
-                                        alt=""></div>-->
-                            <!-- /.Title & Divider -->
 
-                            <!-- Chefs List -->
-                            <div class="row text-center">
-                                <!-- Chef 01 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <img
-                                            src="newTemplate/img/chef1.jpg"
-                                            class="img-responsive center-block chefitem" width="350" height="350"
-                                            alt="">
-                                    <h3>Mark Robert</h3>
-                                    <p class="text-muted">Recipe Inventor</p>
-                                    <p class="mrgn-20-top">Mark is a brilliant dish-designer who believes in creating a
-                                        whole new food
-                                        world
-                                    <p>
+                        <!-- Appetizer List -->
+                        <!--<div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="a in appetizer"><img ng-src="{[{ a.img[0].data }]}" class="img_slide">
                                 </div>
-                                <!-- /.Chef 01 -->
-                                <!-- Chef 02 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <img
-                                            src="newTemplate/img/chef2.jpg"
-                                            class="img-responsive center-block chefitem" width="350" height="350"
-                                            alt="">
-                                    <h3>Alonzo Xavier</h3>
-                                    <p class="text-muted">Chef</p>
-                                    <p class="mrgn-20-top">Alonzo has been in food industry for more than years. His
-                                        experiences will
-                                        never
-                                        stop to enlighten you</p>
-                                </div>
-                                <!-- /.Chef 02 -->
-                                <!-- Chef 03 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <img
-                                            src="newTemplate/img/chef3.jpg"
-                                            class="img-responsive center-block chefitem" width="350" height="350"
-                                            alt="">
-                                    <h3>Les Leo Terrance</h3>
-                                    <p class="text-muted">Sous-Chef</p>
-                                    <p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out
-                                        awesome tastes.</p>
-                                </div>
-                                <!-- /.Chef 03 -->
-                                <!-- Chef 03 -->
-                                <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
-                                    <img
-                                            src="newTemplate/img/chef3.jpg"
-                                            class="img-responsive center-block chefitem" width="350" height="350"
-                                            alt="">
-                                    <h3>Les Leo Terrance</h3>
-                                    <p class="text-muted">Sous-Chef</p>
-                                    <p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out
-                                        awesome tastes.</p>
-                                </div>
-                                <!-- /.Chef 03 -->
                             </div>
-                            <!-- Chefs List -->
+                        </div>-->
+                        <!-- Appetizer List -->
+
+                        <!-- Test Appetizer card box-->
+                        <div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="a in appetizer">
+                                    <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
+                                        <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline card_title">{[{ a.name }]}</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+
+                                        <md-card-content>
+                                            <div class="row">
+                                                <div class="col-sm-6" align="center">
+                                                    <!--typeveg symbol-->
+                                                    <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg"
+                                                         style="height: 30px; ">
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg"
+                                                         style="height: 30px; ">
+                                                </div>
+
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6" align="center">
+                                                    <uib-rating ng-model="a.rating" max="max"
+                                                                read-only="isReadonly_rating"></uib-rating>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <i class='material-icons gray123'>euro_symbol</i>
+                                                    <b style="color: slategray;">{[{ a.price |
+                                                        number:2 }]}</b>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+                            </div>
                         </div>
-                        <!-- /.container -->
-                    </section>
-                    <!-- /.Chefs -->
+                        <!-- End Test Appetizer card box -->
 
-                    <!-- Dishes -->
-                    <section id="chefs" class="reducePadding">
-                        <div class="container">
-                            <!-- Title & Divider -->
-                            <div class="row">
-                                <h2>&nbsp;&nbsp;&nbsp;&nbsp;Appetizer</h2>
-                                <!--<h2>&nbsp;&nbsp;&nbsp;&nbsp;Appetizer</h2>-->
-                                <div class="col-md-8 col-md-offset-2 wow "
-                                     style="visibility: hidden; animation-name: none;">
+                        <div class="row">
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Main Dish</h2>
+                            <div class="col-md-8 col-md-offset-2 wow "
+                                 style="visibility: hidden; animation-name: none;">
+                                <!--<h2>Our Chefs</h2>-->
 
-                                    <!--<h2>Our Chefs</h2>-->
-                                    <!--<p class="lead">Appetizer</p>-->
-                                </div>
+                                <!--<p class="lead">Main Dish</p>-->
                             </div>
-
-                            <!-- Appetizer List -->
-                            <!--<div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="a in appetizer"><img ng-src="{[{ a.img[0].data }]}" class="img_slide">
-                                    </div>
-                                </div>
-                            </div>-->
-                            <!-- Appetizer List -->
-
-                            <!-- Test Appetizer card box-->
-                            <div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="a in appetizer">
-                                        <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
-                                            <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
-                                            <md-card-title>
-                                                <md-card-title-text>
-                                                    <span class="md-headline card_title">{[{ a.name }]}</span>
-                                                </md-card-title-text>
-                                            </md-card-title>
-
-                                            <md-card-content>
-                                                <div class="row">
-                                                    <div class="col-sm-6" align="center">
-                                                        <!--typeveg symbol-->
-                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
-
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">&nbsp;</div>
-                                                <div class="row">
-                                                    <div class="col-sm-6" align="center">
-                                                        <uib-rating ng-model="a.rating" max="max"
-                                                                    read-only="isReadonly_rating"></uib-rating>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <i class='material-icons gray123'>euro_symbol</i>
-                                                        <b style="color: slategray;">{[{ a.price |
-                                                            number:2 }]}</b>
-                                                    </div>
-                                                </div>
-                                            </md-card-content>
-                                        </md-card>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Test Appetizer card box -->
-
-                            <div class="row">
-                                <h2>&nbsp;&nbsp;&nbsp;&nbsp;Main Dish</h2>
-                                <div class="col-md-8 col-md-offset-2 wow "
-                                     style="visibility: hidden; animation-name: none;">
-                                    <!--<h2>Our Chefs</h2>-->
-
-                                    <!--<p class="lead">Main Dish</p>-->
-                                </div>
-                            </div>
-
-                            <!-- Main Dish List -->
-                            <!--<div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="mD in mainDish"><img ng-src="{[{ mD.img[0].data }]}"
-                                                                                       class="img_slide"></div>
-                                </div>
-                            </div>-->
-
-                            <!-- Main Dish card box-->
-                            <div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="a in mainDish">
-                                        <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
-                                            <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
-                                            <md-card-title>
-                                                <md-card-title-text>
-                                                    <span class="md-headline card_title">{[{ a.name }]}</span>
-                                                </md-card-title-text>
-                                            </md-card-title>
-
-                                            <md-card-content>
-                                                <div class="row">
-                                                    <div class="col-sm-6" align="center">
-                                                        <!--typeveg symbol-->
-                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
-
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">&nbsp;</div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <uib-rating ng-model="a.rating" max="max"
-                                                                    read-only="isReadonly_rating"></uib-rating>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
-                                                            number:2 }]}</b>
-                                                    </div>
-                                                </div>
-                                            </md-card-content>
-                                        </md-card>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Main Dish card box -->
-                            <!-- Main Dish List -->
-
-                            <div class="row">
-                                <h2>&nbsp;&nbsp;&nbsp;&nbsp;Dessert</h2>
-                                <div class="col-md-8 col-md-offset-2 text-center wow "
-                                     style="visibility: hidden; animation-name: none;">
-                                    <!--<h2>Our Chefs</h2>-->
-                                    <!--<p class="lead"></p>-->
-                                </div>
-                            </div>
-
-                            <!-- Dessert List -->
-                            <!--<div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="d in dessert"><img ng-src="{[{ d.img[0].data }]}" class="img_slide">
-                                    </div>
-                                </div>
-                            </div>-->
-                            <!-- Dessert List -->
-
-                            <!-- Dessert card box-->
-                            <div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="a in dessert">
-                                        <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
-                                            <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
-                                            <md-card-title>
-                                                <md-card-title-text>
-                                                    <span class="md-headline card_title">{[{ a.name }]}</span>
-                                                </md-card-title-text>
-                                            </md-card-title>
-
-                                            <md-card-content>
-                                                <div class="row">
-                                                    <div class="col-sm-6" align="center">
-                                                        <!--typeveg symbol-->
-                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
-
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">&nbsp;</div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <uib-rating ng-model="a.rating" max="max"
-                                                                    read-only="isReadonly_rating"></uib-rating>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
-                                                            number:2 }]}</b>
-                                                    </div>
-                                                </div>
-                                            </md-card-content>
-                                        </md-card>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Dessert card box -->
-
-                            <div class="row">
-                                <h2>&nbsp;&nbsp;&nbsp;&nbsp;Soup</h2>
-                                <div class="col-md-8 col-md-offset-2 text-center wow "
-                                     style="visibility: hidden; animation-name: none;">
-                                    <!--<h2>Our Chefs</h2>-->
-                                    <!--<p class="lead">Soup</p>-->
-                                </div>
-                            </div>
-
-                            <!-- Soup List -->
-                            <!--<div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="so in soup"><img ng-src="{[{ so.img[0].data }]}" class="img_slide">
-                                    </div>
-                                </div>
-                            </div>-->
-                            <!-- Soup List -->
-
-                            <!-- Soup card box-->
-                            <div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="a in soup">
-                                        <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
-                                            <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
-                                            <md-card-title>
-                                                <md-card-title-text>
-                                                    <span class="md-headline card_title">{[{ a.name }]}</span>
-                                                </md-card-title-text>
-                                            </md-card-title>
-
-                                            <md-card-content>
-                                                <div class="row">
-                                                    <div class="col-sm-6" align="center">
-                                                        <!--typeveg symbol-->
-                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
-
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">&nbsp;</div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <uib-rating ng-model="a.rating" max="max"
-                                                                    read-only="isReadonly_rating"></uib-rating>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
-                                                            number:2 }]}</b>
-                                                    </div>
-                                                </div>
-                                            </md-card-content>
-                                        </md-card>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Soup card box -->
-
-                            <div class="row">
-                                <h2>&nbsp;&nbsp;&nbsp;&nbsp;Salad</h2>
-                                <div class="col-md-8 col-md-offset-2 text-center wow "
-                                     style="visibility: hidden; animation-name: none;">
-                                    <!--<h2>Our Chefs</h2>-->
-                                    <!--<p class="lead">Salad</p>-->
-                                </div>
-                            </div>
-
-                            <!-- Salad List -->
-                            <!--<div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="sa in salad"><img ng-src="{[{ sa.img[0].data }]}" class="img_slide">
-                                    </div>
-                                </div>
-                            </div>-->
-                            <!-- Salad List -->
-
-                            <!-- salad card box-->
-                            <div class="row text-center">
-                                <div class="bxslider">
-                                    <div class="slide" ng-repeat="a in salad">
-                                        <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
-                                            <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
-                                            <md-card-title>
-                                                <md-card-title-text>
-                                                    <span class="md-headline card_title">{[{ a.name }]}</span>
-                                                </md-card-title-text>
-                                            </md-card-title>
-
-                                            <md-card-content>
-                                                <div class="row">
-                                                    <div class="col-sm-6" align="center">
-                                                        <!--typeveg symbol-->
-                                                        <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg" style="height: 30px; ">
-
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg" style="height: 30px; ">
-                                                        <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg" style="height: 30px; ">
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">&nbsp;</div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <uib-rating ng-model="a.rating" max="max"
-                                                                    read-only="isReadonly_rating"></uib-rating>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
-                                                            number:2 }]}</b>
-                                                    </div>
-                                                </div>
-                                            </md-card-content>
-                                        </md-card>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- salad card box -->
-
                         </div>
-                        <!-- /.container -->
-                    </section>
-                    <!-- /.Dishes -->
-                </div>
-                <!--End Main data-->
+
+                        <!-- Main Dish List -->
+                        <!--<div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="mD in mainDish"><img ng-src="{[{ mD.img[0].data }]}"
+                                                                                   class="img_slide"></div>
+                            </div>
+                        </div>-->
+
+                        <!-- Main Dish card box-->
+                        <div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="a in mainDish">
+                                    <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
+                                        <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline card_title">{[{ a.name }]}</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+
+                                        <md-card-content>
+                                            <div class="row">
+                                                <div class="col-sm-6" align="center">
+                                                    <!--typeveg symbol-->
+                                                    <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg"
+                                                         style="height: 30px; ">
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg"
+                                                         style="height: 30px; ">
+                                                </div>
+
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <uib-rating ng-model="a.rating" max="max"
+                                                                read-only="isReadonly_rating"></uib-rating>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
+                                                        number:2 }]}</b>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Main Dish card box -->
+                        <!-- Main Dish List -->
+
+                        <div class="row">
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Dessert</h2>
+                            <div class="col-md-8 col-md-offset-2 text-center wow "
+                                 style="visibility: hidden; animation-name: none;">
+                                <!--<h2>Our Chefs</h2>-->
+                                <!--<p class="lead"></p>-->
+                            </div>
+                        </div>
+
+                        <!-- Dessert List -->
+                        <!--<div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="d in dessert"><img ng-src="{[{ d.img[0].data }]}" class="img_slide">
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- Dessert List -->
+
+                        <!-- Dessert card box-->
+                        <div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="a in dessert">
+                                    <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
+                                        <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline card_title">{[{ a.name }]}</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+
+                                        <md-card-content>
+                                            <div class="row">
+                                                <div class="col-sm-6" align="center">
+                                                    <!--typeveg symbol-->
+                                                    <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg"
+                                                         style="height: 30px; ">
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg"
+                                                         style="height: 30px; ">
+                                                </div>
+
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <uib-rating ng-model="a.rating" max="max"
+                                                                read-only="isReadonly_rating"></uib-rating>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
+                                                        number:2 }]}</b>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Dessert card box -->
+
+                        <div class="row">
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Soup</h2>
+                            <div class="col-md-8 col-md-offset-2 text-center wow "
+                                 style="visibility: hidden; animation-name: none;">
+                                <!--<h2>Our Chefs</h2>-->
+                                <!--<p class="lead">Soup</p>-->
+                            </div>
+                        </div>
+
+                        <!-- Soup List -->
+                        <!--<div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="so in soup"><img ng-src="{[{ so.img[0].data }]}" class="img_slide">
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- Soup List -->
+
+                        <!-- Soup card box-->
+                        <div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="a in soup">
+                                    <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
+                                        <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline card_title">{[{ a.name }]}</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+
+                                        <md-card-content>
+                                            <div class="row">
+                                                <div class="col-sm-6" align="center">
+                                                    <!--typeveg symbol-->
+                                                    <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg"
+                                                         style="height: 30px; ">
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg"
+                                                         style="height: 30px; ">
+                                                </div>
+
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <uib-rating ng-model="a.rating" max="max"
+                                                                read-only="isReadonly_rating"></uib-rating>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
+                                                        number:2 }]}</b>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Soup card box -->
+
+                        <div class="row">
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Salad</h2>
+                            <div class="col-md-8 col-md-offset-2 text-center wow "
+                                 style="visibility: hidden; animation-name: none;">
+                                <!--<h2>Our Chefs</h2>-->
+                                <!--<p class="lead">Salad</p>-->
+                            </div>
+                        </div>
+
+                        <!-- Salad List -->
+                        <!--<div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="sa in salad"><img ng-src="{[{ sa.img[0].data }]}" class="img_slide">
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- Salad List -->
+
+                        <!-- salad card box-->
+                        <div class="row text-center">
+                            <div class="bxslider">
+                                <div class="slide" ng-repeat="a in salad">
+                                    <md-card ng-click="showTabDialog($event, a.name, a.price)" style="height: auto">
+                                        <img src="{[{ a.img[0].data }]}" class="md-card-image card_image" alt="">
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline card_title">{[{ a.name }]}</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+
+                                        <md-card-content>
+                                            <div class="row">
+                                                <div class="col-sm-6" align="center">
+                                                    <!--typeveg symbol-->
+                                                    <img ng-if="a.typeveg == 'veg'" src="newTemplate/svg/salad.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'pork'" src="newTemplate/svg/pig.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typeveg == 'meat'" src="newTemplate/svg/steak.svg"
+                                                         style="height: 30px; ">
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img ng-if="a.typedairy == 'dairy'" src="newTemplate/svg/milk.svg"
+                                                         style="height: 30px; ">
+                                                    <img ng-if="a.typedairy == 'no'" src="newTemplate/svg/milk_no.svg"
+                                                         style="height: 30px; ">
+                                                </div>
+
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <uib-rating ng-model="a.rating" max="max"
+                                                                read-only="isReadonly_rating"></uib-rating>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <i class='material-icons'>euro_symbol</i><b>{[{ a.price |
+                                                        number:2 }]}</b>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- salad card box -->
+
+                    </div>
+                    <!-- /.container -->
+                </section>
+                <!-- /.Dishes -->
+            </div>
+            <!--End Main data-->
 
 
             <!--</div>-->
@@ -1661,9 +1892,6 @@
                 <!-- /.Copyright -->
             </div>
         </div>
-
-
-
 
 
         <!-- Title & Divider -->
@@ -1763,20 +1991,9 @@
 <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
 <link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
 
-<!-- Angular Slider-->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
-<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
 
 <script type="text/javascript" src="bower_components/material-calendar/angular-material-calendar.js"></script>
 <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
-
-<!--&lt;!&ndash;The new slider&ndash;&gt;-->
-<!--<link href="bower_components/ionRangeslider/css/normalize.css" rel="stylesheet" type="text/css">-->
-<!--<link href="bower_components/ionRangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css">-->
-<!--<link href="bower_components/ionRangeslider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet" type="text/css">-->
-<!--<script src="bower_components/ionRangeslider/js/ion.rangeSlider.js"></script>-->
 
 
 </body>

@@ -129,8 +129,13 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
         //Set Price Ratio of Dishes
         var ratio = 0;
         for(var i=0 ; i< $scope.dishes.length; i++){
-            ratio = ($scope.dishes[i].price / $scope.dishes[i].amount)*1.00;
-            $scope.dishes[i]["ratio"] = ratio
+
+            if($scope.dishes[i].amount == 0){
+                $scope.dishes.splice(i,1)
+            }else{
+                ratio = ($scope.dishes[i].price / $scope.dishes[i].amount)*1.00;
+                $scope.dishes[i]["ratio"] = ratio
+            }
         }
         console.log("Scope Dishes");
         console.log($scope.dishes);
@@ -140,8 +145,13 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
         var ratio = 0;
 
         for(var i=0 ; i< $scope.ingredients.length; i++){
-            ratio = ($scope.ingredients[i].price / $scope.ingredients[i].amount)*1.00;
-            $scope.ingredients[i]["ratio"] = ratio
+            if($scope.ingredients[i].amount == 0){
+                $scope.ingredients.splice(i,1)
+            }else{
+                ratio = ($scope.ingredients[i].price / $scope.ingredients[i].amount)*1.00;
+                $scope.ingredients[i]["ratio"] = ratio
+            }
+
         }
         console.log("Scope Ingredients");
         console.log($scope.ingredients);

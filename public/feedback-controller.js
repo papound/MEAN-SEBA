@@ -90,7 +90,7 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData) 
         console.log(feedback);
         for(var i = 0;i<feedback.length;i++){
             console.log(i+ " " +feedback[i].type);
-            if(feedback[i].type=="Main Dish" || feedback[i].type=="main dish"){
+            if(feedback[i].type=="Main Dish" || feedback[i].type=="Main dish" || feedback[i].type=="main dish"){
                 $scope.mainDish.push(feedback[i]);
             }else if(feedback[i].type=="Dessert" || feedback[i].type=="dessert"){
                 $scope.dessert.push(feedback[i]);

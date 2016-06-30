@@ -35,7 +35,7 @@
 })();
 //End Test UploadPic
 
-var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'rzModule']);
+var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'ion.rangeslider']);
 
 var url = "http://localhost:4000";
 
@@ -59,6 +59,17 @@ app2.factory('getUserData', ['$http', function ($http) {
         window.location.href = "http://localhost:4000/"
     }
     return $http.post(url + "/list/user", {email: this_email})
+        .then(function (response) {
+            //console.log(response.data);
+            return response.data;
+        });
+}]);
+
+
+// get ingredient
+app2.factory('getIngredient', ['$http', function ($http) {
+
+    return $http.get(url + "/list/ingredient")
         .then(function (response) {
             //console.log(response.data);
             return response.data;
@@ -354,30 +365,30 @@ app2.factory('getUserData', ['$http', function ($http) {
         }
     });
 
-    app2.controller('DragDropCtrl', function ($scope) {
-
-    });
+    // app2.controller('DragDropCtrl', function ($scope) {
+    //
+    // });
 
 })();
 //end test drag&drop
 
 //Test Calendar
-app2.controller("calendarCtrl", function($scope, $filter) {
+app2.controller("calendarCtrl", function ($scope, $filter) {
     $scope.selectedDate = null;
     $scope.firstDayOfWeek = 0;
-    $scope.setDirection = function(direction) {
+    $scope.setDirection = function (direction) {
         $scope.direction = direction;
     };
-    $scope.dayClick = function(date) {
+    $scope.dayClick = function (date) {
         $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
     };
-    $scope.prevMonth = function(data) {
+    $scope.prevMonth = function (data) {
         $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
     };
-    $scope.nextMonth = function(data) {
+    $scope.nextMonth = function (data) {
         $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
     };
-    $scope.setDayContent = function(date) {
+    $scope.setDayContent = function (date) {
         // You would inject any HTML you wanted for
         // that particular date here.
         return "<p></p>";
@@ -385,7 +396,7 @@ app2.controller("calendarCtrl", function($scope, $filter) {
 });
 //End Test Calendar
 
-app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope, getUserData, $http, $rootScope, $timeout, $modal) {
+app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', function ($scope, getIngredient, getUserData, $http, $rootScope, $timeout, $modal) {
     $scope.formStatus = true; //comment out after testing
 
     //pre-define user's variables
@@ -404,11 +415,21 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         halal: false,
         height: '',
         weight: '',
-        profilePicture: null
+        profilePicture: null,
+        healthCond: null,
+        noIngredient: null,
+        tastePreference: null,
+        sweet: "",
+        sour: "",
+        bitter: "",
+        spicy: "",
+        salty: ""
+
     };
 
     $scope.imageurl = "";
     $scope.imageurl_bak = "";
+
 
     //this will call factory
     getUserData.then(function (user) {
@@ -432,110 +453,90 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         $scope.imageurl_bak = user[0].imageurl;
         if (user[0].profilePicture.data != null) {
             $scope.imageurl = user[0].profilePicture.data;
-        } else if( user[0].imageurl != null){
+        } else if (user[0].imageurl != null) {
             $scope.imageurl = user[0].imageurl;
             $scope.imageurl_bak = user[0].imageurl;
             //console.log($scope.imageurl_bak)
-        }else{
+        } else {
             $scope.imageurl = localStorage.loginChefAtHomeimage
         }
         $scope.user.vegetarian = user[0].vegetarian;
         $scope.user.halal = user[0].halal;
+        if (user[0].healthCond = null) {
+            $scope.user.healthCond = [];
+        } else {
+            $scope.user.healthCond = user[0].healthCond
+        }
+
+        if (user[0].noIngredient = null) {
+            $scope.user.noIngredient = [];
+        } else {
+            $scope.user.noIngredient = user[0].noIngredient;
+            console.log('noIngredient' + user[0].noIngredient)
+        }
+
         $scope.myDate = new Date();
         //$scope.myDate = user[0].birthdate;
         $scope.myDate = new Date(user[0].birthdate);
+
+        $scope.user.sweet = user[0].tastePreference[0];
+        $scope.user.sour = user[0].tastePreference[1];
+        $scope.user.bitter = user[0].tastePreference[2];
+        $scope.user.spicy = user[0].tastePreference[3];
+        $scope.user.salty = user[0].tastePreference[4];
+
+
     });
-
-    //Birthdate
-
-    //$scope.myDate = new Date();
-
-    //End Birthdate
-
-    //Title
-
-    /*    $scope.titles = ('Mr. ' +
-     'Mrs. Miss ').split(' ').map(function (title) {
-     return {abbrev: title};
-     });*/
-
-    //End Title
 
     //Slider
 
-    var vm = this;
-    //Minimal slider config
-    $scope.minSlider = {
-        value: 10
-    };
     //Slider config with custom display function
     $scope.calories = {
-        // minValue: 2100,
-        // maxValue: 2900,
-        options: {
-            ceil: 4000,
-            floor: 0,
-            translate: function (value) {
-                return value;
-            }
+        ceil: 4000,
+        floor: 0,
+        translate: function (value) {
+            return value;
         }
     };
 
     $scope.proteins = {
-        // minValue: 40,
-        // maxValue: 70,
-        options: {
-            ceil: 200,
-            floor: 0,
-            translate: function (value) {
-                return value;
-            }
+        ceil: 200,
+        floor: 0,
+        translate: function (value) {
+            return value;
         }
     };
 
     $scope.carb = {
-        // minValue: 250,
-        // maxValue: 450,
-        options: {
-            ceil: 1000,
-            floor: 0,
-            translate: function (value) {
-                return value;
-            }
+        ceil: 1000,
+        floor: 0,
+        translate: function (value) {
+            return value;
         }
     };
 
     $scope.fats = {
-        // minValue: 60,
-        // maxValue: 70,
-        options: {
-            ceil: 100,
-            floor: 0,
-            translate: function (value) {
-                return value;
-            }
+        ceil: 100,
+        floor: 0,
+        translate: function (value) {
+            return value;
         }
     };
 
     $scope.cholesterols = {
-        // minValue: 50,
-        // maxValue: 80,
-        options: {
-            ceil: 300,
-            floor: 0,
-            translate: function (value) {
-                return value;
-            }
+        ceil: 300,
+        floor: 0,
+        translate: function (value) {
+            return value;
         }
     };
 
     getUserData.then(function (user) {
         $scope.name = user;
-        //$scope.imageurl = user[0].imageurl;
-        //console.log(user[0].imageurl)
         var nutrition_range = user[0].nutritionRange;
         $scope.calories.minValue = nutrition_range[0].minValue;
         $scope.calories.maxValue = nutrition_range[0].maxValue;
+        console.log($scope.calories.maxValue)
         $scope.proteins.minValue = nutrition_range[1].minValue;
         $scope.proteins.maxValue = nutrition_range[1].maxValue;
         $scope.carb.minValue = nutrition_range[2].minValue;
@@ -547,7 +548,12 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
 
     });
 
+
     //End Slider
+
+    $scope.model = {
+        type: "double"
+    }
 
     //Nutritions
 
@@ -650,65 +656,23 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
     };
 
     //NoPrefs
+    //Get ingredient from DB
+    $scope.notprefs = [];
 
-    $scope.notprefs = [{
-        category: 'dairyprod',
-        name: 'Cheese'
-    }, {
-        category: 'dairyprod',
-        name: 'Yoghurt'
-    }, {
-        category: 'dairyprod',
-        name: 'Butter'
-    }, {
-        category: 'dairyprod',
-        name: 'Milk'
-    }, {
-        category: 'dairyprod',
-        name: 'Custard'
-    }, {
-        category: 'dairyprod',
-        name: 'Magarine'
-    }, {
-        category: 'dairyprod',
-        name: 'Cream'
-    }, {
-        category: 'dairyprod',
-        name: 'Ice cream'
-    }, {
-        category: 'dairyprod',
-        name: 'Egg'
-    }, {
-        category: 'seafood',
-        name: 'Shrimp'
-    }, {
-        category: 'seafood',
-        name: 'Crab'
-    }, {
-        category: 'seafood',
-        name: 'Lobster'
-    }, {
-        category: 'seafood',
-        name: 'Fish'
-    }, {
-        category: 'seafood',
-        name: 'Oyster'
-    }, {
-        category: 'seafood',
-        name: 'Clam'
-    }, {
-        category: 'seafood',
-        name: 'Squid'
-    }, {
-        category: 'seafood',
-        name: 'Shrimp'
-    }, {
-        category: 'seafood',
-        name: 'Octopus'
-    }, {
-        category: 'seafood',
-        name: 'Scallop'
-    }];
+    getIngredient.then(function (ingredient) {
+
+        for (var i = 0; i < ingredient.length; i++) {
+            var notprefs_obj = {
+                category: ingredient[i].type,
+                name: ingredient[i].name
+            };
+
+            $scope.notprefs.push(notprefs_obj);
+        }
+
+
+    });
+
     $scope.selectedNotPref = [];
     $scope.printSelectedNotPrefs = function printSelectedNotPrefs() {
         var numberOfSelectedNotPrefs = this.selectedNotPref.length;
@@ -787,12 +751,12 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
         var birthdate = $scope.myDate.toISOString();
         var valid_date = $scope.user.validityDate.toISOString();
 
-        if($scope.user.profilePicture.lastModified != null){
+        if ($scope.user.profilePicture.lastModified != null) {
             console.log("data 6 elements");
             $scope.user.profilePicture = $scope.user.profilePicture.data;
             console.log("changed to data 2 elements");
             //console.log(JSON.stringify($scope.user.profilePicture))
-        }else{
+        } else {
             console.log("data 2 elements");
         }
         return $http.post(url + "/api/update/profile", {
@@ -840,6 +804,15 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', '$http', function ($scope,
                     minValue: $scope.cholesterols.minValue,
                     maxValue: $scope.cholesterols.maxValue
                 }
+            ],
+            healthCond: $scope.user.healthCond,
+            noIngredient: $scope.user.noIngredient,
+            tastePreference: [
+                $scope.user.sweet,
+                $scope.user.sour,
+                $scope.user.bitter,
+                $scope.user.spicy,
+                $scope.user.salty
             ]
 
         }).then(function (response) {

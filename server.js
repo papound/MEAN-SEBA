@@ -46,6 +46,7 @@ var db_model = mongoose.model('Taste', new mongoose.Schema({name: String}), 'tas
 //var user_model = mongoose.model('User1', new mongoose.Schema({ firstname: String }),'user');
 var db_order = mongoose.model('Order1', new mongoose.Schema({customer: String}), 'order'); //table order
 var db_dish = mongoose.model('Dish1', new mongoose.Schema({name: String}), 'dish'); //update dish collection
+var db_ingredient = mongoose.model('Ingredient', new mongoose.Schema({name: String}), 'ingredient'); //update ingredient collection
 
 app.get("/list/database", function (req, res) {
     // Locate all the entries using find
@@ -65,6 +66,18 @@ app.get("/list/user", function (req, res) {
         //db.close();
     });
 })
+
+app.get("/list/ingredient", function (req, res) {
+    // Locate all the entries using find
+    //var req_email = req.body.email;
+    db_ingredient.find(function (err, results) {
+        //Getting Results
+        res.send(results);
+        // Close the db
+        //db.close();
+    });
+})
+
 
 app.post("/add", function (req, res) {
     var taste = db.collection('taste');
@@ -372,6 +385,15 @@ apiRoutes.post('/update/profile', function (req, res) {
                     minValue: req.body.nutritionRange[4].minValue,
                     maxValue: req.body.nutritionRange[4].maxValue
                 }
+            ],
+            healthCond: req.body.healthCond,
+            noIngredient: req.body.noIngredient,
+            tastePreference: [
+                req.body.tastePreference[0],
+                req.body.tastePreference[1],
+                req.body.tastePreference[2],
+                req.body.tastePreference[3],
+                req.body.tastePreference[4]
             ]
         }
     }, function (err) {
