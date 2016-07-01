@@ -527,7 +527,7 @@
 
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body data-gr-c-s-loaded="true" id="all_modules">
 
 <script>
     $(document).ready(function () {
@@ -564,7 +564,7 @@
 //                adaptiveHeight: true
             });
 
-        }, 2000);
+        }, 3000);
 
     });
 </script>
@@ -583,7 +583,7 @@
                             <ul class="nav navbar-nav pull-left">
                                 <li><a href="http://localhost:4000"
                                        class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                                <li><a href="#menu" class="menubar">Menu</a></li>
+                                <li><a href="#" class="menubar">Menu</a></li>
 
                             </ul>
                         </div>
@@ -598,9 +598,9 @@
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-right">
 
-                                <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="http://localhost:4000/order" class="menubar">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
-                                <li><a href="#ingredient" class="menubar">Ingredient</a></li>
+                                <li><a href="http://localhost:4000/feedback" class="menubar">Feedback</a></li>
 
                             </ul>
 
@@ -614,7 +614,7 @@
                         <div class="col-sm-12">
                             <ul class="nav navbar-nav">
                                 <li><a href="#" class="menubar fixed-right" data-dialog="dialog" id="login"
-                                       onclick="clickHandler(e)">Login</a></li>
+                                       onclick="loginPopup()">Login</a></li>
                                 <li>
                                     <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
                                 </li>
@@ -652,6 +652,23 @@
                     <a href="#">Not a member? Please Register Here!</a>
                     <br><br>
                 </paper-dialog>
+
+                <!--After Login-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="afterLogin" class="size-position">
+                        <!--<h2>Welcome! {[{ firstname }]}</h2>-->
+                        <!--<br><br>-->
+                        <div class="col-sm-6 col-centered">
+                            <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
+                            </md-button>
+                        </div>
+                        <div class="col-sm-6 col-centered">
+                            <md-button class="md-warn" ng-click="signout()">Sign Out
+                            </md-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
             </div>
             <!-- /.row -->
         </div>
@@ -704,9 +721,9 @@
 <!-- /. Menu Header -->
 
 <!-- Full Menu List -->
-<section id="menu-list">
+<section id="menu-list" style="background: #f9f7f3 url(http://bella.designershare.net/assets/bella-firenze/images/backgrounds/bf-events-bg.jpg);">
     <div class="container">
-        <div id="all_modules" layout="column" ng-cloak class="md-inline-form">
+        <div layout="column" ng-cloak class="md-inline-form">
             <!--<md-content flex="" layout-padding="">-->
             <div ng-controller="AppCtrl">
                 <div>
@@ -739,12 +756,12 @@
                     <md-sidenav class="md-sidenav-left md-whiteframe-4dp" style="margin-top: 10px; position: fixed; top: 10%;  "
                                 md-component-id="left">
                         <md-toolbar style="background: #bda881;">
-                            <h1 class="md-toolbar-tools">Search Dish/ Ingredients</h1>
+                            <h1 class="md-toolbar-tools">Search Dish</h1>
                         </md-toolbar>
                         <md-content layout-padding="" ng-controller="LeftCtrl" style="position: relative; overflow:scroll;">
                             <div class="tabsdemoDynamicHeight">
                                 <form class="ui form animated fadeInUp" ng-model="newUser" name="profileform"
-                                      ng-controller="SearchCtrl">
+                                      ng-controller="MainCtrl">
                                     <md-content>
                                         <md-tabs md-dynamic-height="" md-border-bottom="">
                                             <!--Dish Preference-->
@@ -753,70 +770,82 @@
                                                     <!--Disable default preference Checkbox-->
                                                     <div class="row">
                                                         <label>
-                                                            <md-checkbox ng-model="checked" ng-init="checked=true"/>
-                                                            Enable default preference
+                                                            <md-checkbox ng-model="disable_default" ng-init="checked=false"/>
+                                                            Disable default preference
                                                         </label>
                                                         <!--<fieldset class="standard" ng-disabled="checked">-->
                                                         <br><label>Nutrition&nbsp;</label><span>(per dish)</span>
                                                         <!--Start slider-->
-                                                        <!--Calories-->
                                                         <div>
                                                             <h5>Calories (calories): </h5>
-                                                            <ion-range-slider min="calories.floor"
-                                                                              max="calories.ceil"
-                                                                              from="calories.minValue"
-                                                                              to="calories.maxValue"
-                                                                              type="model.type"></ion-range-slider>
+                                                            <ionslider type="double"
+                                                                       min="calories.floor"
+                                                                       max="calories.ceil"
+                                                                       from="calories.minValue"
+                                                                       to="calories.maxValue"
+                                                                       step="1"
+                                                                       ng-model="calories.calories_range">
+                                                            </ionslider>
                                                         </div>
-                                                        <!--<br>-->
-
                                                         <!--Proteins-->
                                                         <div>
                                                             <h5>Proteins (grams): </h5>
-                                                            <ion-range-slider min="proteins.floor"
-                                                                              max="proteins.ceil"
-                                                                              from="proteins.minValue"
-                                                                              to="proteins.maxValue"
-                                                                              type="model.type"></ion-range-slider>
+                                                            <ionslider type="double"
+                                                                       min="proteins.floor"
+                                                                       max="proteins.ceil"
+                                                                       from="proteins.minValue"
+                                                                       to="proteins.maxValue"
+                                                                       step="1"
+                                                                       ng-model="proteins.proteins_range">
+                                                            </ionslider>
                                                         </div>
-                                                        <!--<br>-->
-
                                                         <!--Carbohydrates-->
                                                         <div>
                                                             <h5>Carbohydrate (grams): </h5>
-                                                            <ion-range-slider min="carb.floor" max="carb.ceil"
-                                                                              from="carb.minValue"
-                                                                              to="carb.maxValue"
-                                                                              type="model.type"></ion-range-slider>
+                                                            <ionslider type="double"
+                                                                       min="carb.floor"
+                                                                       max="carb.ceil"
+                                                                       from="carb.minValue"
+                                                                       to="carb.maxValue"
+                                                                       step="1"
+                                                                       ng-model="carb.carb_range">
+                                                            </ionslider>
                                                         </div>
-                                                        <!--<br>-->
-
                                                         <!--Fats-->
                                                         <div>
                                                             <h5>Fats (grams): </h5>
-                                                            <ion-range-slider min="fats.floor" max="fats.ceil"
-                                                                              from="fats.minValue"
-                                                                              to="fats.maxValue"
-                                                                              type="model.type"></ion-range-slider>
+                                                            <ionslider type="double"
+                                                                       min="fats.floor"
+                                                                       max="fats.ceil"
+                                                                       from="fats.minValue"
+                                                                       to="fats.maxValue"
+                                                                       step="1"
+                                                                       ng-model="fats.fats_range">
+                                                            </ionslider>
                                                         </div>
-                                                        <!--<br>-->
 
                                                         <!--Cholesterol-->
                                                         <div>
                                                             <h5>Cholesterol (milligrams): </h5>
-                                                            <ion-range-slider min="cholesterols.floor"
-                                                                              max="cholesterols.ceil"
-                                                                              from="cholesterols.minValue"
-                                                                              to="cholesterols.maxValue"
-                                                                              type="model.type"></ion-range-slider>
+                                                            <!--<ion-range-slider min="cholesterols.floor" max="cholesterols.ceil"-->
+                                                            <!--from="cholesterols.minValue" to="cholesterols.maxValue"-->
+                                                            <!--type="model.type"></ion-range-slider>-->
+                                                            <ionslider type="double"
+                                                                       min="cholesterols.floor"
+                                                                       max="cholesterols.ceil"
+                                                                       from="cholesterols.minValue"
+                                                                       to="cholesterols.maxValue"
+                                                                       step="1"
+                                                                       ng-model="cholesterols.cholesterols_range">
+                                                            </ionslider>
                                                         </div>
-                                                        <br>
                                                         <!--End slider-->
 
                                                         <!--Taste Preference-->
+                                                        <br>
                                                         <div class="row">
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-11">
+                                                            <!--<div class="col-md-3"></div>-->
+                                                            <div class="col-md-12">
                                                                 <label>Taste</label>
                                                             </div>
                                                         </div>
@@ -861,28 +890,35 @@
                                                             <!--</div>-->
                                                         <!--</div>-->
 
-                                                        <div ng-controller="MainCtrl" class="row">
+                                                        <div class="row">
                                                             <div class="col-md-8">
-                                                                <md-checkbox ng-model="user.sweet"  aria-label="">
+                                                                <md-checkbox ng-model="sweet"  aria-label="">
                                                                     Sweet
                                                                 </md-checkbox>
-                                                                <md-checkbox ng-model="user.sour" aria-label="">
+                                                                <md-checkbox ng-model="sour" aria-label="">
                                                                     Sour
                                                                 </md-checkbox>
-                                                                <md-checkbox ng-model="user.bitter" aria-label="">
+                                                                <md-checkbox ng-model="bitter" aria-label="">
                                                                     Bitter
                                                                 </md-checkbox>
-                                                                <md-checkbox ng-model="user.spicy" aria-label="">
+                                                                <md-checkbox ng-model="spicy" aria-label="">
                                                                     Spicy
                                                                 </md-checkbox>
-                                                                <md-checkbox ng-model="user.salty" aria-label="">
+                                                                <md-checkbox ng-model="salty" aria-label="">
                                                                     Salty
                                                                 </md-checkbox>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <md-button class="md-fab md-primary" ng-click="search()">
+                                                                    <md-icon md-svg-src="newTemplate/svg/search.svg"></md-icon>
+                                                                </md-button>
                                                             </div>
                                                         </div>
 
                                                         <!--End Taste Preference-->
                                                         <!--</fieldset>-->
+
+
                                                     </div>
                                                     <br>
                                                     <!--End Disable default preference Checkbox-->
@@ -1245,7 +1281,7 @@
                     <div class="container">
                         <!-- Title & Divider -->
                         <div class="row">
-                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for you</h2>
+                            <h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for You</h2>
                             <div class="col-md-8 col-md-offset-2 wow "
                                  style="visibility: hidden; animation-name: none;">
                             </div>
@@ -1839,19 +1875,14 @@
                             </div>
                         </div>
                         <!-- salad card box -->
-
                     </div>
                     <!-- /.container -->
                 </section>
                 <!-- /.Dishes -->
             </div>
             <!--End Main data-->
-
-
             <!--</div>-->
-
         </div>
-
 
         <!-- /.container -->
     </div>
@@ -1874,15 +1905,15 @@
                 <!-- Social Profiles -->
                 <div class="mrgn-30-top-btm">
                     <ul class="list-inline social-buttons">
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-facebook"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-pinterest"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-youtube"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
@@ -1892,7 +1923,6 @@
                 <!-- /.Copyright -->
             </div>
         </div>
-
 
         <!-- Title & Divider -->
     </div>
@@ -1930,6 +1960,15 @@
 
 <!-- Script for log in-->
 <script>
+
+    function loginPopup() {
+        if(localStorage.loginChefAtHomeEmail){
+            document.getElementById("afterLogin").open()
+        }else{
+            document.getElementById("dialog").open()
+        }
+    }
+
     function clickHandler(e) {
         if (!e.target.hasAttribute('data-dialog')) {
             return;
@@ -1962,7 +2001,7 @@
         if (localStorage.loginChefAtHomeEmail) {
             console.log("checklogin")
             //$('a#login').text(localStorage.loginChefAtHomefirstname);
-            document.getElementById("login").removeAttribute("onclick");
+            //document.getElementById("login").removeAttribute("onclick");
             document.getElementById("login").removeAttribute("href");
             document.getElementById("login_collapse").removeAttribute("onclick");
             document.getElementById("login_collapse").removeAttribute("href");

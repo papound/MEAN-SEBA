@@ -296,6 +296,13 @@
             $(".file-upload").click();
         });
 
+        if(localStorage.loginChefAtHomeEmail){
+
+        }else{
+            $('a#feedback_link').removeAttr('href');
+            $('a#order_link').removeAttr('href');
+        }
+
 
 
     });
@@ -328,9 +335,9 @@
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-right">
 
-                                <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="#contact" class="menubar" id="order_link">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
-                                <li><a href="#ingredient" class="menubar">Ingredient</a></li>
+                                <li><a href="#ingredient" class="menubar" id="feedback_link">Feedback</a></li>
 
                             </ul>
 

@@ -343,7 +343,7 @@
     </style>
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body data-gr-c-s-loaded="true" id="all_modules">
 
 <script>
     $(document).ready(function () {
@@ -369,7 +369,7 @@
 
         if (localStorage.loginChefAtHomeEmail) {
             console.log(localStorage.loginChefAtHomefirstname)
-            $('a#login').removeAttr("onclick");
+            //$('a#login').removeAttr("onclick");
             $('a#login').removeAttr('href');
             $('a#login').text(localStorage.loginChefAtHomefirstname);
             $('a#login_collapse').text("Welcome! " + localStorage.loginChefAtHomefirstname);
@@ -399,7 +399,7 @@
                             <ul class="nav navbar-nav pull-left">
                                 <li><a href="http://localhost:4000"
                                        class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                                <li><a href="#menu" class="menubar">Menu</a></li>
+                                <li><a href="http://localhost:4000/search" class="menubar">Menu</a></li>
 
                             </ul>
                         </div>
@@ -414,9 +414,9 @@
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-right">
 
-                                <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="#" class="menubar">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
-                                <li><a href="#ingredient" class="menubar">Ingredient</a></li>
+                                <li><a href="http://localhost:4000/feedback" class="menubar">Feedback</a></li>
 
                             </ul>
 
@@ -430,7 +430,7 @@
                         <div class="col-sm-12">
                             <ul class="nav navbar-nav">
                                 <li><a href="#" class="menubar fixed_right_login" data-dialog="dialog" id="login"
-                                       onclick="clickHandler(e)">Login</a></li>
+                                       onclick="loginPopup()">Login</a></li>
                                 <li>
                                     <a class="login_icon" id="login_icon"><i class="material-icons">person</i></a>
                                 </li>
@@ -468,6 +468,24 @@
                     <a href="#">Not a member? Please Register Here!</a>
                     <br><br>
                 </paper-dialog>
+
+                <!--After Login-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="afterLogin" class="size-position">
+                        <!--<h2>Welcome! {[{ firstname }]}</h2>-->
+                        <!--<br><br>-->
+                        <div class="col-sm-6 col-centered">
+                            <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
+                            </md-button>
+                        </div>
+                        <div class="col-sm-6 col-centered">
+                            <md-button class="md-warn" ng-click="signout()">Sign Out
+                            </md-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
+
             </div>
             <!-- /.row -->
         </div>
@@ -522,7 +540,7 @@
 <!-- Full Menu List -->
 <section id="menu-list" style="padding-top: 2%">
     <div class="container">
-        <div id="all_modules" layout="column" ng-cloak class="md-inline-form" ng-controller="calendarCtrl">
+        <div layout="column" ng-cloak class="md-inline-form" ng-controller="calendarCtrl">
             <form name="orderForm">
                 <!-- Title & Divider -->
                 <div class="row">
@@ -706,15 +724,15 @@
                 <!-- Social Profiles -->
                 <div class="mrgn-30-top-btm">
                     <ul class="list-inline social-buttons">
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-facebook"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-pinterest"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-youtube"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
@@ -764,6 +782,16 @@
 
 <!-- Script for log in-->
 <script>
+
+    function loginPopup() {
+        if(localStorage.loginChefAtHomeEmail){
+            document.getElementById("afterLogin").open()
+        }else{
+            document.getElementById("dialog").open()
+        }
+    }
+
+
     function clickHandler(e) {
         if (!e.target.hasAttribute('data-dialog')) {
             return;

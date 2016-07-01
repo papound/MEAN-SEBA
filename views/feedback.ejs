@@ -354,7 +354,7 @@
 
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body data-gr-c-s-loaded="true" id="all_modules">
 
 <script>
     $(document).ready(function () {
@@ -403,8 +403,8 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <ul class="nav navbar-nav pull-left">
-                                    <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                                    <li><a href="#menu" class="menubar">Menu</a></li>
+                                    <li><a href="http://localhost:4000" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                    <li><a href="http://localhost:4000/search" class="menubar">Menu</a></li>
 
                                 </ul>
                             </div>
@@ -419,10 +419,10 @@
                             <div class="col-sm-4">
                                 <ul class="nav navbar-nav pull-right">
 
-                                    <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    <li><a href="http://localhost:4000/order" class="menubar">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </li>
 
-                                    <li><a href="#ingredient" class="menubar">Ingredient</a></li>
+                                    <li><a href="#" class="menubar">Feedback</a></li>
 
                                 </ul>
 
@@ -492,8 +492,8 @@
                     <!--After Login-->
                     <div class="visible-sm visible-xs visible-md visible-lg">
                         <paper-dialog id="afterLogin" class="size-position">
-                            <h2>Welcome! {[{ firstname }]}</h2>
-                            <br><br>
+                            <!--<h2>Welcome! {[{ firstname }]}</h2>-->
+                            <!--<br><br>-->
                             <div class="col-sm-6 col-centered">
                                 <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                                 </md-button>
@@ -585,7 +585,7 @@
 <!-- Full Menu List -->
 <section id="menu-list" style="padding-top: 2%">
     <div class="container">
-        <div id="all_modules" layout="column" ng-cloak class="md-inline-form">
+        <div layout="column" ng-cloak class="md-inline-form">
 
             <!-- Title & Divider -->
             <div class="row">
@@ -672,7 +672,7 @@
                                                                         <md-radio-group ng-model="data.group1">
                                                                             <table ng-repeat="dishAppetizer in appetizer" class="table">
                                                                                 <tr style="padding-bottom: 5%">
-                                                                                    <td>
+                                                                                    <td style="width: 215px; height : 167px;">
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishAppetizer.img[0].data }]}"/>
                                                                                     </td>
@@ -719,7 +719,7 @@
                                                                         <md-radio-group ng-model="data.group1">
                                                                             <table ng-repeat="dishMainDish in mainDish" class="table">
                                                                                 <tr style="padding-bottom: 5%">
-                                                                                    <td>
+                                                                                    <td style="width: 215px; height : 167px;"  >
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
@@ -766,7 +766,7 @@
                                                                         <md-radio-group ng-model="data.group1">
                                                                             <table ng-repeat="dishMainDish in dessert" class="table">
                                                                                 <tr style="padding-bottom: 5%">
-                                                                                    <td>
+                                                                                    <td style="width: 215px; height : 167px;"  >
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
@@ -837,7 +837,7 @@
                                                                         <md-radio-group ng-model="data.group1">
                                                                             <table ng-repeat="dishMainDish in salad" class="table">
                                                                                 <tr style="padding-bottom: 5%">
-                                                                                    <td>
+                                                                                    <td style="width: 215px; height : 167px;"  >
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
@@ -868,7 +868,7 @@
                                                                         <md-radio-group ng-model="data.group1">
                                                                             <table ng-repeat="dishMainDish in soup" class="table">
                                                                                 <tr style="padding-bottom: 5%">
-                                                                                    <td>
+                                                                                    <td style="width: 215px; height : 167px;"  >
                                                                                         <img style="width: 150px; height: 150px"
                                                                                              src="{[{ dishMainDish.img[0].data }]}"/>
                                                                                     </td>
@@ -974,15 +974,15 @@
                 <!-- Social Profiles -->
                 <div class="mrgn-30-top-btm">
                     <ul class="list-inline social-buttons">
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-facebook"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-pinterest"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-youtube"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
@@ -1032,6 +1032,15 @@
 
 <!-- Script for log in-->
 <script>
+
+    function loginPopup() {
+        if(localStorage.loginChefAtHomeEmail){
+            document.getElementById("afterLogin").open()
+        }else{
+            document.getElementById("dialog").open()
+        }
+    }
+
     function clickHandler(e) {
         if (!e.target.hasAttribute('data-dialog')) {
             return;
@@ -1064,7 +1073,7 @@
         if (localStorage.loginChefAtHomeEmail) {
             console.log("checklogin")
             //$('a#login').text(localStorage.loginChefAtHomefirstname);
-            document.getElementById("login").removeAttribute("onclick");
+            //document.getElementById("login").removeAttribute("onclick");
             document.getElementById("login").removeAttribute("href");
             document.getElementById("login_collapse").removeAttribute("onclick");
             document.getElementById("login_collapse").removeAttribute("href");

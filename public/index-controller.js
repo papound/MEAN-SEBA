@@ -13,22 +13,22 @@ app2.controller('loginCtrl', function ($scope, $http) {
     $scope.openProfile = function () {
         setTimeout(1000);
         window.location.href = "http://localhost:4000/main-profile"
-    }
+    };
 
     $scope.signout = function () {
-        console.log("email before signout="+localStorage.loginChefAtHomeEmail)
+        console.log("email before signout="+localStorage.loginChefAtHomeEmail);
         localStorage.removeItem('loginChefAtHomeEmail');
-        console.log("email after signout="+localStorage.loginChefAtHomeEmail)
+        console.log("email after signout="+localStorage.loginChefAtHomeEmail);
         //localStorage.removeItem('current_ingredient');
         setTimeout(1000);
         window.location.href = "http://localhost:4000/"
-    }
+    };
 
     $scope.user = {
         email: '',
         password: ''
         //test: 'hello'
-    }
+    };
 
     $scope.showFailed = function (err) {
         if (err == "Incomplete Credentials!") {

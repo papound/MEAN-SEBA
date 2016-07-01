@@ -46,6 +46,26 @@ var suggestlist2 = [["Type", "Ingredients"],
     ["None"]
 ];
 
+app2.controller('loginCtrl',['$scope', function ($scope) {
+
+    $scope.firstname = localStorage.loginChefAtHomefirstname;
+
+    $scope.signout = function () {
+        console.log("email before signout="+localStorage.loginChefAtHomeEmail);
+        localStorage.removeItem('loginChefAtHomeEmail');
+        console.log("email after signout="+localStorage.loginChefAtHomeEmail);
+        //localStorage.removeItem('current_ingredient');
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/"
+    };
+
+    $scope.openProfile = function () {
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/main-profile"
+    };
+
+}]);
+
 app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData) {
 
     //New Ratings

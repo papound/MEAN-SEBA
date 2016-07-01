@@ -191,6 +191,7 @@
             console.log(firstname)
             $('a#login').text(firstname);
             //$('a#login').removeAttr("onclick");
+
             $('a#login').removeAttr('href');
             $('a#login_collapse').text("Welcome! " + email);
             $('a#login_collapse').removeAttr("onclick");
@@ -202,6 +203,9 @@
 
             //document.setAttribute('onclick', function() { document.getElementById("afterLogin").open(); });
 
+        }else{
+            $('a#feedback_link').removeAttr('href');
+            $('a#order_link').removeAttr('href');
         }
 
 
@@ -225,15 +229,15 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <ul class="nav navbar-nav pull-left">
-                                    <li><a href="#home" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                                    <li><a href="#menu" class="menubar">Menu</a></li>
+                                    <li><a href="#" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                    <li><a href="http://localhost:4000/search" class="menubar">Menu</a></li>
 
                                 </ul>
                             </div>
                             <!-- /.Links 01 -->
                             <!-- Logo -->
                             <div class="col-sm-4">
-                                <a href="http://localhost:4000" id="bellafirenze-lg"></a>
+                                <a href="#" id="bellafirenze-lg"></a>
                             </div>
                             <!-- /.Logo -->
 
@@ -241,10 +245,10 @@
                             <div class="col-sm-4">
                                 <ul class="nav navbar-nav pull-right">
 
-                                    <li><a href="#contact" class="menubar">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    <li><a href="http://localhost:4000/order" class="menubar" id="order_link">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </li>
 
-                                    <li><a href="#ingredient" class="menubar">Ingredient</a></li>
+                                    <li><a href="http://localhost:4000/feedback" class="menubar" id="feedback_link">Feedback</a></li>
 
                                 </ul>
 
@@ -314,8 +318,8 @@
                     <!--After Login-->
                     <div class="visible-sm visible-xs visible-md visible-lg">
                         <paper-dialog id="afterLogin" class="size-position">
-                            <h2>Welcome! {[{ firstname }]}</h2>
-                            <br><br>
+                            <!--<h2>Welcome! {[{ firstname }]}</h2>-->
+                            <!--<br><br>-->
                             <div class="col-sm-6 col-centered">
                                 <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                                 </md-button>
@@ -735,7 +739,7 @@
         <!-- Menu Button -->
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center mrgn-50-top"><a
-                        href="http://bella.designershare.net/menu.html" class="btn btn-lg btn-main">See Full Menu</a>
+                        href="http://localhost:4000/search" class="btn btn-lg btn-main">See Full Menu</a>
             </div>
         </div>
         <!-- /.Menu Button -->
@@ -898,7 +902,7 @@
                  style="visibility: hidden; animation-name: none;">
                 <h2>Food should be fresh, delicious and beautiful.</h2>
                 <p class="lead mrgn-40-top-btm text-uppercase text-bold">Come to Chef@Home to fall in love.</p>
-                <p><a href="http://bella.designershare.net/index-bella-firenze.html#booktable"
+                <p><a href="http://localhost:4000/search"
                       class="btn btn-lg btn-main-white">Choose Dishes</a></p>
             </div>
         </div>
@@ -1103,15 +1107,15 @@
                 <!-- Social Profiles -->
                 <div class="mrgn-30-top-btm">
                     <ul class="list-inline social-buttons">
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-facebook"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-pinterest"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-youtube"></i></a></li>
-                        <li><a href="http://bella.designershare.net/index-bella-firenze.html#"><i
+                        <li><a href="#"><i
                                         class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
@@ -1206,6 +1210,7 @@
         var image = profile.getImageUrl();
         $('a#login').text(firstName);
         //$('a#login').removeAttr("onclick");
+
         $('a#login').removeAttr('href');
         $('a#login_collapse').text("Welcome! " + firstName);
         $('a#login_collapse').removeAttr("onclick");
@@ -1229,7 +1234,7 @@
                     //$("#position").hide();
                 }
             });
-        }b
+        }
 
         if (typeof(Storage) !== "undefined") {
             //localStorage.visitProfile = 1;
@@ -1252,6 +1257,7 @@
                     //$('a#login').attr('href', url);
                 }
             } else {
+
                 //Never login on this pc before
                 localStorage.loginChefAtHomefullname = fullName;
                 localStorage.loginChefAtHomefirstname = firstName;

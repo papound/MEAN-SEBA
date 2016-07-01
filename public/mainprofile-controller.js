@@ -45,7 +45,7 @@ app2.factory('getUserData', ['$http', function ($http) {
     //Create request for User data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
     //localStorage.loginChefAtHomeEmail = "chanawatnpound@gmail.com"
-    var this_email = "chanawatnpound@gmail.com";
+    var this_email = "";
     console.log(localStorage.loginChefAtHomefullname)
     console.log(localStorage.loginChefAtHomefirstname)
     console.log(localStorage.loginChefAtHomelastname)
@@ -53,7 +53,7 @@ app2.factory('getUserData', ['$http', function ($http) {
     console.log(localStorage.loginChefAtHomeEmail);
     if (localStorage.loginChefAtHomeEmail) {
         //if already logged in
-        // this_email = localStorage.loginChefAtHomeEmail;
+        this_email = localStorage.loginChefAtHomeEmail;
     } else {
         //link back to homepage on accessing unauthorized url
         window.location.href = "http://localhost:4000/"
@@ -396,6 +396,26 @@ app2.controller("calendarCtrl", function ($scope, $filter) {
 });
 //End Test Calendar
 
+app2.controller('loginCtrl',['$scope', function ($scope) {
+
+    $scope.firstname = localStorage.loginChefAtHomefirstname;
+
+    $scope.signout = function () {
+        console.log("email before signout="+localStorage.loginChefAtHomeEmail);
+        localStorage.removeItem('loginChefAtHomeEmail');
+        console.log("email after signout="+localStorage.loginChefAtHomeEmail);
+        //localStorage.removeItem('current_ingredient');
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/"
+    };
+
+    $scope.openProfile = function () {
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/main-profile"
+    };
+
+}]);
+
 app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', function ($scope, getIngredient, getUserData, $http, $rootScope, $timeout, $modal) {
     $scope.formStatus = true; //comment out after testing
 
@@ -417,7 +437,7 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         weight: '',
         profilePicture: null,
         healthCond: null,
-        noIngredient: null,
+        noIngredient: [],
         tastePreference: null,
         sweet: "",
         sour: "",
@@ -462,19 +482,22 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         }
         $scope.user.vegetarian = user[0].vegetarian;
         $scope.user.halal = user[0].halal;
-        if (user[0].healthCond = null) {
+        if (user[0].healthCond == null) {
             $scope.user.healthCond = [];
+            console.log("healthCond is null")
         } else {
             $scope.user.healthCond = user[0].healthCond
         }
 
-        if (user[0].noIngredient = null) {
+        if (user[0].noIngredient == null) {
             $scope.user.noIngredient = [];
+            console.log("noIngredient is null")
         } else {
             $scope.user.noIngredient = user[0].noIngredient;
-            console.log('noIngredient' + user[0].noIngredient)
+            //console.log(user[0].noIngredient[0])
         }
-
+        console.log($scope.user.healthCond);
+        console.log($scope.user.noIngredient[0]);
         $scope.myDate = new Date();
         //$scope.myDate = user[0].birthdate;
         $scope.myDate = new Date(user[0].birthdate);
@@ -496,7 +519,8 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         floor: 0,
         translate: function (value) {
             return value;
-        }
+        },
+        calories_range: []
     };
 
     $scope.proteins = {
@@ -504,7 +528,8 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         floor: 0,
         translate: function (value) {
             return value;
-        }
+        },
+        proteins_range: []
     };
 
     $scope.carb = {
@@ -512,7 +537,8 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         floor: 0,
         translate: function (value) {
             return value;
-        }
+        },
+        carb_range: []
     };
 
     $scope.fats = {
@@ -520,7 +546,8 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         floor: 0,
         translate: function (value) {
             return value;
-        }
+        },
+        fats_range: []
     };
 
     $scope.cholesterols = {
@@ -528,7 +555,8 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         floor: 0,
         translate: function (value) {
             return value;
-        }
+        },
+        cholesterols_range: []
     };
 
     getUserData.then(function (user) {
@@ -694,6 +722,9 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
     //End NoPrefs
 
     $scope.checkElementToUpdate = function () {
+
+        console.log($scope.calories.calories_range);
+
         if ($scope.user.firstname != "" &&
             $scope.user.lastname != "" &&
             $scope.project.height != "" &&
@@ -703,6 +734,31 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
             $scope.user.address != "" &&
             $scope.user.city != "" &&
             $scope.user.postalCode != "") {
+
+            //Check if Slider has changed
+            if ($scope.calories.calories_range.length != 0) {
+                //console.log($scope.calories.calories_range);
+                $scope.calories.minValue = $scope.calories.calories_range[0];
+                //console.log("updated calories min to "+$scope.calories.minValue);
+                $scope.calories.maxValue = $scope.calories.calories_range[1];
+                //console.log("updated calories max to "+$scope.calories.maxValue);
+            }
+            if ($scope.proteins.proteins_range.length != 0) {
+                $scope.proteins.minValue = $scope.proteins.proteins_range[0];
+                $scope.proteins.maxValue = $scope.proteins.proteins_range[1];
+            }
+            if ($scope.carb.carb_range.length != 0) {
+                $scope.carb.minValue = $scope.carb.carb_range[0];
+                $scope.carb.maxValue = $scope.carb.carb_range[1];
+            }
+            if ($scope.fats.fats_range.length != 0) {
+                $scope.fats.minValue = $scope.fats.fats_range[0];
+                $scope.fats.maxValue = $scope.fats.fats_range[1];
+            }
+            if ($scope.cholesterols.cholesterols_range.length != 0) {
+                $scope.cholesterols.minValue = $scope.cholesterols.cholesterols_range[0];
+                $scope.cholesterols.maxValue = $scope.cholesterols.cholesterols_range[1];
+            }
             $scope.confirmUpdateProfile();
 
         } else {
@@ -759,6 +815,7 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         } else {
             console.log("data 2 elements");
         }
+
         return $http.post(url + "/api/update/profile", {
             firstname: $scope.user.firstname,
             lastname: $scope.user.lastname,

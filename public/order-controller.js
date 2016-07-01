@@ -95,6 +95,26 @@ app2.factory('getUserData', ['$http', function ($http) {
         });
 }]);
 
+app2.controller('loginCtrl',['$scope', function ($scope) {
+
+    $scope.firstname = localStorage.loginChefAtHomefirstname;
+
+    $scope.signout = function () {
+        console.log("email before signout="+localStorage.loginChefAtHomeEmail);
+        localStorage.removeItem('loginChefAtHomeEmail');
+        console.log("email after signout="+localStorage.loginChefAtHomeEmail);
+        //localStorage.removeItem('current_ingredient');
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/"
+    };
+
+    $scope.openProfile = function () {
+        setTimeout(1000);
+        window.location.href = "http://localhost:4000/main-profile"
+    };
+
+}]);
+
 //Calendar controller
 //app2.controller("calendarCtrl", function ($scope, $filter, $q, $timeout, $log, MaterialCalendarData) {
 app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $filter, $q, $timeout, $log, MaterialCalendarData, $http) {
