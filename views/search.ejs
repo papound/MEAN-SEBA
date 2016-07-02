@@ -523,6 +523,7 @@
             left: 0;
         }
 
+
     </style>
 
 </head>
@@ -548,7 +549,7 @@
             $('#login_icon').addClass('login_icon2').removeClass('login_icon');
             setTimeout(checklogin(), 3000);
         } else {
-            window.location.href = "http://localhost:4000/";
+            //window.location.href = "http://localhost:4000/";
         }
 
         setTimeout(function () {
@@ -598,7 +599,8 @@
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-right">
 
-                                <li><a href="http://localhost:4000/order" class="menubar">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="http://localhost:4000/order" class="menubar">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                </li>
 
                                 <li><a href="http://localhost:4000/feedback" class="menubar">Feedback</a></li>
 
@@ -721,7 +723,8 @@
 <!-- /. Menu Header -->
 
 <!-- Full Menu List -->
-<section id="menu-list" style="background: #f9f7f3 url(http://bella.designershare.net/assets/bella-firenze/images/backgrounds/bf-events-bg.jpg);">
+<section id="menu-list"
+         style="background: #f9f7f3 url(http://bella.designershare.net/assets/bella-firenze/images/backgrounds/bf-events-bg.jpg);">
     <div class="container">
         <div layout="column" ng-cloak class="md-inline-form">
             <!--<md-content flex="" layout-padding="">-->
@@ -753,12 +756,14 @@
             <!--Nav bar-->
             <div ng-controller="AppCtrl" layout="column" style="height:10px;" class="sidenavdemoBasicUsage">
                 <section layout="row" flex="">
-                    <md-sidenav class="md-sidenav-left md-whiteframe-4dp" style="margin-top: 10px; position: fixed; top: 10%;  "
+                    <md-sidenav class="md-sidenav-left md-whiteframe-4dp"
+                                style="margin-top: 10px; position: fixed; top: 10%;  "
                                 md-component-id="left">
                         <md-toolbar style="background: #bda881;">
                             <h1 class="md-toolbar-tools">Search Dish</h1>
                         </md-toolbar>
-                        <md-content layout-padding="" ng-controller="LeftCtrl" style="position: relative; overflow:scroll;">
+                        <md-content layout-padding="" ng-controller="LeftCtrl"
+                                    style="position: relative; overflow:scroll;">
                             <div class="tabsdemoDynamicHeight">
                                 <form class="ui form animated fadeInUp" ng-model="newUser" name="profileform"
                                       ng-controller="MainCtrl">
@@ -770,7 +775,9 @@
                                                     <!--Disable default preference Checkbox-->
                                                     <div class="row">
                                                         <label>
-                                                            <md-checkbox ng-model="disable_default" ng-init="checked=false"/>
+                                                            <md-checkbox ng-model="disable_default"
+                                                                         ng-init="checked=false"
+                                                                         ng-if="!notLogin_mainctrl"/>
                                                             Disable default preference
                                                         </label>
                                                         <!--<fieldset class="standard" ng-disabled="checked">-->
@@ -850,49 +857,49 @@
                                                             </div>
                                                         </div>
                                                         <!--<div class="row">-->
-                                                            <!--<div class="col-md-1"></div>-->
-                                                            <!--<div class="col-md-5">-->
-                                                                <!--<md-checkbox ng-model="user.sweet" aria-label=""-->
-                                                                             <!--ng-disabled="checked">-->
-                                                                    <!--Sweet<span ng-if="user.sweet"></span>-->
-                                                                <!--</md-checkbox>-->
-                                                            <!--</div>-->
-                                                            <!--<div class="col-md-5">-->
-                                                                <!--<md-checkbox ng-model="user.spicy" aria-label=""-->
-                                                                             <!--ng-disabled="checked">-->
-                                                                    <!--Spicy<span ng-if="user.spicy"></span>-->
-                                                                <!--</md-checkbox>-->
-                                                            <!--</div>-->
+                                                        <!--<div class="col-md-1"></div>-->
+                                                        <!--<div class="col-md-5">-->
+                                                        <!--<md-checkbox ng-model="user.sweet" aria-label=""-->
+                                                        <!--ng-disabled="checked">-->
+                                                        <!--Sweet<span ng-if="user.sweet"></span>-->
+                                                        <!--</md-checkbox>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="col-md-5">-->
+                                                        <!--<md-checkbox ng-model="user.spicy" aria-label=""-->
+                                                        <!--ng-disabled="checked">-->
+                                                        <!--Spicy<span ng-if="user.spicy"></span>-->
+                                                        <!--</md-checkbox>-->
+                                                        <!--</div>-->
                                                         <!--</div>-->
                                                         <!--<div class="row">-->
-                                                            <!--<div class="col-md-1"></div>-->
-                                                            <!--<div class="col-md-5">-->
-                                                                <!--<md-checkbox ng-model="user.sour" aria-label=""-->
-                                                                             <!--ng-disabled="checked">-->
-                                                                    <!--Sour<span ng-if="user.sour"></span>-->
-                                                                <!--</md-checkbox>-->
-                                                            <!--</div>-->
-                                                            <!--<div class="col-md-5">-->
-                                                                <!--<md-checkbox ng-model="user.bitter"-->
-                                                                             <!--aria-label=""-->
-                                                                             <!--ng-disabled="checked">-->
-                                                                    <!--Bitter<span ng-if="user.bitter"></span>-->
-                                                                <!--</md-checkbox>-->
-                                                            <!--</div>-->
+                                                        <!--<div class="col-md-1"></div>-->
+                                                        <!--<div class="col-md-5">-->
+                                                        <!--<md-checkbox ng-model="user.sour" aria-label=""-->
+                                                        <!--ng-disabled="checked">-->
+                                                        <!--Sour<span ng-if="user.sour"></span>-->
+                                                        <!--</md-checkbox>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="col-md-5">-->
+                                                        <!--<md-checkbox ng-model="user.bitter"-->
+                                                        <!--aria-label=""-->
+                                                        <!--ng-disabled="checked">-->
+                                                        <!--Bitter<span ng-if="user.bitter"></span>-->
+                                                        <!--</md-checkbox>-->
+                                                        <!--</div>-->
                                                         <!--</div>-->
                                                         <!--<div class="row">-->
-                                                            <!--<div class="col-md-1"></div>-->
-                                                            <!--<div class="col-md-5">-->
-                                                                <!--<md-checkbox ng-model="user.salty" aria-label=""-->
-                                                                             <!--ng-disabled="checked">-->
-                                                                    <!--Salty<span ng-if="user.salty"></span>-->
-                                                                <!--</md-checkbox>-->
-                                                            <!--</div>-->
+                                                        <!--<div class="col-md-1"></div>-->
+                                                        <!--<div class="col-md-5">-->
+                                                        <!--<md-checkbox ng-model="user.salty" aria-label=""-->
+                                                        <!--ng-disabled="checked">-->
+                                                        <!--Salty<span ng-if="user.salty"></span>-->
+                                                        <!--</md-checkbox>-->
+                                                        <!--</div>-->
                                                         <!--</div>-->
 
                                                         <div class="row">
                                                             <div class="col-md-8">
-                                                                <md-checkbox ng-model="sweet"  aria-label="">
+                                                                <md-checkbox ng-model="sweet" aria-label="">
                                                                     Sweet
                                                                 </md-checkbox>
                                                                 <md-checkbox ng-model="sour" aria-label="">
@@ -909,8 +916,10 @@
                                                                 </md-checkbox>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <md-button class="md-fab md-primary" ng-click="search()">
-                                                                    <md-icon md-svg-src="newTemplate/svg/search.svg"></md-icon>
+                                                                <md-button class="md-fab md-primary"
+                                                                           ng-click="search()">
+                                                                    <md-icon
+                                                                            md-svg-src="newTemplate/svg/search.svg"></md-icon>
                                                                 </md-button>
                                                             </div>
                                                         </div>
@@ -968,6 +977,15 @@
 
             <!--Main data-->
             <div ng-controller="MainCtrl">
+
+                <script type="text/ng-template" id="toast-template.html">
+                    <md-toast>
+                        <span class="md-toast-text" flex>Please Login</span>
+                        <md-button ng-click="closeToast()">
+                            Close
+                        </md-button>
+                    </md-toast>
+                </script>
 
                 <script type="text/ng-template" id="tabDialog.tmpl.html">
                     <md-dialog aria-label="{[{ dishName }]}">
@@ -1030,8 +1048,9 @@
                                                     <th width="15%" style="color: #0b50bf">Quantity</th>
                                                     <th width="20%" style="color: #9e5406">Unit</th>
                                                     <th width="35%" style="color: forestgreen">Ingredient</th>
-                                                    <th width="15%" style="color: steelblue">+ Top up</th>
-                                                    <th width="15%" style="color: dimgray">price/unit</th>
+                                                    <th width="15%" style="color: steelblue" ng-if="!notLogin">+ Top up</th>
+                                                    <th width="15%" style="color: dimgray" ng-if="!notLogin">price/unit</th>
+                                                    <th width="15%" style="color: dimgray" ng-if="notLogin">Top up price/unit</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -1042,7 +1061,7 @@
                                                         <b>{[{ di.name }]}</b>
                                                         &nbsp;&nbsp;<i>{[{ di.detail }]}</i>
                                                     </td>
-                                                    <td>
+                                                    <td ng-if="!notLogin">
                                                         <md-input-container class="md-block">
                                                             <input id="{[{ di.name }]}"
                                                                    name="{[{ di.name }]}"
@@ -1076,13 +1095,13 @@
                                 </md-tabs>
                             </md-dialog-content>
 
-                            <md-dialog-actions layout="row">
+                            <md-dialog-actions layout="row" ng-if="!notLogin">
                                 <span flex></span>
                                 <h5>Quantity: </h5>
                                 <md-input-container class="md-block" style="max-width: 50px">
                                     <input type="number" step="any" ng-model="dish_quantity"/>
                                 </md-input-container>
-                                <md-button ng-click="addToCart(dishName, dish_quantity)">
+                                <md-button ng-click="addToCart(dishName, dish_quantity)" id="toastBase">
                                     Add to Cart
                                 </md-button>
                             </md-dialog-actions>
@@ -1452,79 +1471,79 @@
 
                 <!-- Chefs -->
                 <!--<section id="chefs" class="reducePadding">-->
-                    <!--<div class="container">-->
-                        <!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
-                        <!--<div class="row">-->
-                            <!--<h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for you</h2>-->
-                            <!--<div class="col-md-8 col-md-offset-2 wow "-->
-                                 <!--style="visibility: hidden; animation-name: none;">-->
-                                <!--&lt;!&ndash;<h2>Best for you</h2>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<p class="lead">Best for you</p>&ndash;&gt;-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class="mrgn-50-top-btm text-center"><img-->
-                                    <!--src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"-->
-                                    <!--alt=""></div>&ndash;&gt;-->
-                        <!--&lt;!&ndash; /.Title & Divider &ndash;&gt;-->
+                <!--<div class="container">-->
+                <!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
+                <!--<div class="row">-->
+                <!--<h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for you</h2>-->
+                <!--<div class="col-md-8 col-md-offset-2 wow "-->
+                <!--style="visibility: hidden; animation-name: none;">-->
+                <!--&lt;!&ndash;<h2>Best for you</h2>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p class="lead">Best for you</p>&ndash;&gt;-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="mrgn-50-top-btm text-center"><img-->
+                <!--src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"-->
+                <!--alt=""></div>&ndash;&gt;-->
+                <!--&lt;!&ndash; /.Title & Divider &ndash;&gt;-->
 
-                        <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
-                        <!--<div class="row text-center">-->
-                            <!--&lt;!&ndash; Chef 01 &ndash;&gt;-->
-                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                                <!--<img-->
-                                        <!--src="newTemplate/img/chef1.jpg"-->
-                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                                        <!--alt="">-->
-                                <!--<h3>Mark Robert</h3>-->
-                                <!--<p class="text-muted">Recipe Inventor</p>-->
-                                <!--<p class="mrgn-20-top">Mark is a brilliant dish-designer who believes in creating a-->
-                                    <!--whole new food-->
-                                    <!--world-->
-                                <!--<p>-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash; /.Chef 01 &ndash;&gt;-->
-                            <!--&lt;!&ndash; Chef 02 &ndash;&gt;-->
-                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                                <!--<img-->
-                                        <!--src="newTemplate/img/chef2.jpg"-->
-                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                                        <!--alt="">-->
-                                <!--<h3>Alonzo Xavier</h3>-->
-                                <!--<p class="text-muted">Chef</p>-->
-                                <!--<p class="mrgn-20-top">Alonzo has been in food industry for more than years. His-->
-                                    <!--experiences will-->
-                                    <!--never-->
-                                    <!--stop to enlighten you</p>-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash; /.Chef 02 &ndash;&gt;-->
-                            <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
-                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                                <!--<img-->
-                                        <!--src="newTemplate/img/chef3.jpg"-->
-                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                                        <!--alt="">-->
-                                <!--<h3>Les Leo Terrance</h3>-->
-                                <!--<p class="text-muted">Sous-Chef</p>-->
-                                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
-                                    <!--awesome tastes.</p>-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
-                            <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
-                            <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                                <!--<img-->
-                                        <!--src="newTemplate/img/chef3.jpg"-->
-                                        <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                                        <!--alt="">-->
-                                <!--<h3>Les Leo Terrance</h3>-->
-                                <!--<p class="text-muted">Sous-Chef</p>-->
-                                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
-                                    <!--awesome tastes.</p>-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash; /.container &ndash;&gt;-->
+                <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
+                <!--<div class="row text-center">-->
+                <!--&lt;!&ndash; Chef 01 &ndash;&gt;-->
+                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                <!--<img-->
+                <!--src="newTemplate/img/chef1.jpg"-->
+                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                <!--alt="">-->
+                <!--<h3>Mark Robert</h3>-->
+                <!--<p class="text-muted">Recipe Inventor</p>-->
+                <!--<p class="mrgn-20-top">Mark is a brilliant dish-designer who believes in creating a-->
+                <!--whole new food-->
+                <!--world-->
+                <!--<p>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.Chef 01 &ndash;&gt;-->
+                <!--&lt;!&ndash; Chef 02 &ndash;&gt;-->
+                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                <!--<img-->
+                <!--src="newTemplate/img/chef2.jpg"-->
+                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                <!--alt="">-->
+                <!--<h3>Alonzo Xavier</h3>-->
+                <!--<p class="text-muted">Chef</p>-->
+                <!--<p class="mrgn-20-top">Alonzo has been in food industry for more than years. His-->
+                <!--experiences will-->
+                <!--never-->
+                <!--stop to enlighten you</p>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.Chef 02 &ndash;&gt;-->
+                <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
+                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                <!--<img-->
+                <!--src="newTemplate/img/chef3.jpg"-->
+                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                <!--alt="">-->
+                <!--<h3>Les Leo Terrance</h3>-->
+                <!--<p class="text-muted">Sous-Chef</p>-->
+                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
+                <!--awesome tastes.</p>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
+                <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
+                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
+                <!--<img-->
+                <!--src="newTemplate/img/chef3.jpg"-->
+                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
+                <!--alt="">-->
+                <!--<h3>Les Leo Terrance</h3>-->
+                <!--<p class="text-muted">Sous-Chef</p>-->
+                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
+                <!--awesome tastes.</p>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.container &ndash;&gt;-->
                 <!--</section>-->
                 <!-- /.Chefs -->
 
@@ -1962,9 +1981,9 @@
 <script>
 
     function loginPopup() {
-        if(localStorage.loginChefAtHomeEmail){
+        if (localStorage.loginChefAtHomeEmail) {
             document.getElementById("afterLogin").open()
-        }else{
+        } else {
             document.getElementById("dialog").open()
         }
     }

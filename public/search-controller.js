@@ -5,6 +5,12 @@ var app2 = angular.module("inputBasicDemo", ['ngMaterial', 'ngMessages', 'ion.ra
 
 var url = "http://localhost:4000";
 
+var notLogin = false;
+
+if(!localStorage.loginChefAtHomeEmail){
+    notLogin = true;
+}
+
 app2.factory('getUserData', ['$http', function ($http) {
     //Create request for User data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
@@ -13,7 +19,7 @@ app2.factory('getUserData', ['$http', function ($http) {
     if (localStorage.loginChefAtHomeEmail) {
         this_email = localStorage.loginChefAtHomeEmail;
     } else {
-        window.location.href = "http://localhost:4000/"
+        //window.location.href = "http://localhost:4000/"
     }
     return $http.post(url + "/list/user", {email: this_email})
         .then(function (response) {
@@ -62,7 +68,7 @@ app2.factory('getRecommended', ['$http', function ($http) {
         //this_email = localStorage.loginChefAtHomeEmail;
     } else {
         //link back to homepage on accessing unauthorized url
-        window.location.href = "http://localhost:4000/"
+        //window.location.href = "http://localhost:4000/"
     }
     return $http.get(url + "/list/recommended")
         .then(function (response) {
@@ -85,7 +91,7 @@ app2.factory('getFeedbackDishData', ['$http', function ($http) {
     if (localStorage.loginChefAtHomeEmail) {
         this_email = localStorage.loginChefAtHomeEmail;
     } else {
-        window.location.href = "http://localhost:4000/"
+        //window.location.href = "http://localhost:4000/"
     }
     return $http.post(url + "/list/feedback_dish")
         .then(function (response) {
@@ -102,7 +108,7 @@ app2.factory('getSuggestedDishData', ['$http', function ($http) {
     if (localStorage.loginChefAtHomeEmail) {
         this_email = localStorage.loginChefAtHomeEmail;
     } else {
-        window.location.href = "http://localhost:4000/"
+        //window.location.href = "http://localhost:4000/"
     }
     return $http.post(url + "/list/feedback_dish")
         .then(function (response) {
@@ -123,7 +129,7 @@ app2.factory('getUserData', ['$http', function ($http) {
         this_email = localStorage.loginChefAtHomeEmail;
     } else {
         //link back to homepage on accessing unauthorized url
-        window.location.href = "http://localhost:4000/"
+        //window.location.href = "http://localhost:4000/"
     }
     return $http.post(url + "/list/user", {email: this_email})
         .then(function (response) {
@@ -259,8 +265,8 @@ console.log('local_current_ingredient: ', JSON.parse(retrieve_ingredient));
 //End var to localStorage
 
 
-app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish', 'getFeedbackDishData', 'getSuggestedDishData', 'getIngredients', '$mdDialog', '$http',
-    function ($scope, getUserData, getRecommended, getDish, getFeedbackDishData, getSuggestedDishData, getIngredients, $mdDialog, $http, $route, $rootScope, $timeout, $modal) {
+app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish', 'getFeedbackDishData', 'getSuggestedDishData', 'getIngredients', '$mdDialog', '$http', '$mdToast', '$document',
+    function ($scope, getUserData, getRecommended, getDish, getFeedbackDishData, getSuggestedDishData, getIngredients, $mdDialog, $http, $mdToast, $document, $route, $rootScope, $timeout, $modal) {
 
         $scope.dish_only_name = [];
         $scope.dish_recommended = [];
@@ -333,14 +339,9 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
          $scope.best3.rating = "";
          $scope.best4.rating = "";*/
 
-        getUserData.then(function (user) {
-            $scope.user.vegetarian = user[0].vegetarian;
-            $scope.user.halal = user[0].halal;
-            $scope.user.healthCond = user[0].healthCond;
-            $scope.user.noIngredient = user[0].noIngredient;
-            $scope.user.nutritionRange = user[0].nutritionRange;
-            $scope.user.tastePreference = user[0].tastePreference;
-        });
+        // getUserData.then(function (user) {
+        //
+        // });
 
         $scope.formStatus = true;
         //Slider
@@ -411,87 +412,196 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
         //     $scope.disable_default = false;
         // }
 
+        $scope.notLogin_mainctrl = false;
 
-        getUserData.then(function (user) {
-            $scope.name = user;
+        if(notLogin == true){
 
-            //Nutrition Range
-            var nutrition_range = user[0].nutritionRange;
-            $scope.calories.minValue = nutrition_range[0].minValue;
-            $scope.calories.maxValue = nutrition_range[0].maxValue;
-            $scope.proteins.minValue = nutrition_range[1].minValue;
-            $scope.proteins.maxValue = nutrition_range[1].maxValue;
-            $scope.carb.minValue = nutrition_range[2].minValue;
-            $scope.carb.maxValue = nutrition_range[2].maxValue;
-            $scope.fats.minValue = nutrition_range[3].minValue;
-            $scope.fats.maxValue = nutrition_range[3].maxValue;
-            $scope.cholesterols.minValue = nutrition_range[4].minValue;
-            $scope.cholesterols.maxValue = nutrition_range[4].maxValue;
+            $scope.notLogin_mainctrl = true;
 
-            //Taste
-            $scope.sweet = user[0].tastePreference[0];
-            $scope.sour = user[0].tastePreference[1];
-            $scope.bitter = user[0].tastePreference[2];
-            $scope.spicy = user[0].tastePreference[3];
-            $scope.salty = user[0].tastePreference[4];
+            if(localStorage.defaultPref != null){
 
-            //Set Taste
-            function checkBool(str){
-                if(str == 'true'){
-                    return true;
-                }else{
-                    return false;
+                $scope.notLogin_mainctrl = true;
+
+                console.log("second_time");
+
+                function checkBool(str){
+                    if(str == 'true'){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
+
+                if (localStorage.defaultPref && checkBool(localStorage.defaultPref)) {
+                    //override default data -- use data from side bar
+
+                    //Set Nutrition
+                    $scope.calories.minValue = parseInt(localStorage.calMin);
+                    $scope.calories.maxValue = parseInt(localStorage.calMax);
+                    $scope.proteins.minValue = parseInt(localStorage.proMin);
+                    $scope.proteins.maxValue = parseInt(localStorage.proMax);
+                    $scope.carb.minValue = parseInt(localStorage.carbMin);
+                    $scope.carb.maxValue = parseInt(localStorage.carbMax);
+                    $scope.fats.minValue = parseInt(localStorage.fatsMin);
+                    $scope.fats.maxValue = parseInt(localStorage.fatsMax);
+                    $scope.cholesterols.minValue = parseInt(localStorage.cholMin);
+                    $scope.cholesterols.maxValue = parseInt(localStorage.cholMax);
+
+                    $scope.disable_default = checkBool(localStorage.defaultPref);
+
+                    $scope.sweet = checkBool(localStorage.sweet);
+                    $scope.sour = checkBool(localStorage.sour);
+                    $scope.bitter = checkBool(localStorage.bitter);
+                    $scope.spicy = checkBool(localStorage.spicy);
+                    $scope.salty = checkBool(localStorage.salty);
+
+                    console.log("cal min= " + $scope.calories.minValue);
+                    console.log("cal max= " + $scope.calories.maxValue);
+                    console.log("pro min= " + $scope.proteins.minValue);
+                    console.log("pro max= " + $scope.proteins.maxValue);
+                    console.log("carb min= " + $scope.carb.minValue);
+                    console.log("carb max= " + $scope.carb.maxValue);
+                    console.log("fats min= " + $scope.fats.minValue);
+                    console.log("fats max= " + $scope.fats.maxValue);
+                    console.log("chol min= " + $scope.cholesterols.minValue);
+                    console.log("chol max= " + $scope.cholesterols.maxValue);
+
+                    console.log("sweet " + $scope.sweet);
+                    console.log("sour " + $scope.sour);
+                    console.log("bitter " + $scope.bitter);
+                    console.log("spicy " + $scope.spicy);
+                    console.log("salty " + $scope.salty);
+
+                } else {
+
+                    $scope.disable_default = false;
+                    //use profile (default) data
+
+                }
+            }else{
+                $scope.notLogin_mainctrl = true;
+
+                console.log("User not Logged in");
+
+                $scope.disable_default = true;
+
+                $scope.user.vegetarian = false;
+                $scope.user.halal = false;
+                $scope.user.healthCond = null;
+                $scope.user.noIngredient = null;
+
+                //Nutrition Range
+                $scope.calories.minValue = 0;
+                $scope.calories.maxValue = 0;
+                $scope.proteins.minValue = 0;
+                $scope.proteins.maxValue = 0;
+                $scope.carb.minValue = 0;
+                $scope.carb.maxValue = 0;
+                $scope.fats.minValue = 0;
+                $scope.fats.maxValue = 0;
+                $scope.cholesterols.minValue = 0;
+                $scope.cholesterols.maxValue = 0;
+
+                //Taste
+                $scope.sweet = false;
+                $scope.sour = false;
+                $scope.bitter = false;
+                $scope.spicy = false;
+                $scope.salty = false;
             }
 
-            if (localStorage.defaultPref && checkBool(localStorage.defaultPref)) {
-                //override default data -- use data from side bar
+        }else{
 
-                //Set Nutrition
-                $scope.calories.minValue = parseInt(localStorage.calMin);
-                $scope.calories.maxValue = parseInt(localStorage.calMax);
-                $scope.proteins.minValue = parseInt(localStorage.proMin);
-                $scope.proteins.maxValue = parseInt(localStorage.proMax);
-                $scope.carb.minValue = parseInt(localStorage.carbMin);
-                $scope.carb.maxValue = parseInt(localStorage.carbMax);
-                $scope.fats.minValue = parseInt(localStorage.fatsMin);
-                $scope.fats.maxValue = parseInt(localStorage.fatsMax);
-                $scope.cholesterols.minValue = parseInt(localStorage.cholMin);
-                $scope.cholesterols.maxValue = parseInt(localStorage.cholMax);
+            $scope.notLogin_mainctrl = false;
 
-                $scope.disable_default = checkBool(localStorage.defaultPref);
+            getUserData.then(function (user) {
+                $scope.name = user;
 
-                $scope.sweet = checkBool(localStorage.sweet);
-                $scope.sour = checkBool(localStorage.sour);
-                $scope.bitter = checkBool(localStorage.bitter);
-                $scope.spicy = checkBool(localStorage.spicy);
-                $scope.salty = checkBool(localStorage.salty);
+                $scope.user.vegetarian = user[0].vegetarian;
+                $scope.user.halal = user[0].halal;
+                $scope.user.healthCond = user[0].healthCond;
+                $scope.user.noIngredient = user[0].noIngredient;
+                $scope.user.nutritionRange = user[0].nutritionRange;
+                $scope.user.tastePreference = user[0].tastePreference;
 
-                console.log("cal min= " + $scope.calories.minValue);
-                console.log("cal max= " + $scope.calories.maxValue);
-                console.log("pro min= " + $scope.proteins.minValue);
-                console.log("pro max= " + $scope.proteins.maxValue);
-                console.log("carb min= " + $scope.carb.minValue);
-                console.log("carb max= " + $scope.carb.maxValue);
-                console.log("fats min= " + $scope.fats.minValue);
-                console.log("fats max= " + $scope.fats.maxValue);
-                console.log("chol min= " + $scope.cholesterols.minValue);
-                console.log("chol max= " + $scope.cholesterols.maxValue);
+                //Nutrition Range
+                var nutrition_range = user[0].nutritionRange;
+                $scope.calories.minValue = nutrition_range[0].minValue;
+                $scope.calories.maxValue = nutrition_range[0].maxValue;
+                $scope.proteins.minValue = nutrition_range[1].minValue;
+                $scope.proteins.maxValue = nutrition_range[1].maxValue;
+                $scope.carb.minValue = nutrition_range[2].minValue;
+                $scope.carb.maxValue = nutrition_range[2].maxValue;
+                $scope.fats.minValue = nutrition_range[3].minValue;
+                $scope.fats.maxValue = nutrition_range[3].maxValue;
+                $scope.cholesterols.minValue = nutrition_range[4].minValue;
+                $scope.cholesterols.maxValue = nutrition_range[4].maxValue;
 
-                console.log("sweet " + $scope.sweet);
-                console.log("sour " + $scope.sour);
-                console.log("bitter " + $scope.bitter);
-                console.log("spicy " + $scope.spicy);
-                console.log("salty " + $scope.salty);
+                //Taste
+                $scope.sweet = user[0].tastePreference[0];
+                $scope.sour = user[0].tastePreference[1];
+                $scope.bitter = user[0].tastePreference[2];
+                $scope.spicy = user[0].tastePreference[3];
+                $scope.salty = user[0].tastePreference[4];
 
-            } else {
+                //Set Taste
+                function checkBool(str){
+                    if(str == 'true'){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
 
-                $scope.disable_default = false;
-                //use profile (default) data
+                if (localStorage.defaultPref && checkBool(localStorage.defaultPref)) {
+                    //override default data -- use data from side bar
 
-            }
+                    //Set Nutrition
+                    $scope.calories.minValue = parseInt(localStorage.calMin);
+                    $scope.calories.maxValue = parseInt(localStorage.calMax);
+                    $scope.proteins.minValue = parseInt(localStorage.proMin);
+                    $scope.proteins.maxValue = parseInt(localStorage.proMax);
+                    $scope.carb.minValue = parseInt(localStorage.carbMin);
+                    $scope.carb.maxValue = parseInt(localStorage.carbMax);
+                    $scope.fats.minValue = parseInt(localStorage.fatsMin);
+                    $scope.fats.maxValue = parseInt(localStorage.fatsMax);
+                    $scope.cholesterols.minValue = parseInt(localStorage.cholMin);
+                    $scope.cholesterols.maxValue = parseInt(localStorage.cholMax);
 
-        });
+                    $scope.disable_default = checkBool(localStorage.defaultPref);
+
+                    $scope.sweet = checkBool(localStorage.sweet);
+                    $scope.sour = checkBool(localStorage.sour);
+                    $scope.bitter = checkBool(localStorage.bitter);
+                    $scope.spicy = checkBool(localStorage.spicy);
+                    $scope.salty = checkBool(localStorage.salty);
+
+                    console.log("cal min= " + $scope.calories.minValue);
+                    console.log("cal max= " + $scope.calories.maxValue);
+                    console.log("pro min= " + $scope.proteins.minValue);
+                    console.log("pro max= " + $scope.proteins.maxValue);
+                    console.log("carb min= " + $scope.carb.minValue);
+                    console.log("carb max= " + $scope.carb.maxValue);
+                    console.log("fats min= " + $scope.fats.minValue);
+                    console.log("fats max= " + $scope.fats.maxValue);
+                    console.log("chol min= " + $scope.cholesterols.minValue);
+                    console.log("chol max= " + $scope.cholesterols.maxValue);
+
+                    console.log("sweet " + $scope.sweet);
+                    console.log("sour " + $scope.sour);
+                    console.log("bitter " + $scope.bitter);
+                    console.log("spicy " + $scope.spicy);
+                    console.log("salty " + $scope.salty);
+
+                } else {
+
+                    $scope.disable_default = false;
+                    //use profile (default) data
+
+                }
+
+            });
+        }
 
         $scope.model = {
             type: "double"
@@ -1440,16 +1550,18 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                 dishRecipe: $scope.dish_dialog_recipe,
                                 dishNutritions: $scope.dish_dialog_nutritions,
                                 dishUtensils: $scope.dish_dialog_utensils,
-                                dishPrice: price
+                                dishPrice: price,
+                                notLogin: $scope.notLogin_mainctrl
                             },
-                            controller: ['$scope', 'dishName', 'dishIngredients', 'dishUtensils', 'dishRecipe', 'dishNutritions', 'dishPrice', '$mdDialog',
-                                function ($scope, dishName, dishIngredients, dishUtensils, dishRecipe, dishNutritions, dishPrice, $mdDialog) {
+                            controller: ['$scope', 'dishName', 'dishIngredients', 'dishUtensils', 'dishRecipe', 'dishNutritions', 'dishPrice', '$mdDialog', 'notLogin',
+                                function ($scope, dishName, dishIngredients, dishUtensils, dishRecipe, dishNutritions, dishPrice, $mdDialog, notLogin) {
                                     $scope.dishName = dishName;
                                     $scope.dishIngredients = dishIngredients;
                                     $scope.dishRecipe = dishRecipe;
                                     $scope.dishNutritions = dishNutritions;
                                     $scope.dishPrice = dishPrice;
                                     $scope.dishUtensils = dishUtensils;
+                                    $scope.notLogin = notLogin;
 
                                     $scope.hide = function () {
                                         current_ingredient_onchange = [];
@@ -1542,26 +1654,128 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     $scope.addToCart = function (dish_name, dish_quantity) {
 
 
-                                        if (dish_quantity == 0) {
+                                        if(notLogin){
 
-                                            console.log("can't add to cart")
+                                            var toast = $mdToast.show( $mdToast.simple()
+                                                .textContent('Please Login')
+                                                .hideDelay(3000)
+                                                .position('bottom right')
+                                                .action('OK')
+                                                .highlightAction(true)
+                                                .highlightClass('md-warn')// Accent is used by default, this just demonstrates the usage.
+                                                .parent(angular.element(document.body))
+                                                //.position(pinTo);
+                                            );
 
-                                        } else {
+
+                                            // $mdToast.show(
+                                            //     $mdToast.simple()
+                                            //         //.textContent('Hello World!')
+                                            //         .hideDelay(3000)
+                                            //         .position('bottom right')
+                                            //         // .templateUrl('toast-template.html')
+                                            //
+                                            // );
+
+                                            // $mdToast.show({
+                                            //     hideDelay   : 3000,
+                                            //     //parent: angular.element(document.body),
+                                            //     position    : 'top right',
+                                            //     templateUrl : 'toast-template.html',
+                                            //     controller: ['$scope', '$mdDialog', '$mdToast',
+                                            //     function ($scope, $mdToast, $mdDialog) {
+                                            //         $scope.closeToast = function() {
+                                            //             if (isDlgOpen) return;
+                                            //
+                                            //             $mdToast
+                                            //                 .hide()
+                                            //                 .then(function() {
+                                            //                     isDlgOpen = false;
+                                            //                 });
+                                            //         };
+                                            //
+                                            //         $scope.openMoreInfo = function(e) {
+                                            //             if ( isDlgOpen ) return;
+                                            //             isDlgOpen = true;
+                                            //
+                                            //             $mdDialog
+                                            //                 .show($mdDialog
+                                            //                     .alert()
+                                            //                     .title('More info goes here.')
+                                            //                     .textContent('Something witty.')
+                                            //                     .ariaLabel('More info')
+                                            //                     .ok('Got it')
+                                            //                     .targetEvent(e)
+                                            //                 )
+                                            //                 .then(function() {
+                                            //                     isDlgOpen = false;
+                                            //                 })
+                                            //         };
+                                            //     }]
+                                            // });
+
+                                        }else{
+
+                                            if (dish_quantity == 0) {
+
+                                                console.log("can't add to cart")
+
+                                            } else {
 
 
-                                            //add temp ingredient list to basket
+                                                //add temp ingredient list to basket
 
-                                            for (var j = 0; j < current_ingredient_onchange.length; j++) {
-                                                // current_ingredient.push(current_ingredient_onchange[j])
-                                                if (current_ingredient.length > 0) {
+                                                for (var j = 0; j < current_ingredient_onchange.length; j++) {
+                                                    // current_ingredient.push(current_ingredient_onchange[j])
+                                                    if (current_ingredient.length > 0) {
+                                                        var flag = true, i = 0;
+                                                        console.log("starting, i=" + i);
+                                                        while (flag && i < current_ingredient.length) {
+                                                            if (current_ingredient[i].name == current_ingredient_onchange[j].name) {
+                                                                //console.log("in if update, i=" + i);
+                                                                current_ingredient[i]["amount"] = current_ingredient[i]["amount"] + current_ingredient_onchange[j].amount;
+                                                                //console.log("Update " + current_ingredient[i].name + "'s quantity to " + current_ingredient_onchange[j]["amount"]);
+                                                                //console.log(current_dish);
+                                                                flag = false;
+                                                            } else {
+
+                                                            }
+                                                            i++;
+                                                            //console.log("after increment, i=" + i);
+                                                        }
+
+                                                        if (i == current_ingredient.length && flag) {
+                                                            current_ingredient.push(current_ingredient_onchange[j]);
+                                                            //console.log("Push " + current_ingredient_onchange[j].name + " X " + current_ingredient_onchange[j].amount + " to current_ingredient array")
+                                                            //console.log("in if push, i=" + i);
+                                                        }
+
+                                                    } else {
+                                                        current_ingredient.push(current_ingredient_onchange[j]);
+                                                        //console.log("empty array");
+                                                    }
+                                                }
+
+                                                // console.log("current_ingredient= ")
+                                                // console.log(current_ingredient);
+
+                                                var dish_obj = {
+                                                    "name": dish_name,
+                                                    "amount": dish_quantity,
+                                                    "price": $scope.dishPrice
+                                                };
+
+                                                //console.log(dish_obj);
+                                                //console.log("length=" + current_dish.length);
+
+                                                if (current_dish.length > 0) {
                                                     var flag = true, i = 0;
-                                                    console.log("starting, i=" + i);
-                                                    while (flag && i < current_ingredient.length) {
-                                                        if (current_ingredient[i].name == current_ingredient_onchange[j].name) {
+                                                    //console.log("starting, i=" + i);
+                                                    while (flag && i < current_dish.length) {
+                                                        if (current_dish[i].name == dish_name) {
                                                             //console.log("in if update, i=" + i);
-                                                            current_ingredient[i]["amount"] = current_ingredient[i]["amount"] + current_ingredient_onchange[j].amount;
-                                                            //console.log("Update " + current_ingredient[i].name + "'s quantity to " + current_ingredient_onchange[j]["amount"]);
-                                                            //console.log(current_dish);
+                                                            current_dish[i]["amount"] = current_dish[i]["amount"] + dish_quantity;
+                                                            //console.log("Update " + dish_name + "'s quantity to " + current_dish[i]["amount"]);
                                                             flag = false;
                                                         } else {
 
@@ -1570,72 +1784,34 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                         //console.log("after increment, i=" + i);
                                                     }
 
-                                                    if (i == current_ingredient.length && flag) {
-                                                        current_ingredient.push(current_ingredient_onchange[j]);
-                                                        //console.log("Push " + current_ingredient_onchange[j].name + " X " + current_ingredient_onchange[j].amount + " to current_ingredient array")
-                                                        //console.log("in if push, i=" + i);
+                                                    if (i == current_dish.length && flag) {
+                                                        current_dish.push(dish_obj);
+                                                        /*console.log("Push " + dish_name + " X " + dish_quantity + " to current_dish array")
+                                                         console.log("in if push, i=" + i);*/
                                                     }
 
                                                 } else {
-                                                    current_ingredient.push(current_ingredient_onchange[j]);
-                                                    //console.log("empty array");
-                                                }
-                                            }
-
-                                            // console.log("current_ingredient= ")
-                                            // console.log(current_ingredient);
-
-                                            var dish_obj = {
-                                                "name": dish_name,
-                                                "amount": dish_quantity,
-                                                "price": $scope.dishPrice
-                                            };
-
-                                            //console.log(dish_obj);
-                                            //console.log("length=" + current_dish.length);
-
-                                            if (current_dish.length > 0) {
-                                                var flag = true, i = 0;
-                                                //console.log("starting, i=" + i);
-                                                while (flag && i < current_dish.length) {
-                                                    if (current_dish[i].name == dish_name) {
-                                                        //console.log("in if update, i=" + i);
-                                                        current_dish[i]["amount"] = current_dish[i]["amount"] + dish_quantity;
-                                                        //console.log("Update " + dish_name + "'s quantity to " + current_dish[i]["amount"]);
-                                                        flag = false;
-                                                    } else {
-
-                                                    }
-                                                    i++;
-                                                    //console.log("after increment, i=" + i);
-                                                }
-
-                                                if (i == current_dish.length && flag) {
                                                     current_dish.push(dish_obj);
-                                                    /*console.log("Push " + dish_name + " X " + dish_quantity + " to current_dish array")
-                                                     console.log("in if push, i=" + i);*/
+                                                    /*console.log("empty array");
+                                                     console.log("Push " + dish_name + " X " + dish_quantity + " to current_dish array")*/
+
                                                 }
 
-                                            } else {
-                                                current_dish.push(dish_obj);
-                                                /*console.log("empty array");
-                                                 console.log("Push " + dish_name + " X " + dish_quantity + " to current_dish array")*/
+                                                //console.log("Adding "+name+" X"+$scope.dish_quantity+" to cart")
+                                                $scope.dish_quantity = 1;
+                                                //$scope.answer('');
+
+                                                //console.log(current_dish);
+                                                $mdDialog.hide();
 
                                             }
 
-                                            //console.log("Adding "+name+" X"+$scope.dish_quantity+" to cart")
-                                            $scope.dish_quantity = 1;
-                                            //$scope.answer('');
-
-                                            //console.log(current_dish);
-                                            $mdDialog.hide();
+                                            localStorage.setItem('current_dish', JSON.stringify(current_dish));
+                                            //console.log(localStorage.current_dish);
+                                            localStorage.setItem('current_ingredient', JSON.stringify(current_ingredient));
+                                            //console.log(localStorage.current_ingredient);
 
                                         }
-
-                                        localStorage.setItem('current_dish', JSON.stringify(current_dish));
-                                        //console.log(localStorage.current_dish);
-                                        localStorage.setItem('current_ingredient', JSON.stringify(current_ingredient));
-                                        //console.log(localStorage.current_ingredient);
 
                                     };
 
