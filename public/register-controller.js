@@ -169,8 +169,13 @@ app2.controller('formCtrl', function ($scope, $http) {
                 dialog.open();
             }
 
-        } else {
+        } else if(err == "incomplete"){
             var dialog = document.getElementById("incomplete");
+            if (dialog) {
+                dialog.open();
+            }
+        }else {
+            var dialog = document.getElementById("noProfilePic");
             if (dialog) {
                 dialog.open();
             }
@@ -197,9 +202,14 @@ app2.controller('formCtrl', function ($scope, $http) {
                 $scope.register.email == "" ||
                 $scope.register.address[0].name == "" ||
                 $scope.register.address[2].name == "" ||
-                $scope.register.address[3].name == "")
+                $scope.register.address[3].name == "" ||
+                $scope.register.profilePicture == null)
             {
-                $scope.showFailed("Incomplete Credentials!");
+                if($scope.register.profilePicture == null){
+                    $scope.showFailed("No Profile Picture!");
+                }else{
+                    $scope.showFailed("Incomplete Credentials!");
+                }
             } else {
                 //alert("Ready to Submit!");
                 if($scope.register.profilePicture.lastModified != null){

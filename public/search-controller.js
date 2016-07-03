@@ -544,8 +544,8 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
         $scope.user = {
             vegetarian: "",
             halal: "",
-            healthCond: "",
-            noIngredient: "",
+            healthCond: null,
+            noIngredient: null,
             tastePreference: null,
             sweet: "",
             sour: "",
@@ -743,7 +743,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                 }
             } else {
 
-                //User had never searched before
+                //User has never searched before
 
                 $scope.notLogin_mainctrl = true;
 
@@ -789,11 +789,21 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
                 $scope.user.vegetarian = user[0].vegetarian;
                 $scope.user.halal = user[0].halal;
-                $scope.user.healthCond = user[0].healthCond;
-                $scope.user.noIngredient = user[0].noIngredient;
+
+                if(user[0].healthCond == null){
+                    $scope.user.healthCond == null;
+                }else{
+                    $scope.user.healthCond = user[0].healthCond;
+                }
+
+                if(user[0].noIngredient == null){
+                    $scope.user.noIngredient == null;
+                }else{
+                    $scope.user.noIngredient = user[0].noIngredient;
+                }
+
                 $scope.user.nutritionRange = user[0].nutritionRange;
                 $scope.user.tastePreference = user[0].tastePreference;
-
                 //Nutrition Range
                 var nutrition_range = user[0].nutritionRange;
                 $scope.calories.minValue = nutrition_range[0].minValue;
@@ -1052,11 +1062,12 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                 suggested = temp_suggested;
                                 temp_suggested = [];
                                 //loop through suggested
-                                if ($scope.user.healthCond == null)  //no health condition
+                                if ($scope.user.healthCond.length == 1)  //no health condition, always at least 1 element (null)
                                 {
+                                    console.log("no healthcond");
                                     temp_suggested = suggested; //push all back to temp
                                 }
-                                else if ($scope.user.healthCond.length > 0) // if health condition exists
+                                else if ($scope.user.healthCond.length > 1) // if health condition exists
                                 {
                                     for (var j = 0; j < $scope.user.healthCond.length; j++) //loop all health conditions
                                     {
@@ -1092,29 +1103,37 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     temp_suggested = [];
 
                                     //check noIngredient
-                                    for (var k = 0; k < suggested.length; k++) //loop all no Ingredient
-                                    {
-                                        var noIng_exist = false;
+                                    if($scope.user.noIngredient.length == 1) {  //only 1 element (null)
+                                        console.log("no ingredient");
+                                        temp_suggested = suggested; //push all back to temp
+                                    }
+                                    else if($scope.user.noIngredient.length>1){
+                                        for (var k = 0; k < suggested.length; k++) //loop for all no Ingredient
+                                        {
+                                            var noIng_exist = false;
 
-                                        if ($scope.user.noIngredient == null) {
-                                            //$scope.user.noIngredient = []
-                                        } else {
-                                            for (var j = 0; j < $scope.user.noIngredient.length; j++)  // loop all remaining dish
-                                            {
-                                                for (var l = 0; l < suggested[k].ingredients.length; l++)  //loop through all tastes of each dish
+                                            /*if ($scope.user.noIngredient[0] == null) {
+                                                console.log("no ingredient");
+                                                //$scope.user.noIngredient = []
+                                            }else if ($scope.user.noIngredient.length > 0){*/
+                                                for (var j = 0; j < $scope.user.noIngredient.length; j++)  // loop all remaining dish
                                                 {
-                                                    if (suggested[k].ingredients[l]["name"] == $scope.user.noIngredient[j]) {
-                                                        noIng_exist = true;
+                                                    for (var l = 0; l < suggested[k].ingredients.length; l++)  //loop through all ingredients of each dish
+                                                    {
+                                                        if (suggested[k].ingredients[l]["name"] == $scope.user.noIngredient[j]) {
+                                                            noIng_exist = true;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            if (!noIng_exist) //push dish only if noIng does not exist
-                                            {
-                                                temp_suggested.push(suggested[k]);
-                                            }
-                                        }
+                                                if (!noIng_exist) //push dish only if noIng does not exist
+                                                {
+                                                    temp_suggested.push(suggested[k]);
+                                                }
+                                            /*}*/
 
+                                        }
                                     }
+
 
                                 }
                                 /*console.log("after THIRD suggested");

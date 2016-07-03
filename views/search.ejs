@@ -552,16 +552,9 @@
             $('a#login').text(localStorage.loginChefAtHomefirstname);
             $('a#login_collapse').text(localStorage.loginChefAtHomefirstname);
             $('#login_icon').addClass('login_icon2').removeClass('login_icon');
-            $('a#feedback_link').removeAttr('href');
-            $('a#order_link').removeAttr('href');
             setTimeout(checklogin(), 3000);
         } else {
             //window.location.href = "http://localhost:4000/";
-        }
-
-        if(localStorage.loginChefAtHomeEmail){
-
-        }else{
             $('a#feedback_link').removeAttr('href');
             $('a#order_link').removeAttr('href');
         }
@@ -614,10 +607,10 @@
                             <div class="col-sm-4">
                                 <ul class="nav navbar-nav pull-right">
 
-                                    <li><a href="http://localhost:4000/order" class="menubar">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    <li><a href="http://localhost:4000/order" class="menubar" id="order_link">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </li>
 
-                                    <li><a href="http://localhost:4000/feedback" class="menubar">Feedback</a></li>
+                                    <li><a href="http://localhost:4000/feedback" class="menubar" id="feedback_link">Feedback</a></li>
 
                                 </ul>
 
