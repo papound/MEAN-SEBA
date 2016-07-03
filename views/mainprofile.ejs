@@ -314,57 +314,6 @@
             padding-top: 50px !important;
         }
 
-        /*Test Chips*/
-
-        /*Drag n' Drop*/
-        .bin {
-            min-height: 5px;
-            /*min-width: 140px;*/
-            max-width: 120px;
-            max-height: 250px;
-            float: left;
-            border: 2px solid #d9edf7;
-            padding: 10px;
-            color: #31708f;
-            font-size: 15px;
-            text-align: center;
-            margin: 0 5px;
-        }
-
-        .bin_inside {
-            min-height: 50px;
-            min-width: 100px;
-            padding-left: 7px;
-            float: right;
-            color: #31708f;
-            max-width: 125px;
-        }
-
-        .tasteItem {
-            font-size: 15px;
-            text-align: center;
-            margin: 0 5px;
-            border: 1px solid slategray;
-            margin-top: 2px;
-            padding-top: 2px;
-            min-height: 30px;
-            min-width: 60px;
-            max-height: 30px;
-            max-width: 60px;
-            background: aliceblue;
-            transition: all 0.2s ease;
-        }
-
-        .drag {
-            opacity: 0.5;
-        }
-
-        .login_icon2 {
-            position: fixed;
-            top: inherit;
-            right: 145px;
-        }
-
         /*Footer*/
         section#contact {
             padding: 50px;
@@ -441,7 +390,7 @@
                                     <li><a href="http://localhost:4000/order" class="menubar">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </li>
 
-                                    <li><a href="#" class="menubar">Feedback</a></li>
+                                    <li><a href="http://localhost:4000/feedback" class="menubar">Feedback</a></li>
 
                                 </ul>
 
@@ -535,11 +484,11 @@
                         <paper-dialog id="afterLogin" class="size-position">
                             <!--<h2>Welcome! {[{ firstname }]}</h2>-->
                             <!--<br><br>-->
-                            <div class="col-sm-6 col-centered">
+                            <div class="col-sm-6">
                                 <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                                 </md-button>
                             </div>
-                            <div class="col-sm-6 col-centered">
+                            <div class="col-sm-6">
                                 <md-button class="md-warn" ng-click="signout()">Sign Out
                                 </md-button>
                             </div>
@@ -562,16 +511,16 @@
                                 data-target="#navbar_collapse"><span class="sr-only">Toggle navigation</span> <span
                                     class="icon-bar first"></span> <span class="icon-bar hide-bar"></span> <span
                                     class="icon-bar last"></span></button>
-                        <a class="navbar-brand" href="index-x.html" id="bellafirenze-sm"></a>
+                        <a class="navbar-brand" href="http://localhost:4000" id="bellafirenze-sm"></a>
                     </div>
                     <!-- /.Navbar Header -->
                     <!-- Navbar Collapse -->
                     <div class="collapse navbar-collapse" id="navbar_collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#menu">Menu</a></li>
-                            <li><a href="#ingredient">Ingredient</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="http://localhost:4000">Home</a></li>
+                            <li><a href="http://localhost:4000/search">Menu</a></li>
+                            <li><a href="http://localhost:4000/order" id="order_list">Order</a></li>
+                            <li><a href="http://localhost:4000/feedback" id="feedback_list">Feedback</a></li>
                             <li><a href="#" data-dialog="dialog" onclick="clickHandler(event)"
                                    id="login_collapse">Login</a>
                             </li>

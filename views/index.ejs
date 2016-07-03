@@ -193,7 +193,7 @@
             //$('a#login').removeAttr("onclick");
 
             $('a#login').removeAttr('href');
-            $('a#login_collapse').text("Welcome! " + email);
+            $('a#login_collapse').text(firstname);
             $('a#login_collapse').removeAttr("onclick");
             $('a#login_collapse').removeAttr('href');
             $('#login_icon').addClass('login_icon2').removeClass('login_icon');
@@ -320,11 +320,11 @@
                         <paper-dialog id="afterLogin" class="size-position">
                             <!--<h2>Welcome! {[{ firstname }]}</h2>-->
                             <!--<br><br>-->
-                            <div class="col-sm-6 col-centered">
+                            <div class="col-sm-6">
                                 <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                                 </md-button>
                             </div>
-                            <div class="col-sm-6 col-centered">
+                            <div class="col-sm-6">
                                 <md-button class="md-warn" ng-click="signout()">Sign Out
                                 </md-button>
                             </div>
@@ -377,8 +377,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">Home</a></li>
                             <li><a href="http://localhost:4000/search">Menu</a></li>
-                            <li><a href="#ingredient" id="order_link">Order</a></li>
-                            <li><a href="#" id="feedback_link">Feedback</a></li>
+                            <li><a href="http://localhost:4000/order" id="order_link">Order</a></li>
+                            <li><a href="http://localhost:4000/feedback" id="feedback_link">Feedback</a></li>
                             <li><a href="#" data-dialog="dialog" onclick="clickHandler(event)"
                                    id="login_collapse">Login</a>
                             </li>
@@ -451,7 +451,7 @@
                 </p>
                 <p class="lead-sm mrgn-30-top-btm">Choose your favourite dishes & we deliver the ingredients right to
                     your doorsteps!</p>
-                <p class="lead-sm mrgn-30-top-btm">Don't hesitate to Contact us or Sign up :)</p>
+                <p class="lead-sm mrgn-30-top-btm">Don't hesitate to Contact us or <a href="http://localhost:4000/register" class="menubar">Sign up </a>:)</p>
             </div>
             <!-- About us description -->
         </div>

@@ -265,7 +265,7 @@
 
 </head>
 
-<body data-gr-c-s-loaded="true" onclick="clickHandler(event)">
+<body data-gr-c-s-loaded="true" onclick="clickHandler(event)" id="all_modules">
 
 <script>
     $(document).ready(function () {
@@ -362,32 +362,85 @@
             </div>
 
             <!--Login Dialog-->
-            <div class="visible-sm visible-xs visible-md visible-lg">
-                <paper-dialog id="login" class="size-position">
+            <div class="visible-sm visible-xs visible-md visible-lg" ng-controller="loginCtrl">
+                <paper-dialog id="dialog" class="size-position">
                     <h2>Login</h2>
-                    <paper-input label="&nbsp;&nbsp;Username" id="inputWithButton">
-                        <iron-icon icon="social:person" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <paper-input label="&nbsp;&nbsp;Password" id="inputWithButton2" type="password">
-                        <iron-icon icon="icons:https" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput2()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <br><br>
+                    <!--<paper-input label="&nbsp;&nbsp;Username" id="inputWithButton" ng-model="user.email">-->
+                    <!--<iron-icon icon="social:person" prefix></iron-icon>-->
+                    <!--<paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">-->
+                    <!--</paper-icon-button>-->
+                    <!--</paper-input>-->
+                    <br>
+                    <div class="login_input">
+                        <md-input-container class="md-icon-float md-block">
+                            <!-- Use floating label instead of placeholder -->
+                            <label>Email</label>
+                            <md-icon md-svg-src="images/svg/ic_person_24px.svg" class="name"></md-icon>
+                            <input ng-model="user.email" type="text">
+                        </md-input-container>
+
+                        <md-input-container class="md-icon-float md-block">
+                            <!-- Use floating label instead of placeholder -->
+                            <label>Password</label>
+                            <md-icon md-svg-src="images/svg/ic_lock_black_24px.svg" class="name"></md-icon>
+                            <input ng-model="user.password" type="password">
+                        </md-input-container>
+                    </div>
+
                     <div class="row in-login-popup">
                         <div class="col-sm-6 col-centered">
-                            <paper-button raised class="green">Login</paper-button>
+                            <md-button class="md-raised md-primary" ng-click="login()">Login
+                            </md-button>
                         </div>
                         <div class="col-sm-6 col-centered">
-                            <paper-button raised class="grey">Clear</paper-button>
+                            <md-button class="md-raised" ng-click="closeDialog()">Cancel
+                            </md-button>
                         </div>
                     </div>
+                    <div id="my-signin2" data-onsuccess=""></div>
                     <br>
-                    <a href="#">Not a member? Please Register Here!</a>
+                    <a href="http://localhost:4000/register">Not a member? Please Register Here!</a>
                     <br><br>
                 </paper-dialog>
+
+                <!--After Login-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="afterLogin" class="size-position">
+                        <!--<h2>Welcome! {[{ firstname }]}</h2>-->
+                        <!--<br><br>-->
+                        <div class="col-sm-6">
+                            <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
+                            </md-button>
+                        </div>
+                        <div class="col-sm-6">
+                            <md-button class="md-warn" ng-click="signout()">Sign Out
+                            </md-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
+                <!--Invalid Credentials-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="incomplete">
+                        <h2>Invalid Credentials!</h2>
+                        <p>Your information is incomplete!</p>
+                        <div class="buttons">
+                            <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
+                <!--Invalid Credentials-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="login-failed">
+                        <h2>Invalid email or password!</h2>
+                        <p>Please type it again!</p>
+                        <div class="buttons">
+                            <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
             </div>
 
 
@@ -404,7 +457,7 @@
                             data-target="#navbar_collapse"><span class="sr-only">Toggle navigation</span> <span
                                 class="icon-bar first"></span> <span class="icon-bar hide-bar"></span> <span
                                 class="icon-bar last"></span></button>
-                    <a class="navbar-brand" href="index-x.html" id="bellafirenze-sm"></a>
+                    <a class="navbar-brand" href="http://localhost:4000" id="bellafirenze-sm"></a>
                 </div>
                 <!-- /.Navbar Header -->
                 <!-- Navbar Collapse -->
@@ -448,7 +501,7 @@
 <!-- Full Menu List -->
 <section id="menu-list">
     <div class="container">
-        <div id="all_modules" layout="column" ng-cloak class="md-inline-form">
+        <div layout="column" ng-cloak class="md-inline-form">
 
             <!-- Title & Divider -->
             <div class="row">
@@ -792,11 +845,6 @@
 <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
 
-<!-- Angular Slider-->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
-<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
 
 </body>
 </html>

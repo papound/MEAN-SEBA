@@ -61,7 +61,7 @@ app2.controller('loginCtrl',['$scope', function ($scope) {
 
     $scope.openProfile = function () {
         setTimeout(1000);
-        window.location.href = "http://localhost:4000/main-profile"
+        window.location.href = "http://localhost:4000/main-profile";
     };
 
 }]);

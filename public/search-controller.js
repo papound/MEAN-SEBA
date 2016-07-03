@@ -7,8 +7,11 @@ var url = "http://localhost:4000";
 
 var notLogin = false;
 
-if(!localStorage.loginChefAtHomeEmail){
+if (!localStorage.loginChefAtHomeEmail) {
     notLogin = true;
+    console.log('not logged in')
+} else {
+    console.log("logged in " + localStorage.loginChefAtHomeEmail)
 }
 
 app2.factory('getUserData', ['$http', function ($http) {
@@ -27,16 +30,16 @@ app2.factory('getUserData', ['$http', function ($http) {
         });
 }]);
 
-app2.controller('loginCtrl',['$scope', function ($scope) {
+app2.controller('loginCtrl', ['$scope', '$http', function ($scope, $http) {
 
     console.log(localStorage.loginChefAtHomefirstname);
 
     $scope.firstname = localStorage.loginChefAtHomefirstname;
 
     $scope.signout = function () {
-        console.log("email before signout="+localStorage.loginChefAtHomeEmail);
+        console.log("email before signout=" + localStorage.loginChefAtHomeEmail);
         localStorage.removeItem('loginChefAtHomeEmail');
-        console.log("email after signout="+localStorage.loginChefAtHomeEmail);
+        console.log("email after signout=" + localStorage.loginChefAtHomeEmail);
         //localStorage.removeItem('current_ingredient');
         setTimeout(1000);
         window.location.href = "http://localhost:4000/"
@@ -45,6 +48,56 @@ app2.controller('loginCtrl',['$scope', function ($scope) {
     $scope.openProfile = function () {
         setTimeout(1000);
         window.location.href = "http://localhost:4000/main-profile"
+    };
+
+    $scope.login = function () {
+
+        if ($scope.user.email == "" || $scope.user.password == "") {
+            $scope.showFailed("Incomplete Credentials!");
+        } else {
+            //alert("Ready to Submit!");
+            return $http.post(url + "/api/authenticate", {
+                email: $scope.user.email,
+                password: $scope.user.password
+            }).then(function (response) {
+                if (response.data.success == "true") {
+                    console.log(response.data.success);
+                    localStorage.loginChefAtHomeEmail = $scope.user.email;
+                    localStorage.loginChefAtHomefirstname = response.data.firstname;
+                    localStorage.jwtChefAtHome = response.data.token;
+                    window.location.href = "http://localhost:4000"
+                    //console.log("LocalStorage: " + localStorage.loginChefAtHomeEmail);
+                } else {
+                    $scope.showFailed("Login Failed");
+                    $scope.user.email = ''
+                    $scope.user.password = ''
+                }
+
+            });
+        }
+    }
+
+    $scope.showFailed = function (err) {
+        if (err == "Incomplete Credentials!") {
+
+            var dialog = document.getElementById("incomplete");
+            if (dialog) {
+                dialog.open();
+            }
+
+        } else {
+            var dialog = document.getElementById("login-failed");
+            if (dialog) {
+                dialog.open();
+            }
+        }
+    };
+
+    $scope.closeDialog = function () {
+        var dialog = document.getElementById("dialog");
+        if (dialog) {
+            dialog.close();
+        }
     };
 
 }]);
@@ -102,6 +155,22 @@ app2.factory('getFeedbackDishData', ['$http', function ($http) {
 }]);
 
 app2.factory('getSuggestedDishData', ['$http', function ($http) {
+    //Create request for User data then send it to other Controller
+    //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
+    var this_email = "";
+    if (localStorage.loginChefAtHomeEmail) {
+        this_email = localStorage.loginChefAtHomeEmail;
+    } else {
+        //window.location.href = "http://localhost:4000/"
+    }
+    return $http.post(url + "/list/feedback_dish")
+        .then(function (response) {
+            //console.log("hello world");
+            //console.log(response.data);
+            return response.data;
+        });
+}]);
+app2.factory('getDishDataByPrice', ['$http', function ($http) {
     //Create request for User data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
     var this_email = "";
@@ -253,6 +322,175 @@ app2.directive("angularRatings", function () {
     }
 })();
 
+// (function () {
+/*'use strict';
+    app2
+    //.module('MyApp',['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+        .controller('DemoCtrl', DemoCtrl);
+
+    /*auto complete test*/
+/*function DemoCtrl($scope, $timeout, $q, $log, getDishDataByPrice) {
+
+        function newState(state) {
+            alert("Sorry! You'll need to create a Constituion for " + state + " first!");
+        }
+
+        // ******************************
+        // Internal methods
+        // ******************************
+
+        /!**
+         * Search for states... use $timeout to simulate
+         * remote dataservice call.
+         *!/
+        function querySearch(query) {
+            var results = query ? self.states.filter(createFilterFor(query)) : self.states,
+                deferred;
+            if (self.simulateQuery) {
+                deferred = $q.defer();
+                $timeout(function () {
+                    deferred.resolve(results);
+                }, Math.random() * 1000, false);
+                return deferred.promise;
+            } else {
+                return results;
+            }
+        }
+
+        function searchTextChange(text) {
+            $log.info('Text changed to ' + text);
+        }
+
+        function selectedItemChange(item) {
+            $log.info('Item changed to ' + JSON.stringify(item));
+        }
+
+        /!**
+         * Build `states` list of key/value pairs
+         *!/
+
+        $scope.loadAll = function() {
+
+            console.log("Start loadAll");
+
+            //$scope.get_dish_name();
+
+            var allStates = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
+              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
+              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
+              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
+              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
+              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
+              Wisconsin, Wyoming";
+
+            // allStates = "Spaghetti Bolognese, Apple Almond Yogurt, Chicken Salad Sandwich, Cappuccino cake,\ " +
+            //     "Tuna salad, Tomato soup, Spinach soup, Soft brownie, Banana Honey Pancakes, Cream puff,\ " +
+            //     "Tomatoes and egg, Dark Chocolate Cupcakes, Grilled Salmon Salad, Squash soup, Fried rice,\ " +
+            //     "Japanese Chicken Curry, Matcha ice cream, Grilled corn with miso butter,\ " +
+            //     "Strawberry popsicles, Tempura zucchini sticks, Asparagus sald, Mango salad with popcorn, Russian salad,\ " +
+            //     "Japnanese seaweed salad, Dal soup, Creamy mushroom soup, Sweet potato soup, Classic pad thai,\ " +
+            //     "Smoked salmon pizza, Pork steak with fries, Linguine with lobster, Salmon & broccoli, Indian chicken curry,\ " +
+            //     "Classic schnitzel, Roasted goose, Alonzo Cheeseburger";
+
+            if(localStorage.dish_name_string){
+                allStates = localStorage.dish_name_string;
+            }else{
+
+            }
+
+            /!*console.log('allStates');
+            console.log(allStates);*!/
+
+            return allStates.split(/, +/g).map(function (state) {
+                return {
+                    value: state.toLowerCase(),
+                    display: state
+                };
+            });
+        };
+
+        $scope.get_dish_name = function () {
+
+            console.log("Start get_dish_name");
+            var dish_name_string = "";
+            getDishDataByPrice.then(function (dish) { //getDishDataByPrice to obtain dish data
+                //sort alphabetically
+                function sort_name(a, b) {
+                    if (a.name > b.name) {
+                        return 1;
+                    }
+                    if (a.name < b.name) {
+                        return -1;
+                    }
+                    return 0;
+                }
+
+                dish = dish.sort(sort_name);
+
+
+                for (var i = 0; i < dish.length; i++) {
+                    if (i < dish.length - 1) {
+                        dish_name_string = dish_name_string + dish[i].name + ", ";
+                    } else if (i == dish.length - 1) {
+                        dish_name_string = dish_name_string + dish[i].name;
+                    }
+                }
+
+                localStorage.setItem('dish_name_string', dish_name_string);
+
+                //console.log(localStorage.dish_name_string);
+
+                var allStates = dish_name_string ;
+                console.log("End get_dish_name");
+                // $scope.loadAll();
+                /!*if(localStorage.dish_name_string){
+                 allStates = localStorage.dish_name_string;
+                 }else{
+
+                 }*!/
+
+                console.log('allStates=');
+                console.log(allStates);
+
+                return allStates.split(/, +/g).map(function (state) {
+                    return {
+                        value: state.toLowerCase(),
+                        display: state
+                    };
+                });
+
+            });
+
+        };
+
+        /!**
+         * Create filter function for a query string
+         *!/
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+
+            return function filterFn(state) {
+                return (state.value.indexOf(lowercaseQuery) === 0);
+            };
+        }
+
+        var self = this;
+
+        self.simulateQuery = false;
+        self.isDisabled = false;
+
+        // list of `state` value/display objects
+        // self.states = $scope.loadAll();
+        self.states = $scope.get_dish_name();
+        self.querySearch = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange = searchTextChange;
+
+        self.newState = newState;
+
+    }*/
+// })();
+
 
 //var to localStorage
 //localStorage.setItem('current_dish', JSON.stringify(current_dish));
@@ -265,8 +503,8 @@ console.log('local_current_ingredient: ', JSON.parse(retrieve_ingredient));
 //End var to localStorage
 
 
-app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish', 'getFeedbackDishData', 'getSuggestedDishData', 'getIngredients', '$mdDialog', '$http', '$mdToast', '$document',
-    function ($scope, getUserData, getRecommended, getDish, getFeedbackDishData, getSuggestedDishData, getIngredients, $mdDialog, $http, $mdToast, $document, $route, $rootScope, $timeout, $modal) {
+app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish', 'getFeedbackDishData', 'getSuggestedDishData', 'getDishDataByPrice', 'getIngredients', '$mdDialog', '$http', '$mdToast', '$document',
+    function ($scope, getUserData, getRecommended, getDish, getFeedbackDishData, getSuggestedDishData, getDishDataByPrice, getIngredients, $mdDialog, $http, $mdToast, $document, $route, $rootScope, $timeout, $modal) {
 
         $scope.dish_only_name = [];
         $scope.dish_recommended = [];
@@ -339,9 +577,9 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
          $scope.best3.rating = "";
          $scope.best4.rating = "";*/
 
-        // getUserData.then(function (user) {
-        //
-        // });
+        //Get Dish by Price
+        $scope.priceRange = [1, 19];
+        $scope.price_order = "";
 
         $scope.formStatus = true;
         //Slider
@@ -398,6 +636,10 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
         $scope.full_ingredients_str = "";
 
+        $scope.printDefaultPref = function () {
+            console.log($scope.defaultPref);
+        };
+
 
         //Side Navbar
         $scope.sweet = "";
@@ -406,33 +648,54 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
         $scope.spicy = "";
         $scope.salty = "";
 
-        // if(localStorage.defaultPref){
-        //     $scope.disable_default = localStorage.defaultPref;
-        // }else{
-        //     $scope.disable_default = false;
-        // }
+        $scope.defaultPref = false;
+
+        if (localStorage.defaultPref) {
+
+            //noinspection JSAnnotator
+            function checkBool(str) {
+                if (str == 'true') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            $scope.defaultPref = checkBool(localStorage.defaultPref);
+        } else {
+            $scope.defaultPref = false;
+        }
 
         $scope.notLogin_mainctrl = false;
 
-        if(notLogin == true){
+        //Check User Login
+
+        if (notLogin == true) {
+
+            //User hasn't logged in
 
             $scope.notLogin_mainctrl = true;
 
-            if(localStorage.defaultPref != null){
+            //Check if user has already searched or not
+
+            if (localStorage.defaultPref != null) {
 
                 $scope.notLogin_mainctrl = true;
 
                 console.log("second_time");
 
-                function checkBool(str){
-                    if(str == 'true'){
+                //noinspection JSAnnotator
+                function checkBool(str) {
+                    if (str == 'true') {
                         return true;
-                    }else{
+                    } else {
                         return false;
                     }
                 }
 
-                if (localStorage.defaultPref && checkBool(localStorage.defaultPref)) {
+                //User had searched at least once
+
+                if (checkBool(localStorage.defaultPref)) {
                     //override default data -- use data from side bar
 
                     //Set Nutrition
@@ -447,7 +710,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                     $scope.cholesterols.minValue = parseInt(localStorage.cholMin);
                     $scope.cholesterols.maxValue = parseInt(localStorage.cholMax);
 
-                    $scope.disable_default = checkBool(localStorage.defaultPref);
+                    $scope.defaultPref = checkBool(localStorage.defaultPref);
 
                     $scope.sweet = checkBool(localStorage.sweet);
                     $scope.sour = checkBool(localStorage.sour);
@@ -472,18 +735,22 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                     console.log("spicy " + $scope.spicy);
                     console.log("salty " + $scope.salty);
 
-                } else {
+                } else if (!checkBool(localStorage.defaultPref)) {
 
-                    $scope.disable_default = false;
+                    $scope.defaultPref = false;
                     //use profile (default) data
 
                 }
-            }else{
+            } else {
+
+                //User had never searched before
+
                 $scope.notLogin_mainctrl = true;
 
                 console.log("User not Logged in");
+                console.log("User had never searched before");
 
-                $scope.disable_default = true;
+                $scope.defaultPref = true;
 
                 $scope.user.vegetarian = false;
                 $scope.user.halal = false;
@@ -510,7 +777,10 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                 $scope.salty = false;
             }
 
-        }else{
+        } else {
+
+            //User logged in already
+            console.log("User logged in");
 
             $scope.notLogin_mainctrl = false;
 
@@ -544,17 +814,20 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                 $scope.spicy = user[0].tastePreference[3];
                 $scope.salty = user[0].tastePreference[4];
 
-                //Set Taste
-                function checkBool(str){
-                    if(str == 'true'){
+                function checkBool(str) {
+                    if (str == 'true') {
                         return true;
-                    }else{
+                    } else {
                         return false;
                     }
                 }
 
-                if (localStorage.defaultPref && checkBool(localStorage.defaultPref)) {
+                //Check if user wants to modify his/her Nutrition Preference
+                if (checkBool(localStorage.defaultPref) == true) {
+
                     //override default data -- use data from side bar
+                    console.log("override default data");
+                    console.log(localStorage.defaultPref);
 
                     //Set Nutrition
                     $scope.calories.minValue = parseInt(localStorage.calMin);
@@ -568,34 +841,20 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                     $scope.cholesterols.minValue = parseInt(localStorage.cholMin);
                     $scope.cholesterols.maxValue = parseInt(localStorage.cholMax);
 
-                    $scope.disable_default = checkBool(localStorage.defaultPref);
-
+                    //Set Taste
                     $scope.sweet = checkBool(localStorage.sweet);
                     $scope.sour = checkBool(localStorage.sour);
                     $scope.bitter = checkBool(localStorage.bitter);
                     $scope.spicy = checkBool(localStorage.spicy);
                     $scope.salty = checkBool(localStorage.salty);
 
-                    console.log("cal min= " + $scope.calories.minValue);
-                    console.log("cal max= " + $scope.calories.maxValue);
-                    console.log("pro min= " + $scope.proteins.minValue);
-                    console.log("pro max= " + $scope.proteins.maxValue);
-                    console.log("carb min= " + $scope.carb.minValue);
-                    console.log("carb max= " + $scope.carb.maxValue);
-                    console.log("fats min= " + $scope.fats.minValue);
-                    console.log("fats max= " + $scope.fats.maxValue);
-                    console.log("chol min= " + $scope.cholesterols.minValue);
-                    console.log("chol max= " + $scope.cholesterols.maxValue);
+                    //Set defaultPref
+                    $scope.defaultPref = checkBool(localStorage.defaultPref);
 
-                    console.log("sweet " + $scope.sweet);
-                    console.log("sour " + $scope.sour);
-                    console.log("bitter " + $scope.bitter);
-                    console.log("spicy " + $scope.spicy);
-                    console.log("salty " + $scope.salty);
+                } else if (checkBool(localStorage.defaultPref) == false) {
 
-                } else {
-
-                    $scope.disable_default = false;
+                    console.log("use userdata from db");
+                    $scope.defaultPref = false;
                     //use profile (default) data
 
                 }
@@ -608,8 +867,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
         };
 
         $scope.search = function () {
-
-            console.log("Hi")
 
             //Check if Slider has changed
             if ($scope.calories.calories_range.length != 0) {
@@ -633,26 +890,12 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                 $scope.cholesterols.maxValue = $scope.cholesterols.cholesterols_range[1];
             }
 
-            console.log("cal min= " + $scope.calories.minValue);
-            console.log("cal max= " + $scope.calories.maxValue);
-            console.log("pro min= " + $scope.proteins.minValue);
-            console.log("pro max= " + $scope.proteins.maxValue);
-            console.log("carb min= " + $scope.carb.minValue);
-            console.log("carb max= " + $scope.carb.maxValue);
-            console.log("fats min= " + $scope.fats.minValue);
-            console.log("fats max= " + $scope.fats.maxValue);
-            console.log("chol min= " + $scope.cholesterols.minValue);
-            console.log("chol max= " + $scope.cholesterols.maxValue);
+            console.log("default pref " + $scope.defaultPref);
 
-            console.log("sweet " + $scope.sweet);
-            console.log("sour " + $scope.sour);
-            console.log("bitter " + $scope.bitter);
-            console.log("spicy " + $scope.spicy);
-            console.log("salty " + $scope.salty);
+            //Set NutritionPreference and TastePreference to localStorage
 
-            console.log("default pref " + $scope.disable_default);
-
-            localStorage.setItem('defaultPref', $scope.disable_default.toString())
+            //Set defaultPref
+            localStorage.setItem('defaultPref', $scope.defaultPref.toString());
 
             localStorage.setItem('calMin', ($scope.calories.minValue).toString());
             localStorage.setItem('calMax', ($scope.calories.maxValue).toString());
@@ -671,12 +914,13 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
             localStorage.setItem('spicy', $scope.spicy);
             localStorage.setItem('salty', $scope.salty);
 
-            console.log("local sweet " + localStorage.sweet);
-            console.log("local sour " + localStorage.sour);
-            console.log("local bitter " + localStorage.bitter);
-            console.log("local spicy " + localStorage.spicy);
-            console.log("local salty " + localStorage.salty);
+            // console.log("local sweet " + localStorage.sweet);
+            // console.log("local sour " + localStorage.sour);
+            // console.log("local bitter " + localStorage.bitter);
+            // console.log("local spicy " + localStorage.spicy);
+            // console.log("local salty " + localStorage.salty);
 
+            //reload page to see the change
             window.location.href = "http://localhost:4000/search"
 
         };
@@ -690,7 +934,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
         getDish.then(function (dish_name) {
             $scope.dish_only_name = dish_name;
-            console.log($scope.dish_only_name);
+            // console.log($scope.dish_only_name);
             getRecommended.then(function (order) {
                 //console.log("hi");
                 for (var i = 0; i < order.length; i++) {
@@ -717,10 +961,10 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                 while (flag && (a < $scope.dish_recommended.length)) {
                                     if ($scope.dish_recommended[a].dishName == order[i].orderItems[j].name) {
                                         //duplicate dish name --> update frequency
-                                        console.log("a=" + $scope.dish_recommended[a].dishName);
-                                        console.log("b=" + order[i].orderItems[j].name);
+                                        //console.log("a=" + $scope.dish_recommended[a].dishName);
+                                        //console.log("b=" + order[i].orderItems[j].name);
                                         $scope.dish_recommended[a].frequency += order[i].orderItems[j].amount;
-                                        console.log($scope.dish_recommended[a].frequency);
+                                        //console.log($scope.dish_recommended[a].frequency);
                                         flag = false;
                                     }
                                     a++; //increment to loop the whole array
@@ -757,7 +1001,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
                     $scope.bestforyou = function () {
 
-                        if (!$scope.disable_default) {   //use profile data
+                        if (!$scope.defaultPref) {   //use profile data
                             // dish is full list of Dish
                             //suggested dish is full list of Dish
                             var suggested = dish;
@@ -852,9 +1096,9 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     {
                                         var noIng_exist = false;
 
-                                        if($scope.user.noIngredient == null){
+                                        if ($scope.user.noIngredient == null) {
                                             //$scope.user.noIngredient = []
-                                        }else{
+                                        } else {
                                             for (var j = 0; j < $scope.user.noIngredient.length; j++)  // loop all remaining dish
                                             {
                                                 for (var l = 0; l < suggested[k].ingredients.length; l++)  //loop through all tastes of each dish
@@ -930,6 +1174,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     }
 
                                     //Sort Score
+                                    //noinspection JSAnnotator
                                     function sort_score(a, b) {
                                         if (a.score > b.score) {
                                             return -1;
@@ -1022,6 +1267,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                         }
 
                                         //Sort Score
+                                        //noinspection JSAnnotator
                                         function sort_score_taste(a, b) {
                                             if (a.score == b.score) {
                                                 return (a.score_taste < b.score_taste) ? 1 : (a.score_taste > b.score_taste) ? -1 : 0;
@@ -1130,7 +1376,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                         }
                         //end if enable default
                         //begin if - disable default i.e. use these values
-                        else if ($scope.disable_default) {
+                        else if ($scope.defaultPref) {
                             var suggested = dish;
                             var temp_suggested = [];
 
@@ -1166,6 +1412,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                             }
 
                             //Sort Score
+                            //noinspection JSAnnotator
                             function sort_score(a, b) {
                                 if (a.score > b.score) {
                                     return -1;
@@ -1248,6 +1495,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                 }
 
                                 //Sort Score
+                                //noinspection JSAnnotator
                                 function sort_score_taste(a, b) {
                                     if (a.score == b.score) {
                                         return (a.score_taste < b.score_taste) ? 1 : (a.score_taste > b.score_taste) ? -1 : 0;
@@ -1356,8 +1604,67 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                 });
 
 
-                //$scope.bestforyou();
+                $scope.dish_by_price_result = [];
 
+                getDishDataByPrice.then(function (dish) {
+                    $scope.dishbyprice = function () {
+                        /*console.log("onchange");
+                         console.log("min = "+);
+                         console.log("max = "+);*/
+                        var dish_by_price = dish;
+
+                        /*sort in descending order: High to Low*/
+                        function sort_price_desc(a, b) {
+                            if (a.price > b.price) {
+                                return -1;
+                            }
+                            if (a.price < b.price) {
+                                return 1;
+                            }
+                            return 0;
+                        }
+
+                        /*sort in ascending order: Low to High*/
+                        function sort_price_asc(a, b) {
+                            if (a.price > b.price) {
+                                return 1;
+                            }
+                            if (a.price < b.price) {
+                                return -1;
+                            }
+                            return 0;
+                        }
+
+                        var temp_dish_in_price_range = [];
+                        //get only dish where its price is in range
+                        for (var i = 0; i < dish_by_price.length; i++) {
+                            if (dish_by_price[i].price >= $scope.priceRange[0] && dish_by_price[i].price <= $scope.priceRange[1]) {
+                                temp_dish_in_price_range.push(dish_by_price[i]);
+                            }
+                        }
+
+                        if ($scope.price_order == "asc") {
+                            /*if low > high is selected*/
+                            $scope.dish_by_price_result = temp_dish_in_price_range.sort(sort_price_asc);
+                            if ($scope.dish_by_price_result.length > 15) {
+                                $scope.dish_by_price_result = $scope.dish_by_price_result.slice(0, 15);
+                            }
+                        } else if ($scope.price_order == "desc") {
+                            /*else if high > low is selected*/
+                            $scope.dish_by_price_result = temp_dish_in_price_range.sort(sort_price_desc);
+                            if ($scope.dish_by_price_result.length > 15) {
+                                $scope.dish_by_price_result = $scope.dish_by_price_result.slice(0, 15);
+                            }
+                        } else if ($scope.price_order == "") {
+                            /*no radio button selected*/
+                            dish_by_price = [];
+                        }
+
+                        //$scope.dish_by_price_result = dish_by_price;
+                    };
+                    $scope.dishbyprice();
+                });
+                /*end search dish by price*/
 
                 getFeedbackDishData.then(function (dish) {
 
@@ -1654,16 +1961,16 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     $scope.addToCart = function (dish_name, dish_quantity) {
 
 
-                                        if(notLogin){
+                                        if (notLogin) {
 
-                                            var toast = $mdToast.show( $mdToast.simple()
-                                                .textContent('Please Login')
-                                                .hideDelay(3000)
-                                                .position('bottom right')
-                                                .action('OK')
-                                                .highlightAction(true)
-                                                .highlightClass('md-warn')// Accent is used by default, this just demonstrates the usage.
-                                                .parent(angular.element(document.body))
+                                            var toast = $mdToast.show($mdToast.simple()
+                                                    .textContent('Please Login')
+                                                    .hideDelay(3000)
+                                                    .position('bottom right')
+                                                    .action('OK')
+                                                    .highlightAction(true)
+                                                    .highlightClass('md-warn')// Accent is used by default, this just demonstrates the usage.
+                                                    .parent(angular.element(document.body))
                                                 //.position(pinTo);
                                             );
 
@@ -1714,7 +2021,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                             //     }]
                                             // });
 
-                                        }else{
+                                        } else {
 
                                             if (dish_quantity == 0) {
 

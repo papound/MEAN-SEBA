@@ -44,14 +44,14 @@ app2.controller('loginCtrl', function ($scope, $http) {
                 dialog.open();
             }
         }
-    }
+    };
 
     $scope.closeDialog = function () {
         var dialog = document.getElementById("dialog");
         if (dialog) {
             dialog.close();
         }
-    }
+    };
 
     $scope.login = function () {
 
@@ -80,7 +80,7 @@ app2.controller('loginCtrl', function ($scope, $http) {
         }
     }
 
-})
+});
 
 app2.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[{');

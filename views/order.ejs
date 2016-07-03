@@ -372,7 +372,7 @@
             //$('a#login').removeAttr("onclick");
             $('a#login').removeAttr('href');
             $('a#login').text(localStorage.loginChefAtHomefirstname);
-            $('a#login_collapse').text("Welcome! " + localStorage.loginChefAtHomefirstname);
+            $('a#login_collapse').text(localStorage.loginChefAtHomefirstname);
             $('#login_icon').addClass('login_icon2').removeClass('login_icon');
 //            setTimeout(checklogin(), 3000);
         } else {
@@ -442,30 +442,44 @@
             </div>
 
             <!--Login Dialog-->
-            <div class="visible-sm visible-xs visible-md visible-lg">
+            <div class="visible-sm visible-xs visible-md visible-lg" ng-controller="loginCtrl">
                 <paper-dialog id="dialog" class="size-position">
                     <h2>Login</h2>
-                    <paper-input label="&nbsp;&nbsp;Username" id="inputWithButton">
-                        <iron-icon icon="social:person" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <paper-input label="&nbsp;&nbsp;Password" id="inputWithButton2" type="password">
-                        <iron-icon icon="icons:https" prefix></iron-icon>
-                        <paper-icon-button suffix onclick="clearInput2()" icon="clear" alt="clear" title="clear">
-                        </paper-icon-button>
-                    </paper-input>
-                    <br><br>
+                    <!--<paper-input label="&nbsp;&nbsp;Username" id="inputWithButton" ng-model="user.email">-->
+                    <!--<iron-icon icon="social:person" prefix></iron-icon>-->
+                    <!--<paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">-->
+                    <!--</paper-icon-button>-->
+                    <!--</paper-input>-->
+                    <br>
+                    <div class="login_input">
+                        <md-input-container class="md-icon-float md-block">
+                            <!-- Use floating label instead of placeholder -->
+                            <label>Email</label>
+                            <md-icon md-svg-src="images/svg/ic_person_24px.svg" class="name"></md-icon>
+                            <input ng-model="user.email" type="text">
+                        </md-input-container>
+
+                        <md-input-container class="md-icon-float md-block">
+                            <!-- Use floating label instead of placeholder -->
+                            <label>Password</label>
+                            <md-icon md-svg-src="images/svg/ic_lock_black_24px.svg" class="name"></md-icon>
+                            <input ng-model="user.password" type="password">
+                        </md-input-container>
+                    </div>
+
                     <div class="row in-login-popup">
                         <div class="col-sm-6 col-centered">
-                            <paper-button raised class="green">Login</paper-button>
+                            <md-button class="md-raised md-primary" ng-click="login()">Login
+                            </md-button>
                         </div>
                         <div class="col-sm-6 col-centered">
-                            <paper-button raised class="grey">Clear</paper-button>
+                            <md-button class="md-raised" ng-click="closeDialog()">Cancel
+                            </md-button>
                         </div>
                     </div>
+                    <div id="my-signin2" data-onsuccess=""></div>
                     <br>
-                    <a href="#">Not a member? Please Register Here!</a>
+                    <a href="http://localhost:4000/register">Not a member? Please Register Here!</a>
                     <br><br>
                 </paper-dialog>
 
@@ -474,17 +488,38 @@
                     <paper-dialog id="afterLogin" class="size-position">
                         <!--<h2>Welcome! {[{ firstname }]}</h2>-->
                         <!--<br><br>-->
-                        <div class="col-sm-6 col-centered">
+                        <div class="col-sm-6">
                             <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                             </md-button>
                         </div>
-                        <div class="col-sm-6 col-centered">
+                        <div class="col-sm-6">
                             <md-button class="md-warn" ng-click="signout()">Sign Out
                             </md-button>
                         </div>
                     </paper-dialog>
                 </div>
 
+                <!--Invalid Credentials-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="incomplete">
+                        <h2>Invalid Credentials!</h2>
+                        <p>Your information is incomplete!</p>
+                        <div class="buttons">
+                            <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                        </div>
+                    </paper-dialog>
+                </div>
+
+                <!--Invalid Credentials-->
+                <div class="visible-sm visible-xs visible-md visible-lg">
+                    <paper-dialog id="login-failed">
+                        <h2>Invalid email or password!</h2>
+                        <p>Please type it again!</p>
+                        <div class="buttons">
+                            <paper-button dialog-dismiss autofocus>OK!</paper-button>
+                        </div>
+                    </paper-dialog>
+                </div>
 
             </div>
             <!-- /.row -->
@@ -500,16 +535,16 @@
                             data-target="#navbar_collapse"><span class="sr-only">Toggle navigation</span> <span
                                 class="icon-bar first"></span> <span class="icon-bar hide-bar"></span> <span
                                 class="icon-bar last"></span></button>
-                    <a class="navbar-brand" href="index-x.html" id="bellafirenze-sm"></a>
+                    <a class="navbar-brand" href="http://localhost:4000" id="bellafirenze-sm"></a>
                 </div>
                 <!-- /.Navbar Header -->
                 <!-- Navbar Collapse -->
                 <div class="collapse navbar-collapse" id="navbar_collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#menu">Menu</a></li>
-                        <li><a href="#ingredient">Ingredient</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="http://localhost:4000">Home</a></li>
+                        <li><a href="http://localhost:4000/search">Menu</a></li>
+                        <li><a href="#" id="order_list">Order</a></li>
+                        <li><a href="http://localhost:4000/feedback" id="feedback_list">Feedback</a></li>
                         <li><a href="##" data-dialog="dialog" onclick="clickHandler(e)"
                                id="login_collapse">Login</a></li>
                     </ul>
