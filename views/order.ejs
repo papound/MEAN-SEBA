@@ -75,10 +75,6 @@
     <script type="text/javascript" src="angular-material-calendar.js"></script>
     <!--End Angular-->
 
-    <!--Tab-->
-    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.css">
-    <link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.0-rc.5/docs.css">-->
 
     <!--Google icons font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -209,12 +205,6 @@
             background-color: transparent !important;
         }
 
-        /**Profile pic*/
-        /*.upload-button {*/
-        /*!*padding: 4px;*!*/
-        /*!*border: 1px solid black;*!*/
-        /*!*border-radius: 5px;*!*/
-        /*}*/
         .profile-pic {
             width: 135px;
             height: 145px;
@@ -445,11 +435,6 @@
             <div class="visible-sm visible-xs visible-md visible-lg" ng-controller="loginCtrl">
                 <paper-dialog id="dialog" class="size-position">
                     <h2>Login</h2>
-                    <!--<paper-input label="&nbsp;&nbsp;Username" id="inputWithButton" ng-model="user.email">-->
-                    <!--<iron-icon icon="social:person" prefix></iron-icon>-->
-                    <!--<paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">-->
-                    <!--</paper-icon-button>-->
-                    <!--</paper-input>-->
                     <br>
                     <div class="login_input">
                         <md-input-container class="md-icon-float md-block">
@@ -486,8 +471,7 @@
                 <!--After Login-->
                 <div class="visible-sm visible-xs visible-md visible-lg">
                     <paper-dialog id="afterLogin" class="size-position">
-                        <!--<h2>Welcome! {[{ firstname }]}</h2>-->
-                        <!--<br><br>-->
+
                         <div class="col-sm-6">
                             <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                             </md-button>
@@ -603,10 +587,6 @@
                     <md-content>
                         <md-tabs md-dynamic-height md-border-bottom>
                             <md-tab label="CURRENT">
-                                <!--<p ng-if="!order_status">-->
-                                    <!--No Orders in your basket-->
-                                <!--</p>-->
-                                <!--<div ng-if="order_status">-->
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
@@ -655,12 +635,9 @@
                                                 </td>
                                                 <td>€ <span ng-init="$parent.total = $parent.total + (amount * i.ratio)"
                                                             ng-model="total">{[{ amount * i.ratio | number:2 }]}</span>
-                                                    <!--<br><span ng-init="totalDish" ng-model="totalDish">{[{ amount * i.ratio | number:2 + totalDish}]}</span>-->
                                                 </td>
                                             </tr>
-                                            <!--<tr>-->
-                                            <!--<span ng-init="totalDish" ng-model="totalDish">{[{ totalDish }]}</span>-->
-                                            <!--</tr>-->
+
                                             </tbody>
                                             <thead>
                                             <tr class="success">
@@ -711,26 +688,15 @@
                                                          disable-future-selection="disableFutureDates">
                                                 /calendar-md>
                                         </div>
-                                        <!--<p>{[{ msg || "Click on a date/button to get started"}]}</p>-->
-                                        <!--<pre>$scope.selectedDate = {[{ selectedDate | json }]}</pre>-->
+
                                     </div>
                                     <!--end calendar-->
                                 </md-content>
                             </md-tab>
-                            <!--<md-tab label="three">
-                                <md-content class="md-padding">
-                                    <h1 class="md-display-2">Tab Three</h1>
-                                    <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-                                </md-content>
-                            </md-tab>-->
+
                         </md-tabs>
                     </md-content>
                 </div>
-
-                <!--
-                Copyright 2016 Google Inc. All Rights Reserved.
-                Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
-                -->
 
                 <!--end test tab-->
             </form>
@@ -847,25 +813,7 @@
         clear2.value = "";
     }
 
-    /*function passmatch(e) {
-     var password = encodeURIComponent(this.pass);
-     var confirmPassword = encodeURIComponent(this.repass);
-     if (password != confirmPassword) {
-     // do something
-     }
-     }
 
-     function checklogin() {
-     if (localStorage.loginChefAtHomeEmail) {
-     console.log("checklogin")
-     //$('a#login').text(localStorage.loginChefAtHomefirstname);
-     document.getElementById("login").removeAttribute("onclick");
-     document.getElementById("login").removeAttribute("href");
-     document.getElementById("login_collapse").removeAttribute("onclick");
-     document.getElementById("login_collapse").removeAttribute("href");
-     } else {
-     }
-     }*/
 
 
 </script>

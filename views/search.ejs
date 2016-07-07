@@ -215,18 +215,6 @@
             margin-bottom: 16px;
         }
 
-        /*Fuzzy Search*/
-        /*#resultTextAreaContainer {*/
-        /*height: 300px;*/
-        /*overflow-y: scroll;*/
-        /*border: 1px solid black;*/
-        /*}*/
-
-        /*#searchTextbox {*/
-        /*padding: 5px;*/
-        /*width: 200px;*/
-        /*}*/
-
         /*Test Chips*/
         .chipsdemoContactChips md-content.autocomplete {
             min-height: 250px;
@@ -298,8 +286,8 @@
         .star-rating.readonly .star.filled {
             color: #666;
         }
-
         /*End Star Rating*/
+
         @media (min-width: 960px) {
             .chipsdemoContactChips .contact-item {
                 float: left;
@@ -327,8 +315,6 @@
         #menu-list {
             padding-top: 50px !important;
         }
-
-        /*Test Chips*/
 
         /*Drag n' Drop*/
         .bin {
@@ -569,7 +555,6 @@
                 moveSlides: 2,
                 slideMargin: 3,
                 randomStart: true
-//                adaptiveHeight: true
             });
 
         }, 500);
@@ -639,11 +624,6 @@
                 <div class="visible-sm visible-xs visible-md visible-lg">
                     <paper-dialog id="dialog" class="size-position">
                         <h2>Login</h2>
-                        <!--<paper-input label="&nbsp;&nbsp;Username" id="inputWithButton" ng-model="user.email">-->
-                        <!--<iron-icon icon="social:person" prefix></iron-icon>-->
-                        <!--<paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">-->
-                        <!--</paper-icon-button>-->
-                        <!--</paper-input>-->
                         <br>
                         <div class="login_input">
                             <md-input-container class="md-icon-float md-block">
@@ -680,8 +660,6 @@
                     <!--After Login-->
                     <div class="visible-sm visible-xs visible-md visible-lg">
                         <paper-dialog id="afterLogin" class="size-position">
-                            <!--<h2>Welcome! {[{ firstname }]}</h2>-->
-                            <!--<br><br>-->
                             <div class="col-sm-6">
                                 <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                                 </md-button>
@@ -775,24 +753,11 @@
             <!--<md-content flex="" layout-padding="">-->
             <div ng-controller="AppCtrl">
                 <div>
-                    <!--<md-button ng-click="toggleLeft()" class="md-primary fixbutton">-->
-                    <!--...-->
-                    <!--</md-button>-->
                     <md-button ng-click="toggleLeft()" class="md-fab fixbutton" aria-label="Preference">
                         <md-icon md-svg-src="newTemplate/svg/pencil.svg"></md-icon>
                     </md-button>
                 </div>
             </div>
-            <!--</md-content>-->
-            <!-- Title & Divider -->
-            <!--<div class="row">-->
-            <!--<div class="col-md-8 col-md-offset-2 text-center wow fadeIn"-->
-            <!--style="visibility: visible; animation-name: fadeIn;">-->
-            <!--<h2>Menu</h2>-->
-            <!--<br><br>-->
-            <!--</div>-->
-            <!--</div>-->
-
             <!-- /.Title & Divider -->
 
 
@@ -827,8 +792,9 @@
                                                                 </md-checkbox>
                                                             </label>
                                                         </div>
-                                                        <!--<fieldset class="standard" ng-disabled="checked">-->
+
                                                         <br><label>Nutrition&nbsp;</label><span>(per dish)</span>
+
                                                         <!--Start slider-->
                                                         <div>
                                                             <h5>Calories (calories): </h5>
@@ -881,9 +847,6 @@
                                                         <!--Cholesterol-->
                                                         <div>
                                                             <h5>Cholesterol (milligrams): </h5>
-                                                            <!--<ion-range-slider min="cholesterols.floor" max="cholesterols.ceil"-->
-                                                            <!--from="cholesterols.minValue" to="cholesterols.maxValue"-->
-                                                            <!--type="model.type"></ion-range-slider>-->
                                                             <ionslider type="double"
                                                                        min="cholesterols.floor"
                                                                        max="cholesterols.ceil"
@@ -898,57 +861,13 @@
                                                         <!--Taste Preference-->
                                                         <br>
                                                         <div class="row">
-                                                            <!--<div class="col-md-3"></div>-->
                                                             <div class="col-md-12">
                                                                 <label>Taste</label>
                                                             </div>
                                                         </div>
-                                                        <!--<div class="row">-->
-                                                        <!--<div class="col-md-1"></div>-->
-                                                        <!--<div class="col-md-5">-->
-                                                        <!--<md-checkbox ng-model="user.sweet" aria-label=""-->
-                                                        <!--ng-disabled="checked">-->
-                                                        <!--Sweet<span ng-if="user.sweet"></span>-->
-                                                        <!--</md-checkbox>-->
-                                                        <!--</div>-->
-                                                        <!--<div class="col-md-5">-->
-                                                        <!--<md-checkbox ng-model="user.spicy" aria-label=""-->
-                                                        <!--ng-disabled="checked">-->
-                                                        <!--Spicy<span ng-if="user.spicy"></span>-->
-                                                        <!--</md-checkbox>-->
-                                                        <!--</div>-->
-                                                        <!--</div>-->
-                                                        <!--<div class="row">-->
-                                                        <!--<div class="col-md-1"></div>-->
-                                                        <!--<div class="col-md-5">-->
-                                                        <!--<md-checkbox ng-model="user.sour" aria-label=""-->
-                                                        <!--ng-disabled="checked">-->
-                                                        <!--Sour<span ng-if="user.sour"></span>-->
-                                                        <!--</md-checkbox>-->
-                                                        <!--</div>-->
-                                                        <!--<div class="col-md-5">-->
-                                                        <!--<md-checkbox ng-model="user.bitter"-->
-                                                        <!--aria-label=""-->
-                                                        <!--ng-disabled="checked">-->
-                                                        <!--Bitter<span ng-if="user.bitter"></span>-->
-                                                        <!--</md-checkbox>-->
-                                                        <!--</div>-->
-                                                        <!--</div>-->
-                                                        <!--<div class="row">-->
-                                                        <!--<div class="col-md-1"></div>-->
-                                                        <!--<div class="col-md-5">-->
-                                                        <!--<md-checkbox ng-model="user.salty" aria-label=""-->
-                                                        <!--ng-disabled="checked">-->
-                                                        <!--Salty<span ng-if="user.salty"></span>-->
-                                                        <!--</md-checkbox>-->
-                                                        <!--</div>-->
-                                                        <!--</div>-->
 
                                                         <div class="row">
                                                             <div class="col-md-8">
-                                                                <!--<md-checkbox ng-model="defaultPref" aria-label="" ng-if="!notLogin_mainctrl">-->
-                                                                <!--Disable default preference-->
-                                                                <!--</md-checkbox>-->
                                                                 <md-checkbox ng-model="sweet" aria-label="">
                                                                     Sweet
                                                                 </md-checkbox>
@@ -977,7 +896,6 @@
                                                         <!--End Taste Preference-->
                                                         <!--</fieldset>-->
 
-
                                                     </div>
                                                     <br>
                                                     <!--End Disable default preference Checkbox-->
@@ -994,7 +912,6 @@
                                                                 <div class="col-md-6">
                                                                     <md-radio-button value="asc">Low → High
                                                                     </md-radio-button>
-                                                                    <!--how to set default as selected-->
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <md-radio-button value="desc" class="md-primary">
@@ -1002,9 +919,9 @@
                                                                     </md-radio-button>
                                                                 </div>
                                                             </md-radio-group>
-                                                            <!--<span>{[{ price_order }]}</span>-->
+
                                                         </div>
-                                                        <!--<fieldset class="standard" ng-disabled="checked">-->
+
                                                         <br><br>
                                                         <!--Start slider-->
                                                         <div>
@@ -1026,16 +943,11 @@
                                                             <!--result sorted by price section-->
                                                             <md-content layout="column">
                                                                 <md-list class="md-dense" flex>
-                                                                    <!--<md-subheader class="md-no-sticky">Result</md-subheader>-->
                                                                     <md-list-item class="md-3-line"
                                                                                   ng-repeat="d in dish_by_price_result"
                                                                                   ng-click="showTabDialog($event, d.name, d.price)">
                                                                         <div class="md-list-item-text" layout="column">
-                                                                            <!--<h3><b>{[{d.name}]}</b></h3>
-                                                                            <h3>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                <i class='material-icons gray123'>euro_symbol</i>
-                                                                                <span style="color: green"><b>{[{d.price}]}</b></span>
-                                                                            </h3>-->
+
                                                                             <h3>
                                                                                 <i class='material-icons gray123'>euro_symbol</i>
                                                                                 <span style="color: green; font-size: larger"><b>{[{d.price}]}</span> - {[{d.name}]}</b>
@@ -1051,63 +963,6 @@
                                             </md-tab>
                                             <!--end seach dish by price-->
 
-                                            <!--search dish by name-->
-                                            <!--<md-tab label="Search">
-                                                <div ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak=""
-                                                     class="autocompletedemoBasicUsage">
-                                                    <md-content class="md-padding">
-                                                        <form ng-submit="$event.preventDefault()">
-                                                            &lt;!&ndash;<p>Use <code>md-autocomplete</code> to search for matches from local or remote data sources.</p>&ndash;&gt;
-                                                            <md-autocomplete ng-disabled="ctrl.isDisabled"
-                                                                             md-no-cache="ctrl.noCache"
-                                                                             md-selected-item="ctrl.selectedItem"
-                                                                             md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                                                                             md-search-text="ctrl.searchText"
-                                                                             md-selected-item-change="ctrl.selectedItemChange(item)"
-                                                                             md-items="item in ctrl.querySearch(ctrl.searchText)"
-                                                                             md-item-text="item.display"
-                                                                             md-min-length="0"
-                                                                             placeholder="What is your favorite Menu?">
-                                                                <md-item-template>
-                                                                    <span md-highlight-text="ctrl.searchText"
-                                                                          md-highlight-flags="^i">{{item.display}}</span>
-                                                                </md-item-template>
-                                                                <md-not-found>
-                                                                    No states matching "{{ctrl.searchText}}" were found.
-                                                                    <a ng-click="ctrl.newState(ctrl.searchText)"></a>
-                                                                </md-not-found>
-                                                            </md-autocomplete>
-                                                            &lt;!&ndash;<br>&ndash;&gt;
-                                                            &lt;!&ndash;<md-checkbox ng-model="ctrl.simulateQuery">Simulate query for results?</md-checkbox>&ndash;&gt;
-                                                            &lt;!&ndash;<md-checkbox ng-model="ctrl.noCache">Disable caching of queries?</md-checkbox>&ndash;&gt;
-                                                            &lt;!&ndash;<md-checkbox ng-model="ctrl.isDisabled">Disable the input?</md-checkbox>&ndash;&gt;
-
-                                                            &lt;!&ndash;<p>By default, <code>md-autocomplete</code> will cache results when performing a query.  After the initial call is performed, it will use the cached results to eliminate unnecessary server requests or lookup logic. This can be disabled above.</p>&ndash;&gt;
-                                                        </form>
-                                                    </md-content>
-                                                </div>
-                                            </md-tab>-->
-                                            <!--end search dish by name-->
-
-                                            <!--Ingredient preference-->
-                                            <!--<md-tab label="Ingredient">-->
-                                            <!--<div class="tabsdemoDynamicHeight">-->
-                                            <!--<md-content>-->
-                                            <!--<div class="row">-->
-                                            <!--<div class="col-md-1">&nbsp</div>-->
-                                            <!--<div class="col-md-11">-->
-                                            <!--<md-input-container class="md-block">-->
-                                            <!--<label>Search Ingredient:</label>-->
-                                            <!--<textarea id="searchTextbox" ng-model="test"-->
-                                            <!--md-maxlength="32"-->
-                                            <!--md-slelect-on-focus="">-->
-                                            <!--</textarea>-->
-                                            <!--</md-input-container>-->
-                                            <!--</div>-->
-                                            <!--</div>-->
-                                            <!--</md-content>-->
-                                            <!--</div>-->
-                                            <!--</md-tab>-->
 
                                         </md-tabs>
                                     </md-content>
@@ -1116,15 +971,6 @@
                         </md-content>
                     </md-sidenav>
 
-                    <!--<md-content flex="" layout-padding="">-->
-                    <!--<div layout="column" layout-fill="" layout-align="top center">-->
-                    <!--<div>-->
-                    <!--<md-button ng-click="toggleLeft()" class="md-primary">-->
-                    <!--Search bar-->
-                    <!--</md-button>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</md-content>-->
                 </section>
             </div>
             <!-- End Nav Bar-->
@@ -1271,33 +1117,20 @@
                 </script>
                 <!--</div>-->
 
-                <!--<div ng-include src="'tabDialog.tmpl.html'"></div>-->
-
                 <!-- Chefs -->
                 <section id="chefs" class="reducePadding">
                     <div class="container">
                         <!-- Title & Divider -->
                         <div class="row">
-                            <!--<p class="lead">&nbsp;&nbsp;&nbsp;&nbsp;Best Seller</p>-->
                             <h2>&nbsp;&nbsp;&nbsp;&nbsp;Best Seller</h2>
                             <div class="col-md-8 col-md-offset-2 wow "
                                  style="visibility: hidden; animation-name: none;">
                                 <!--<h2>Our Chefs</h2>-->
 
-                                <!--<p class="lead">Recommended</p>-->
                             </div>
                         </div>
 
-                        <!--<div ng-controller="slider">-->
-                        <!--<ion-range-slider min="model.min" max="model.max" from="model.from" to="model.until" type="model.type"></ion-range-slider>-->
-                        <!--</div>-->
-                        <!--<div class="mrgn-50-top-btm text-center"><img
-                                    src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"
-                                    alt=""></div>-->
-                        <!-- /.Title & Divider -->
-
-
-                        <!-- Chefs List -->
+                        <!--  List -->
                         <div class="row text-center">
                             <!-- Img 01 -->
                             <div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">
@@ -1447,9 +1280,8 @@
                                     </md-card-content>
                                 </md-card>
                             </div>
-                            <!-- /.Chef 03 -->
                         </div>
-                        <!-- Chefs List -->
+                        <!--  List -->
                     </div>
                     <!-- /.container -->
                 </section>
@@ -1630,107 +1462,17 @@
                 </section>
                 <!-- /.Suggested -->
 
-                <!-- Chefs -->
-                <!--<section id="chefs" class="reducePadding">-->
-                <!--<div class="container">-->
-                <!--&lt;!&ndash; Title & Divider &ndash;&gt;-->
-                <!--<div class="row">-->
-                <!--<h2>&nbsp;&nbsp;&nbsp;&nbsp;Best for you</h2>-->
-                <!--<div class="col-md-8 col-md-offset-2 wow "-->
-                <!--style="visibility: hidden; animation-name: none;">-->
-                <!--&lt;!&ndash;<h2>Best for you</h2>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p class="lead">Best for you</p>&ndash;&gt;-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--&lt;!&ndash;<div class="mrgn-50-top-btm text-center"><img-->
-                <!--src="http://bella.designershare.net/assets/bella-firenze/images/dividers/divider.svg"-->
-                <!--alt=""></div>&ndash;&gt;-->
-                <!--&lt;!&ndash; /.Title & Divider &ndash;&gt;-->
-
-                <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
-                <!--<div class="row text-center">-->
-                <!--&lt;!&ndash; Chef 01 &ndash;&gt;-->
-                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                <!--<img-->
-                <!--src="newTemplate/img/chef1.jpg"-->
-                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                <!--alt="">-->
-                <!--<h3>Mark Robert</h3>-->
-                <!--<p class="text-muted">Recipe Inventor</p>-->
-                <!--<p class="mrgn-20-top">Mark is a brilliant dish-designer who believes in creating a-->
-                <!--whole new food-->
-                <!--world-->
-                <!--<p>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; /.Chef 01 &ndash;&gt;-->
-                <!--&lt;!&ndash; Chef 02 &ndash;&gt;-->
-                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                <!--<img-->
-                <!--src="newTemplate/img/chef2.jpg"-->
-                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                <!--alt="">-->
-                <!--<h3>Alonzo Xavier</h3>-->
-                <!--<p class="text-muted">Chef</p>-->
-                <!--<p class="mrgn-20-top">Alonzo has been in food industry for more than years. His-->
-                <!--experiences will-->
-                <!--never-->
-                <!--stop to enlighten you</p>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; /.Chef 02 &ndash;&gt;-->
-                <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
-                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                <!--<img-->
-                <!--src="newTemplate/img/chef3.jpg"-->
-                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                <!--alt="">-->
-                <!--<h3>Les Leo Terrance</h3>-->
-                <!--<p class="text-muted">Sous-Chef</p>-->
-                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
-                <!--awesome tastes.</p>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
-                <!--&lt;!&ndash; Chef 03 &ndash;&gt;-->
-                <!--<div class="col-sm-3 wow fadeIn chef" style="visibility: hidden; animation-name: none;">-->
-                <!--<img-->
-                <!--src="newTemplate/img/chef3.jpg"-->
-                <!--class="img-responsive center-block chefitem" width="350" height="350"-->
-                <!--alt="">-->
-                <!--<h3>Les Leo Terrance</h3>-->
-                <!--<p class="text-muted">Sous-Chef</p>-->
-                <!--<p class="mrgn-20-top">Leo loves nothing, but cooking. His passion brings out-->
-                <!--awesome tastes.</p>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; /.Chef 03 &ndash;&gt;-->
-                <!--</div>-->
-                <!--&lt;!&ndash; Chefs List &ndash;&gt;-->
-                <!--</div>-->
-                <!--&lt;!&ndash; /.container &ndash;&gt;-->
-                <!--</section>-->
-                <!-- /.Chefs -->
-
                 <!-- Dishes -->
                 <section id="chefs" class="reducePadding">
                     <div class="container">
                         <!-- Title & Divider -->
                         <div class="row">
                             <h2>&nbsp;&nbsp;&nbsp;&nbsp;Appetizer</h2>
-                            <!--<h2>&nbsp;&nbsp;&nbsp;&nbsp;Appetizer</h2>-->
                             <div class="col-md-8 col-md-offset-2 wow "
                                  style="visibility: hidden; animation-name: none;">
 
-                                <!--<h2>Our Chefs</h2>-->
-                                <!--<p class="lead">Appetizer</p>-->
                             </div>
                         </div>
-
-                        <!-- Appetizer List -->
-                        <!--<div class="row text-center">
-                            <div class="bxslider">
-                                <div class="slide" ng-repeat="a in appetizer"><img ng-src="{[{ a.img[0].data }]}" class="img_slide">
-                                </div>
-                            </div>
-                        </div>-->
-                        <!-- Appetizer List -->
 
                         <!-- Test Appetizer card box-->
                         <div class="row text-center">
@@ -1787,19 +1529,8 @@
                             <h2>&nbsp;&nbsp;&nbsp;&nbsp;Main Dish</h2>
                             <div class="col-md-8 col-md-offset-2 wow "
                                  style="visibility: hidden; animation-name: none;">
-                                <!--<h2>Our Chefs</h2>-->
-
-                                <!--<p class="lead">Main Dish</p>-->
                             </div>
                         </div>
-
-                        <!-- Main Dish List -->
-                        <!--<div class="row text-center">
-                            <div class="bxslider">
-                                <div class="slide" ng-repeat="mD in mainDish"><img ng-src="{[{ mD.img[0].data }]}"
-                                                                                   class="img_slide"></div>
-                            </div>
-                        </div>-->
 
                         <!-- Main Dish card box-->
                         <div class="row text-center">
@@ -1857,19 +1588,8 @@
                             <h2>&nbsp;&nbsp;&nbsp;&nbsp;Dessert</h2>
                             <div class="col-md-8 col-md-offset-2 text-center wow "
                                  style="visibility: hidden; animation-name: none;">
-                                <!--<h2>Our Chefs</h2>-->
-                                <!--<p class="lead"></p>-->
                             </div>
                         </div>
-
-                        <!-- Dessert List -->
-                        <!--<div class="row text-center">
-                            <div class="bxslider">
-                                <div class="slide" ng-repeat="d in dessert"><img ng-src="{[{ d.img[0].data }]}" class="img_slide">
-                                </div>
-                            </div>
-                        </div>-->
-                        <!-- Dessert List -->
 
                         <!-- Dessert card box-->
                         <div class="row text-center">
@@ -1931,14 +1651,6 @@
                             </div>
                         </div>
 
-                        <!-- Soup List -->
-                        <!--<div class="row text-center">
-                            <div class="bxslider">
-                                <div class="slide" ng-repeat="so in soup"><img ng-src="{[{ so.img[0].data }]}" class="img_slide">
-                                </div>
-                            </div>
-                        </div>-->
-                        <!-- Soup List -->
 
                         <!-- Soup card box-->
                         <div class="row text-center">
@@ -1995,19 +1707,8 @@
                             <h2>&nbsp;&nbsp;&nbsp;&nbsp;Salad</h2>
                             <div class="col-md-8 col-md-offset-2 text-center wow "
                                  style="visibility: hidden; animation-name: none;">
-                                <!--<h2>Our Chefs</h2>-->
-                                <!--<p class="lead">Salad</p>-->
                             </div>
                         </div>
-
-                        <!-- Salad List -->
-                        <!--<div class="row text-center">
-                            <div class="bxslider">
-                                <div class="slide" ng-repeat="sa in salad"><img ng-src="{[{ sa.img[0].data }]}" class="img_slide">
-                                </div>
-                            </div>
-                        </div>-->
-                        <!-- Salad List -->
 
                         <!-- salad card box-->
                         <div class="row text-center">
@@ -2065,7 +1766,6 @@
                 <!-- /.Dishes -->
             </div>
             <!--End Main data-->
-            <!--</div>-->
         </div>
 
         <!-- /.container -->

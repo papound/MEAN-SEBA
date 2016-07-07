@@ -122,10 +122,6 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData) 
                 $scope.salad.push(feedback[i]);
             }
         }
-        //console.log("Test data")
-        //console.log($scope.mainDish)
-        //$scope.get_feedback_data_soup();
-
     });
 
     //Initialize Radio Button Data and Rating Data
@@ -156,19 +152,6 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData) 
         group1 : ""
     };
 
-    // function updateDish (name, rating, noRater) {
-    //     console.log("Inside Update Dish");
-    //     return $http.post(url + "/update/one_dish",
-    //         {
-    //             name: name,
-    //             rating: rating,
-    //             noRater: noRater
-    //         }
-    //     )
-    //         .then(function (response) {
-    //             console.log(response)
-    //         });
-    // };
 
     //method to submit rating
     $scope.submitRating = function (){
@@ -184,7 +167,6 @@ app2.controller('MainCtrl', function ($scope, $http, $sce, getFeedbackDishData) 
                     var old_rating = one_dish.rating;
                     var old_noRater = one_dish.noRater;
                     var new_rating = ((old_rating*old_noRater)+$scope.rate)/(old_noRater + 1);
-                    // var new_rating = Math.floor((((old_rating*old_noRater)+$scope.rate)/(old_noRater + 1)));
                     console.log((((old_rating*old_noRater)+$scope.rate)/(old_noRater + 1)))
                     console.log("Name: "+$scope.data.group1);
                     console.log("You rate: "+$scope.rate);

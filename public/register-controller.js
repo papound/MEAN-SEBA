@@ -216,7 +216,6 @@ app2.controller('formCtrl', function ($scope, $http) {
                     console.log("data 6 elements");
                     $scope.register.profilePicture = $scope.register.profilePicture.data;
                     console.log("changed to data 2 elements");
-                    //console.log(JSON.stringify($scope.register.profilePicture));
                     return $http.post(url + "/api/register", {
                         firstname: $scope.register.firstname,
                         lastname: $scope.register.lastname,

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!-- saved from url=(0048)http://bella.designershare.net/menu.html#contact -->
 <html lang="en">
@@ -253,7 +252,7 @@
         }
 
         /*Footer*/
-        section#contact{
+        section#contact {
             padding: 50px;
         }
 
@@ -297,13 +296,12 @@
             $(".file-upload").click();
         });
 
-        if(localStorage.loginChefAtHomeEmail){
+        if (localStorage.loginChefAtHomeEmail) {
 
-        }else{
+        } else {
             $('a#feedback_link').removeAttr('href');
             $('a#order_link').removeAttr('href');
         }
-
 
 
     });
@@ -320,7 +318,8 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-left">
-                                <li><a href="http://localhost:4000" class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="http://localhost:4000"
+                                       class="menubar">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                                 <li><a href="http://localhost:4000/search" class="menubar">Menu</a></li>
 
                             </ul>
@@ -336,7 +335,8 @@
                         <div class="col-sm-4">
                             <ul class="nav navbar-nav pull-right">
 
-                                <li><a href="#contact" class="menubar" id="order_link">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                                <li><a href="#contact" class="menubar" id="order_link">Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                </li>
 
                                 <li><a href="#ingredient" class="menubar" id="feedback_link">Feedback</a></li>
 
@@ -366,11 +366,6 @@
             <div class="visible-sm visible-xs visible-md visible-lg" ng-controller="loginCtrl">
                 <paper-dialog id="dialog" class="size-position">
                     <h2>Login</h2>
-                    <!--<paper-input label="&nbsp;&nbsp;Username" id="inputWithButton" ng-model="user.email">-->
-                    <!--<iron-icon icon="social:person" prefix></iron-icon>-->
-                    <!--<paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">-->
-                    <!--</paper-icon-button>-->
-                    <!--</paper-input>-->
                     <br>
                     <div class="login_input">
                         <md-input-container class="md-icon-float md-block">
@@ -407,8 +402,6 @@
                 <!--After Login-->
                 <div class="visible-sm visible-xs visible-md visible-lg">
                     <paper-dialog id="afterLogin" class="size-position">
-                        <!--<h2>Welcome! {[{ firstname }]}</h2>-->
-                        <!--<br><br>-->
                         <div class="col-sm-6">
                             <md-button class="md-raised md-primary" ng-click="openProfile()">Profile
                             </md-button>
@@ -535,7 +528,7 @@
 
                 <!--Successful-->
                 <div class="visible-sm visible-xs visible-md visible-lg">
-                    <paper-dialog id="regis-success" >
+                    <paper-dialog id="regis-success">
                         <h2>Registration Successful!</h2>
                         <p>Welcome to Chef@Home {[{ register.firstname }]}</p>
                         <div class="buttons">
@@ -546,7 +539,7 @@
 
                 <!--Incorrect Password-->
                 <div class="visible-sm visible-xs visible-md visible-lg">
-                    <paper-dialog id="incorrect-pass" >
+                    <paper-dialog id="incorrect-pass">
                         <h2>Incorrect Password!</h2>
                         <p>Your confirmation password doesn't match!</p>
                         <div class="buttons">
@@ -557,7 +550,7 @@
 
                 <!--Invalid Credentials-->
                 <div class="visible-sm visible-xs visible-md visible-lg">
-                    <paper-dialog id="incomplete" >
+                    <paper-dialog id="incomplete">
                         <h2>Invalid Credentials!</h2>
                         <p>Your information is incomplete!</p>
                         <div class="buttons">
@@ -579,7 +572,8 @@
                                 <md-button class="md-raised">Upload Picture</md-button>
                             </md-content>
                         </div>
-                        <input class="file-upload" type="file" accept="image/*" ng-file-model="register.profilePicture"/>
+                        <input class="file-upload" type="file" accept="image/*"
+                               ng-file-model="register.profilePicture"/>
                     </div>
                     <!-- End left side column-->
 
@@ -589,146 +583,132 @@
                              class="md-inline-form inputdemoBasicUsage">
                             <md-content layout-padding="">
                                 <div>
-
-                                        <!--<md-input-container class="md-block" flex-gt-sm="">-->
-                                            <!--<label>Title</label>-->
-                                            <!--<md-select ng-model="user.title">-->
-                                                <!--<md-option ng-repeat="title in titles" value="{[{title.abbrev}]}">-->
-                                                    <!--{[{title.abbrev}]}-->
-                                                <!--</md-option>-->
-                                            <!--</md-select>-->
-                                        <!--</md-input-container>-->
-
-                                        <div layout-gt-xs="row">
-                                            <md-input-container class="md-block" flex-gt-sm="">
-                                                <label>First name</label>
-                                                <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg"
-                                                         class="name"></md-icon>-->
-                                                <input ng-model="register.firstname" type="text">
-                                            </md-input-container>
-                                        </div>
-
-                                        <div layout-gt-xs="row">
-                                            <md-input-container class="md-block" flex-gt-sm="">
-                                                <label>Family name</label>
-                                                <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg"
-                                                         class="name"></md-icon>-->
-                                                <input ng-model="register.lastname" type="text">
-                                            </md-input-container>
-                                        </div>
-
-                                        <div layout-gt-xs="row">
-                                            <md-datepicker ng-model="register.birthdate" md-placeholder="Birth date">
-                                            </md-datepicker>
-                                        </div>
-                                        <br>
-
-                                        <!--Telephone-->
-                                        <md-input-container md-no-float="" class="md-block">
-                                            <label>Phone Number</label>
-                                            <input ng-model="register.telephone" type="text" required>
+                                    <div layout-gt-xs="row">
+                                        <md-input-container class="md-block" flex-gt-sm="">
+                                            <label>First name</label>
+                                            <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg"
+                                                     class="name"></md-icon>-->
+                                            <input ng-model="register.firstname" type="text">
                                         </md-input-container>
+                                    </div>
 
-                                        <!--E-mail-->
+                                    <div layout-gt-xs="row">
+                                        <md-input-container class="md-block" flex-gt-sm="">
+                                            <label>Family name</label>
+                                            <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg"
+                                                     class="name"></md-icon>-->
+                                            <input ng-model="register.lastname" type="text">
+                                        </md-input-container>
+                                    </div>
+
+                                    <div layout-gt-xs="row">
+                                        <md-datepicker ng-model="register.birthdate" md-placeholder="Birth date">
+                                        </md-datepicker>
+                                    </div>
+                                    <br>
+
+                                    <!--Telephone-->
+                                    <md-input-container md-no-float="" class="md-block">
+                                        <label>Phone Number</label>
+                                        <input ng-model="register.telephone" type="text" required>
+                                    </md-input-container>
+
+                                    <!--E-mail-->
+                                    <md-input-container>
+                                        <label>Email</label>
+                                        <input ng-model="register.email" type="email" required>
+                                    </md-input-container>
+
+                                    <!--Password-->
+                                    <div layout-gt-xs="row">
                                         <md-input-container>
-                                            <label>Email</label>
-                                            <input ng-model="register.email" type="email" required>
+                                            <label>Password</label>
+                                            <input type="{[{inputType}]}" required ng-model="register.password"/>
                                         </md-input-container>
-
-                                        <!--Password-->
-                                        <div layout-gt-xs="row">
-                                            <md-input-container>
-                                                <label>Password</label>
-                                                <input type="{[{inputType}]}" required ng-model="register.password"/>
-                                            </md-input-container>
-                                            <div>
-                                                <md-checkbox id="checkbox" ng-model="passwordCheckbox"
-                                                             ng-click="hideShowPassword()"/>
-                                                <p for=" checkbox" ng-if="passwordCheckbox">Hide password</p>
-                                                <p for="checkbox" ng-if="!passwordCheckbox">Show password</p>
-                                                </md-checkbox>
-                                            </div>
+                                        <div>
+                                            <md-checkbox id="checkbox" ng-model="passwordCheckbox"
+                                                         ng-click="hideShowPassword()"/>
+                                            <p for=" checkbox" ng-if="passwordCheckbox">Hide password</p>
+                                            <p for="checkbox" ng-if="!passwordCheckbox">Show password</p>
+                                            </md-checkbox>
                                         </div>
+                                    </div>
 
-                                        <!--Confirm password-->
-                                        <div layout-gt-xs="row">
-                                            <md-input-container>
-                                                <label>Confirm password</label>
-                                                <input type="password" ng-model="register.confirmpassword"/>
-                                            </md-input-container>
-                                        </div>
+                                    <!--Confirm password-->
+                                    <div layout-gt-xs="row">
+                                        <md-input-container>
+                                            <label>Confirm password</label>
+                                            <input type="password" ng-model="register.confirmpassword"/>
+                                        </md-input-container>
+                                    </div>
 
-                                        <!--Address-->
-                                        <md-input-container class="md-block">
-                                            <label>Address</label>
-                                            <input ng-model="register.address[0].name">
+                                    <!--Address-->
+                                    <md-input-container class="md-block">
+                                        <label>Address</label>
+                                        <input ng-model="register.address[0].name">
+                                    </md-input-container>
+
+                                    <md-input-container md-no-float="" class="md-block">
+                                        <label>Address 2</label>
+                                        <input ng-model="register.address[1].name">
+                                    </md-input-container>
+
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex-gt-sm="">
+                                            <label>City</label>
+                                            <input ng-model="register.address[2].name">
                                         </md-input-container>
 
-                                        <md-input-container md-no-float="" class="md-block">
-                                            <label>Address 2</label>
-                                            <input ng-model="register.address[1].name">
-                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="">
+                                            <label>Postal Code</label>
+                                            <input name="postalCode" ng-model="register.address[3].name"
+                                                   placeholder="12345"
+                                                   required="" ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
 
-                                        <div layout-gt-sm="row">
-                                            <md-input-container class="md-block" flex-gt-sm="">
-                                                <label>City</label>
-                                                <input ng-model="register.address[2].name">
-                                            </md-input-container>
-
-                                            <md-input-container class="md-block" flex-gt-sm="">
-                                                <label>Postal Code</label>
-                                                <input name="postalCode" ng-model="register.address[3].name" placeholder="12345"
-                                                       required="" ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
-
-                                                <div ng-messages="registerform.postalCode.$error" role="alert" multiple="">
-                                                    <div ng-message="required" class="my-message">You
-                                                        must
-                                                        supply
-                                                        a
-                                                        postal
-                                                        code.</div>
-                                                    <div ng-message="pattern" class="my-message">That
-                                                        doesn
-                                                        't look like a valid postal code.
-                                                    </div>
-                                                    <div ng-message="md-maxlength" class="my-message">
-                                                        Don
-                                                        't use the long version silly...we don'
-                                                        t
-                                                        need
-                                                        to
-                                                        be
-                                                        that
-                                                        specific...
-                                                    </div>
+                                            <div ng-messages="registerform.postalCode.$error" role="alert" multiple="">
+                                                <div ng-message="required" class="my-message">You
+                                                    must
+                                                    supply
+                                                    a
+                                                    postal
+                                                    code.
                                                 </div>
-                                            </md-input-container>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-7"></div>
-                                            <div class="col-md-5">
-                                                <div ng-cloak="" class="buttondemoBasicUsage">
-                                                    <md-content class="btn_group_bg">
-                                                        <md-button class="md-raised" ng-click="submit()">Save</md-button>
-                                                        <md-button class="md-raised">Cancel</md-button>
-                                                    </md-content>
+                                                <div ng-message="pattern" class="my-message">That
+                                                    doesn
+                                                    't look like a valid postal code.
+                                                </div>
+                                                <div ng-message="md-maxlength" class="my-message">
+                                                    Don
+                                                    't use the long version silly...we don'
+                                                    t
+                                                    need
+                                                    to
+                                                    be
+                                                    that
+                                                    specific...
                                                 </div>
                                             </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-7"></div>
+                                        <div class="col-md-5">
+                                            <div ng-cloak="" class="buttondemoBasicUsage">
+                                                <md-content class="btn_group_bg">
+                                                    <md-button class="md-raised" ng-click="submit()">Save</md-button>
+                                                    <md-button class="md-raised">Cancel</md-button>
+                                                </md-content>
+                                            </div>
                                         </div>
-
+                                    </div>
                                 </div>
                             </md-content>
                         </div>
                     </div>
                     <!-- End main column-->
-
-
                 </div>
-
             </form>
         </div>
-
-
         <!-- /.container -->
     </div>
 </section>
@@ -771,9 +751,6 @@
         </div>
 
 
-
-
-
         <!-- Title & Divider -->
     </div>
     <!-- /.container -->
@@ -789,7 +766,6 @@
     <!-- /.container -->
 </footer>
 <!-- /.Footer -->
-
 
 
 <!-- Bootstrap core JavaScript
@@ -834,7 +810,7 @@
         clear2.value = "";
     }
 
-    function gotoMainProfile(){
+    function gotoMainProfile() {
         window.location.href = "http://localhost:4000/main-profile"
     }
 

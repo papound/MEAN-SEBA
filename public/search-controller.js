@@ -105,7 +105,6 @@ app2.controller('loginCtrl', ['$scope', '$http', function ($scope, $http) {
 app2.factory('getIngredients', ['$http', function ($http) {
     //Create request for User data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
-
     return $http.get(url + "/ingredients")
         .then(function (response) {
             return response.data;
@@ -116,13 +115,6 @@ app2.factory('getRecommended', ['$http', function ($http) {
 
     console.log(localStorage.loginChefAtHomeEmail);
 
-    if (localStorage.loginChefAtHomeEmail) {
-        //if already logged in
-        //this_email = localStorage.loginChefAtHomeEmail;
-    } else {
-        //link back to homepage on accessing unauthorized url
-        //window.location.href = "http://localhost:4000/"
-    }
     return $http.get(url + "/list/recommended")
         .then(function (response) {
             //console.log(response.data);
@@ -148,8 +140,6 @@ app2.factory('getFeedbackDishData', ['$http', function ($http) {
     }
     return $http.post(url + "/list/feedback_dish")
         .then(function (response) {
-            //console.log("hello world");
-            //console.log(response.data);
             return response.data;
         });
 }]);
@@ -165,8 +155,6 @@ app2.factory('getSuggestedDishData', ['$http', function ($http) {
     }
     return $http.post(url + "/list/feedback_dish")
         .then(function (response) {
-            //console.log("hello world");
-            //console.log(response.data);
             return response.data;
         });
 }]);
@@ -181,8 +169,6 @@ app2.factory('getDishDataByPrice', ['$http', function ($http) {
     }
     return $http.post(url + "/list/feedback_dish")
         .then(function (response) {
-            //console.log("hello world");
-            //console.log(response.data);
             return response.data;
         });
 }]);
@@ -223,17 +209,6 @@ app2.directive("angularRatings", function () {
             $scope.setRating = function (rating) {
                 $scope.model = rating;
                 $scope.$apply();
-                // if ($attrs.notifyUrl !== void 0 && $scope.notifyId) {
-                //     return $http.post($attrs.notifyUrl, {
-                //         id: $scope.notifyId,
-                //         rating: rating
-                //     }).error(function(data) {
-                //         if (typeof data === 'string') {
-                //             alert(data);
-                //         }
-                //         return $scope.model = 0;
-                //     });
-                // }
             };
             return $scope.setOver = function (n) {
                 $scope.over = n;
@@ -322,176 +297,6 @@ app2.directive("angularRatings", function () {
     }
 })();
 
-// (function () {
-/*'use strict';
-    app2
-    //.module('MyApp',['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
-        .controller('DemoCtrl', DemoCtrl);
-
-    /*auto complete test*/
-/*function DemoCtrl($scope, $timeout, $q, $log, getDishDataByPrice) {
-
-        function newState(state) {
-            alert("Sorry! You'll need to create a Constituion for " + state + " first!");
-        }
-
-        // ******************************
-        // Internal methods
-        // ******************************
-
-        /!**
-         * Search for states... use $timeout to simulate
-         * remote dataservice call.
-         *!/
-        function querySearch(query) {
-            var results = query ? self.states.filter(createFilterFor(query)) : self.states,
-                deferred;
-            if (self.simulateQuery) {
-                deferred = $q.defer();
-                $timeout(function () {
-                    deferred.resolve(results);
-                }, Math.random() * 1000, false);
-                return deferred.promise;
-            } else {
-                return results;
-            }
-        }
-
-        function searchTextChange(text) {
-            $log.info('Text changed to ' + text);
-        }
-
-        function selectedItemChange(item) {
-            $log.info('Item changed to ' + JSON.stringify(item));
-        }
-
-        /!**
-         * Build `states` list of key/value pairs
-         *!/
-
-        $scope.loadAll = function() {
-
-            console.log("Start loadAll");
-
-            //$scope.get_dish_name();
-
-            var allStates = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming";
-
-            // allStates = "Spaghetti Bolognese, Apple Almond Yogurt, Chicken Salad Sandwich, Cappuccino cake,\ " +
-            //     "Tuna salad, Tomato soup, Spinach soup, Soft brownie, Banana Honey Pancakes, Cream puff,\ " +
-            //     "Tomatoes and egg, Dark Chocolate Cupcakes, Grilled Salmon Salad, Squash soup, Fried rice,\ " +
-            //     "Japanese Chicken Curry, Matcha ice cream, Grilled corn with miso butter,\ " +
-            //     "Strawberry popsicles, Tempura zucchini sticks, Asparagus sald, Mango salad with popcorn, Russian salad,\ " +
-            //     "Japnanese seaweed salad, Dal soup, Creamy mushroom soup, Sweet potato soup, Classic pad thai,\ " +
-            //     "Smoked salmon pizza, Pork steak with fries, Linguine with lobster, Salmon & broccoli, Indian chicken curry,\ " +
-            //     "Classic schnitzel, Roasted goose, Alonzo Cheeseburger";
-
-            if(localStorage.dish_name_string){
-                allStates = localStorage.dish_name_string;
-            }else{
-
-            }
-
-            /!*console.log('allStates');
-            console.log(allStates);*!/
-
-            return allStates.split(/, +/g).map(function (state) {
-                return {
-                    value: state.toLowerCase(),
-                    display: state
-                };
-            });
-        };
-
-        $scope.get_dish_name = function () {
-
-            console.log("Start get_dish_name");
-            var dish_name_string = "";
-            getDishDataByPrice.then(function (dish) { //getDishDataByPrice to obtain dish data
-                //sort alphabetically
-                function sort_name(a, b) {
-                    if (a.name > b.name) {
-                        return 1;
-                    }
-                    if (a.name < b.name) {
-                        return -1;
-                    }
-                    return 0;
-                }
-
-                dish = dish.sort(sort_name);
-
-
-                for (var i = 0; i < dish.length; i++) {
-                    if (i < dish.length - 1) {
-                        dish_name_string = dish_name_string + dish[i].name + ", ";
-                    } else if (i == dish.length - 1) {
-                        dish_name_string = dish_name_string + dish[i].name;
-                    }
-                }
-
-                localStorage.setItem('dish_name_string', dish_name_string);
-
-                //console.log(localStorage.dish_name_string);
-
-                var allStates = dish_name_string ;
-                console.log("End get_dish_name");
-                // $scope.loadAll();
-                /!*if(localStorage.dish_name_string){
-                 allStates = localStorage.dish_name_string;
-                 }else{
-
-                 }*!/
-
-                console.log('allStates=');
-                console.log(allStates);
-
-                return allStates.split(/, +/g).map(function (state) {
-                    return {
-                        value: state.toLowerCase(),
-                        display: state
-                    };
-                });
-
-            });
-
-        };
-
-        /!**
-         * Create filter function for a query string
-         *!/
-        function createFilterFor(query) {
-            var lowercaseQuery = angular.lowercase(query);
-
-            return function filterFn(state) {
-                return (state.value.indexOf(lowercaseQuery) === 0);
-            };
-        }
-
-        var self = this;
-
-        self.simulateQuery = false;
-        self.isDisabled = false;
-
-        // list of `state` value/display objects
-        // self.states = $scope.loadAll();
-        self.states = $scope.get_dish_name();
-        self.querySearch = querySearch;
-        self.selectedItemChange = selectedItemChange;
-        self.searchTextChange = searchTextChange;
-
-        self.newState = newState;
-
-    }*/
-// })();
-
-
 //var to localStorage
 //localStorage.setItem('current_dish', JSON.stringify(current_dish));
 var retrieve_dish = localStorage.getItem('current_dish');  //String
@@ -571,11 +376,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
         $scope.best2_typedairy = "";
         $scope.best3_typedairy = "";
         $scope.best4_typedairy = "";
-
-        /*$scope.best1.rating = "";
-         $scope.best2.rating = "";
-         $scope.best3.rating = "";
-         $scope.best4.rating = "";*/
 
         //Get Dish by Price
         $scope.priceRange = [1, 19];
@@ -790,15 +590,15 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                 $scope.user.vegetarian = user[0].vegetarian;
                 $scope.user.halal = user[0].halal;
 
-                if(user[0].healthCond == null){
+                if (user[0].healthCond == null) {
                     $scope.user.healthCond == null;
-                }else{
+                } else {
                     $scope.user.healthCond = user[0].healthCond;
                 }
 
-                if(user[0].noIngredient == null){
+                if (user[0].noIngredient == null) {
                     $scope.user.noIngredient == null;
-                }else{
+                } else {
                     $scope.user.noIngredient = user[0].noIngredient;
                 }
 
@@ -924,23 +724,11 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
             localStorage.setItem('spicy', $scope.spicy);
             localStorage.setItem('salty', $scope.salty);
 
-            // console.log("local sweet " + localStorage.sweet);
-            // console.log("local sour " + localStorage.sour);
-            // console.log("local bitter " + localStorage.bitter);
-            // console.log("local spicy " + localStorage.spicy);
-            // console.log("local salty " + localStorage.salty);
-
             //reload page to see the change
             window.location.href = "http://localhost:4000/search"
 
         };
         //End Side Navbar
-
-        //Reload Controller
-        // $scope.reloadData = function(){
-        //     $route.reload();
-        // };
-        //End Reload Controller
 
         getDish.then(function (dish_name) {
             $scope.dish_only_name = dish_name;
@@ -971,8 +759,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                 while (flag && (a < $scope.dish_recommended.length)) {
                                     if ($scope.dish_recommended[a].dishName == order[i].orderItems[j].name) {
                                         //duplicate dish name --> update frequency
-                                        //console.log("a=" + $scope.dish_recommended[a].dishName);
-                                        //console.log("b=" + order[i].orderItems[j].name);
                                         $scope.dish_recommended[a].frequency += order[i].orderItems[j].amount;
                                         //console.log($scope.dish_recommended[a].frequency);
                                         flag = false;
@@ -980,8 +766,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     a++; //increment to loop the whole array
                                 }
                                 if (flag) {
-                                    //console.log("c="+$scope.dish_recommended[a].dishName);
-                                    //console.log("d="+order[i].orderItems[j].name);
                                     //add other object in to array
                                     $scope.dish_recommended.push(push_obj);
                                 }
@@ -1017,11 +801,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                             var suggested = dish;
                             var temp_suggested = [];
 
-                            /*console.log("START suggested");
-                             console.log(suggested);
-                             console.log("START temp_suggested");
-                             console.log(temp_suggested);*/
-
                             if ($scope.user.vegetarian == true) {    // vegetarian (no meat no pork)  halal is either TRUE or FALSE
                                 for (var i = 0; i < dish.length; i++)   //loop through all dish
                                 {
@@ -1029,7 +808,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                         temp_suggested.push(dish[i]);   //push dish==veg to temp
                                     }
                                 }
-
                             }
                             else if ($scope.user.halal == true && $scope.user.vegetarian == false) {    // halal
                                 for (var i = 0; i < dish.length; i++)   //loop through all dish
@@ -1038,21 +816,13 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                         temp_suggested.push(dish[i]);   //push dish!= pork to temp
                                     }
                                 }
-
                             }
                             else if ($scope.user.halal == false && $scope.user.vegetarian == false) {    // vegetarian
                                 for (var i = 0; i < dish.length; i++)   //loop through all dish
                                 {
                                     temp_suggested.push(dish[i]);   //push all dishes
                                 }
-
                             }
-
-
-                            /*console.log("after FIRST suggested");
-                             console.log(suggested);
-                             console.log("after FIRST temp_suggested");
-                             console.log(temp_suggested);*/
 
                             if (temp_suggested.length < 4) {
                                 return suggested
@@ -1090,10 +860,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                         }
                                     }
                                 }
-                                /*console.log("after SECOND suggested");
-                                 console.log(suggested);
-                                 console.log("after SECOND temp_suggested");
-                                 console.log(temp_suggested);*/
 
                                 if (temp_suggested.length < 4) {
                                     return suggested
@@ -1103,43 +869,30 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     temp_suggested = [];
 
                                     //check noIngredient
-                                    if($scope.user.noIngredient.length == 1) {  //only 1 element (null)
+                                    if ($scope.user.noIngredient.length == 1) {  //only 1 element (null)
                                         console.log("no ingredient");
                                         temp_suggested = suggested; //push all back to temp
                                     }
-                                    else if($scope.user.noIngredient.length>1){
+                                    else if ($scope.user.noIngredient.length > 1) {
                                         for (var k = 0; k < suggested.length; k++) //loop for all no Ingredient
                                         {
                                             var noIng_exist = false;
-
-                                            /*if ($scope.user.noIngredient[0] == null) {
-                                                console.log("no ingredient");
-                                                //$scope.user.noIngredient = []
-                                            }else if ($scope.user.noIngredient.length > 0){*/
-                                                for (var j = 0; j < $scope.user.noIngredient.length; j++)  // loop all remaining dish
+                                            for (var j = 0; j < $scope.user.noIngredient.length; j++)  // loop all remaining dish
+                                            {
+                                                for (var l = 0; l < suggested[k].ingredients.length; l++)  //loop through all ingredients of each dish
                                                 {
-                                                    for (var l = 0; l < suggested[k].ingredients.length; l++)  //loop through all ingredients of each dish
-                                                    {
-                                                        if (suggested[k].ingredients[l]["name"] == $scope.user.noIngredient[j]) {
-                                                            noIng_exist = true;
-                                                        }
+                                                    if (suggested[k].ingredients[l]["name"] == $scope.user.noIngredient[j]) {
+                                                        noIng_exist = true;
                                                     }
                                                 }
-                                                if (!noIng_exist) //push dish only if noIng does not exist
-                                                {
-                                                    temp_suggested.push(suggested[k]);
-                                                }
-                                            /*}*/
-
+                                            }
+                                            if (!noIng_exist) //push dish only if noIng does not exist
+                                            {
+                                                temp_suggested.push(suggested[k]);
+                                            }
                                         }
                                     }
-
-
                                 }
-                                /*console.log("after THIRD suggested");
-                                 console.log(suggested);
-                                 console.log("after THIRD temp_suggested");
-                                 console.log(temp_suggested);*/
 
                                 if (temp_suggested.length < 4) {
                                     return suggested
@@ -1156,40 +909,28 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
                                         if (suggested[x].nutritions[0].Calories >= $scope.user.nutritionRange[0].minValue
                                             && suggested[x].nutritions[0].Calories <= $scope.user.nutritionRange[0].maxValue) {
-
                                             score++;
-
                                         }
                                         if (suggested[x].nutritions[0].Proteins >= $scope.user.nutritionRange[1].minValue
                                             && suggested[x].nutritions[0].Proteins <= $scope.user.nutritionRange[1].maxValue) {
-
                                             score++;
-
                                         }
                                         if (suggested[x].nutritions[0].Carbohydrates >= $scope.user.nutritionRange[2].minValue
                                             && suggested[x].nutritions[0].Carbohydrates <= $scope.user.nutritionRange[2].maxValue) {
-
                                             score++;
-
                                         }
                                         if (suggested[x].nutritions[0].Fats >= $scope.user.nutritionRange[3].minValue
                                             && suggested[x].nutritions[0].Fats <= $scope.user.nutritionRange[3].maxValue) {
-
                                             score++;
-
                                         }
                                         if (suggested[x].nutritions[0].Cholesterols >= $scope.user.nutritionRange[4].minValue
                                             && suggested[x].nutritions[0].Cholesterols <= $scope.user.nutritionRange[4].maxValue) {
-
                                             score++;
-
                                         }
 
                                         var temp_with_score = suggested[x]
                                         temp_with_score.score = score;
                                         temp_suggested.push(temp_with_score);
-
-
                                     }
 
                                     //Sort Score
@@ -1205,11 +946,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                     }
 
                                     temp_suggested.sort(sort_score);
-
-                                    /*console.log("after FOURTH suggested");
-                                     console.log(suggested);
-                                     console.log("after FOURTH temp_suggested");
-                                     console.log(temp_suggested);*/
 
                                     if (temp_suggested.length < 4) {
                                         return suggested
@@ -1232,7 +968,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                         score_taste++;
                                                     }
                                                 }
-
                                             }
                                             //Sour
                                             if ($scope.user.tastePreference[1] == true) {
@@ -1243,7 +978,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                         score_taste++;
                                                     }
                                                 }
-
                                             }
                                             //Bitter
                                             if ($scope.user.tastePreference[2] == true) {
@@ -1254,7 +988,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                         score_taste++;
                                                     }
                                                 }
-
                                             }
                                             //Spicy
                                             if ($scope.user.tastePreference[3] == true) {
@@ -1265,7 +998,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                         score_taste++;
                                                     }
                                                 }
-
                                             }
                                             //Salty
                                             if ($scope.user.tastePreference[4] == true) {
@@ -1276,17 +1008,14 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                         score_taste++;
                                                     }
                                                 }
-
                                             }
 
                                             var temp_with_score = suggested[y];
                                             temp_with_score.score_taste = score_taste;
                                             temp_suggested.push(temp_with_score);
-
                                         }
 
                                         //Sort Score
-                                        //noinspection JSAnnotator
                                         function sort_score_taste(a, b) {
                                             if (a.score == b.score) {
                                                 return (a.score_taste < b.score_taste) ? 1 : (a.score_taste > b.score_taste) ? -1 : 0;
@@ -1297,12 +1026,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                         }
 
                                         temp_suggested.sort(sort_score_taste);
-
-                                        /*console.log("after 5th suggested");
-                                         console.log(suggested);
-                                         console.log("after 5th temp_suggested");
-                                         console.log(temp_suggested);*/
-
 
                                         if (temp_suggested.length < 4) {
                                             $scope.suggested_real = suggested;
@@ -1384,11 +1107,8 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                             $scope.best4_typedairy = "newTemplate/svg/milk_no.svg";
                                         }
                                         $scope.best.four.rating = Math.ceil($scope.best.four.rating);
-
-
                                     }
                                 }
-
 
                             }
 
@@ -1627,9 +1347,7 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
                 getDishDataByPrice.then(function (dish) {
                     $scope.dishbyprice = function () {
-                        /*console.log("onchange");
-                         console.log("min = "+);
-                         console.log("max = "+);*/
+
                         var dish_by_price = dish;
 
                         /*sort in descending order: High to Low*/
@@ -1679,7 +1397,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                             dish_by_price = [];
                         }
 
-                        //$scope.dish_by_price_result = dish_by_price;
                     };
                     $scope.dishbyprice();
                 });
@@ -1710,7 +1427,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                         }
                     }
 
-                    //console.log("Appetizer" + $scope.appetizer);
 
                     for (var i = 0; i < dish.length; i++) {
 
@@ -1791,11 +1507,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                             $scope.dish4.rating = Math.ceil($scope.dish4.rating);
                         }
                     }
-                    /*console.log($scope.dish1);
-                     console.log($scope.dish2);
-                     console.log($scope.dish3);
-                     console.log($scope.dish4);*/
-
                 })
 
             });
@@ -1901,29 +1612,12 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                         $mdDialog.cancel();
                                     };
 
-                                    // $scope.answer = function (answer) {
-                                    //     $mdDialog.hide(answer);
-                                    //
-                                    //     if(answer == "cancel"){
-                                    //         current_ingredient_onchange = [];
-                                    //     }
-                                    //
-                                    // };
 
                                     $scope.dish_quantity = 1;
                                     $scope.topup_quantity = 0;
 
-                                    /*function getRandomPrice(min, max) {
-                                     return Math.random() * (max - min) + min;
-                                     }*/
 
                                     $scope.change_topUpQuantity = function (dish_name, ingredient_name, quantity, ingredient_price) {
-                                        //console.log("Adding topup " + ingredient_name + " x" + quantity + " (price=" + ingredient_price + ") of " + dish_name + "to cart");
-                                        //console.log(ingredient_name + "- total price = " + quantity * ingredient_price);
-
-                                        /*var random_price = getRandomPrice(0.5,3);
-
-                                         random_price = random_price.toFixed(2);*/
 
                                         var topup_obj = {
                                             "name": ingredient_name,
@@ -1932,12 +1626,9 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                             "price": ingredient_price * quantity
                                         };
 
-                                        //console.log(topup_obj);
 
                                         //Check if current_ingredient array is not empty
                                         if (current_ingredient_onchange.length > 0) {
-
-                                            //console.log("NOT empty array");
 
                                             var flag = true, i = 0;
                                             while (flag && i < current_ingredient_onchange.length) {
@@ -1945,41 +1636,29 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
                                                 if (current_ingredient_onchange[i].name == ingredient_name) {
 
-                                                    //console.log("i in if:" + i);
                                                     current_ingredient_onchange[i]["amount"] = quantity;
-                                                    //console.log("Update " + ingredient_name + "'s quantity to " + current_ingredient_onchange[i]["amount"]);
 
-                                                    //console.log(current_ingredient_onchange);
                                                     flag = false;
                                                 } else {
-
                                                     //console.log(current_ingredient);
                                                 }
                                                 i++;
-                                                //console.log("i after increment:" + i)
                                             }
                                             // if item does not exist in array
                                             if (i == current_ingredient_onchange.length && flag) {
-                                                //console.log("i on push:" + i);
+
                                                 current_ingredient_onchange.push(topup_obj);
-                                                //console.log("Push " + ingredient_name + " X " + quantity + " to current_ingredient_onchange array");
                                             }
 
                                         } else {
-                                            //console.log("empty array");
                                             current_ingredient_onchange.push(topup_obj);
-                                            //console.log("Push " + ingredient_name + " X " + quantity + " to current_ingredient_onchange array");
-                                            //console.log(current_ingredient_onchange);
                                         }
 
 
                                         $scope.topup_quantity = 0;
-
                                     };
 
                                     $scope.addToCart = function (dish_name, dish_quantity) {
-
-
                                         if (notLogin) {
 
                                             var toast = $mdToast.show($mdToast.simple()
@@ -1993,53 +1672,6 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                 //.position(pinTo);
                                             );
 
-
-                                            // $mdToast.show(
-                                            //     $mdToast.simple()
-                                            //         //.textContent('Hello World!')
-                                            //         .hideDelay(3000)
-                                            //         .position('bottom right')
-                                            //         // .templateUrl('toast-template.html')
-                                            //
-                                            // );
-
-                                            // $mdToast.show({
-                                            //     hideDelay   : 3000,
-                                            //     //parent: angular.element(document.body),
-                                            //     position    : 'top right',
-                                            //     templateUrl : 'toast-template.html',
-                                            //     controller: ['$scope', '$mdDialog', '$mdToast',
-                                            //     function ($scope, $mdToast, $mdDialog) {
-                                            //         $scope.closeToast = function() {
-                                            //             if (isDlgOpen) return;
-                                            //
-                                            //             $mdToast
-                                            //                 .hide()
-                                            //                 .then(function() {
-                                            //                     isDlgOpen = false;
-                                            //                 });
-                                            //         };
-                                            //
-                                            //         $scope.openMoreInfo = function(e) {
-                                            //             if ( isDlgOpen ) return;
-                                            //             isDlgOpen = true;
-                                            //
-                                            //             $mdDialog
-                                            //                 .show($mdDialog
-                                            //                     .alert()
-                                            //                     .title('More info goes here.')
-                                            //                     .textContent('Something witty.')
-                                            //                     .ariaLabel('More info')
-                                            //                     .ok('Got it')
-                                            //                     .targetEvent(e)
-                                            //                 )
-                                            //                 .then(function() {
-                                            //                     isDlgOpen = false;
-                                            //                 })
-                                            //         };
-                                            //     }]
-                                            // });
-
                                         } else {
 
                                             if (dish_quantity == 0) {
@@ -2052,38 +1684,34 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                 //add temp ingredient list to basket
 
                                                 for (var j = 0; j < current_ingredient_onchange.length; j++) {
-                                                    // current_ingredient.push(current_ingredient_onchange[j])
+
                                                     if (current_ingredient.length > 0) {
                                                         var flag = true, i = 0;
                                                         console.log("starting, i=" + i);
                                                         while (flag && i < current_ingredient.length) {
                                                             if (current_ingredient[i].name == current_ingredient_onchange[j].name) {
-                                                                //console.log("in if update, i=" + i);
+
                                                                 current_ingredient[i]["amount"] = current_ingredient[i]["amount"] + current_ingredient_onchange[j].amount;
-                                                                //console.log("Update " + current_ingredient[i].name + "'s quantity to " + current_ingredient_onchange[j]["amount"]);
-                                                                //console.log(current_dish);
+
                                                                 flag = false;
                                                             } else {
 
                                                             }
                                                             i++;
-                                                            //console.log("after increment, i=" + i);
+
                                                         }
 
                                                         if (i == current_ingredient.length && flag) {
                                                             current_ingredient.push(current_ingredient_onchange[j]);
-                                                            //console.log("Push " + current_ingredient_onchange[j].name + " X " + current_ingredient_onchange[j].amount + " to current_ingredient array")
-                                                            //console.log("in if push, i=" + i);
+
                                                         }
 
                                                     } else {
                                                         current_ingredient.push(current_ingredient_onchange[j]);
-                                                        //console.log("empty array");
+
                                                     }
                                                 }
 
-                                                // console.log("current_ingredient= ")
-                                                // console.log(current_ingredient);
 
                                                 var dish_obj = {
                                                     "name": dish_name,
@@ -2091,15 +1719,10 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
                                                     "price": $scope.dishPrice
                                                 };
 
-                                                //console.log(dish_obj);
-                                                //console.log("length=" + current_dish.length);
-
                                                 if (current_dish.length > 0) {
                                                     var flag = true, i = 0;
-                                                    //console.log("starting, i=" + i);
                                                     while (flag && i < current_dish.length) {
                                                         if (current_dish[i].name == dish_name) {
-                                                            //console.log("in if update, i=" + i);
                                                             current_dish[i]["amount"] = current_dish[i]["amount"] + dish_quantity;
                                                             //console.log("Update " + dish_name + "'s quantity to " + current_dish[i]["amount"]);
                                                             flag = false;
@@ -2107,27 +1730,19 @@ app2.controller('MainCtrl', ['$scope', 'getUserData', 'getRecommended', 'getDish
 
                                                         }
                                                         i++;
-                                                        //console.log("after increment, i=" + i);
                                                     }
 
                                                     if (i == current_dish.length && flag) {
                                                         current_dish.push(dish_obj);
-                                                        /*console.log("Push " + dish_name + " X " + dish_quantity + " to current_dish array")
-                                                         console.log("in if push, i=" + i);*/
                                                     }
 
                                                 } else {
                                                     current_dish.push(dish_obj);
-                                                    /*console.log("empty array");
-                                                     console.log("Push " + dish_name + " X " + dish_quantity + " to current_dish array")*/
-
                                                 }
 
-                                                //console.log("Adding "+name+" X"+$scope.dish_quantity+" to cart")
+                                               
                                                 $scope.dish_quantity = 1;
-                                                //$scope.answer('');
-
-                                                //console.log(current_dish);
+                                                
                                                 $mdDialog.hide();
 
                                             }

@@ -5,46 +5,6 @@ var app2 = angular.module("materialExample", ["ngMaterial", "materialCalendar"])
 
 var url = "http://localhost:4000";
 
-//Test CURRENT function Data initialize
-// var current_dish =
-//     [
-//         {
-//             "name": "Caesar Salad",
-//             "amount": 3,
-//             "price": 3.00
-//         },
-//         {
-//             "name": "Dish 2",
-//             "amount": 3,
-//             "price": 5.00
-//         },
-//         {
-//             "name": "Dish 3",
-//             "amount": 1,
-//             "price": 7.00
-//         }
-//
-//     ]
-// var current_ingredient =
-//     [
-//         {
-//             "name": "Butter",
-//             "amount": 150,
-//             "price": 3.95
-//         },
-//         {
-//             "name": "Mustard",
-//             "amount": 50,
-//             "price": 15.00
-//         },
-//         {
-//             "name": "Black Pepper",
-//             "amount": 20,
-//             "price": 10.00
-//         }
-//
-//     ]
-
 //var to localStorage
 //localStorage.setItem('current_dish', JSON.stringify(current_dish));
 var retrieve_dish = localStorage.getItem('current_dish');  //String
@@ -58,7 +18,6 @@ console.log('local_current_ingredient: ',JSON.parse(retrieve_ingredient));
 app2.factory('getOrderData', ['$http', function ($http) {
     //Create request for Order data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
-    //localStorage.loginChefAtHomeEmail = "chanawatnpound@gmail.com";
     var this_email = "";
 
     if (localStorage.loginChefAtHomeEmail) {
@@ -78,7 +37,6 @@ app2.factory('getOrderData', ['$http', function ($http) {
 app2.factory('getUserData', ['$http', function ($http) {
     //Create request for Order data then send it to other Controller
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
-    //localStorage.loginChefAtHomeEmail = "chanawatnpound@gmail.com";
     var this_email = "";
 
     if (localStorage.loginChefAtHomeEmail) {
@@ -116,7 +74,6 @@ app2.controller('loginCtrl',['$scope', function ($scope) {
 }]);
 
 //Calendar controller
-//app2.controller("calendarCtrl", function ($scope, $filter, $q, $timeout, $log, MaterialCalendarData) {
 app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $filter, $q, $timeout, $log, MaterialCalendarData, $http) {
     //Check Credit Card, CVC Status
     getUserData.then(function (user) {
@@ -124,8 +81,6 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
             cardNumber : user[0].cardNumber,
             cvc : user[0].cvc
         };
-
-        //$scope.user.cardNumber = ""
         
         if($scope.user.cardNumber == "" || $scope.user.cvc == "" || !user[0].cardNumber || !user[0].cvc){
             $('#creditcard').attr('disabled', 'true');
@@ -241,7 +196,6 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
     //Variable for number of order
     var noOfOrder = {};
     //var for unique days with noOfOrder
-    //var date_order = {};
     $scope.setContentViaService = function (date, name) {
         MaterialCalendarData.setDayContent(date, '<span><i class="material-icons">shopping_cart</i><span class="cal_order_color">' + "&nbsp;&nbsp;" + name + '</span></span>')
     }
@@ -271,8 +225,6 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
                 $scope.order.paymentStatus[i] = order[i].paymentStatus;
                 $scope.order.customer[i] = order[i].customer;
                 console.log("i=" + i);
-                //console.log("date=" + $scope.order.dateTime[i]);
-                //console.log("customer=" + $scope.order.customer[i]);
 
                 $scope.date_name = $scope.order.dateTime[i].substring(0, 10); //yyyy-mm-dd
 
@@ -338,7 +290,6 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
                 //reset counter
                 count = 0;
                 orderList_arr = []
-                //console.log("noOfOrder["+field_name+"]: "+JSON.stringify(noOfOrder[field_name]))
             }
         }
 
@@ -352,14 +303,12 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
     $scope.placeOrder = function () {
 
         for(var i=0; i<$scope.dishes.length; i++){
-            //($scope.totalOrder).push($scope.dishes[i])
             if($scope.dishes[i].amount > 0){
                 ($scope.totalOrder).push($scope.dishes[i])
             }
         }
 
         for(var i=0; i<$scope.ingredients.length; i++){
-            //($scope.totalOrder).push($scope.ingredients[i])
             if($scope.ingredients[i].amount > 0){
                 ($scope.totalOrder).push($scope.ingredients[i])
             }
@@ -430,12 +379,10 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
     };
     $scope.dayClick = function (date) {
         $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
-        //console.log($scope.msg)
         $scope.show_date_dialog = $filter("date")(date, "MMM d, y");
         date.setDate(date.getDate() + 1);
         var dateInOrder = (date.toISOString()).substring(0, 10);
         //if there exists order(s)
-        //console.log(dateInOrder)
         if (noOfOrder[dateInOrder]) {
 
             var open_span = '<span>';
@@ -444,12 +391,11 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
 
 
             for (var i = 0; i < (noOfOrder[dateInOrder][0].orderItems).length; i++) {
-                //console.log("i="+i+",time="+noOfOrder[dateInOrder][0].orderItems[i].time+",length="+(noOfOrder[dateInOrder][0].orderItems.items).length);
-                //$scope.outerTime[i] = noOfOrder[dateInOrder][0].orderItems[i].time;
+                
                 data += "<p><h5><i class='material-icons'>alarm</i><i>" + " <b>" + noOfOrder[dateInOrder][0].orderItems[i].time + "</b> &nbsp;&nbsp; <i class='material-icons'>euro_symbol</i> <b>" + (noOfOrder[dateInOrder][0].orderItems[i].price).toFixed(2) + "</b></i></h5><br>";
 
                 for (var j = 0; j < (noOfOrder[dateInOrder][0].orderItems[i].items).length; j++) {
-                    //console.log("name=" + noOfOrder[dateInOrder][0].orderItems[i].items[j].name);
+                    
                     if( i == (noOfOrder[dateInOrder][0].orderItems).length -1 && j == (noOfOrder[dateInOrder][0].orderItems[i].items).length - 1){
                         data += noOfOrder[dateInOrder][0].orderItems[i].items[j].amount + " X " + noOfOrder[dateInOrder][0].orderItems[i].items[j].name;
                     }else{
@@ -459,9 +405,9 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
                 }
 
                 data += "<br></p>"
-                //console.log("each="+);
+              
             }
-            //$scope.items_orderInDate = noOfOrder[dateInOrder][0].orderItems;
+            
             $scope.full_data = open_span.concat(data).concat(close_span);
             console.log($scope.full_data)
 
@@ -478,17 +424,10 @@ app2.controller('calendarCtrl', function ($scope, getOrderData, getUserData, $fi
     $scope.nextMonth = function (data) {
         $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
     };
-    // $scope.setContentViaService = function () {
-    //     var today = new Date();
-    //     MaterialCalendarData.setDayContent(today, '<span> :oD </span>')
-    // }
-    var holidays = {
-        //"2016-06-14": [{"name": "2 orders", "country": "US", "date": "2016-06-14"}],
-        //"2016-06-19": [{"name": "Father's Day", "country": "US", "date": "2016-06-19"}],
-        //"2016-06-27": [{"name": "Helen Keller Day", "country": "US", "date": "2016-06-27"}]
+   
+    var holidays = {     
     };
-    //console.log("holidays="+JSON.stringify(holidays));
-    //var holidays = noOfOrder;
+   
     var numFmt = function (num) {
         num = num.toString();
         if (num.length < 2) {

@@ -1,7 +1,6 @@
 /**
  * Created by Chanawatn Pound on 02-Jun-16.
  */
-//var bodyparser = require('../node_modules/body-parser');
 
 // //Test UploadPic
 (function () {
@@ -46,11 +45,6 @@ app2.factory('getUserData', ['$http', function ($http) {
     //More info http://stackoverflow.com/questions/33843861/why-is-this-factory-returning-a-state-object-instead-of-response-data
     //localStorage.loginChefAtHomeEmail = "chanawatnpound@gmail.com"
     var this_email = "";
-    console.log(localStorage.loginChefAtHomefullname)
-    console.log(localStorage.loginChefAtHomefirstname)
-    console.log(localStorage.loginChefAtHomelastname)
-    console.log(localStorage.loginChefAtHomeimage)
-    console.log(localStorage.loginChefAtHomeEmail);
     if (localStorage.loginChefAtHomeEmail) {
         //if already logged in
         this_email = localStorage.loginChefAtHomeEmail;
@@ -81,12 +75,6 @@ app2.factory('getIngredient', ['$http', function ($http) {
 (function () {
 
     app2.provider('creditCardInput', function () {
-
-        // getUserData.then(function (user) {
-        //     $scope.name = user;
-        //     $scope.data.cb1 = user[0].vegetarian;
-        //     console.log("vegetarian: " + $scope.data.cb1)
-        // });
 
         var _amex, _discover, _master, _visa;
         _amex = 'amex';
@@ -259,119 +247,6 @@ app2.factory('getIngredient', ['$http', function ($http) {
 }).call(this);
 //End Test Credit Cards
 
-//test drag&drop
-(function () {
-
-    app2.directive('draggable', function () {
-        return function (scope, element) {
-            // this gives us the native JS object
-            var el = element[0];
-
-            el.draggable = true;
-
-            el.addEventListener(
-                'dragstart',
-                function (e) {
-                    e.dataTransfer.effectAllowed = 'move';
-                    e.dataTransfer.setData('Text', this.id);
-                    this.classList.add('drag');
-                    console.log("Remove old: " + this.id);
-                    console.log("From id: " + this.classList + "..");
-                    return false;
-                },
-                false
-            );
-
-            el.addEventListener(
-                'dragend',
-                function (e) {
-                    this.classList.remove('drag');
-                    console.log("add new: " + this.id);
-                    return false;
-                },
-                false
-            );
-        }
-    });
-
-    app2.directive('droppable', function () {
-        return {
-            scope: {
-                drop: '&',
-                bin: '='
-            },
-            link: function (scope, element) {
-                // again we need the native object
-                var el = element[0];
-
-                el.addEventListener(
-                    'dragover',
-                    function (e) {
-
-                        e.dataTransfer.dropEffect = 'move';
-                        // allows us to drop
-                        if (e.preventDefault) e.preventDefault();
-                        this.classList.add('over');
-                        return false;
-                    },
-                    false
-                );
-
-                el.addEventListener(
-                    'dragenter',
-                    function (e) {
-                        this.classList.add('over');
-                        return false;
-                    },
-                    false
-                );
-
-                el.addEventListener(
-                    'dragleave',
-                    function (e) {
-                        this.classList.remove('over');
-                        return false;
-                    },
-                    false
-                );
-
-                el.addEventListener(
-                    'drop',
-                    function (e) {
-                        // Stops some browsers from redirecting.
-                        if (e.stopPropagation) e.stopPropagation();
-
-                        this.classList.remove('over');
-
-                        var binId = this.id;
-                        console.log("To id: " + this.id + "..");
-                        var item = document.getElementById(e.dataTransfer.getData('Text'));
-                        this.appendChild(item);
-                        //console.log("newItem: "+item.getAttribute())
-                        // call the passed drop function
-                        scope.$apply(function (scope) {
-                            var fn = scope.drop();
-                            if ('undefined' !== typeof fn) {
-                                fn(item.id, binId);
-
-                            }
-                        });
-
-                        return false;
-                    },
-                    false
-                );
-            }
-        }
-    });
-
-    // app2.controller('DragDropCtrl', function ($scope) {
-    //
-    // });
-
-})();
-//end test drag&drop
-
 //Test Calendar
 app2.controller("calendarCtrl", function ($scope, $filter) {
     $scope.selectedDate = null;
@@ -417,7 +292,6 @@ app2.controller('loginCtrl',['$scope', function ($scope) {
 }]);
 
 app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', function ($scope, getIngredient, getUserData, $http, $rootScope, $timeout, $modal) {
-    $scope.formStatus = true; //comment out after testing
 
     //pre-define user's variables
     $scope.user = {
@@ -564,7 +438,7 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
         var nutrition_range = user[0].nutritionRange;
         $scope.calories.minValue = nutrition_range[0].minValue;
         $scope.calories.maxValue = nutrition_range[0].maxValue;
-        console.log($scope.calories.maxValue)
+        console.log($scope.calories.maxValue);
         $scope.proteins.minValue = nutrition_range[1].minValue;
         $scope.proteins.maxValue = nutrition_range[1].maxValue;
         $scope.carb.minValue = nutrition_range[2].minValue;
@@ -581,7 +455,7 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
 
     $scope.model = {
         type: "double"
-    }
+    };
 
     //Nutritions
 
@@ -694,11 +568,8 @@ app2.controller('MainCtrl', ['$scope', 'getIngredient', 'getUserData', '$http', 
                 category: ingredient[i].type,
                 name: ingredient[i].name
             };
-
             $scope.notprefs.push(notprefs_obj);
         }
-
-
     });
 
     $scope.selectedNotPref = [];

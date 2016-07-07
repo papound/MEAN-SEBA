@@ -1,31 +1,32 @@
-var express = require('express');
+var express = require('express'); //Use for routing
 var path = require("path");
 var cors = require("cors");
-var bodyParser = require("body-parser");
+var bodyParser = require("body-parser"); //Use to retrieve data from the request
 var cookieParser = require("cookie-parser");
-var passport = require('passport');
 var morgan = require('morgan');
+
+//MongoDB framework
 var mongoose = require('mongoose');
-var jwt = require('jwt-simple');
 var config = require('./config/database');
 var db = mongoose.connection;
+
+//DB Schema
 var User = require('./user');
 var Order = require('./order');
 var Feedback = require('./feedback');
-var bcrypt = require('bcryptjs');
 
-//mongoose.connect('mongodb://localhost/seba-webapp');
+//Authentication
+var passport = require('passport');
+var jwt = require('jwt-simple');
+var bcrypt = require('bcryptjs'); //Use to encrypt password
 
-
+//Connect to Database (MongoDB)
 mongoose.connect(config.database);
-
-// var routes = require('./routes/index');
-//https://www.youtube.com/watch?v=Z1ktxiqyiLA
 
 //Init App
 var app = express();
 app.use(cors());
-app.use(bodyParser({limit: '50mb'}));
+app.use(bodyParser({limit: '50mb'})); //Extend limit of request size.
 
 //For Authentication
 // Use body-parser to get POST requests for API use
@@ -37,24 +38,24 @@ app.use(morgan('dev'));
 
 // pass passport for configuration
 require('./config/passport')(passport);
-
 var routes = require('./routes/index')(app);
 
-//var for index-8.html
 
+//Simple Database Model
 var db_model = mongoose.model('Taste', new mongoose.Schema({name: String}), 'taste');
-//var user_model = mongoose.model('User1', new mongoose.Schema({ firstname: String }),'user');
 var db_order = mongoose.model('Order1', new mongoose.Schema({customer: String}), 'order'); //table order
 var db_dish = mongoose.model('Dish1', new mongoose.Schema({name: String}), 'dish'); //update dish collection
 var db_ingredient = mongoose.model('Ingredient', new mongoose.Schema({name: String}), 'ingredient'); //update ingredient collection
 
+
+//Request handling
 app.get("/list/database", function (req, res) {
     // Locate all the entries using find
     db_model.find(function (err, results) {
         //Getting Results
         res.send(results);
     });
-})
+});
 
 app.get("/list/user", function (req, res) {
     // Locate all the entries using find
@@ -65,7 +66,7 @@ app.get("/list/user", function (req, res) {
         // Close the db
         //db.close();
     });
-})
+});
 
 app.get("/list/ingredient", function (req, res) {
     // Locate all the entries using find
@@ -76,7 +77,7 @@ app.get("/list/ingredient", function (req, res) {
         // Close the db
         //db.close();
     });
-})
+});
 
 
 app.post("/add", function (req, res) {
@@ -86,7 +87,7 @@ app.post("/add", function (req, res) {
         res.send(result);
         console.log("Success");
     })
-})
+});
 
 app.post("/list/user", function (req, res) {
     // Locate all the entries using find
@@ -133,7 +134,7 @@ app.post("/place/order", function (req, res) {
     // save the user
     newOrder.save(function (err) {
         if (err) {
-            console.log(err)
+            console.log(err);
             return res.json({success: false, msg: 'Error!'});
         }
         return res.json({success: true, msg: 'Successful!'});
@@ -148,7 +149,7 @@ app.get("/ingredients", function (req, res) {
         // Close the db
         //db.close();
     });
-})
+});
 
 app.post("/save/feedback", function (req, res) {
 
@@ -162,14 +163,14 @@ app.post("/save/feedback", function (req, res) {
     // save the user
     newFeedback.save(function (err) {
         if (err) {
-            console.log(err)
+            console.log(err);
             return res.json({success: false, msg: 'Error!.'});
         }
         return res.json({success: true, msg: 'Successful!'});
 
     });
 
-})
+});
 
 app.get("/list/dish", function (req, res) {
     // Locate all the entries using find
@@ -204,34 +205,24 @@ app.post("/list/dish", function (req, res) {
     db_dish.findOne({name: name}, function (err, results) {
         //Getting Results
         res.send(results);
-        // Close the db
-        //db.close();
     });
 });
 
 app.post("/update/one_dish", function (req, res) {
     // Locate all the entries using find
     var name = req.body.name;
-    // var 
-    // //var group_response = [];
-    // db_dish.findOne({name: name}, function (err, results) {
-    //     //Getting Results
-    //     name =  results.data.name
-    // });
-    var dish_collection = db.collection('dish')
+    var dish_collection = db.collection('dish');
     dish_collection.update({name: name}, {
-            /*  db.dish.update({name : name},
-             {*/
             $set: {
                 "rating": req.body.rating,
                 "noRater": req.body.noRater
             }
         }, function (err) {
             if (err) {
-                console.log("Error!")
+                console.log("Error!");
                 res.json({success: false, msg: 'Error update new rating.'});
             } else {
-                console.log("Success!")
+                console.log("Success!");
                 res.json({success: true, msg: 'Successfully update new rating.'});
             }
         }
@@ -296,6 +287,7 @@ apiRoutes.post('/register', function (req, res) {
     }
 });
 
+//Create User Account after Sign-in with Google
 apiRoutes.post('/register/google', function (req, res) {
     if (!req.body.email) {
         res.json({success: false, msg: 'Please pass name and password.'});
@@ -316,6 +308,7 @@ apiRoutes.post('/register/google', function (req, res) {
     }
 });
 
+//Update User Data
 apiRoutes.post('/update/profile', function (req, res) {
 
     //console.log(req.body)
@@ -398,19 +391,19 @@ apiRoutes.post('/update/profile', function (req, res) {
         }
     }, function (err) {
         if (err) {
-            console.log("Error!")
+            console.log("Error!");
             res.json({success: false, msg: 'Error created new user.'});
         } else {
-            console.log("Success!")
+            console.log("Success!");
             res.json({success: true, msg: 'Successfully created new user.'});
         }
     })
-})
-;
+});
 
+//Login
 apiRoutes.post('/authenticate', function (req, res) {
-    console.log(req.body.email)
-    console.log(req.body.password)
+    console.log(req.body.email);
+    console.log(req.body.password);
     User.findOne({
         email: req.body.email
     }, function (err, user) {
@@ -497,10 +490,8 @@ getToken = function (headers) {
 // connect the api routes under /api/*
 app.use('/api', apiRoutes);
 
-
-// Set Port
+// Set Listening Port
 app.set('port', (4000));
-
 app.listen(app.get('port'), function () {
     console.log('Server runs at port: ' + app.get('port'));
 });
